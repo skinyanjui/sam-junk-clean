@@ -38,9 +38,9 @@ const Careers = () => {
       <ApplicationProcess />
       <CareersCta />
 
-      {/* Application Form Dialog */}
+      {/* Multi-step Application Form Dialog */}
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto">
+        <DialogContent className="sm:max-w-[700px] max-h-[90vh] overflow-y-auto">
           <JobApplicationForm 
             positions={jobListings.map(job => ({ id: job.id, title: job.title }))}
             onClose={handleCloseDialog}
