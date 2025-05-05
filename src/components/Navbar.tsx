@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, Phone } from 'lucide-react';
@@ -60,10 +59,10 @@ const Navbar = () => {
             <Link
               key={link.path}
               to={link.path}
-              className={`px-4 py-2 font-medium transition-colors hover:text-brand-red ${
+              className={`px-4 py-2 font-medium transition-colors hover:text-brand-red text-gray-800 ${
                 location.pathname === link.path
-                  ? 'text-brand-red'
-                  : 'text-brand-navy'
+                  ? 'text-brand-red font-semibold'
+                  : 'text-gray-800'
               }`}
             >
               {link.name}
