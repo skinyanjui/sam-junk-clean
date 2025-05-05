@@ -3,6 +3,7 @@ import { ReactNode } from 'react';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import { Breadcrumb } from './Breadcrumb';
+import { Toaster } from './ui/toaster';
 
 interface PageLayoutProps {
   children: ReactNode;
@@ -29,6 +30,9 @@ const PageLayout = ({
       <Footer />
       {/* Bottom padding for mobile sticky button */}
       <div className="h-16 md:h-0 w-full"></div>
+      
+      {/* Global Toast Notifications */}
+      <Toaster />
     </div>
   );
 };

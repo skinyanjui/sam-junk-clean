@@ -1,8 +1,19 @@
 
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
+import { useToast } from '@/hooks/use-toast';
 
 const CtaSection = () => {
+  const { toast } = useToast();
+  
+  const handleCallClick = () => {
+    toast({
+      title: "Calling...",
+      description: "Connecting you to our customer service team.",
+      duration: 3000,
+    });
+  };
+
   return (
     <section className="py-16 bg-brand-gray">
       <div className="container-custom">
@@ -22,9 +33,9 @@ const CtaSection = () => {
                 <Link to="/quote">Get a Free Quote</Link>
               </Button>
               <Button 
-                asChild 
                 variant="outline" 
                 className="border-white text-white hover:bg-white hover:text-brand-navy"
+                onClick={handleCallClick}
               >
                 <a href="tel:+18005551234">Call (800) 555-1234</a>
               </Button>
