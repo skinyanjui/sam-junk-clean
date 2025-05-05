@@ -52,6 +52,30 @@
       "subtitle": "Propiedad de veteranos, enfocados en la comunidad y comprometidos con la excelencia"
     }
   },
+  "locations": {
+    "title": "Nuestras Áreas de Servicio",
+    "subtitle": "Descubra si brindamos servicios en su ubicación",
+    "search": "Buscar por ciudad, estado o código postal...",
+    "showingResults": "Mostrando {{count}} área de servicio",
+    "showingResults_plural": "Mostrando {{count}} áreas de servicio",
+    "mapTitle": "Mapa de Áreas de Servicio",
+    "mapDescription": "Vea todas las comunidades a las que servimos en el área de Tri-State",
+    "primaryArea": "Área Principal",
+    "coverage": "Cobertura",
+    "citiesServed": "Ciudades Atendidas",
+    "contact": "Contacto",
+    "about": "Acerca de",
+    "noAreasFound": "No se encontraron áreas de servicio",
+    "noAreasMessage": "No pudimos encontrar áreas de servicio que coincidan con \"{{searchTerm}}\". Intente otra búsqueda o llámenos para verificar si brindamos servicios en su área.",
+    "clearSearch": "Borrar Búsqueda",
+    "checkAreaTitle": "Verifique Si Brindamos Servicio en Su Área",
+    "checkAreaSubtitle": "Ingrese su código postal para ver si Uncle Sam Junk Removal sirve a su área",
+    "enterZip": "Ingrese código postal",
+    "check": "Verificar",
+    "ctaTitle": "¿Listo para Comenzar?",
+    "ctaSubtitle": "Contáctenos hoy para averiguar si brindamos servicios en su área y obtener un presupuesto gratuito sin compromiso",
+    "requestQuote": "Solicitar un Presupuesto"
+  },
   "seo": {
     "home": {
       "title": "Uncle Sam Junk Removal | Servicios de Remoción de Basura del Área Tri-State",
@@ -72,6 +96,10 @@
     "contact": {
       "title": "Contáctenos | Uncle Sam Junk Removal",
       "description": "¿Tiene preguntas? ¿Necesita un presupuesto? Contacte a Uncle Sam Junk Removal para todas sus necesidades de remoción de basura en el área de Tri-State."
+    },
+    "locations": {
+      "title": "Ubicaciones de Servicio | Uncle Sam Junk Removal",
+      "description": "Uncle Sam Junk Removal con orgullo sirve al área de Tri-State, incluyendo Evansville, IN, Owensboro, KY y Mt. Carmel, IL. Encuentre servicios de remoción de basura en su área."
     }
   }
 }

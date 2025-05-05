@@ -52,6 +52,30 @@
       "subtitle": "Veteran-owned, community-focused, and committed to excellence"
     }
   },
+  "locations": {
+    "title": "Our Service Areas",
+    "subtitle": "Find out if we service your location",
+    "search": "Search by city, state, or ZIP code...",
+    "showingResults": "Showing {{count}} service area",
+    "showingResults_plural": "Showing {{count}} service areas",
+    "mapTitle": "Service Area Map",
+    "mapDescription": "See all the communities we service in the Tri-State area",
+    "primaryArea": "Primary Area",
+    "coverage": "Coverage",
+    "citiesServed": "Cities Served",
+    "contact": "Contact",
+    "about": "About",
+    "noAreasFound": "No service areas found",
+    "noAreasMessage": "We couldn't find any service areas matching \"{{searchTerm}}\". Please try another search or call us to check if we service your area.",
+    "clearSearch": "Clear Search",
+    "checkAreaTitle": "Check If We Service Your Area",
+    "checkAreaSubtitle": "Enter your ZIP code to see if Uncle Sam Junk Removal serves your area",
+    "enterZip": "Enter ZIP code",
+    "check": "Check",
+    "ctaTitle": "Ready to Get Started?",
+    "ctaSubtitle": "Contact us today to find out if we service your area and get a free, no-obligation quote",
+    "requestQuote": "Request a Quote"
+  },
   "seo": {
     "home": {
       "title": "Uncle Sam Junk Removal | Tri-State Area Junk Removal Services",
@@ -72,6 +96,10 @@
     "contact": {
       "title": "Contact Us | Uncle Sam Junk Removal",
       "description": "Have questions? Need a quote? Contact Uncle Sam Junk Removal for all your junk removal needs in the Tri-State area."
+    },
+    "locations": {
+      "title": "Service Locations | Uncle Sam Junk Removal",
+      "description": "Uncle Sam Junk Removal proudly serves the Tri-State area including Evansville, IN, Owensboro, KY, and Mt. Carmel, IL. Find junk removal services in your area."
     }
   }
 }
