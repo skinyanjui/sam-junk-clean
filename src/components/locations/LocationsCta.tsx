@@ -31,7 +31,7 @@ const LocationsCta = () => {
         <div className="text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-6">{t('locations.ctaTitle')}</h2>
           <p className="text-xl mb-10 text-white/90 max-w-3xl mx-auto">
-            {t('locations.ctaSubtitle')}
+            Ready to reclaim your space? Our friendly team is ready to help you remove junk and clutter from your home or business. Contact us today for a free, no-obligation quote.
           </p>
           <div className="flex flex-col sm:flex-row gap-5 justify-center">
             <Button 

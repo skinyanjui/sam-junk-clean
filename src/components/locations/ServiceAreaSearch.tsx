@@ -1,8 +1,6 @@
 
-import { ChangeEvent } from 'react';
-import { Search } from 'lucide-react';
 import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
+import { Search, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 interface ServiceAreaSearchProps {
@@ -11,29 +9,36 @@ interface ServiceAreaSearchProps {
   filteredLocationsCount: number;
 }
 
-const ServiceAreaSearch = ({ searchTerm, setSearchTerm, filteredLocationsCount }: ServiceAreaSearchProps) => {
+const ServiceAreaSearch = ({ 
+  searchTerm, 
+  setSearchTerm, 
+  filteredLocationsCount 
+}: ServiceAreaSearchProps) => {
   const { t } = useTranslation();
   
-  const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(e.target.value);
-  };
-  
   return (
-    <div className="max-w-md mx-auto mb-12">
-      <div className="flex items-center border rounded-md overflow-hidden shadow-sm">
-        <Input 
-          type="text" 
-          placeholder={t('locations.search')} 
-          className="border-0 flex-1"
+    <div className="mb-12 max-w-2xl mx-auto">
+      <div className="relative">
+        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
+        <Input
+          type="text"
+          placeholder="Search for your city, state, or ZIP code..."
+          className="pl-10 pr-10 py-6 text-lg"
           value={searchTerm}
-          onChange={handleSearchChange}
+          onChange={(e) => setSearchTerm(e.target.value)}
         />
-        <Button variant="ghost" className="px-3" onClick={() => setSearchTerm("")}>
-          <Search size={18} />
-        </Button>
+        {searchTerm && (
+          <button
+            onClick={() => setSearchTerm('')}
+            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+            aria-label="Clear search"
+          >
+            <X size={18} />
+          </button>
+        )}
       </div>
-      {searchTerm && (
-        <p className="text-sm text-gray-500 mt-2">
+      {filteredLocationsCount > 0 && (
+        <p className="text-sm text-gray-500 mt-2 text-center">
           {t('locations.showingResults', { count: filteredLocationsCount })}
         </p>
       )}
