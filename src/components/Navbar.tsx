@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, Phone } from 'lucide-react';
@@ -50,7 +49,7 @@ const Navbar = () => {
           <img 
             src="/lovable-uploads/acf3ac1c-8d3b-4125-896d-7a7416fab53a.png" 
             alt="Uncle Sam Junk Removal" 
-            className="h-14 md:h-16"
+            className="h-16 md:h-20"
           />
         </Link>
 
