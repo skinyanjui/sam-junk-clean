@@ -1,4 +1,3 @@
-
 import PageLayout from '@/components/PageLayout';
 import { Link } from 'react-router-dom';
 import { Check, ArrowRight } from 'lucide-react';
@@ -137,12 +136,21 @@ const Services = () => {
                       </li>
                     ))}
                   </ul>
-                  <Button 
-                    asChild 
-                    className="bg-brand-red hover:bg-opacity-90"
-                  >
-                    <Link to="/quote">Get a Quote</Link>
-                  </Button>
+                  <div className="flex flex-col sm:flex-row gap-3">
+                    <Button 
+                      asChild 
+                      className="bg-brand-red hover:bg-opacity-90"
+                    >
+                      <Link to="/quote">Get a Quote</Link>
+                    </Button>
+                    <Button
+                      asChild
+                      variant="outline"
+                      className="border-brand-navy text-brand-navy hover:bg-brand-navy hover:text-white"
+                    >
+                      <Link to="/pricing">View Pricing</Link>
+                    </Button>
+                  </div>
                 </div>
                 <div className={`${index % 2 === 1 ? 'md:order-1' : ''}`}>
                   <img 
@@ -179,7 +187,7 @@ const Services = () => {
                 size="lg"
                 className="border-white text-white hover:bg-white hover:text-brand-navy"
               >
-                <Link to="/contact">Contact Us</Link>
+                <Link to="/pricing">View Pricing</Link>
               </Button>
             </div>
           </div>
