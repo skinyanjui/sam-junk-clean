@@ -1,3 +1,17 @@
+
+# Allow all crawlers
+User-agent: *
+Allow: /
+
+# Block specific paths
+Disallow: /admin/
+Disallow: /api/
+Disallow: /temp/
+
+# Sitemap location
+Sitemap: https://unclesamjunkremoval.com/sitemap.xml
+
+# Specific crawler directives
 User-agent: Googlebot
 Allow: /
 
@@ -10,5 +24,15 @@ Allow: /
 User-agent: facebookexternalhit
 Allow: /
 
-User-agent: *
+User-agent: DuckDuckBot
 Allow: /
+
+# Crawl delay for some bots
+User-agent: AhrefsBot
+Crawl-delay: 10
+
+User-agent: Baiduspider
+Crawl-delay: 10
+
+User-agent: PetalBot
+Crawl-delay: 10

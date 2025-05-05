@@ -9,6 +9,13 @@ const Footer = () => {
     'Henderson, KY',
     'Owensboro, KY',
     'Mt. Carmel, IL',
+    'Princeton, IN',
+    'Boonville, IN',
+    'Vincennes, IN',
+    'Madisonville, KY',
+    'Carmi, IL',
+    'Fairfield, IL',
+    'Grayville, IL',
   ];
 
   const currentYear = new Date().getFullYear();
@@ -16,7 +23,7 @@ const Footer = () => {
   return (
     <footer className="bg-brand-navy text-white pt-12 pb-6">
       <div className="container-custom">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mb-8">
           {/* Company Info */}
           <div className="flex flex-col items-center md:items-start">
             <img 
@@ -54,21 +61,23 @@ const Footer = () => {
               <li><Link to="/quote" className="text-gray-300 hover:text-white transition-colors hover:underline">Get a Quote</Link></li>
               <li><Link to="/about" className="text-gray-300 hover:text-white transition-colors hover:underline">About Us</Link></li>
               <li><Link to="/contact" className="text-gray-300 hover:text-white transition-colors hover:underline">Contact</Link></li>
+              <li><Link to="/privacy" className="text-gray-300 hover:text-white transition-colors hover:underline">Privacy Policy</Link></li>
+              <li><Link to="/terms" className="text-gray-300 hover:text-white transition-colors hover:underline">Terms of Service</Link></li>
             </ul>
           </div>
 
-          {/* Service Areas */}
+          {/* Service Areas - Now in 2 columns for better mobile display */}
           <div className="text-center md:text-left">
             <h3 className="text-xl font-bold mb-4 relative">
               <span className="relative inline-block after:content-[''] after:absolute after:w-12 after:h-1 after:bg-brand-red after:left-0 after:-bottom-2 md:after:mx-0 after:mx-auto after:right-0">Service Areas</span>
             </h3>
-            <ul className="space-y-2 mt-6">
+            <div className="grid grid-cols-2 gap-x-2 gap-y-2 mt-6">
               {serviceAreas.map((area) => (
-                <li key={area}>
-                  <span className="text-gray-300">{area}</span>
-                </li>
+                <div key={area}>
+                  <span className="text-gray-300 text-sm">{area}</span>
+                </div>
               ))}
-            </ul>
+            </div>
           </div>
 
           {/* Contact Info */}
@@ -79,11 +88,11 @@ const Footer = () => {
             <ul className="space-y-4 mt-6">
               <li className="flex items-center justify-center md:justify-start">
                 <Phone size={18} className="mr-2 text-brand-red" />
-                <span className="text-gray-300">(800) 555-1234</span>
+                <a href="tel:+18005551234" className="text-gray-300 hover:text-white">(800) 555-1234</a>
               </li>
               <li className="flex items-center justify-center md:justify-start">
                 <Mail size={18} className="mr-2 text-brand-red" />
-                <span className="text-gray-300">info@unclesamjunk.com</span>
+                <a href="mailto:info@unclesamjunk.com" className="text-gray-300 hover:text-white">info@unclesamjunk.com</a>
               </li>
               <li className="flex items-center justify-center md:justify-start">
                 <MapPin size={18} className="mr-2 text-brand-red" />
