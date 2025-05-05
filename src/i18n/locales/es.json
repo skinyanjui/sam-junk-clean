@@ -74,7 +74,66 @@
     "check": "Verificar",
     "ctaTitle": "¿Listo para Comenzar?",
     "ctaSubtitle": "Contáctenos hoy para averiguar si brindamos servicios en su área y obtener un presupuesto gratuito sin compromiso",
-    "requestQuote": "Solicitar un Presupuesto"
+    "requestQuote": "Solicitar un Presupuesto",
+    "serviceAreas": {
+      "indiana": {
+        "name": "Indiana",
+        "isPrimary": "Área de Servicio Principal",
+        "serviceRadius": "Más de 30 millas desde Evansville",
+        "primaryCity": "Evansville",
+        "contactPhone": "(800) 555-1234",
+        "contactEmail": "indiana@unclesamjunk.com",
+        "description": "Nuestra área de servicio principal cubre la mayor parte del sur de Indiana, con servicio el mismo día disponible en muchas ubicaciones.",
+        "cities": {
+          "evansville": "Evansville",
+          "newburgh": "Newburgh", 
+          "boonville": "Boonville",
+          "princeton": "Princeton",
+          "vincennes": "Vincennes",
+          "mtVernon": "Mt. Vernon",
+          "washington": "Washington",
+          "jasper": "Jasper"
+        }
+      },
+      "kentucky": {
+        "name": "Kentucky",
+        "isPrimary": "Área de Servicio",
+        "serviceRadius": "Más de 25 millas desde Owensboro",
+        "primaryCity": "Owensboro",
+        "contactPhone": "(800) 555-5678",
+        "contactEmail": "kentucky@unclesamjunk.com",
+        "description": "Servimos a las comunidades del noroeste de Kentucky con servicios profesionales de remoción de basura, típicamente con tiempos de respuesta de 1-2 días.",
+        "cities": {
+          "owensboro": "Owensboro",
+          "henderson": "Henderson", 
+          "madisonville": "Madisonville",
+          "calhoun": "Calhoun",
+          "hartford": "Hartford",
+          "centralCity": "Central City",
+          "beaverDam": "Beaver Dam",
+          "hawesville": "Hawesville"
+        }
+      },
+      "illinois": {
+        "name": "Illinois",
+        "isPrimary": "Área de Servicio",
+        "serviceRadius": "Más de 20 millas desde Mt. Carmel",
+        "primaryCity": "Mt. Carmel",
+        "contactPhone": "(800) 555-9012",
+        "contactEmail": "illinois@unclesamjunk.com",
+        "description": "Sirviendo a las comunidades del sureste de Illinois con servicios programados de remoción de basura en días designados cada semana.",
+        "cities": {
+          "mtCarmel": "Mt. Carmel", 
+          "grayville": "Grayville", 
+          "fairfield": "Fairfield",
+          "carmi": "Carmi",
+          "albion": "Albion",
+          "crossville": "Crossville",
+          "westSalem": "West Salem",
+          "olney": "Olney"
+        }
+      }
+    }
   },
   "seo": {
     "home": {

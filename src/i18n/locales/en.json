@@ -74,7 +74,66 @@
     "check": "Check",
     "ctaTitle": "Ready to Get Started?",
     "ctaSubtitle": "Contact us today to find out if we service your area and get a free, no-obligation quote",
-    "requestQuote": "Request a Quote"
+    "requestQuote": "Request a Quote",
+    "serviceAreas": {
+      "indiana": {
+        "name": "Indiana",
+        "isPrimary": "Primary Service Area",
+        "serviceRadius": "30+ miles from Evansville",
+        "primaryCity": "Evansville",
+        "contactPhone": "(800) 555-1234",
+        "contactEmail": "indiana@unclesamjunk.com",
+        "description": "Our primary service area covers most of Southern Indiana, with same-day service available in many locations.",
+        "cities": {
+          "evansville": "Evansville",
+          "newburgh": "Newburgh", 
+          "boonville": "Boonville",
+          "princeton": "Princeton",
+          "vincennes": "Vincennes",
+          "mtVernon": "Mt. Vernon",
+          "washington": "Washington",
+          "jasper": "Jasper"
+        }
+      },
+      "kentucky": {
+        "name": "Kentucky",
+        "isPrimary": "Service Area",
+        "serviceRadius": "25+ miles from Owensboro",
+        "primaryCity": "Owensboro",
+        "contactPhone": "(800) 555-5678",
+        "contactEmail": "kentucky@unclesamjunk.com",
+        "description": "We service Northwestern Kentucky communities with professional junk removal, typically with 1-2 day response times.",
+        "cities": {
+          "owensboro": "Owensboro",
+          "henderson": "Henderson", 
+          "madisonville": "Madisonville",
+          "calhoun": "Calhoun",
+          "hartford": "Hartford",
+          "centralCity": "Central City",
+          "beaverDam": "Beaver Dam",
+          "hawesville": "Hawesville"
+        }
+      },
+      "illinois": {
+        "name": "Illinois",
+        "isPrimary": "Service Area",
+        "serviceRadius": "20+ miles from Mt. Carmel",
+        "primaryCity": "Mt. Carmel",
+        "contactPhone": "(800) 555-9012",
+        "contactEmail": "illinois@unclesamjunk.com",
+        "description": "Serving Southeastern Illinois communities with scheduled junk removal services on designated days each week.",
+        "cities": {
+          "mtCarmel": "Mt. Carmel", 
+          "grayville": "Grayville", 
+          "fairfield": "Fairfield",
+          "carmi": "Carmi",
+          "albion": "Albion",
+          "crossville": "Crossville",
+          "westSalem": "West Salem",
+          "olney": "Olney"
+        }
+      }
+    }
   },
   "seo": {
     "home": {
