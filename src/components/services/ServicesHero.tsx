@@ -13,9 +13,12 @@ const ServicesHero = () => {
       />
       
       {/* Hero Section */}
-      <section className="pt-20 pb-16 bg-brand-navy text-white">
+      <section className="pt-20 pb-16 bg-brand-navy text-white relative">
+        {/* Add a subtle pattern overlay */}
+        <div className="absolute inset-0 opacity-5 bg-[url('https://www.transparenttextures.com/patterns/diamond-upholstery.png')]"></div>
+        
         <div className="container-custom">
-          <div className="max-w-3xl mx-auto text-center">
+          <div className="max-w-3xl mx-auto text-center z-10 relative">
             <h1 className="text-4xl md:text-5xl font-bold mb-6">Our Services</h1>
             <p className="text-lg md:text-xl opacity-90 mb-8">
               From residential cleanouts to commercial junk removal, Uncle Sam wants YOU to live clutter-free!

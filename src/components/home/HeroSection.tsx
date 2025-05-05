@@ -5,6 +5,9 @@ import { Button } from '@/components/ui/button';
 const HeroSection = () => {
   return (
     <section className="relative bg-brand-navy text-white pt-24 pb-28">
+      {/* Add a subtle pattern overlay */}
+      <div className="absolute inset-0 opacity-5 bg-[url('https://www.transparenttextures.com/patterns/diamond-upholstery.png')]"></div>
+      
       <div className="container-custom grid md:grid-cols-2 gap-8 items-center">
         <div className="z-10">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-6 leading-tight">
@@ -34,10 +37,12 @@ const HeroSection = () => {
           </div>
         </div>
         <div className="relative hidden md:flex justify-center items-center">
+          <div className="absolute -left-4 -top-4 w-24 h-24 bg-brand-blue opacity-20 rounded-full blur-xl"></div>
+          <div className="absolute -right-8 -bottom-8 w-32 h-32 bg-brand-red opacity-20 rounded-full blur-xl"></div>
           <img
             src="/lovable-uploads/acf3ac1c-8d3b-4125-896d-7a7416fab53a.png"
             alt="Uncle Sam Junk Removal"
-            className="w-full max-w-md mx-auto animate-fade-in rounded-lg shadow-xl"
+            className="w-full max-w-md mx-auto animate-fade-in rounded-lg shadow-xl relative z-10"
           />
         </div>
       </div>
