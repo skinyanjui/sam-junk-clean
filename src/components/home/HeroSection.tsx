@@ -4,10 +4,10 @@ import { Button } from '@/components/ui/button';
 
 const HeroSection = () => {
   return (
-    <section className="relative bg-brand-navy text-white pt-12 pb-20">
+    <section className="relative bg-brand-navy text-white pt-24 pb-28">
       <div className="container-custom grid md:grid-cols-2 gap-8 items-center">
         <div className="z-10">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-4 leading-tight">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-6 leading-tight">
             Uncle Sam Wants YOU... <br className="hidden sm:block" />
             <span className="text-brand-red">to Live Junk-Free!</span>
           </h1>
@@ -33,15 +33,15 @@ const HeroSection = () => {
             </Button>
           </div>
         </div>
-        <div className="relative hidden md:block">
+        <div className="relative hidden md:flex justify-center items-center">
           <img
             src="/lovable-uploads/acf3ac1c-8d3b-4125-896d-7a7416fab53a.png"
             alt="Uncle Sam Junk Removal"
-            className="w-full max-w-md mx-auto animate-fade-in"
+            className="w-full max-w-md mx-auto animate-fade-in rounded-lg shadow-xl"
           />
         </div>
       </div>
-      <div className="absolute bottom-0 left-0 w-full h-16 bg-white" style={{clipPath: 'polygon(0 100%, 100% 0, 100% 100%, 0% 100%)'}}></div>
+      <div className="absolute bottom-0 left-0 w-full h-20 bg-white" style={{clipPath: 'polygon(0 100%, 100% 0, 100% 100%, 0% 100%)'}}></div>
     </section>
   );
 };

@@ -3,7 +3,7 @@ import React from 'react';
 
 const QuoteHero = () => {
   return (
-    <section className="pt-20 pb-16 bg-brand-navy text-white">
+    <section className="pt-24 pb-20 bg-brand-navy text-white">
       <div className="container-custom">
         <div className="max-w-3xl mx-auto text-center">
           <h1 className="text-4xl md:text-5xl font-bold mb-6">Get a Free Quote</h1>
