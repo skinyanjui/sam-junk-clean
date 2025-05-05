@@ -34,8 +34,11 @@ const Navbar = () => {
     { name: 'Home', path: '/' },
     { name: 'Services', path: '/services' },
     { name: 'Pricing', path: '/pricing' },
-    { name: 'Get a Quote', path: '/quote' },
+    { name: 'Locations', path: '/locations' },
+    { name: 'Blog', path: '/blog' },
+    { name: 'FAQ', path: '/faq' },
     { name: 'About', path: '/about' },
+    { name: 'Careers', path: '/careers' },
     { name: 'Contact', path: '/contact' },
   ];
 
@@ -61,7 +64,7 @@ const Navbar = () => {
             <Link
               key={link.path}
               to={link.path}
-              className={`px-4 py-2 font-medium transition-colors hover:text-brand-red text-gray-800 ${
+              className={`px-3 py-2 text-sm font-medium transition-colors hover:text-brand-red text-gray-800 ${
                 location.pathname === link.path
                   ? 'text-brand-red font-semibold'
                   : 'text-gray-800'
@@ -116,8 +119,8 @@ const Navbar = () => {
               </Link>
             ))}
             <div className="mt-4">
-              <Button className="w-full bg-brand-red hover:bg-opacity-90">
-                Get a Free Quote
+              <Button asChild className="w-full bg-brand-red hover:bg-opacity-90">
+                <Link to="/quote">Get a Free Quote</Link>
               </Button>
             </div>
           </nav>

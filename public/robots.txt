@@ -11,6 +11,12 @@ Disallow: /temp/
 # Sitemap location
 Sitemap: https://unclesamjunkremoval.com/sitemap.xml
 
+# Specific page permissions
+Allow: /faq
+Allow: /blog
+Allow: /careers
+Allow: /locations
+
 # Specific crawler directives
 User-agent: Googlebot
 Allow: /
