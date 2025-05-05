@@ -1,29 +1,24 @@
 
-import { useState } from 'react';
 import PageLayout from '@/components/PageLayout';
 import SEO from '@/components/SEO';
 import { useTranslation } from 'react-i18next';
-import { serviceLocations } from '@/data/serviceLocations';
 import ServiceAreaCard from '@/components/locations/ServiceAreaCard';
 import ServiceAreaSearch from '@/components/locations/ServiceAreaSearch';
 import LocationsMap from '@/components/locations/LocationsMap';
 import NoLocationsFound from '@/components/locations/NoLocationsFound';
 import ZipCodeLookup from '@/components/locations/ZipCodeLookup';
 import LocationsCta from '@/components/locations/LocationsCta';
+import { useLocationSearch } from '@/hooks/use-location-search';
 
 const Locations = () => {
-  const [searchTerm, setSearchTerm] = useState("");
   const { t } = useTranslation();
-
-  // Filter locations based on search term
-  const filteredLocations = serviceLocations.filter(
-    location => 
-      location.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
-      location.primaryCity.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      (location.serviceAreas && location.serviceAreas.some(area => 
-        area.toLowerCase().includes(searchTerm.toLowerCase())
-      ))
-  );
+  const { 
+    searchTerm, 
+    filteredLocations, 
+    filteredLocationsCount,
+    handleSearchChange, 
+    clearSearch 
+  } = useLocationSearch();
 
   return (
     <PageLayout>
@@ -45,8 +40,8 @@ const Locations = () => {
           {/* Search Box */}
           <ServiceAreaSearch 
             searchTerm={searchTerm} 
-            setSearchTerm={setSearchTerm} 
-            filteredLocationsCount={filteredLocations.length}
+            setSearchTerm={handleSearchChange} 
+            filteredLocationsCount={filteredLocationsCount}
           />
 
           {/* Map Section */}
@@ -63,7 +58,7 @@ const Locations = () => {
           {filteredLocations.length === 0 && (
             <NoLocationsFound 
               searchTerm={searchTerm} 
-              clearSearch={() => setSearchTerm("")}
+              clearSearch={clearSearch}
             />
           )}
         </div>
