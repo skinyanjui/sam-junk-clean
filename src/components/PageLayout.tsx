@@ -11,7 +11,7 @@ const PageLayout = ({ children }: PageLayoutProps) => {
   return (
     <div className="flex flex-col min-h-screen">
       <Navbar />
-      <main className="flex-grow pt-24">
+      <main className="flex-grow pt-28">
         {children}
       </main>
       <Footer />
