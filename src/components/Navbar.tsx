@@ -18,7 +18,7 @@ const Navbar = () => {
   // Handle scroll effect
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 10);
+      setScrolled(window.scrollY > 20);
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -40,7 +40,9 @@ const Navbar = () => {
       <PromoLBanner />
       <div 
         className={`w-full transition-all duration-300 ${
-          scrolled ? 'bg-white shadow-md py-0.5' : 'bg-white/95 py-1'
+          scrolled 
+            ? 'bg-white shadow-lg py-2' 
+            : 'bg-white/95 py-3'
         }`}
       >
         <div className="container-custom flex items-center justify-between">

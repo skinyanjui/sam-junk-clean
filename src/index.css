@@ -83,22 +83,58 @@
 
 @layer components {
   .container-custom {
-    @apply container mx-auto px-4 md:px-6;
+    @apply container mx-auto px-4 md:px-6 lg:px-8;
   }
   
   .btn-primary {
-    @apply bg-brand-red hover:bg-opacity-90 text-white font-medium py-3 px-6 rounded-md transition-all shadow-md hover:shadow-lg;
+    @apply bg-brand-red hover:bg-opacity-90 text-white font-medium py-3 px-6 rounded-lg transition-all shadow-md hover:shadow-lg;
   }
   
   .btn-secondary {
-    @apply bg-brand-navy hover:bg-opacity-90 text-white font-medium py-3 px-6 rounded-md transition-all shadow-md hover:shadow-lg;
+    @apply bg-brand-navy hover:bg-opacity-90 text-white font-medium py-3 px-6 rounded-lg transition-all shadow-md hover:shadow-lg;
   }
   
   .btn-outline {
-    @apply bg-transparent border-2 border-brand-navy text-brand-navy hover:bg-brand-navy hover:text-white font-medium py-3 px-6 rounded-md transition-all;
+    @apply bg-transparent border-2 border-brand-navy text-brand-navy hover:bg-brand-navy hover:text-white font-medium py-3 px-6 rounded-lg transition-all;
   }
 
   .section-title {
     @apply text-3xl md:text-4xl font-bold text-brand-navy mb-6;
   }
+  
+  .glass-card {
+    @apply bg-white border border-gray-100 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300;
+  }
+  
+  .gradient-bg {
+    @apply bg-gradient-to-br from-brand-navy to-brand-navy/90;
+  }
+  
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-brand-red to-brand-navy;
+  }
+  
+  /* Modern animations */
+  .hover-lift {
+    @apply transition-transform duration-300 hover:-translate-y-1;
+  }
+  
+  .hover-scale {
+    @apply transition-transform duration-300 hover:scale-105;
+  }
+  
+  /* Custom map styles */
+  .custom-popup .leaflet-popup-content-wrapper {
+    @apply bg-white rounded-lg shadow-lg border border-gray-100 px-1;
+  }
+  
+  .custom-popup .leaflet-popup-tip {
+    @apply bg-white;
+  }
+  
+  .custom-popup .leaflet-popup-content {
+    @apply p-2 m-0;
+  }
 }
+
+/* Remove App.css rules as we're defining everything in index.css */

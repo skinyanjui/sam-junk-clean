@@ -6,16 +6,15 @@ import L from 'leaflet';
 import { serviceLocations } from '@/data/serviceLocations';
 import 'leaflet/dist/leaflet.css';
 
-// Fix for default marker icons in Leaflet with React
-const markerIcon = L.icon({
-  iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
-  iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
-  shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
-  iconSize: [25, 41],
-  iconAnchor: [12, 41],
-  popupAnchor: [1, -34],
-  shadowSize: [41, 41]
-});
+// Custom marker icons with branded colors
+const createMarkerIcon = (color: string) => {
+  return L.divIcon({
+    className: 'custom-marker',
+    html: `<div style="background-color: ${color}; width: 14px; height: 14px; border-radius: 50%; border: 2px solid white; box-shadow: 0 0 4px rgba(0,0,0,0.5);"></div>`,
+    iconSize: [18, 18],
+    iconAnchor: [9, 9]
+  });
+};
 
 // Coordinates for each service area
 const locationCoordinates = {
@@ -93,21 +92,25 @@ const LocationsMap = () => {
   }, []);
 
   return (
-    <div className="mb-12 bg-brand-gray p-4 rounded-lg">
-      <h3 className="text-xl font-bold text-brand-navy mb-4">{t('locations.mapTitle')}</h3>
-      <p className="mb-4 text-gray-600">{t('locations.mapDescription')}</p>
+    <div className="mb-12 bg-white p-6 rounded-xl shadow-lg">
+      <h3 className="text-2xl font-bold text-brand-navy mb-4">{t('locations.mapTitle')}</h3>
+      <p className="mb-6 text-gray-600 max-w-3xl">{t('locations.mapDescription')}</p>
       
-      <div className="aspect-w-16 aspect-h-9 rounded-lg overflow-hidden">
-        <div className="w-full h-96">
+      <div className="aspect-w-16 aspect-h-9 rounded-xl overflow-hidden border border-gray-100">
+        <div className="w-full h-[500px]">
           <MapContainer 
             center={mapCenter} 
             zoom={zoom} 
-            style={{ height: '100%', width: '100%', borderRadius: '0.5rem' }}
+            style={{ height: '100%', width: '100%', borderRadius: '0.75rem' }}
             scrollWheelZoom={false}
+            zoomControl={false}
+            attributionControl={false}
+            className="z-10"
           >
             <TileLayer
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              className="opacity-90"
             />
             
             {Object.entries(locationsByState).map(([state, cities]) => (
@@ -115,17 +118,11 @@ const LocationsMap = () => {
                 <Marker 
                   key={`${state}-${location.city}-${idx}`}
                   position={location.coords} 
-                  icon={L.divIcon({
-                    className: 'custom-marker',
-                    html: `<div style="background-color: ${stateColors[state as keyof typeof stateColors] || '#1A1F71'}; width: 12px; height: 12px; border-radius: 50%; border: 2px solid white; box-shadow: 0 0 4px rgba(0,0,0,0.5);"></div>`,
-                    iconSize: [16, 16],
-                    iconAnchor: [8, 8]
-                  })}
+                  icon={createMarkerIcon(stateColors[state as keyof typeof stateColors] || '#1A1F71')}
                 >
-                  <Popup>
-                    <strong>{location.city}</strong>
-                    <br />
-                    {state}
+                  <Popup className="custom-popup">
+                    <div className="font-medium text-brand-navy">{location.city}</div>
+                    <div className="text-sm text-gray-600">{state}</div>
                   </Popup>
                 </Marker>
               ))
@@ -134,14 +131,14 @@ const LocationsMap = () => {
         </div>
       </div>
       
-      <div className="mt-4 flex flex-wrap gap-4 justify-center">
+      <div className="mt-6 flex flex-wrap gap-6 justify-center">
         {Object.entries(stateColors).map(([state, color]) => (
           <div key={state} className="flex items-center">
             <div 
-              className="w-3 h-3 rounded-full mr-2" 
-              style={{ backgroundColor: color, border: '1px solid white', boxShadow: '0 0 2px rgba(0,0,0,0.3)' }}
+              className="w-4 h-4 rounded-full mr-2" 
+              style={{ backgroundColor: color, border: '2px solid white', boxShadow: '0 0 3px rgba(0,0,0,0.3)' }}
             ></div>
-            <span className="text-sm">{state}</span>
+            <span className="text-gray-700 font-medium">{state}</span>
           </div>
         ))}
       </div>
