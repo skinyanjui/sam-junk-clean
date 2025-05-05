@@ -7,8 +7,14 @@ import { Home, Briefcase, Users, Award, Shield } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
+import { useState } from 'react';
+import JobApplicationForm from '@/components/careers/JobApplicationForm';
 
 const Careers = () => {
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [selectedJobId, setSelectedJobId] = useState<number | null>(null);
+
   // Job listings data
   const jobListings = [
     {
@@ -75,6 +81,15 @@ const Careers = () => {
       ]
     }
   ];
+
+  const handleOpenApplicationForm = (jobId: number) => {
+    setSelectedJobId(jobId);
+    setIsDialogOpen(true);
+  };
+
+  const handleCloseDialog = () => {
+    setIsDialogOpen(false);
+  };
 
   return (
     <PageLayout>
@@ -222,7 +237,12 @@ const Careers = () => {
                   </Tabs>
                 </CardContent>
                 <CardFooter>
-                  <Button className="w-full md:w-auto bg-brand-red hover:bg-opacity-90">Apply Now</Button>
+                  <Button 
+                    className="w-full md:w-auto bg-brand-red hover:bg-opacity-90"
+                    onClick={() => handleOpenApplicationForm(job.id)}
+                  >
+                    Apply Now
+                  </Button>
                 </CardFooter>
               </Card>
             ))}
@@ -312,6 +332,17 @@ const Careers = () => {
           </div>
         </div>
       </section>
+
+      {/* Application Form Dialog */}
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto">
+          <JobApplicationForm 
+            positions={jobListings.map(job => ({ id: job.id, title: job.title }))}
+            onClose={handleCloseDialog}
+            preselectedPosition={selectedJobId || undefined}
+          />
+        </DialogContent>
+      </Dialog>
     </PageLayout>
   );
 };
