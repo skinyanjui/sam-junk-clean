@@ -138,7 +138,7 @@ const Index = () => {
           <div className="text-center mt-12">
             <Button 
               asChild 
-              className="bg-brand-navy hover:bg-opacity-90"
+              className="bg-brand-red hover:bg-opacity-90"
             >
               <Link to="/services">View All Services</Link>
             </Button>
@@ -146,7 +146,7 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Pricing Overview Section - New! */}
+      {/* Pricing Overview Section */}
       <section className="py-16 bg-brand-gray">
         <div className="container-custom">
           <div className="text-center mb-12">
