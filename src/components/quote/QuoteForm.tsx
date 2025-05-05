@@ -4,6 +4,7 @@ import { useForm, FormProvider } from 'react-hook-form';
 import { useToast } from '@/hooks/use-toast';
 
 // Form components
+import ValidationSummary from './form/ValidationSummary';
 import ContactInformation from './form/ContactInformation';
 import ServiceInformation from './form/ServiceInformation';
 import ImageUpload from './form/ImageUpload';
@@ -23,6 +24,7 @@ interface QuoteFormData {
 
 const QuoteForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const { toast } = useToast();
   
@@ -55,14 +57,27 @@ const QuoteForm = () => {
         description: "We'll contact you shortly with a free estimate.",
       });
       setIsSubmitting(false);
+      setIsSubmitted(false);
       setImagePreview(null);
       reset();
     }, 1500);
   };
 
+  const onError = () => {
+    setIsSubmitted(true);
+    // Scroll to the top of the form to show validation summary
+    window.scrollTo({
+      top: document.getElementById('quote-form')?.offsetTop || 0,
+      behavior: 'smooth'
+    });
+  };
+
   return (
     <FormProvider {...methods}>
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+      <form id="quote-form" onSubmit={handleSubmit(onSubmit, onError)} className="space-y-6">
+        {/* Validation Summary */}
+        <ValidationSummary errors={errors} isSubmitted={isSubmitted} />
+        
         {/* Contact Information */}
         <ContactInformation errors={errors} />
 
