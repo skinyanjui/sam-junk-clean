@@ -50,7 +50,7 @@ const Navbar = () => {
           <img 
             src="/lovable-uploads/acf3ac1c-8d3b-4125-896d-7a7416fab53a.png" 
             alt="Uncle Sam Junk Removal" 
-            className="h-12 md:h-14"
+            className="h-14 md:h-16"
           />
         </Link>
 
