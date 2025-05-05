@@ -1,277 +1,257 @@
 
-import { useState } from 'react';
 import PageLayout from '@/components/PageLayout';
 import SEO from '@/components/SEO';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Search, Calendar, User, ArrowRight } from 'lucide-react';
-import { Input } from '@/components/ui/input';
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Search } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { Card, CardContent } from '@/components/ui/card';
+
+// Blog post type definition
+type BlogPost = {
+  id: string;
+  title: string;
+  excerpt: string;
+  category: string;
+  date: string;
+  author: string;
+  imageUrl: string;
+  slug: string;
+};
 
 const Blog = () => {
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
 
-  // Blog post data
-  const blogPosts = [
+  // Sample blog posts
+  const blogPosts: BlogPost[] = [
     {
-      id: 1,
-      title: "10 Items You Should Never Throw in the Trash",
-      excerpt: "Certain items require special disposal methods to protect the environment and comply with regulations. Here are 10 items that should never go in your regular trash.",
-      date: "May 2, 2025",
-      author: "Captain America",
-      category: "Environmental Tips",
-      image: "https://images.unsplash.com/photo-1605810230434-7631ac76ec81?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80",
-      slug: "10-items-never-throw-in-trash",
-      relatedService: "residential"
+      id: '1',
+      title: 'How to Properly Dispose of Electronic Waste',
+      excerpt: 'Learn about the environmental impact of e-waste and how to responsibly dispose of your old electronics.',
+      category: 'Tips & Advice',
+      date: 'May 2, 2025',
+      author: 'Mike Johnson',
+      imageUrl: 'https://images.unsplash.com/photo-1550009158-9ebf69173e03',
+      slug: 'dispose-electronic-waste'
     },
     {
-      id: 2,
-      title: "The Ultimate Guide to Decluttering Your Garage",
-      excerpt: "Is your garage packed with years of accumulated stuff? Follow our step-by-step guide to reclaim your space and organize what remains.",
-      date: "April 28, 2025",
-      author: "Sergeant Storage",
-      category: "Organization",
-      image: "https://images.unsplash.com/photo-1615729947596-a598e5de0ab3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80",
-      slug: "ultimate-guide-decluttering-garage",
-      relatedService: "residential"
+      id: '2',
+      title: 'The Cost of Hoarding: Financial and Emotional Impact',
+      excerpt: 'Exploring the hidden costs of keeping too much stuff and how decluttering can improve your life.',
+      category: 'Lifestyle',
+      date: 'April 25, 2025',
+      author: 'Sarah Williams',
+      imageUrl: 'https://images.unsplash.com/photo-1534653299134-96a171b61581',
+      slug: 'cost-of-hoarding'
     },
     {
-      id: 3,
-      title: "How Junk Removal Services Are Becoming More Eco-Friendly",
-      excerpt: "The junk removal industry is evolving to prioritize sustainability. Learn about the innovative ways companies like ours are reducing environmental impact.",
-      date: "April 15, 2025",
-      author: "General Green",
-      category: "Industry News",
-      image: "https://images.unsplash.com/photo-1493397212122-2b85dda8106b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80",
-      slug: "eco-friendly-junk-removal",
-      relatedService: "commercial"
+      id: '3',
+      title: 'Commercial Junk Removal: What Businesses Need to Know',
+      excerpt: 'A complete guide for businesses looking to efficiently manage office cleanouts and junk disposal.',
+      category: 'Business',
+      date: 'April 18, 2025',
+      author: 'James Rodriguez',
+      imageUrl: 'https://images.unsplash.com/photo-1556761175-5973dc0f32e7',
+      slug: 'commercial-junk-removal'
     },
     {
-      id: 4,
-      title: "Preparing for a Home Renovation? Here's How to Handle the Debris",
-      excerpt: "Home renovations create a lot of waste and debris. Plan ahead with these tips for efficient waste management during your next home improvement project.",
-      date: "April 5, 2025",
-      author: "Major Makeover",
-      category: "Home Improvement",
-      image: "https://images.unsplash.com/photo-1517022812141-23620dba5c23?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80",
-      slug: "handle-renovation-debris",
-      relatedService: "light-demolition"
+      id: '4',
+      title: '5 Ways to Reuse and Recycle Household Items',
+      excerpt: 'Creative ideas for giving new life to old items instead of throwing them away.',
+      category: 'Sustainability',
+      date: 'April 10, 2025',
+      author: 'Emily Chen',
+      imageUrl: 'https://images.unsplash.com/photo-1532996122724-e3c354a0b15b',
+      slug: 'reuse-recycle-items'
     },
     {
-      id: 5,
-      title: "Understanding Volume-Based Pricing",
-      excerpt: "Learn how junk removal companies determine pricing based on the volume of waste and why this approach benefits customers.",
-      date: "March 20, 2025",
-      author: "Private Pricing",
-      category: "Pricing",
-      image: "https://images.unsplash.com/photo-1434626881859-194d67b2b86f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80",
-      slug: "volume-based-pricing",
-      relatedService: ""
+      id: '5',
+      title: 'Spring Cleaning: The Ultimate Checklist',
+      excerpt: 'Get your home ready for spring with this comprehensive cleaning and decluttering guide.',
+      category: 'Tips & Advice',
+      date: 'March 28, 2025',
+      author: 'Mike Johnson',
+      imageUrl: 'https://images.unsplash.com/photo-1528740561666-dc2479dc08ab',
+      slug: 'spring-cleaning-checklist'
     },
     {
-      id: 6,
-      title: "The Hidden Costs of DIY Junk Removal",
-      excerpt: "Why professional junk removal services might actually save you money in the long run compared to doing it yourself.",
-      date: "March 15, 2025",
-      author: "Sergeant Savings",
-      category: "Pricing",
-      image: "https://images.unsplash.com/photo-1526948128573-703ee1aeb6fa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80",
-      slug: "hidden-costs-diy",
-      relatedService: ""
+      id: '6',
+      title: 'The Environmental Impact of Improper Waste Disposal',
+      excerpt: 'Understanding how incorrect waste disposal affects our planet and what you can do about it.',
+      category: 'Sustainability',
+      date: 'March 15, 2025',
+      author: 'Lisa Morgan',
+      imageUrl: 'https://images.unsplash.com/photo-1610392347604-86b8deafd3e9',
+      slug: 'environmental-impact-waste'
     }
   ];
 
-  // Categories extracted from blog posts for the sidebar
-  const categories = [...new Set(blogPosts.map(post => post.category))];
-
-  // Filter blog posts based on search term
-  const filteredPosts = blogPosts.filter(
-    post => 
-      post.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
-      post.excerpt.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      post.category.toLowerCase().includes(searchTerm.toLowerCase())
+  // Filter posts based on search query
+  const filteredPosts = blogPosts.filter(post => 
+    post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    post.excerpt.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    post.category.toLowerCase().includes(searchQuery.toLowerCase())
   );
+
+  // Group posts by category for featured section
+  const categories = [...new Set(blogPosts.map(post => post.category))];
 
   return (
     <PageLayout>
       <SEO 
-        title="Blog | Uncle Sam Junk Removal Tips & News"
-        description="Stay informed with the latest junk removal tips, organization hacks, and industry news from Uncle Sam Junk Removal's blog."
-        keywords="junk removal blog, decluttering tips, organization hacks, eco-friendly disposal, Tri-State area junk removal, Uncle Sam Junk Removal"
+        title="Blog | Uncle Sam Junk Removal"
+        description="Stay informed with the latest tips, advice, and news on junk removal, recycling, and sustainable waste management from Uncle Sam Junk Removal."
+        keywords="junk removal blog, waste management tips, decluttering advice, recycling guide, Tri-State area junk removal"
       />
 
-      <section className="py-16">
+      {/* Hero Section */}
+      <section className="py-16 bg-brand-navy text-white">
         <div className="container-custom">
-          <div className="text-center mb-12">
-            <h1 className="text-4xl font-bold text-brand-navy mb-4">Uncle Sam's Junk Removal Blog</h1>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Discover tips, tricks, and insights about junk removal, organization, and sustainable living.
+          <div className="max-w-3xl mx-auto text-center">
+            <h1 className="text-4xl md:text-5xl font-bold mb-6">Uncle Sam's Junk Removal Blog</h1>
+            <p className="text-lg md:text-xl opacity-90">
+              Expert tips, industry insights, and helpful advice for all your junk removal needs
             </p>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {/* Main Content Area */}
-            <div className="lg:col-span-2">
-              {/* Search Results Count */}
-              {searchTerm && (
-                <div className="mb-6">
-                  <p className="text-gray-600">
-                    Showing {filteredPosts.length} results for "{searchTerm}"
-                  </p>
-                </div>
-              )}
-
-              {/* Blog Post List */}
-              <div className="space-y-8">
-                {filteredPosts.length > 0 ? (
-                  filteredPosts.map(post => (
-                    <Card key={post.id} className="overflow-hidden hover:shadow-md transition-shadow">
-                      <div className="aspect-w-16 aspect-h-9">
-                        <img 
-                          src={post.image} 
-                          alt={post.title} 
-                          className="w-full h-64 object-cover"
-                        />
-                      </div>
-                      <CardHeader>
-                        <Badge className="mb-2 w-fit bg-brand-navy hover:bg-brand-navy/90">{post.category}</Badge>
-                        <CardTitle className="text-2xl">
-                          <Link to={`/blog/${post.slug}`} className="hover:text-brand-red transition-colors">
-                            {post.title}
-                          </Link>
-                        </CardTitle>
-                        <CardDescription className="flex items-center gap-4 text-sm">
-                          <span className="flex items-center">
-                            <Calendar size={14} className="mr-1" />
-                            {post.date}
-                          </span>
-                          <span className="flex items-center">
-                            <User size={14} className="mr-1" />
-                            {post.author}
-                          </span>
-                        </CardDescription>
-                      </CardHeader>
-                      <CardContent>
-                        <p className="text-gray-600 mb-3">{post.excerpt}</p>
-                        {post.relatedService && (
-                          <p className="text-sm text-brand-navy">
-                            <span className="font-medium">Related service: </span>
-                            <Link to={`/services#${post.relatedService}`} className="underline hover:text-brand-red">
-                              {post.relatedService.charAt(0).toUpperCase() + post.relatedService.slice(1).replace('-', ' ')} Junk Removal
-                            </Link>
-                          </p>
-                        )}
-                      </CardContent>
-                      <CardFooter>
-                        <Button asChild variant="outline" className="hover:text-brand-red hover:border-brand-red transition-colors">
-                          <Link to={`/blog/${post.slug}`}>
-                            Read More
-                          </Link>
-                        </Button>
-                      </CardFooter>
-                    </Card>
-                  ))
-                ) : (
-                  <div className="text-center py-8">
-                    <p className="text-gray-500">No blog posts found matching your search.</p>
-                    <Button 
-                      variant="outline" 
-                      className="mt-4"
-                      onClick={() => setSearchTerm("")}
-                    >
-                      Clear Search
-                    </Button>
-                  </div>
-                )}
+            
+            {/* Search Bar */}
+            <div className="mt-8 max-w-md mx-auto">
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+                <Input 
+                  type="text"
+                  placeholder="Search articles..."
+                  className="pl-10 bg-white/10 border-white/20 text-white placeholder:text-gray-300 w-full"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                />
               </div>
             </div>
+          </div>
+        </div>
+      </section>
 
-            {/* Sidebar */}
-            <div className="space-y-8">
-              {/* Search Box */}
-              <div className="bg-white p-6 rounded-lg shadow-sm">
-                <h2 className="text-xl font-bold text-brand-navy mb-4">Search</h2>
-                <div className="flex items-center border rounded-md overflow-hidden">
-                  <Input 
-                    type="text" 
-                    placeholder="Search articles..." 
-                    className="border-0 flex-1"
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
+      {/* Featured Posts Section */}
+      <section className="py-16 bg-white">
+        <div className="container-custom">
+          <h2 className="text-3xl font-bold text-brand-navy mb-8">Featured Articles</h2>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {blogPosts.slice(0, 3).map(post => (
+              <Card key={post.id} className="overflow-hidden hover:shadow-lg transition-shadow">
+                <div className="aspect-[16/9] overflow-hidden">
+                  <img 
+                    src={post.imageUrl} 
+                    alt={post.title}
+                    className="w-full h-full object-cover transition-transform hover:scale-105"
                   />
-                  <Button variant="ghost" className="px-3" onClick={() => setSearchTerm("")}>
-                    <Search size={18} />
-                  </Button>
                 </div>
-              </div>
-
-              {/* Categories */}
-              <div className="bg-white p-6 rounded-lg shadow-sm">
-                <h2 className="text-xl font-bold text-brand-navy mb-4">Categories</h2>
-                <div className="space-y-2">
-                  {categories.map((category, index) => (
-                    <Button 
-                      key={index} 
-                      variant="outline" 
-                      className="mr-2 mb-2"
-                      onClick={() => setSearchTerm(category)}
-                    >
-                      {category}
+                <CardContent className="p-6">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-sm font-medium text-brand-red">{post.category}</span>
+                    <span className="text-sm text-gray-500">{post.date}</span>
+                  </div>
+                  <h3 className="text-xl font-bold text-brand-navy mb-2">{post.title}</h3>
+                  <p className="text-gray-600 mb-4">{post.excerpt}</p>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-gray-500">By {post.author}</span>
+                    <Button variant="link" className="text-brand-red p-0" asChild>
+                      <Link to={`/blog/${post.slug}`}>Read More</Link>
                     </Button>
-                  ))}
-                </div>
-              </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
 
-              {/* Popular Services */}
-              <div className="bg-white p-6 rounded-lg shadow-sm">
-                <h2 className="text-xl font-bold text-brand-navy mb-4">Popular Services</h2>
-                <ul className="space-y-3">
-                  <li>
-                    <Link 
-                      to="/services#residential" 
-                      className="text-gray-700 hover:text-brand-red flex items-center"
-                    >
-                      <ArrowRight size={16} className="mr-2" />
-                      Residential Junk Removal
-                    </Link>
-                  </li>
-                  <li>
-                    <Link 
-                      to="/services#commercial" 
-                      className="text-gray-700 hover:text-brand-red flex items-center"
-                    >
-                      <ArrowRight size={16} className="mr-2" />
-                      Commercial Junk Removal
-                    </Link>
-                  </li>
-                  <li>
-                    <Link 
-                      to="/services#appliance-removal" 
-                      className="text-gray-700 hover:text-brand-red flex items-center"
-                    >
-                      <ArrowRight size={16} className="mr-2" />
-                      Appliance Removal
-                    </Link>
-                  </li>
-                  <li>
-                    <Link 
-                      to="/services#estate-cleanouts" 
-                      className="text-gray-700 hover:text-brand-red flex items-center"
-                    >
-                      <ArrowRight size={16} className="mr-2" />
-                      Estate Cleanouts
-                    </Link>
-                  </li>
-                </ul>
-              </div>
+      {/* All Posts Section */}
+      <section className="py-16 bg-brand-gray">
+        <div className="container-custom">
+          <h2 className="text-3xl font-bold text-brand-navy mb-8">
+            {searchQuery ? `Search Results: ${filteredPosts.length} posts found` : 'All Articles'}
+          </h2>
+          
+          {filteredPosts.length === 0 ? (
+            <div className="text-center py-12 bg-white rounded-lg shadow-sm">
+              <h3 className="text-xl font-medium text-gray-700 mb-2">No articles found</h3>
+              <p className="text-gray-500 mb-4">Try adjusting your search terms or browse all our categories</p>
+              <Button onClick={() => setSearchQuery('')}>Clear Search</Button>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredPosts.map(post => (
+                <Card key={post.id} className="overflow-hidden hover:shadow-md transition-shadow">
+                  <div className="aspect-[16/9] overflow-hidden">
+                    <img 
+                      src={post.imageUrl} 
+                      alt={post.title}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <CardContent className="p-4">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-xs font-medium text-brand-red">{post.category}</span>
+                      <span className="text-xs text-gray-500">{post.date}</span>
+                    </div>
+                    <h3 className="text-lg font-bold text-brand-navy mb-2">{post.title}</h3>
+                    <p className="text-sm text-gray-600 mb-3 line-clamp-2">{post.excerpt}</p>
+                    <Button variant="link" className="text-brand-red p-0 text-sm" asChild>
+                      <Link to={`/blog/${post.slug}`}>Read More</Link>
+                    </Button>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
 
-              {/* CTA Box */}
-              <div className="bg-brand-navy text-white p-6 rounded-lg">
-                <h2 className="text-xl font-bold mb-4">Need Junk Removed?</h2>
-                <p className="mb-4">Let Uncle Sam take care of your junk removal needs!</p>
-                <Button asChild className="w-full bg-brand-red hover:bg-opacity-90">
+      {/* Categories Section */}
+      <section className="py-16 bg-white">
+        <div className="container-custom">
+          <h2 className="text-3xl font-bold text-brand-navy mb-8">Browse by Category</h2>
+          
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {categories.map((category, index) => (
+              <Button 
+                key={index}
+                variant="outline" 
+                className="border-brand-red text-brand-navy hover:bg-brand-red hover:text-white"
+                onClick={() => setSearchQuery(category)}
+              >
+                {category}
+              </Button>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-16 bg-brand-gray">
+        <div className="container-custom">
+          <div className="bg-brand-navy text-white p-8 md:p-12 rounded-xl shadow-lg">
+            <div className="md:flex md:justify-between md:items-center">
+              <div className="mb-6 md:mb-0 md:pr-8">
+                <h2 className="text-3xl font-bold mb-4">Need Junk Removal Services?</h2>
+                <p className="text-white/90 text-lg">
+                  Contact us today for a free, no-obligation quote. We'll handle the mess so you don't have to.
+                </p>
+              </div>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Button 
+                  asChild 
+                  className="bg-brand-red hover:bg-opacity-90 text-white"
+                >
                   <Link to="/quote">Get a Free Quote</Link>
+                </Button>
+                <Button 
+                  asChild
+                  variant="outline" 
+                  className="border-white text-white hover:bg-white hover:text-brand-navy"
+                >
+                  <Link to="/contact">Contact Us</Link>
                 </Button>
               </div>
             </div>
