@@ -19,6 +19,7 @@ import Blog from "./pages/Blog";
 import Careers from "./pages/Careers";
 import Locations from "./pages/Locations";
 import { Suspense } from "react";
+import ScrollToTop from "./components/ScrollToTop";
 
 // Create QueryClient with better error handling
 const queryClient = new QueryClient({
@@ -40,6 +41,7 @@ const App = () => (
           <Toaster />
           <Sonner />
           <BrowserRouter>
+            <ScrollToTop />
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/services" element={<Services />} />

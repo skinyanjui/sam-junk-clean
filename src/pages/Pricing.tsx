@@ -11,6 +11,8 @@ import {
   TableRow, 
   TableCell 
 } from '@/components/ui/table';
+import TruckVisualizer from '@/components/pricing/TruckVisualizer';
+import SEO from '@/components/SEO';
 
 const Pricing = () => {
   const pricingTiers = [
@@ -64,6 +66,12 @@ const Pricing = () => {
 
   return (
     <PageLayout>
+      <SEO 
+        title="Pricing | Uncle Sam Junk Removal"
+        description="Simple, transparent pricing for junk removal services. See our volume-based pricing structure with no hidden fees."
+        keywords="junk removal pricing, waste disposal costs, furniture removal price, Evansville junk removal pricing, Uncle Sam Junk Removal rates"
+      />
+
       {/* Hero Section */}
       <section className="pt-20 pb-16 bg-brand-navy text-white">
         <div className="container-custom">
@@ -73,13 +81,23 @@ const Pricing = () => {
               We believe in transparent, upfront pricing. Our estimates are based on volume, 
               type of material, and accessibility. Below is a breakdown to help you plan ahead.
             </p>
-            <Button 
-              asChild 
-              size="lg"
-              className="bg-brand-red hover:bg-opacity-90"
-            >
-              <Link to="/quote">Get a Free Quote</Link>
-            </Button>
+            <div className="flex flex-col sm:flex-row justify-center gap-4">
+              <Button 
+                asChild 
+                size="lg"
+                className="bg-brand-red hover:bg-opacity-90"
+              >
+                <Link to="/quote">Get a Free Quote</Link>
+              </Button>
+              <Button
+                asChild
+                variant="outline"
+                size="lg"
+                className="border-white text-white hover:bg-white hover:text-brand-navy"
+              >
+                <Link to="/services">View Our Services</Link>
+              </Button>
+            </div>
           </div>
         </div>
         <div className="absolute bottom-0 left-0 w-full h-16 bg-white" style={{clipPath: 'polygon(0 100%, 100% 0, 100% 100%, 0% 100%)'}}></div>
@@ -114,34 +132,7 @@ const Pricing = () => {
             </div>
             
             {/* Truck Visualization */}
-            <div className="bg-brand-gray p-6 rounded-lg mb-12">
-              <h3 className="text-xl font-bold text-brand-navy mb-4 text-center">Truck Load Visualizer</h3>
-              <div className="flex justify-between items-center mb-3">
-                {pricingTiers.map((tier, index) => (
-                  <div key={index} className="flex flex-col items-center">
-                    <span className="text-sm font-medium">{tier.size.split(' ')[0]}</span>
-                  </div>
-                ))}
-              </div>
-              <div className="relative h-24 border-2 border-brand-navy bg-white rounded-lg overflow-hidden mb-3">
-                {pricingTiers.map((tier, index) => (
-                  <div 
-                    key={index}
-                    className="absolute bottom-0 left-0 bg-brand-red opacity-80 h-full border-r-2 border-white last:border-r-0"
-                    style={{ 
-                      width: tier.fillLevel,
-                      height: tier.fillLevel
-                    }}
-                  ></div>
-                ))}
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-full h-1/2 border-t-2 border-b-2 border-dashed border-brand-navy/50"></div>
-                </div>
-              </div>
-              <p className="text-sm text-center text-gray-600">
-                Visual representation of truck capacity and pricing tiers
-              </p>
-            </div>
+            <TruckVisualizer pricingTiers={pricingTiers} />
           </div>
         </div>
       </section>
@@ -201,38 +192,69 @@ const Pricing = () => {
         </div>
       </section>
 
-      {/* CTA Section */}
+      {/* Related Blog Posts */}
       <section className="py-16 bg-white">
         <div className="container-custom">
-          <div className="bg-brand-navy text-white p-8 md:p-12 rounded-xl shadow-lg">
-            <div className="max-w-3xl mx-auto text-center">
-              <h2 className="text-3xl font-bold mb-4">Not sure what size you need?</h2>
-              <p className="text-white/90 text-lg mb-8">
-                Upload a photo or call (800) 555-1234 — we'll give you a fast, free estimate!
-              </p>
-              <div className="flex flex-col sm:flex-row justify-center gap-4">
-                <Button 
-                  asChild 
-                  size="lg" 
-                  className="bg-brand-red hover:bg-opacity-90 gap-2"
-                >
-                  <Link to="/quote">
-                    <Upload size={20} />
-                    Upload Photo + Get Instant Estimate
-                  </Link>
-                </Button>
-                <Button 
-                  asChild 
-                  variant="outline" 
-                  size="lg"
-                  className="border-white text-white hover:bg-white hover:text-brand-navy gap-2"
-                >
-                  <a href="tel:+18005551234">
-                    <Phone size={20} />
-                    Call (800) 555-1234
-                  </a>
-                </Button>
+          <h2 className="section-title text-center mb-8">Learn More About Our Pricing</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="bg-white border rounded-lg overflow-hidden shadow-sm">
+              <img src="https://images.unsplash.com/photo-1517022812141-23620dba5c23" className="w-full h-48 object-cover" alt="Pricing guide" />
+              <div className="p-5">
+                <h3 className="text-lg font-bold text-brand-navy mb-2">Understanding Volume-Based Pricing</h3>
+                <p className="text-gray-600 mb-3">Learn how junk removal companies determine pricing based on the volume of waste.</p>
+                <Link to="/blog/volume-based-pricing" className="text-brand-red font-medium hover:underline">Read More</Link>
               </div>
+            </div>
+            <div className="bg-white border rounded-lg overflow-hidden shadow-sm">
+              <img src="https://images.unsplash.com/photo-1615729947596-a598e5de0ab3" className="w-full h-48 object-cover" alt="Decluttering tips" />
+              <div className="p-5">
+                <h3 className="text-lg font-bold text-brand-navy mb-2">8 Ways to Save on Your Next Junk Removal</h3>
+                <p className="text-gray-600 mb-3">Simple tips to help you maximize value and minimize costs on your next junk removal project.</p>
+                <Link to="/blog/save-on-junk-removal" className="text-brand-red font-medium hover:underline">Read More</Link>
+              </div>
+            </div>
+            <div className="bg-white border rounded-lg overflow-hidden shadow-sm">
+              <img src="https://images.unsplash.com/photo-1493397212122-2b85dda8106b" className="w-full h-48 object-cover" alt="Eco-friendly junk removal" />
+              <div className="p-5">
+                <h3 className="text-lg font-bold text-brand-navy mb-2">The Hidden Costs of DIY Junk Removal</h3>
+                <p className="text-gray-600 mb-3">Why professional junk removal services might actually save you money in the long run.</p>
+                <Link to="/blog/hidden-costs-diy" className="text-brand-red font-medium hover:underline">Read More</Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-16 bg-brand-navy">
+        <div className="container-custom">
+          <div className="max-w-3xl mx-auto text-center text-white">
+            <h2 className="text-3xl font-bold mb-4">Not sure what size you need?</h2>
+            <p className="text-white/90 text-lg mb-8">
+              Upload a photo or call (800) 555-1234 — we'll give you a fast, free estimate!
+            </p>
+            <div className="flex flex-col sm:flex-row justify-center gap-4">
+              <Button 
+                asChild 
+                size="lg" 
+                className="bg-brand-red hover:bg-opacity-90 gap-2"
+              >
+                <Link to="/quote">
+                  <Upload size={20} />
+                  Upload Photo + Get Instant Estimate
+                </Link>
+              </Button>
+              <Button 
+                asChild 
+                variant="outline" 
+                size="lg"
+                className="border-white text-white hover:bg-white hover:text-brand-navy gap-2"
+              >
+                <a href="tel:+18005551234">
+                  <Phone size={20} />
+                  Call (800) 555-1234
+                </a>
+              </Button>
             </div>
           </div>
         </div>

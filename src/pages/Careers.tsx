@@ -10,6 +10,9 @@ import JobListings from '@/components/careers/JobListings';
 import ApplicationProcess from '@/components/careers/ApplicationProcess';
 import CareersCta from '@/components/careers/CareersCta';
 import { jobListings } from '@/components/careers/jobData';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { ArrowRight } from 'lucide-react';
 
 const Careers = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -37,6 +40,48 @@ const Careers = () => {
       <JobListings jobListings={jobListings} onApply={handleOpenApplicationForm} />
       <ApplicationProcess />
       <CareersCta />
+
+      {/* Related Resources Section */}
+      <section className="py-16 bg-brand-gray">
+        <div className="container-custom">
+          <h2 className="text-3xl font-bold text-center text-brand-navy mb-8">Learn More About Us</h2>
+          <div className="grid md:grid-cols-3 gap-6">
+            <div className="bg-white p-6 rounded-lg shadow-sm">
+              <h3 className="text-xl font-bold text-brand-navy mb-3">Our Company Values</h3>
+              <p className="text-gray-600 mb-4">
+                Learn about our mission, vision, and the principles that guide our work every day.
+              </p>
+              <Button asChild variant="outline" className="w-full">
+                <Link to="/about" className="flex items-center justify-center">
+                  Visit Our About Page <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
+              </Button>
+            </div>
+            <div className="bg-white p-6 rounded-lg shadow-sm">
+              <h3 className="text-xl font-bold text-brand-navy mb-3">Our Service Areas</h3>
+              <p className="text-gray-600 mb-4">
+                Discover all the communities we serve throughout the Tri-State area.
+              </p>
+              <Button asChild variant="outline" className="w-full">
+                <Link to="/locations" className="flex items-center justify-center">
+                  View Service Locations <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
+              </Button>
+            </div>
+            <div className="bg-white p-6 rounded-lg shadow-sm">
+              <h3 className="text-xl font-bold text-brand-navy mb-3">Recent Company News</h3>
+              <p className="text-gray-600 mb-4">
+                Stay up to date with our latest announcements and industry insights on our blog.
+              </p>
+              <Button asChild variant="outline" className="w-full">
+                <Link to="/blog" className="flex items-center justify-center">
+                  Read Our Blog <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Multi-step Application Form Dialog */}
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>

@@ -1,7 +1,9 @@
+
 import PageLayout from '@/components/PageLayout';
 import { Link } from 'react-router-dom';
 import { Check, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import SEO from '@/components/SEO';
 
 const Services = () => {
   const services = [
@@ -17,7 +19,18 @@ const Services = () => {
         'Moving debris cleanup',
         'Hoarding cleanup assistance'
       ],
-      image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f'
+      image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f',
+      relatedBlogs: [
+        {
+          title: "The Ultimate Guide to Decluttering Your Garage",
+          slug: "ultimate-guide-decluttering-garage"
+        },
+        {
+          title: "10 Items You Should Never Throw in the Trash",
+          slug: "10-items-never-throw-in-trash"
+        }
+      ],
+      relatedServices: ["appliance-removal", "estate-cleanouts"]
     },
     {
       id: 'commercial',
@@ -31,7 +44,14 @@ const Services = () => {
         'Commercial property cleanups',
         'Warehouse and storage space clearing'
       ],
-      image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085'
+      image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085',
+      relatedBlogs: [
+        {
+          title: "How Junk Removal Services Are Becoming More Eco-Friendly",
+          slug: "eco-friendly-junk-removal"
+        }
+      ],
+      relatedServices: ["light-demolition"]
     },
     {
       id: 'appliance-removal',
@@ -45,7 +65,14 @@ const Services = () => {
         'Air conditioners and HVAC units',
         'Water heaters'
       ],
-      image: 'https://images.unsplash.com/photo-1571175443880-49e1d25b2bc5'
+      image: 'https://images.unsplash.com/photo-1571175443880-49e1d25b2bc5',
+      relatedBlogs: [
+        {
+          title: "10 Items You Should Never Throw in the Trash",
+          slug: "10-items-never-throw-in-trash"
+        }
+      ],
+      relatedServices: ["residential", "commercial"]
     },
     {
       id: 'light-demolition',
@@ -59,7 +86,14 @@ const Services = () => {
         'Concrete patio removal',
         'Small structure teardowns'
       ],
-      image: 'https://images.unsplash.com/photo-1605810230434-7631ac76ec81'
+      image: 'https://images.unsplash.com/photo-1605810230434-7631ac76ec81',
+      relatedBlogs: [
+        {
+          title: "Preparing for a Home Renovation? Here's How to Handle the Debris",
+          slug: "handle-renovation-debris"
+        }
+      ],
+      relatedServices: ["commercial"]
     },
     {
       id: 'estate-cleanouts',
@@ -73,7 +107,9 @@ const Services = () => {
         'Documentation for estate purposes',
         'Final property sweep and cleaning'
       ],
-      image: 'https://images.unsplash.com/photo-1721322800607-8c38375eef04'
+      image: 'https://images.unsplash.com/photo-1721322800607-8c38375eef04',
+      relatedBlogs: [],
+      relatedServices: ["residential", "appliance-removal"]
     },
     {
       id: 'curbside-pickups',
@@ -87,12 +123,24 @@ const Services = () => {
         'Scheduled pickups available',
         'Contact-free service options'
       ],
-      image: 'https://images.unsplash.com/photo-1488590528505-98d2b5aba04b'
+      image: 'https://images.unsplash.com/photo-1488590528505-98d2b5aba04b',
+      relatedBlogs: [],
+      relatedServices: ["residential"]
     }
   ];
 
+  const getServiceById = (id: string) => {
+    return services.find(service => service.id === id);
+  };
+
   return (
     <PageLayout>
+      <SEO
+        title="Our Services | Uncle Sam Junk Removal"
+        description="From residential junk removal to commercial cleanouts, our professional team handles all your junk removal needs in the Tri-State area."
+        keywords="junk removal services, residential cleanouts, commercial junk removal, appliance removal, furniture disposal, estate cleanouts, Evansville junk services"
+      />
+      
       {/* Hero Section */}
       <section className="pt-20 pb-16 bg-brand-navy text-white">
         <div className="container-custom">
@@ -116,7 +164,7 @@ const Services = () => {
       {/* Services List */}
       <section className="py-16 bg-white">
         <div className="container-custom">
-          <div className="space-y-16">
+          <div className="space-y-24">
             {services.map((service, index) => (
               <div 
                 key={service.id}
@@ -136,7 +184,7 @@ const Services = () => {
                       </li>
                     ))}
                   </ul>
-                  <div className="flex flex-col sm:flex-row gap-3">
+                  <div className="flex flex-col sm:flex-row gap-3 mb-6">
                     <Button 
                       asChild 
                       className="bg-brand-red hover:bg-opacity-90"
@@ -151,6 +199,51 @@ const Services = () => {
                       <Link to="/pricing">View Pricing</Link>
                     </Button>
                   </div>
+                  
+                  {/* Related Services */}
+                  {service.relatedServices && service.relatedServices.length > 0 && (
+                    <div className="mt-8">
+                      <h3 className="text-lg font-semibold text-brand-navy mb-3">Related Services</h3>
+                      <div className="flex flex-wrap gap-2">
+                        {service.relatedServices.map(relatedId => {
+                          const relatedService = getServiceById(relatedId);
+                          return relatedService ? (
+                            <Button
+                              key={relatedId}
+                              asChild
+                              variant="secondary"
+                              size="sm"
+                              className="bg-brand-gray/50"
+                            >
+                              <a href={`#${relatedId}`}>
+                                {relatedService.title}
+                              </a>
+                            </Button>
+                          ) : null;
+                        })}
+                      </div>
+                    </div>
+                  )}
+                  
+                  {/* Related Blog Posts */}
+                  {service.relatedBlogs && service.relatedBlogs.length > 0 && (
+                    <div className="mt-6">
+                      <h3 className="text-lg font-semibold text-brand-navy mb-3">Related Articles</h3>
+                      <ul className="space-y-2">
+                        {service.relatedBlogs.map((blog, i) => (
+                          <li key={i}>
+                            <Link 
+                              to={`/blog/${blog.slug}`} 
+                              className="text-brand-red flex items-center hover:underline"
+                            >
+                              <ArrowRight size={14} className="mr-2" />
+                              {blog.title}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
                 </div>
                 <div className={`${index % 2 === 1 ? 'md:order-1' : ''}`}>
                   <img 
@@ -190,6 +283,21 @@ const Services = () => {
                 <Link to="/pricing">View Pricing</Link>
               </Button>
             </div>
+          </div>
+        </div>
+      </section>
+      
+      {/* Service Areas Quick Link */}
+      <section className="py-16 bg-white">
+        <div className="container-custom">
+          <div className="max-w-3xl mx-auto text-center">
+            <h2 className="text-3xl font-bold text-brand-navy mb-4">Service Areas</h2>
+            <p className="text-gray-600 mb-6">
+              Uncle Sam Junk Removal proudly serves the entire Tri-State area including Evansville, Henderson, Owensboro, and surrounding communities.
+            </p>
+            <Button asChild className="bg-brand-navy hover:bg-opacity-90">
+              <Link to="/locations">View Our Service Areas</Link>
+            </Button>
           </div>
         </div>
       </section>

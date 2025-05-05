@@ -1,8 +1,9 @@
+
 import { useState } from 'react';
 import PageLayout from '@/components/PageLayout';
 import SEO from '@/components/SEO';
 import { Link } from 'react-router-dom';
-import { Search, Calendar, User } from 'lucide-react';
+import { Search, Calendar, User, ArrowRight } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -21,7 +22,8 @@ const Blog = () => {
       author: "Captain America",
       category: "Environmental Tips",
       image: "https://images.unsplash.com/photo-1605810230434-7631ac76ec81?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80",
-      slug: "10-items-never-throw-in-trash"
+      slug: "10-items-never-throw-in-trash",
+      relatedService: "residential"
     },
     {
       id: 2,
@@ -31,7 +33,8 @@ const Blog = () => {
       author: "Sergeant Storage",
       category: "Organization",
       image: "https://images.unsplash.com/photo-1615729947596-a598e5de0ab3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80",
-      slug: "ultimate-guide-decluttering-garage"
+      slug: "ultimate-guide-decluttering-garage",
+      relatedService: "residential"
     },
     {
       id: 3,
@@ -41,7 +44,8 @@ const Blog = () => {
       author: "General Green",
       category: "Industry News",
       image: "https://images.unsplash.com/photo-1493397212122-2b85dda8106b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80",
-      slug: "eco-friendly-junk-removal"
+      slug: "eco-friendly-junk-removal",
+      relatedService: "commercial"
     },
     {
       id: 4,
@@ -51,7 +55,30 @@ const Blog = () => {
       author: "Major Makeover",
       category: "Home Improvement",
       image: "https://images.unsplash.com/photo-1517022812141-23620dba5c23?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80",
-      slug: "handle-renovation-debris"
+      slug: "handle-renovation-debris",
+      relatedService: "light-demolition"
+    },
+    {
+      id: 5,
+      title: "Understanding Volume-Based Pricing",
+      excerpt: "Learn how junk removal companies determine pricing based on the volume of waste and why this approach benefits customers.",
+      date: "March 20, 2025",
+      author: "Private Pricing",
+      category: "Pricing",
+      image: "https://images.unsplash.com/photo-1434626881859-194d67b2b86f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80",
+      slug: "volume-based-pricing",
+      relatedService: ""
+    },
+    {
+      id: 6,
+      title: "The Hidden Costs of DIY Junk Removal",
+      excerpt: "Why professional junk removal services might actually save you money in the long run compared to doing it yourself.",
+      date: "March 15, 2025",
+      author: "Sergeant Savings",
+      category: "Pricing",
+      image: "https://images.unsplash.com/photo-1526948128573-703ee1aeb6fa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80",
+      slug: "hidden-costs-diy",
+      relatedService: ""
     }
   ];
 
@@ -126,7 +153,15 @@ const Blog = () => {
                         </CardDescription>
                       </CardHeader>
                       <CardContent>
-                        <p className="text-gray-600">{post.excerpt}</p>
+                        <p className="text-gray-600 mb-3">{post.excerpt}</p>
+                        {post.relatedService && (
+                          <p className="text-sm text-brand-navy">
+                            <span className="font-medium">Related service: </span>
+                            <Link to={`/services#${post.relatedService}`} className="underline hover:text-brand-red">
+                              {post.relatedService.charAt(0).toUpperCase() + post.relatedService.slice(1).replace('-', ' ')} Junk Removal
+                            </Link>
+                          </p>
+                        )}
                       </CardContent>
                       <CardFooter>
                         <Button asChild variant="outline" className="hover:text-brand-red hover:border-brand-red transition-colors">
@@ -186,6 +221,49 @@ const Blog = () => {
                     </Button>
                   ))}
                 </div>
+              </div>
+
+              {/* Popular Services */}
+              <div className="bg-white p-6 rounded-lg shadow-sm">
+                <h2 className="text-xl font-bold text-brand-navy mb-4">Popular Services</h2>
+                <ul className="space-y-3">
+                  <li>
+                    <Link 
+                      to="/services#residential" 
+                      className="text-gray-700 hover:text-brand-red flex items-center"
+                    >
+                      <ArrowRight size={16} className="mr-2" />
+                      Residential Junk Removal
+                    </Link>
+                  </li>
+                  <li>
+                    <Link 
+                      to="/services#commercial" 
+                      className="text-gray-700 hover:text-brand-red flex items-center"
+                    >
+                      <ArrowRight size={16} className="mr-2" />
+                      Commercial Junk Removal
+                    </Link>
+                  </li>
+                  <li>
+                    <Link 
+                      to="/services#appliance-removal" 
+                      className="text-gray-700 hover:text-brand-red flex items-center"
+                    >
+                      <ArrowRight size={16} className="mr-2" />
+                      Appliance Removal
+                    </Link>
+                  </li>
+                  <li>
+                    <Link 
+                      to="/services#estate-cleanouts" 
+                      className="text-gray-700 hover:text-brand-red flex items-center"
+                    >
+                      <ArrowRight size={16} className="mr-2" />
+                      Estate Cleanouts
+                    </Link>
+                  </li>
+                </ul>
               </div>
 
               {/* CTA Box */}

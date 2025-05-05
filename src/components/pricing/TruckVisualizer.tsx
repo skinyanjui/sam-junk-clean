@@ -1,5 +1,6 @@
 
 import { useState } from 'react';
+import { Progress } from '@/components/ui/progress';
 
 interface TruckVisualizerProps {
   pricingTiers: {
@@ -24,7 +25,7 @@ const TruckVisualizer = ({ pricingTiers }: TruckVisualizerProps) => {
         
         <div className="absolute inset-0 flex">
           {pricingTiers.map((tier, index) => {
-            const width = `${20}%`;
+            const width = `${100 / pricingTiers.length}%`;
             return (
               <div 
                 key={index}
@@ -57,7 +58,7 @@ const TruckVisualizer = ({ pricingTiers }: TruckVisualizerProps) => {
       
       <div className="flex justify-between">
         {pricingTiers.map((tier, index) => (
-          <div key={index} className="flex flex-col items-center w-1/5 px-1">
+          <div key={index} className="flex flex-col items-center" style={{ width: `${100 / pricingTiers.length}%` }}>
             <span className="text-xs font-semibold mb-1 text-center">{tier.size}</span>
             <span className="text-xs text-brand-navy font-medium text-center">{tier.price}</span>
           </div>
