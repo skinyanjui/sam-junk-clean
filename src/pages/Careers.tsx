@@ -1,9 +1,7 @@
-
 import PageLayout from '@/components/PageLayout';
 import SEO from '@/components/SEO';
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from '@/components/ui/breadcrumb';
 import { Link } from 'react-router-dom';
-import { Home, Briefcase, Users, Award, Shield } from 'lucide-react';
+import { Briefcase, Users, Award, Shield } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -98,24 +96,6 @@ const Careers = () => {
         description="Join our patriotic team of junk removal professionals. View current job openings, benefits, and apply online. Uncle Sam wants YOU!"
         keywords="junk removal jobs, Evansville job openings, Tri-State area employment, Uncle Sam Junk Removal careers, job applications, veteran owned business jobs"
       />
-
-      <div className="bg-brand-gray py-8">
-        <div className="container-custom">
-          <Breadcrumb>
-            <BreadcrumbList>
-              <BreadcrumbItem>
-                <BreadcrumbLink asChild>
-                  <Link to="/"><Home size={16} className="mr-1" /> Home</Link>
-                </BreadcrumbLink>
-              </BreadcrumbItem>
-              <BreadcrumbSeparator />
-              <BreadcrumbItem>
-                <BreadcrumbPage>Careers</BreadcrumbPage>
-              </BreadcrumbItem>
-            </BreadcrumbList>
-          </Breadcrumb>
-        </div>
-      </div>
 
       {/* Hero Section */}
       <section className="py-16 bg-gradient-to-b from-brand-navy to-brand-navy/90 text-white">

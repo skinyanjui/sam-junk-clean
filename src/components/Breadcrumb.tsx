@@ -31,7 +31,7 @@ export const Breadcrumb = () => {
     'faq': 'FAQ',
     'blog': 'Blog',
     'careers': 'Careers',
-    'locations': 'Locations'
+    'locations': 'Service Locations' // Updated to match navbar label
   };
 
   return (
