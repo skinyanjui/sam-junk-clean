@@ -1,11 +1,11 @@
 
 import { Link } from 'react-router-dom';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Home, Building, Refrigerator, Hammer, HeartHandshake, Truck } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 type ServiceItem = {
   title: string;
-  icon: string;
+  icon: React.ReactNode;
   description: string;
 };
 
@@ -13,32 +13,32 @@ const ServicesOverview = () => {
   const services = [
     {
       title: 'Residential',
-      icon: 'home',
+      icon: <Home className="h-8 w-8 text-brand-red mb-2" />,
       description: 'Home cleanouts, garage junk, and household item removal'
     },
     {
       title: 'Commercial',
-      icon: 'building',
+      icon: <Building className="h-8 w-8 text-brand-red mb-2" />,
       description: 'Office cleanouts, retail space, and business junk removal'
     },
     {
       title: 'Appliance Removal',
-      icon: 'refrigerator',
+      icon: <Refrigerator className="h-8 w-8 text-brand-red mb-2" />,
       description: 'Fridges, washers, dryers, and other large appliances'
     },
     {
       title: 'Light Demolition',
-      icon: 'hammer',
+      icon: <Hammer className="h-8 w-8 text-brand-red mb-2" />,
       description: 'Sheds, decks, fences, and interior demolition'
     },
     {
       title: 'Estate Cleanouts',
-      icon: 'home-heart',
+      icon: <HeartHandshake className="h-8 w-8 text-brand-red mb-2" />,
       description: 'Complete property clearance and junk removal'
     },
     {
       title: 'Curbside Pickups',
-      icon: 'truck',
+      icon: <Truck className="h-8 w-8 text-brand-red mb-2" />,
       description: 'Quick and easy removal of items from your curb'
     }
   ];
@@ -57,8 +57,9 @@ const ServicesOverview = () => {
           {services.map((service, index) => (
             <div 
               key={index} 
-              className="bg-brand-gray p-6 rounded-lg hover:shadow-lg transition-shadow"
+              className="bg-brand-gray p-6 rounded-lg hover:shadow-lg transition-shadow text-center"
             >
+              {service.icon}
               <h3 className="text-xl font-bold text-brand-navy mb-2">{service.title}</h3>
               <p className="text-gray-600 mb-4">{service.description}</p>
               <Link 
