@@ -3,7 +3,6 @@ import { ReactNode } from 'react';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import { Breadcrumb } from './Breadcrumb';
-import PromoLBanner from './PromoLBanner';
 
 interface PageLayoutProps {
   children: ReactNode;
@@ -18,7 +17,6 @@ const PageLayout = ({
 }: PageLayoutProps) => {
   return (
     <div className="flex flex-col min-h-screen">
-      <PromoLBanner />
       <Navbar />
       <main className="flex-grow pt-20">
         {showBreadcrumb && (

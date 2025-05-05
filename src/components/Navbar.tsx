@@ -6,6 +6,7 @@ import DesktopNav from './navbar/DesktopNav';
 import MobileNav from './navbar/MobileNav';
 import MobileToggle from './navbar/MobileToggle';
 import MobileCta from './navbar/MobileCta';
+import PromoLBanner from './PromoLBanner';
 import { navStructure } from './navbar/navData';
 
 const Navbar = () => {
@@ -35,26 +36,29 @@ const Navbar = () => {
   const toggleMenu = () => setIsOpen(!isOpen);
 
   return (
-    <header 
-      className={`fixed w-full z-50 transition-all duration-300 ${
-        scrolled ? 'bg-white shadow-md py-0.5 top-0' : 'bg-white/95 py-1 top-0'
-      }`}
-    >
-      <div className="container-custom flex items-center justify-between">
-        <NavLogo />
-        <DesktopNav navStructure={navStructure} currentPath={location.pathname} />
-        <MobileToggle isOpen={isOpen} toggleMenu={toggleMenu} />
-      </div>
+    <header className="fixed w-full z-50 top-0">
+      <PromoLBanner />
+      <div 
+        className={`w-full transition-all duration-300 ${
+          scrolled ? 'bg-white shadow-md py-0.5' : 'bg-white/95 py-1'
+        }`}
+      >
+        <div className="container-custom flex items-center justify-between">
+          <NavLogo />
+          <DesktopNav navStructure={navStructure} currentPath={location.pathname} />
+          <MobileToggle isOpen={isOpen} toggleMenu={toggleMenu} />
+        </div>
 
-      <MobileNav 
-        navStructure={navStructure} 
-        currentPath={location.pathname} 
-        isOpen={isOpen}
-        openDropdown={openDropdown}
-        setOpenDropdown={setOpenDropdown}
-      />
-      
-      <MobileCta />
+        <MobileNav 
+          navStructure={navStructure} 
+          currentPath={location.pathname} 
+          isOpen={isOpen}
+          openDropdown={openDropdown}
+          setOpenDropdown={setOpenDropdown}
+        />
+        
+        <MobileCta />
+      </div>
     </header>
   );
 };
