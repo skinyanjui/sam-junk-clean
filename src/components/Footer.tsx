@@ -8,7 +8,7 @@ import { LanguageSwitcher } from './LanguageSwitcher';
 const Footer = () => {
   const { t } = useTranslation();
   const [mobileOpen, setMobileOpen] = useState<Record<string, boolean>>({
-    quickLinks: false,
+    company: false,
     serviceAreas: false,
     contact: false
   });
@@ -32,7 +32,7 @@ const Footer = () => {
   return (
     <footer className="bg-brand-navy text-white pt-12 pb-6">
       <div className="container-custom">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 mb-8">
           {/* Company Info */}
           <div className="flex flex-col items-center md:items-start">
             <img 
@@ -59,42 +59,49 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Quick Links with Mobile Dropdown */}
+          {/* Company Links with Mobile Dropdown */}
           <div className="text-center md:text-left">
             <h3 
               className="text-xl font-bold mb-4 relative flex items-center justify-center md:justify-start"
-              onClick={() => toggleSection('quickLinks')}
+              onClick={() => toggleSection('company')}
             >
               <span className="relative inline-block after:content-[''] after:absolute after:w-12 after:h-1 after:bg-brand-red after:left-0 after:-bottom-2 md:after:mx-0 after:mx-auto after:right-0">
-                {t('footer.quickLinks')}
+                {t('footer.companyLinks')}
               </span>
               <button className="ml-2 md:hidden">
-                {mobileOpen.quickLinks ? (
+                {mobileOpen.company ? (
                   <ChevronUp size={18} />
                 ) : (
                   <ChevronDown size={18} />
                 )}
               </button>
             </h3>
-            <ul className={`space-y-2 mt-6 ${mobileOpen.quickLinks ? 'block' : 'hidden md:block'}`}>
-              <li><Link to="/" className="text-gray-300 hover:text-white transition-colors hover:underline">{t('nav.home')}</Link></li>
-              <li><Link to="/services" className="text-gray-300 hover:text-white transition-colors hover:underline">{t('nav.services')}</Link></li>
-              <li><Link to="/quote" className="text-gray-300 hover:text-white transition-colors hover:underline">{t('common.getQuote')}</Link></li>
-              <li><Link to="/about" className="text-gray-300 hover:text-white transition-colors hover:underline">{t('nav.about')}</Link></li>
-              <li><Link to="/contact" className="text-gray-300 hover:text-white transition-colors hover:underline">{t('nav.contact')}</Link></li>
-              <li><Link to="/privacy" className="text-gray-300 hover:text-white transition-colors hover:underline">{t('footer.privacyPolicy')}</Link></li>
-              <li><Link to="/terms" className="text-gray-300 hover:text-white transition-colors hover:underline">{t('footer.termsOfService')}</Link></li>
-            </ul>
+            <div className={`mt-6 ${mobileOpen.company ? 'block' : 'hidden md:block'}`}>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-2">
+                <Link to="/" className="text-gray-300 hover:text-white transition-colors hover:underline">{t('nav.home')}</Link>
+                <Link to="/services" className="text-gray-300 hover:text-white transition-colors hover:underline">{t('nav.services')}</Link>
+                <Link to="/quote" className="text-gray-300 hover:text-white transition-colors hover:underline">{t('common.getQuote')}</Link>
+                <Link to="/about" className="text-gray-300 hover:text-white transition-colors hover:underline">{t('nav.about')}</Link>
+                <Link to="/blog" className="text-gray-300 hover:text-white transition-colors hover:underline">{t('nav.blog')}</Link>
+                <Link to="/faq" className="text-gray-300 hover:text-white transition-colors hover:underline">{t('nav.faq')}</Link>
+                <Link to="/careers" className="text-gray-300 hover:text-white transition-colors hover:underline">{t('nav.careers')}</Link>
+                <Link to="/contact" className="text-gray-300 hover:text-white transition-colors hover:underline">{t('nav.contact')}</Link>
+              </div>
+              <div className="mt-3 pt-3 border-t border-white/10">
+                <Link to="/privacy" className="text-gray-300 hover:text-white transition-colors hover:underline block mb-2">{t('footer.privacyPolicy')}</Link>
+                <Link to="/terms" className="text-gray-300 hover:text-white transition-colors hover:underline block">{t('footer.termsOfService')}</Link>
+              </div>
+            </div>
           </div>
 
-          {/* Service Areas with Mobile Dropdown and Enhanced Organization */}
+          {/* Service Areas with Mobile Dropdown */}
           <div className="text-center md:text-left">
             <h3 
               className="text-xl font-bold mb-4 relative flex items-center justify-center md:justify-start"
               onClick={() => toggleSection('serviceAreas')}
             >
               <span className="relative inline-block after:content-[''] after:absolute after:w-12 after:h-1 after:bg-brand-red after:left-0 after:-bottom-2 md:after:mx-0 after:mx-auto after:right-0">
-                {t('footer.serviceAreas')}
+                {t('footer.serviceLocations')}
               </span>
               <button className="ml-2 md:hidden">
                 {mobileOpen.serviceAreas ? (
@@ -121,11 +128,16 @@ const Footer = () => {
                   </div>
                 </div>
               ))}
+              <div className="mt-3 pt-2 border-t border-white/10">
+                <Link to="/locations" className="text-gray-300 hover:text-white transition-colors hover:underline text-sm">
+                  View all service locations →
+                </Link>
+              </div>
             </div>
           </div>
 
           {/* Contact Info with Mobile Dropdown */}
-          <div className="text-center md:text-left">
+          <div className="text-center md:text-left sm:col-span-2 md:col-span-1">
             <h3 
               className="text-xl font-bold mb-4 relative flex items-center justify-center md:justify-start"
               onClick={() => toggleSection('contact')}

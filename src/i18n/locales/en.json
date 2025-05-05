@@ -12,7 +12,7 @@
     "home": "Home",
     "services": "Services",
     "pricing": "Pricing",
-    "locations": "Locations",
+    "locations": "Service Locations",
     "blog": "Blog",
     "faq": "FAQ",
     "about": "About",
@@ -20,8 +20,8 @@
     "contact": "Contact"
   },
   "footer": {
-    "quickLinks": "Quick Links",
-    "serviceAreas": "Service Areas",
+    "companyLinks": "Company",
+    "serviceLocations": "Service Locations",
     "contactUs": "Contact Us",
     "hours": "Hours: Mon-Sat, 7AM-7PM",
     "copyright": "© {{year}} Uncle Sam Junk Removal. All rights reserved.",

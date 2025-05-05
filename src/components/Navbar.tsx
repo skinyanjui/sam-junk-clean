@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, Phone, ChevronDown, ChevronUp } from 'lucide-react';
@@ -38,7 +37,7 @@ const Navbar = () => {
     setOpenDropdown(null);
   }, [location]);
 
-  // Navigation structure with dropdowns
+  // Navigation structure with dropdowns - updated and consolidated
   const navStructure = [
     { name: 'Home', path: '/', hasDropdown: false },
     { 
@@ -49,12 +48,12 @@ const Navbar = () => {
         { name: 'Residential', path: '/services#residential' },
         { name: 'Commercial', path: '/services#commercial' },
         { name: 'Recycling', path: '/services#recycling' },
-        { name: 'Specialized', path: '/services#specialized' }
+        { name: 'Specialized', path: '/services#specialized' },
+        { name: 'Pricing', path: '/pricing' }
       ]
     },
-    { name: 'Pricing', path: '/pricing', hasDropdown: false },
     { 
-      name: 'Locations', 
+      name: 'Service Locations', 
       path: '/locations', 
       hasDropdown: true,
       dropdownItems: [
@@ -63,8 +62,6 @@ const Navbar = () => {
         { name: 'Illinois', path: '/locations#illinois' }
       ]
     },
-    { name: 'Blog', path: '/blog', hasDropdown: false },
-    { name: 'FAQ', path: '/faq', hasDropdown: false },
     { 
       name: 'About', 
       path: '/about', 
@@ -72,10 +69,12 @@ const Navbar = () => {
       dropdownItems: [
         { name: 'Our Story', path: '/about#story' },
         { name: 'Our Team', path: '/about#team' },
-        { name: 'Veterans', path: '/about#veterans' }
+        { name: 'Veterans', path: '/about#veterans' },
+        { name: 'FAQ', path: '/faq' },
+        { name: 'Blog', path: '/blog' },
+        { name: 'Careers', path: '/careers' }
       ]
     },
-    { name: 'Careers', path: '/careers', hasDropdown: false },
     { name: 'Contact', path: '/contact', hasDropdown: false },
   ];
 
