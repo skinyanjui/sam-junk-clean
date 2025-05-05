@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, Phone } from 'lucide-react';
@@ -47,7 +48,7 @@ const Navbar = () => {
         {/* Logo */}
         <Link to="/" className="flex items-center">
           <img 
-            src="/lovable-uploads/acf3ac1c-8d3b-4125-896d-7a7416fab53a.png" 
+            src="/lovable-uploads/4cf42708-88ba-4818-a535-0ad1dba464c4.png" 
             alt="Uncle Sam Junk Removal" 
             className="h-16 md:h-20"
           />
