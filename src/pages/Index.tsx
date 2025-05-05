@@ -1,3 +1,4 @@
+
 import PageLayout from '@/components/PageLayout';
 import HeroSection from '@/components/home/HeroSection';
 import ServicesOverview from '@/components/home/ServicesOverview';
@@ -58,9 +59,9 @@ const Index = () => {
       <HeroSection />
       <ServicesOverview />
       <PricingOverview />
-      <CtaSection />
       <TestimonialsSection />
       <WhyChooseUs />
+      <CtaSection />
     </PageLayout>
   );
 };
