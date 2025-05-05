@@ -7,14 +7,23 @@ import { Breadcrumb } from './Breadcrumb';
 interface PageLayoutProps {
   children: ReactNode;
   showBreadcrumb?: boolean;
+  breadcrumbClassName?: string; // Add option to customize breadcrumb styling
 }
 
-const PageLayout = ({ children, showBreadcrumb = true }: PageLayoutProps) => {
+const PageLayout = ({ 
+  children, 
+  showBreadcrumb = true,
+  breadcrumbClassName = "bg-gray-50 py-2" // Default styling
+}: PageLayoutProps) => {
   return (
     <div className="flex flex-col min-h-screen">
       <Navbar />
       <main className="flex-grow pt-20">
-        {showBreadcrumb && <Breadcrumb />}
+        {showBreadcrumb && (
+          <div className={breadcrumbClassName}>
+            <Breadcrumb />
+          </div>
+        )}
         {children}
       </main>
       <Footer />

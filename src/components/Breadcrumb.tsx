@@ -35,41 +35,39 @@ export const Breadcrumb = () => {
   };
 
   return (
-    <div className="bg-gray-50 py-2">
-      <div className="container-custom">
-        <BreadcrumbUI>
-          <BreadcrumbList>
-            <BreadcrumbItem>
-              <BreadcrumbLink asChild>
-                <Link to="/">
-                  <HomeIcon className="h-4 w-4" />
-                  <span className="sr-only">Home</span>
-                </Link>
-              </BreadcrumbLink>
-            </BreadcrumbItem>
-            <BreadcrumbSeparator />
+    <div className="container-custom">
+      <BreadcrumbUI>
+        <BreadcrumbList>
+          <BreadcrumbItem>
+            <BreadcrumbLink asChild>
+              <Link to="/">
+                <HomeIcon className="h-4 w-4" />
+                <span className="sr-only">Home</span>
+              </Link>
+            </BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          
+          {pathnames.map((name, index) => {
+            const routeTo = `/${pathnames.slice(0, index + 1).join('/')}`;
+            const isLast = index === pathnames.length - 1;
+            const displayName = pageNameMap[name] || name.charAt(0).toUpperCase() + name.slice(1);
             
-            {pathnames.map((name, index) => {
-              const routeTo = `/${pathnames.slice(0, index + 1).join('/')}`;
-              const isLast = index === pathnames.length - 1;
-              const displayName = pageNameMap[name] || name.charAt(0).toUpperCase() + name.slice(1);
-              
-              return isLast ? (
-                <BreadcrumbItem key={name}>
-                  <BreadcrumbPage>{displayName}</BreadcrumbPage>
-                </BreadcrumbItem>
-              ) : (
-                <BreadcrumbItem key={name}>
-                  <BreadcrumbLink asChild>
-                    <Link to={routeTo}>{displayName}</Link>
-                  </BreadcrumbLink>
-                  <BreadcrumbSeparator />
-                </BreadcrumbItem>
-              );
-            })}
-          </BreadcrumbList>
-        </BreadcrumbUI>
-      </div>
+            return isLast ? (
+              <BreadcrumbItem key={name}>
+                <BreadcrumbPage>{displayName}</BreadcrumbPage>
+              </BreadcrumbItem>
+            ) : (
+              <BreadcrumbItem key={name}>
+                <BreadcrumbLink asChild>
+                  <Link to={routeTo}>{displayName}</Link>
+                </BreadcrumbLink>
+                <BreadcrumbSeparator />
+              </BreadcrumbItem>
+            );
+          })}
+        </BreadcrumbList>
+      </BreadcrumbUI>
     </div>
   );
 };

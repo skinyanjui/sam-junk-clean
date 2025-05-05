@@ -1,10 +1,8 @@
-
 import { useState } from 'react';
 import PageLayout from '@/components/PageLayout';
 import SEO from '@/components/SEO';
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from '@/components/ui/breadcrumb';
 import { Link } from 'react-router-dom';
-import { Home, MapPin, Phone, Mail, Search } from 'lucide-react';
+import { MapPin, Phone, Mail, Search } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
@@ -88,24 +86,6 @@ const Locations = () => {
         description="Uncle Sam Junk Removal proudly serves the Tri-State area including Evansville, IN, Owensboro, KY, and Mt. Carmel, IL. Find your local junk removal team."
         keywords="junk removal Evansville, junk removal Owensboro, junk removal Mt. Carmel, Tri-State area junk removal, Henderson junk removal, Princeton junk removal"
       />
-
-      <div className="bg-brand-gray py-8">
-        <div className="container-custom">
-          <Breadcrumb>
-            <BreadcrumbList>
-              <BreadcrumbItem>
-                <BreadcrumbLink asChild>
-                  <Link to="/"><Home size={16} className="mr-1" /> Home</Link>
-                </BreadcrumbLink>
-              </BreadcrumbItem>
-              <BreadcrumbSeparator />
-              <BreadcrumbItem>
-                <BreadcrumbPage>Service Locations</BreadcrumbPage>
-              </BreadcrumbItem>
-            </BreadcrumbList>
-          </Breadcrumb>
-        </div>
-      </div>
 
       <section className="py-16 bg-white">
         <div className="container-custom">

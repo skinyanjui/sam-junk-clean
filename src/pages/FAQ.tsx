@@ -1,10 +1,8 @@
-
 import PageLayout from '@/components/PageLayout';
 import SEO from '@/components/SEO';
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from '@/components/ui/breadcrumb';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Link } from 'react-router-dom';
-import { Home, HelpCircle } from 'lucide-react';
+import { HelpCircle } from 'lucide-react';
 
 const FAQ = () => {
   // FAQ data categorized
@@ -86,24 +84,6 @@ const FAQ = () => {
         description="Find answers to common questions about our junk removal services, pricing, accepted items, and more. Uncle Sam Junk Removal serves the Tri-State area."
         keywords="junk removal FAQ, Tri-State junk removal questions, Uncle Sam Junk Removal services, junk removal pricing, hazardous waste disposal, furniture removal FAQ"
       />
-
-      <div className="bg-brand-gray py-8">
-        <div className="container-custom">
-          <Breadcrumb>
-            <BreadcrumbList>
-              <BreadcrumbItem>
-                <BreadcrumbLink asChild>
-                  <Link to="/"><Home size={16} className="mr-1" /> Home</Link>
-                </BreadcrumbLink>
-              </BreadcrumbItem>
-              <BreadcrumbSeparator />
-              <BreadcrumbItem>
-                <BreadcrumbPage>FAQ</BreadcrumbPage>
-              </BreadcrumbItem>
-            </BreadcrumbList>
-          </Breadcrumb>
-        </div>
-      </div>
 
       <section className="py-16">
         <div className="container-custom">

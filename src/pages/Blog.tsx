@@ -1,10 +1,8 @@
-
 import { useState } from 'react';
 import PageLayout from '@/components/PageLayout';
 import SEO from '@/components/SEO';
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from '@/components/ui/breadcrumb';
 import { Link } from 'react-router-dom';
-import { Home, Search, Calendar, User } from 'lucide-react';
+import { Search, Calendar, User } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -75,24 +73,6 @@ const Blog = () => {
         description="Stay informed with the latest junk removal tips, organization hacks, and industry news from Uncle Sam Junk Removal's blog."
         keywords="junk removal blog, decluttering tips, organization hacks, eco-friendly disposal, Tri-State area junk removal, Uncle Sam Junk Removal"
       />
-
-      <div className="bg-brand-gray py-8">
-        <div className="container-custom">
-          <Breadcrumb>
-            <BreadcrumbList>
-              <BreadcrumbItem>
-                <BreadcrumbLink asChild>
-                  <Link to="/"><Home size={16} className="mr-1" /> Home</Link>
-                </BreadcrumbLink>
-              </BreadcrumbItem>
-              <BreadcrumbSeparator />
-              <BreadcrumbItem>
-                <BreadcrumbPage>Blog</BreadcrumbPage>
-              </BreadcrumbItem>
-            </BreadcrumbList>
-          </Breadcrumb>
-        </div>
-      </div>
 
       <section className="py-16">
         <div className="container-custom">
