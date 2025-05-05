@@ -1,48 +1,10 @@
 
 import { Link } from 'react-router-dom';
-import { ArrowRight, Home, Building, Refrigerator, Hammer, HeartHandshake, Truck } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-
-type ServiceItem = {
-  title: string;
-  icon: React.ReactNode;
-  description: string;
-};
+import ServicesGrid from './ServicesGrid';
+import { servicesData } from './ServicesData';
 
 const ServicesOverview = () => {
-  const services = [
-    {
-      title: 'Residential',
-      icon: <Home className="h-8 w-8 text-brand-red mb-2" />,
-      description: 'Home cleanouts, garage junk, and household item removal'
-    },
-    {
-      title: 'Commercial',
-      icon: <Building className="h-8 w-8 text-brand-red mb-2" />,
-      description: 'Office cleanouts, retail space, and business junk removal'
-    },
-    {
-      title: 'Appliance Removal',
-      icon: <Refrigerator className="h-8 w-8 text-brand-red mb-2" />,
-      description: 'Fridges, washers, dryers, and other large appliances'
-    },
-    {
-      title: 'Light Demolition',
-      icon: <Hammer className="h-8 w-8 text-brand-red mb-2" />,
-      description: 'Sheds, decks, fences, and interior demolition'
-    },
-    {
-      title: 'Estate Cleanouts',
-      icon: <HeartHandshake className="h-8 w-8 text-brand-red mb-2" />,
-      description: 'Complete property clearance and junk removal'
-    },
-    {
-      title: 'Curbside Pickups',
-      icon: <Truck className="h-8 w-8 text-brand-red mb-2" />,
-      description: 'Quick and easy removal of items from your curb'
-    }
-  ];
-
   return (
     <section className="py-16 bg-white">
       <div className="container-custom text-center mb-12">
@@ -53,24 +15,7 @@ const ServicesOverview = () => {
       </div>
       
       <div className="container-custom">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {services.map((service, index) => (
-            <div 
-              key={index} 
-              className="bg-brand-gray p-6 rounded-lg hover:shadow-lg transition-shadow text-center"
-            >
-              {service.icon}
-              <h3 className="text-xl font-bold text-brand-navy mb-2">{service.title}</h3>
-              <p className="text-gray-600 mb-4">{service.description}</p>
-              <Link 
-                to={`/services#${service.title.toLowerCase().replace(' ', '-')}`}
-                className="inline-flex items-center text-brand-red font-medium hover:underline"
-              >
-                Learn more <ArrowRight size={16} className="ml-1" />
-              </Link>
-            </div>
-          ))}
-        </div>
+        <ServicesGrid services={servicesData} />
         <div className="text-center mt-12">
           <Button 
             asChild 
