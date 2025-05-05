@@ -45,16 +45,16 @@ const Navbar = () => {
   return (
     <header 
       className={`fixed w-full z-50 transition-all duration-300 ${
-        scrolled ? 'bg-white shadow-md py-1' : 'bg-white/95 py-2'
+        scrolled ? 'bg-white shadow-md py-0.5' : 'bg-white/95 py-1'
       }`}
     >
       <div className="container-custom flex items-center justify-between">
-        {/* Logo */}
+        {/* Logo - reduced size */}
         <Link to="/" className="flex items-center">
           <img 
             src="/lovable-uploads/4cf42708-88ba-4818-a535-0ad1dba464c4.png" 
             alt="Uncle Sam Junk Removal" 
-            className="h-20 md:h-24"
+            className="h-16 md:h-18"
           />
         </Link>
 
@@ -64,7 +64,7 @@ const Navbar = () => {
             <Link
               key={link.path}
               to={link.path}
-              className={`px-3 py-2 text-sm font-medium transition-colors hover:text-brand-red text-gray-800 ${
+              className={`px-2.5 py-1.5 text-sm font-medium transition-colors hover:text-brand-red text-gray-800 ${
                 location.pathname === link.path
                   ? 'text-brand-red font-semibold'
                   : 'text-gray-800'
@@ -75,9 +75,9 @@ const Navbar = () => {
           ))}
           <a 
             href="tel:+18005551234" 
-            className="ml-4 flex items-center gap-2 bg-brand-red text-white px-4 py-2 rounded-md hover:bg-opacity-90 transition-all"
+            className="ml-3 flex items-center gap-1.5 bg-brand-red text-white px-3 py-1.5 rounded-md hover:bg-opacity-90 transition-all"
           >
-            <Phone size={18} />
+            <Phone size={16} />
             <span className="font-medium">(800) 555-1234</span>
           </a>
         </nav>
@@ -89,14 +89,14 @@ const Navbar = () => {
             className="mr-4 bg-brand-red text-white p-2 rounded-full hover:bg-opacity-90"
             aria-label="Call us"
           >
-            <Phone size={20} />
+            <Phone size={18} />
           </a>
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="text-brand-navy p-2"
+            className="text-brand-navy p-1.5"
             aria-label="Toggle menu"
           >
-            {isOpen ? <X size={24} /> : <Menu size={24} />}
+            {isOpen ? <X size={22} /> : <Menu size={22} />}
           </button>
         </div>
       </div>
@@ -109,7 +109,7 @@ const Navbar = () => {
               <Link
                 key={link.path}
                 to={link.path}
-                className={`py-3 px-2 border-b border-gray-100 font-medium ${
+                className={`py-2.5 px-2 border-b border-gray-100 font-medium ${
                   location.pathname === link.path
                     ? 'text-brand-red'
                     : 'text-brand-navy'

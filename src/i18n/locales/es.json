@@ -1,0 +1,77 @@
+
+{
+  "common": {
+    "getQuote": "Obtener Presupuesto Gratis",
+    "callUs": "Llámenos",
+    "contactUs": "Contáctenos",
+    "learnMore": "Más Información",
+    "viewServices": "Ver Nuestros Servicios",
+    "readMore": "Leer Más"
+  },
+  "nav": {
+    "home": "Inicio",
+    "services": "Servicios",
+    "pricing": "Precios",
+    "locations": "Ubicaciones",
+    "blog": "Blog",
+    "faq": "Preguntas Frecuentes",
+    "about": "Nosotros",
+    "careers": "Carreras", 
+    "contact": "Contacto"
+  },
+  "footer": {
+    "quickLinks": "Enlaces Rápidos",
+    "serviceAreas": "Áreas de Servicio",
+    "contactUs": "Contáctenos",
+    "hours": "Horario: Lun-Sáb, 7AM-7PM",
+    "copyright": "© {{year}} Uncle Sam Junk Removal. Todos los derechos reservados.",
+    "privacyPolicy": "Política de Privacidad",
+    "termsOfService": "Términos de Servicio"
+  },
+  "home": {
+    "hero": {
+      "title": "¡Uncle Sam te quiere libre de basura!",
+      "subtitle": "Servicios profesionales de remoción de basura en el área de Tri-State",
+      "ctaButton": "Obtenga un Presupuesto Gratis",
+      "callUsText": "O llámenos al"
+    },
+    "services": {
+      "title": "Nuestros Servicios",
+      "subtitle": "¡Nosotros lo manejamos todo para que usted no tenga que hacerlo!"
+    },
+    "pricing": {
+      "title": "Precios Simples y Transparentes",
+      "subtitle": "Sin tarifas ocultas, solo precios honestos basados en cuánto nos llevamos"
+    },
+    "testimonials": {
+      "title": "Lo Que Dicen Nuestros Clientes",
+      "subtitle": "No tome nuestra palabra - escuche a nuestros clientes satisfechos"
+    },
+    "whyChoose": {
+      "title": "¿Por Qué Elegir Uncle Sam Junk Removal?",
+      "subtitle": "Propiedad de veteranos, enfocados en la comunidad y comprometidos con la excelencia"
+    }
+  },
+  "seo": {
+    "home": {
+      "title": "Uncle Sam Junk Removal | Servicios de Remoción de Basura del Área Tri-State",
+      "description": "¡Uncle Sam te quiere viviendo libre de basura! Servicios profesionales de remoción de basura en Evansville, Henderson y toda el área de Tri-State. ¡Obtenga un presupuesto gratis hoy!"
+    },
+    "services": {
+      "title": "Nuestros Servicios | Uncle Sam Junk Removal",
+      "description": "Desde muebles y electrodomésticos hasta residuos de jardín y escombros de construcción, Uncle Sam Junk Removal maneja todas sus necesidades de remoción de basura en el área de Tri-State."
+    },
+    "pricing": {
+      "title": "Precios | Uncle Sam Junk Removal",
+      "description": "Precios transparentes y asequibles para todas sus necesidades de remoción de basura. Vea nuestra estructura de precios simple basada en cuánto nos llevamos."
+    },
+    "about": {
+      "title": "Sobre Nosotros | Uncle Sam Junk Removal",
+      "description": "Conozca nuestra empresa de remoción de basura, propiedad de veteranos, que sirve al área de Tri-State con orgullo, integridad y profesionalismo."
+    },
+    "contact": {
+      "title": "Contáctenos | Uncle Sam Junk Removal",
+      "description": "¿Tiene preguntas? ¿Necesita un presupuesto? Contacte a Uncle Sam Junk Removal para todas sus necesidades de remoción de basura en el área de Tri-State."
+    }
+  }
+}

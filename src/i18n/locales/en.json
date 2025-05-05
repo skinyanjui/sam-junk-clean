@@ -1,0 +1,77 @@
+
+{
+  "common": {
+    "getQuote": "Get a Free Quote",
+    "callUs": "Call Us",
+    "contactUs": "Contact Us",
+    "learnMore": "Learn More",
+    "viewServices": "View Our Services",
+    "readMore": "Read More"
+  },
+  "nav": {
+    "home": "Home",
+    "services": "Services",
+    "pricing": "Pricing",
+    "locations": "Locations",
+    "blog": "Blog",
+    "faq": "FAQ",
+    "about": "About",
+    "careers": "Careers", 
+    "contact": "Contact"
+  },
+  "footer": {
+    "quickLinks": "Quick Links",
+    "serviceAreas": "Service Areas",
+    "contactUs": "Contact Us",
+    "hours": "Hours: Mon-Sat, 7AM-7PM",
+    "copyright": "© {{year}} Uncle Sam Junk Removal. All rights reserved.",
+    "privacyPolicy": "Privacy Policy",
+    "termsOfService": "Terms of Service"
+  },
+  "home": {
+    "hero": {
+      "title": "Uncle Sam Wants YOU to Live Junk-Free!",
+      "subtitle": "Professional Junk Removal Services in the Tri-State Area",
+      "ctaButton": "Get a Free Quote",
+      "callUsText": "Or call us at"
+    },
+    "services": {
+      "title": "Our Services",
+      "subtitle": "We handle it all so you don't have to!"
+    },
+    "pricing": {
+      "title": "Simple, Transparent Pricing",
+      "subtitle": "No hidden fees, just honest pricing based on how much we haul away"
+    },
+    "testimonials": {
+      "title": "What Our Customers Say",
+      "subtitle": "Don't take our word for it - hear from our satisfied customers"
+    },
+    "whyChoose": {
+      "title": "Why Choose Uncle Sam Junk Removal?",
+      "subtitle": "Veteran-owned, community-focused, and committed to excellence"
+    }
+  },
+  "seo": {
+    "home": {
+      "title": "Uncle Sam Junk Removal | Tri-State Area Junk Removal Services",
+      "description": "Uncle Sam wants YOU to live junk-free! Professional junk removal services in Evansville, Henderson, and the entire Tri-State area. Get a free quote today!"
+    },
+    "services": {
+      "title": "Our Services | Uncle Sam Junk Removal",
+      "description": "From furniture and appliances to yard waste and construction debris, Uncle Sam Junk Removal handles all your junk removal needs in the Tri-State area."
+    },
+    "pricing": {
+      "title": "Pricing | Uncle Sam Junk Removal",
+      "description": "Transparent, affordable pricing for all your junk removal needs. See our simple pricing structure based on how much we haul away."
+    },
+    "about": {
+      "title": "About Us | Uncle Sam Junk Removal",
+      "description": "Learn about our veteran-owned junk removal company serving the Tri-State area with pride, integrity, and professionalism."
+    },
+    "contact": {
+      "title": "Contact Us | Uncle Sam Junk Removal",
+      "description": "Have questions? Need a quote? Contact Uncle Sam Junk Removal for all your junk removal needs in the Tri-State area."
+    }
+  }
+}

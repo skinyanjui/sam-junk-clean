@@ -1,5 +1,6 @@
 
 import { Helmet } from 'react-helmet-async';
+import { useLocation } from 'react-router-dom';
 
 interface SEOProps {
   title?: string;
@@ -8,32 +9,85 @@ interface SEOProps {
   ogImage?: string;
   ogType?: 'website' | 'article';
   keywords?: string;
+  structuredData?: Record<string, any>;
+  lang?: string;
+  alternateLanguages?: { lang: string; url: string }[];
 }
 
 const SEO = ({
   title = 'Uncle Sam Junk Removal | Tri-State Area Junk Removal Services',
   description = 'Uncle Sam Junk Removal offers professional junk removal services in the Tri-State area. Veteran-owned business serving residential and commercial clients.',
-  canonicalUrl = 'https://unclesamjunkremoval.com',
+  canonicalUrl,
   ogImage = 'https://lovable.dev/opengraph-image-p98pqg.png',
   ogType = 'website',
   keywords = 'junk removal, trash removal, cleanout services, appliance removal, furniture removal, Evansville, Henderson, Tri-State area, veteran owned',
+  structuredData,
+  lang = 'en',
+  alternateLanguages = [],
 }: SEOProps) => {
+  const location = useLocation();
   const fullTitle = title.includes('Uncle Sam') ? title : `${title} | Uncle Sam Junk Removal`;
   
+  // Create dynamic canonical URL based on current route
+  const baseUrl = 'https://unclesamjunkremoval.com';
+  const dynamicCanonical = canonicalUrl || `${baseUrl}${location.pathname}`;
+  
+  // Default structured data for local business
+  const defaultStructuredData = {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "Uncle Sam Junk Removal",
+    "image": "https://lovable.dev/opengraph-image-p98pqg.png",
+    "telephone": "+18005551234",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Evansville",
+      "addressRegion": "IN",
+      "addressCountry": "US"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 37.9748,
+      "longitude": -87.5558
+    },
+    "url": "https://unclesamjunkremoval.com",
+    "priceRange": "$$",
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday"
+        ],
+        "opens": "07:00",
+        "closes": "19:00"
+      }
+    ]
+  };
+
+  // Use provided structured data or default local business data
+  const finalStructuredData = structuredData || defaultStructuredData;
+  
   return (
-    <Helmet>
+    <Helmet htmlAttributes={{ lang }}>
       {/* Basic Meta Tags */}
       <title>{fullTitle}</title>
       <meta name="description" content={description} />
       <meta name="keywords" content={keywords} />
-      <link rel="canonical" href={canonicalUrl} />
+      <link rel="canonical" href={dynamicCanonical} />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
       
       {/* Open Graph / Facebook */}
       <meta property="og:type" content={ogType} />
-      <meta property="og:url" content={canonicalUrl} />
+      <meta property="og:url" content={dynamicCanonical} />
       <meta property="og:title" content={fullTitle} />
       <meta property="og:description" content={description} />
       <meta property="og:image" content={ogImage} />
+      <meta property="og:locale" content={lang} />
       
       {/* Twitter */}
       <meta name="twitter:card" content="summary_large_image" />
@@ -42,10 +96,28 @@ const SEO = ({
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={ogImage} />
       
+      {/* Alternate language versions */}
+      {alternateLanguages.map((altLang) => (
+        <link 
+          key={altLang.lang} 
+          rel="alternate" 
+          hrefLang={altLang.lang} 
+          href={altLang.url} 
+        />
+      ))}
+      
+      {/* Default hreflang */}
+      <link rel="alternate" hrefLang="x-default" href={dynamicCanonical} />
+      
       {/* Additional SEO */}
       <meta name="robots" content="index, follow" />
       <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
       <meta name="bingbot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+      
+      {/* Structured Data */}
+      <script type="application/ld+json">
+        {JSON.stringify(finalStructuredData)}
+      </script>
     </Helmet>
   );
 };

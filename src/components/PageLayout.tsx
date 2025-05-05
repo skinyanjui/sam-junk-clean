@@ -2,16 +2,19 @@
 import { ReactNode } from 'react';
 import Navbar from './Navbar';
 import Footer from './Footer';
+import { Breadcrumb } from './Breadcrumb';
 
 interface PageLayoutProps {
   children: ReactNode;
+  showBreadcrumb?: boolean;
 }
 
-const PageLayout = ({ children }: PageLayoutProps) => {
+const PageLayout = ({ children, showBreadcrumb = true }: PageLayoutProps) => {
   return (
     <div className="flex flex-col min-h-screen">
       <Navbar />
-      <main className="flex-grow pt-28">
+      <main className="flex-grow pt-20">
+        {showBreadcrumb && <Breadcrumb />}
         {children}
       </main>
       <Footer />
