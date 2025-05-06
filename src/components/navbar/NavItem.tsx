@@ -27,7 +27,7 @@ const NavItem = ({ item, isActive }: NavItemProps) => {
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <button
-            className={`px-2.5 py-1.5 text-sm font-medium text-gray-800 flex items-center ${
+            className={`px-2.5 py-1.5 text-sm font-medium flex items-center ${
               isActive ? 'text-brand-red font-semibold' : 'text-gray-800'
             }`}
           >
@@ -54,7 +54,7 @@ const NavItem = ({ item, isActive }: NavItemProps) => {
   return (
     <Link
       to={item.path}
-      className={`px-2.5 py-1.5 text-sm font-medium text-gray-800 ${
+      className={`px-2.5 py-1.5 text-sm font-medium ${
         isActive ? 'text-brand-red font-semibold' : 'text-gray-800'
       }`}
     >
