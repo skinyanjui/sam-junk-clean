@@ -9,6 +9,7 @@ interface LoadingButtonProps extends React.ComponentProps<typeof Button> {
   loadingText?: string;
   icon?: React.ReactNode;
   loaderClassName?: string;
+  spinnerSize?: "sm" | "md" | "lg";
 }
 
 const LoadingButton = React.forwardRef<HTMLButtonElement, LoadingButtonProps>(
@@ -20,23 +21,43 @@ const LoadingButton = React.forwardRef<HTMLButtonElement, LoadingButtonProps>(
     disabled,
     icon,
     loaderClassName,
+    spinnerSize = "md",
     ...props 
   }, ref) => {
+    // Determine spinner size based on prop
+    const spinnerSizeClasses = {
+      sm: "h-3 w-3",
+      md: "h-4 w-4",
+      lg: "h-5 w-5"
+    };
+
     return (
       <Button
         ref={ref}
-        className={className}
+        className={cn(
+          "transition-all duration-200 relative",
+          isLoading && "opacity-90",
+          className
+        )}
         disabled={isLoading || disabled}
+        aria-busy={isLoading}
         {...props}
       >
         {isLoading ? (
           <>
-            <Loader2 className={cn("mr-2 h-4 w-4 animate-spin", loaderClassName)} />
-            {loadingText || children}
+            <Loader2 
+              className={cn(
+                "mr-2 animate-spin", 
+                spinnerSizeClasses[spinnerSize],
+                loaderClassName
+              )} 
+              aria-hidden="true"
+            />
+            <span>{loadingText || children}</span>
           </>
         ) : (
           <>
-            {icon && <span className="mr-2">{icon}</span>}
+            {icon && <span className="mr-2" aria-hidden="true">{icon}</span>}
             {children}
           </>
         )}

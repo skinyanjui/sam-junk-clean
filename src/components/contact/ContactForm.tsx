@@ -3,9 +3,6 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
 import { 
   Form,
   FormControl, 
@@ -14,9 +11,13 @@ import {
   FormLabel, 
   FormMessage 
 } from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 import { PhoneInput } from '@/components/ui/phone-input';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
+import { LoadingButton } from '@/components/ui/loading-button';
+import { scrollToFirstError } from '@/utils/form-helpers';
 
 // Define form validation schema
 const formSchema = z.object({
@@ -49,7 +50,12 @@ const ContactForm = () => {
       // Submit to Supabase
       const { error } = await supabase
         .from('contact_submissions')
-        .insert([data]);
+        .insert({
+          name: data.name,
+          email: data.email,
+          phone: data.phone || null,
+          message: data.message
+        });
       
       if (error) {
         throw error;
@@ -72,12 +78,21 @@ const ContactForm = () => {
     }
   };
 
+  const handleInvalidSubmit = () => {
+    scrollToFirstError(form);
+    toast({
+      title: "Form has errors",
+      description: "Please check the form for errors and try again.",
+      variant: "destructive"
+    });
+  }
+
   return (
     <div className="glass-card p-8">
       <h2 className="text-2xl font-bold text-brand-navy mb-6">Send Us a Message</h2>
       
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        <form onSubmit={form.handleSubmit(onSubmit, handleInvalidSubmit)} className="space-y-6">
           <FormField
             control={form.control}
             name="name"
@@ -85,7 +100,12 @@ const ContactForm = () => {
               <FormItem>
                 <FormLabel>Full Name <span className="text-brand-red">*</span></FormLabel>
                 <FormControl>
-                  <Input placeholder="John Doe" {...field} />
+                  <Input 
+                    placeholder="John Doe" 
+                    {...field} 
+                    autoComplete="name"
+                    aria-required="true"
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -104,6 +124,7 @@ const ContactForm = () => {
                       type="email"
                       placeholder="johndoe@example.com"
                       autoComplete="email"
+                      aria-required="true"
                       {...field}
                     />
                   </FormControl>
@@ -123,6 +144,7 @@ const ContactForm = () => {
                       placeholder="(123) 456-7890"
                       onValueChange={field.onChange}
                       value={field.value}
+                      autoComplete="tel"
                     />
                   </FormControl>
                   <FormMessage />
@@ -141,6 +163,7 @@ const ContactForm = () => {
                   <Textarea
                     placeholder="How can we help you?"
                     rows={6}
+                    aria-required="true"
                     {...field}
                   />
                 </FormControl>
@@ -149,21 +172,14 @@ const ContactForm = () => {
             )}
           />
           
-          <Button 
+          <LoadingButton 
             type="submit" 
             className="w-full bg-brand-red hover:bg-opacity-90 py-6"
-            disabled={isSubmitting}
+            isLoading={isSubmitting}
+            loadingText="Sending..."
           >
-            {isSubmitting ? (
-              <span className="flex items-center">
-                <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                </svg>
-                Sending...
-              </span>
-            ) : "Send Message"}
-          </Button>
+            Send Message
+          </LoadingButton>
 
           <p className="text-sm text-gray-500 text-center">
             We typically respond within 24 business hours.

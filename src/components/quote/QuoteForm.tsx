@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
+import { scrollToFirstError } from '@/utils/form-helpers';
 
 // Form components
 import ValidationSummary from './form/ValidationSummary';
@@ -10,6 +11,10 @@ import ContactInformation from './form/ContactInformation';
 import ServiceInformation from './form/ServiceInformation';
 import ImageUpload from './form/ImageUpload';
 import FormFooter from './form/FormFooter';
+
+interface QuoteFormProps {
+  onFormSuccess?: () => void;
+}
 
 interface QuoteFormData {
   name: string;
@@ -23,7 +28,7 @@ interface QuoteFormData {
   contactPreference: string;
 }
 
-const QuoteForm = () => {
+const QuoteForm = ({ onFormSuccess }: QuoteFormProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
@@ -36,6 +41,15 @@ const QuoteForm = () => {
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
+      if (file.size > 5 * 1024 * 1024) {
+        toast({
+          title: "File too large",
+          description: "Please select an image under 5MB",
+          variant: "destructive"
+        });
+        return;
+      }
+      
       setImageFile(file);
       const reader = new FileReader();
       reader.onloadend = () => {
@@ -78,7 +92,7 @@ const QuoteForm = () => {
       // Insert quote request into Supabase
       const { error } = await supabase
         .from('quote_requests')
-        .insert([{
+        .insert({
           name: data.name,
           email: data.email,
           phone: data.phone,
@@ -89,7 +103,7 @@ const QuoteForm = () => {
           same_day: data.sameDay,
           contact_preference: data.contactPreference,
           image_url: imageUrl
-        }]);
+        });
         
       if (error) {
         throw error;
@@ -104,6 +118,11 @@ const QuoteForm = () => {
       setImagePreview(null);
       setImageFile(null);
       setIsSubmitted(false);
+      
+      // Call success callback if provided
+      if (onFormSuccess) {
+        onFormSuccess();
+      }
     } catch (error) {
       console.error('Error submitting quote request:', error);
       toast({
@@ -118,10 +137,11 @@ const QuoteForm = () => {
 
   const onError = () => {
     setIsSubmitted(true);
-    // Scroll to the top of the form to show validation summary
-    window.scrollTo({
-      top: document.getElementById('quote-form')?.offsetTop || 0,
-      behavior: 'smooth'
+    scrollToFirstError(methods);
+    toast({
+      title: "Form has errors",
+      description: "Please correct the highlighted fields before submitting.",
+      variant: "destructive"
     });
   };
 

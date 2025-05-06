@@ -72,14 +72,34 @@ const Index = () => {
       {isLoading ? (
         <div className="space-y-16 py-16">
           <div className="container-custom">
-            <LoadingSkeleton className="h-[60vh] w-full rounded-xl" />
+            {/* Hero skeleton */}
+            <LoadingSkeleton variant="image" className="h-[60vh] w-full rounded-xl" />
           </div>
           <div className="container-custom">
-            <LoadingSkeleton className="h-24 w-2/3 mx-auto mb-8" />
+            {/* Title skeleton */}
+            <div className="flex flex-col items-center mb-8">
+              <LoadingSkeleton height="2.5rem" width="60%" className="mb-3" />
+              <LoadingSkeleton height="1.5rem" width="80%" />
+            </div>
+            
+            {/* Services cards skeleton */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <LoadingSkeleton variant="card" />
               <LoadingSkeleton variant="card" />
               <LoadingSkeleton variant="card" />
+            </div>
+          </div>
+
+          {/* Pricing skeleton */}
+          <div className="container-custom bg-brand-gray py-8 px-6 rounded-xl">
+            <div className="flex flex-col items-center mb-8">
+              <LoadingSkeleton height="2.5rem" width="40%" className="mb-3" />
+              <LoadingSkeleton height="1.5rem" width="60%" />
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <LoadingSkeleton height="15rem" className="rounded-lg" />
+              <LoadingSkeleton height="15rem" className="rounded-lg" />
+              <LoadingSkeleton height="15rem" className="rounded-lg" />
             </div>
           </div>
         </div>
