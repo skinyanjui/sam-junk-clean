@@ -28,7 +28,7 @@ import { cn } from '@/lib/utils';
 const AvailabilityStep = () => {
   const { control, watch } = useFormContext<ApplicationFormValues>();
   
-  const hasDriverLicense = watch('availability.hasDriverLicense');
+  const hasDriverLicense = watch('availability.hasDriverLicense') || false;
 
   return (
     <div className="space-y-6">
@@ -162,7 +162,7 @@ const AvailabilityStep = () => {
             <FormItem className="flex flex-row space-x-3 space-y-0 items-start">
               <FormControl>
                 <Checkbox
-                  checked={field.value}
+                  checked={field.value || false}
                   onCheckedChange={field.onChange}
                 />
               </FormControl>
@@ -271,7 +271,7 @@ const AvailabilityStep = () => {
             <FormItem className="flex flex-row space-x-3 space-y-0 items-start mt-4">
               <FormControl>
                 <Checkbox
-                  checked={field.value}
+                  checked={field.value || false}
                   onCheckedChange={field.onChange}
                 />
               </FormControl>

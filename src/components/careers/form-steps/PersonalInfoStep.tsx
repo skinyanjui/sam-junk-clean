@@ -23,7 +23,7 @@ import { Calendar as CalendarComponent } from '@/components/ui/calendar';
 import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
 
-interface PersonalInfoStepProps {
+export interface PersonalInfoStepProps {
   positions: Array<{
     id: number;
     title: string;

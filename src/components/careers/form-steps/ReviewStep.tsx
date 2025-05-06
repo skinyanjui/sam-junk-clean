@@ -12,14 +12,21 @@ import {
 } from '@/components/ui/form';
 import { Textarea } from '@/components/ui/textarea';
 
-const ReviewStep = () => {
+export interface ReviewStepProps {
+  positions: Array<{
+    id: number;
+    title: string;
+  }>;
+}
+
+const ReviewStep = ({ positions }: ReviewStepProps) => {
   const { control, watch } = useFormContext<ApplicationFormValues>();
   const formValues = watch();
   
   // Find the position title from the selected position ID
   const findPositionTitle = (id: string) => {
-    // This is a placeholder. In a real application, you would look up the position title from your positions data
-    return `Position #${id}`;
+    const position = positions.find(pos => pos.id.toString() === id);
+    return position ? position.title : `Position #${id}`;
   };
 
   return (

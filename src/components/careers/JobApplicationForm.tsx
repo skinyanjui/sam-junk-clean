@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { Button } from '@/components/ui/button';
@@ -24,41 +23,41 @@ interface Position {
 }
 
 export interface ApplicationFormValues {
-  position: string;
   personalInfo: {
-    firstName: string;
-    lastName: string;
+    fullName: string;
     email: string;
     phone: string;
     address: string;
     city: string;
     state: string;
     zipCode: string;
+    dateOfBirth?: Date;
+    pronouns?: string;
+    veteranStatus: string;
+  };
+  positionInfo: {
+    positionId: string;
+    coverLetter: string;
   };
   resume: {
-    file: FileList;
-    linkedinUrl?: string;
+    fileUrl?: string;
+    resumeLink?: string;
+    file?: FileList;
   };
-  employmentHistory: {
-    hasExperience: boolean;
-    jobs: {
-      employer: string;
-      position: string;
-      startDate: Date;
-      endDate?: Date;
-      current: boolean;
-      description: string;
-    }[];
-  };
-  education: {
-    highestLevel: string;
-    institutions: {
-      name: string;
-      degree: string;
-      fieldOfStudy: string;
-      graduationYear: number;
-    }[];
-  };
+  employmentHistory?: Array<{
+    employer: string;
+    jobTitle: string;
+    startDate?: string | Date;
+    endDate?: string | Date;
+    isCurrentJob?: boolean;
+    description?: string;
+  }>;
+  education?: Array<{
+    institution: string;
+    degree: string;
+    fieldOfStudy?: string;
+    graduationYear?: number;
+  }>;
   skills: {
     drivingExperience: boolean;
     liftingCapability: boolean;
@@ -66,14 +65,16 @@ export interface ApplicationFormValues {
     teamwork: boolean;
     organizationalSkills: boolean;
     problemSolving: boolean;
-    additionalSkills: string;
+    additionalSkills?: string;
   };
   availability: {
-    workType: 'full-time' | 'part-time' | 'either';
-    earliestStartDate: Date;
-    hoursAvailable: string;
-    weekendAvailability: boolean;
-    additionalNotes: string;
+    workType: string;
+    earliestStartDate?: Date;
+    preferredSchedule?: string;
+    hasDriverLicense?: boolean;
+    driverLicenseState?: string;
+    driverLicenseNumber?: string;
+    hasReliableTransportation?: boolean;
   };
   legalRequirements: {
     isLegallyEligibleToWork: boolean;
@@ -100,25 +101,26 @@ const JobApplicationForm = ({ positions, onClose, preselectedPosition }: JobAppl
   
   const methods = useForm<ApplicationFormValues>({
     defaultValues: {
-      position: preselectedPosition?.toString() || "",
       personalInfo: {
-        firstName: "",
-        lastName: "",
+        fullName: "",
         email: "",
         phone: "",
         address: "",
         city: "",
         state: "",
-        zipCode: ""
+        zipCode: "",
+        veteranStatus: "",
       },
-      employmentHistory: {
-        hasExperience: false,
-        jobs: []
+      positionInfo: {
+        positionId: preselectedPosition?.toString() || "",
+        coverLetter: "",
       },
-      education: {
-        highestLevel: "",
-        institutions: []
+      resume: {
+        fileUrl: "",
+        resumeLink: "",
       },
+      employmentHistory: [],
+      education: [],
       skills: {
         drivingExperience: false,
         liftingCapability: false,
@@ -126,37 +128,38 @@ const JobApplicationForm = ({ positions, onClose, preselectedPosition }: JobAppl
         teamwork: false,
         organizationalSkills: false,
         problemSolving: false,
-        additionalSkills: ""
+        additionalSkills: "",
       },
       availability: {
-        workType: "full-time",
+        workType: "full_time",
         earliestStartDate: new Date(),
-        hoursAvailable: "",
-        weekendAvailability: false,
-        additionalNotes: ""
+        preferredSchedule: "",
+        hasDriverLicense: false,
+        hasReliableTransportation: false,
       },
       legalRequirements: {
         isLegallyEligibleToWork: false,
         isOver18: false,
         willComplyWithBackgroundCheck: false,
         canPerformPhysicalTasks: false,
-        acknowledgeTerms: false
-      }
+        acknowledgeTerms: false,
+      },
+      additionalInfo: "",
     }
   });
   
   const { handleSubmit, watch } = methods;
-  const selectedPosition = watch('position');
+  const positionId = watch('positionInfo.positionId');
 
   const steps = [
-    { name: "Personal Information", component: <PersonalInfoStep /> },
-    { name: "Resume", component: <ResumeUploadStep resumePreview={resumePreview} setResumePreview={setResumePreview} /> },
+    { name: "Personal Information", component: <PersonalInfoStep positions={positions} /> },
+    { name: "Resume", component: <ResumeUploadStep /> },
     { name: "Employment History", component: <EmploymentHistoryStep /> },
     { name: "Education", component: <EducationStep /> },
     { name: "Skills", component: <SkillsStep /> },
     { name: "Availability", component: <AvailabilityStep /> },
     { name: "Legal Requirements", component: <LegalRequirementsStep /> },
-    { name: "Review", component: <ReviewStep /> }
+    { name: "Review", component: <ReviewStep positions={positions} /> }
   ];
 
   const nextStep = () => {
@@ -175,51 +178,37 @@ const JobApplicationForm = ({ positions, onClose, preselectedPosition }: JobAppl
     setIsSubmitting(true);
     
     try {
-      // Convert FileList to File for upload
-      const resumeFile = data.resume.file[0];
-      let resumeUrl = "";
-      
-      if (resumeFile) {
-        const fileName = `resume_${Date.now()}_${resumeFile.name}`;
-        const { error: uploadError } = await supabase.storage
-          .from('public')
-          .upload(fileName, resumeFile);
-          
-        if (uploadError) {
-          throw uploadError;
-        }
-        
-        // Get public URL
-        const { data: { publicUrl } } = supabase.storage
-          .from('public')
-          .getPublicUrl(fileName);
-          
-        resumeUrl = publicUrl;
-      }
-      
-      // Find the position title
-      const positionTitle = positions.find(p => p.id.toString() === data.position)?.title || "Unknown Position";
-      
-      // Format application data for Supabase
-      const applicationData = {
-        position_id: data.position,
-        position_title: positionTitle,
-        personal_info: data.personalInfo,
-        resume_info: {
-          resume_url: resumeUrl,
-          linkedin_url: data.resume.linkedinUrl
+      // Convert dates to ISO strings for storage
+      const formattedData = {
+        position_id: data.positionInfo.positionId,
+        position_title: positions.find(p => p.id.toString() === data.positionInfo.positionId)?.title || "Unknown Position",
+        personal_info: {
+          ...data.personalInfo,
+          dateOfBirth: data.personalInfo.dateOfBirth?.toISOString(),
         },
-        employment_history: data.employmentHistory,
-        education: data.education,
+        resume_info: {
+          resume_url: data.resume.fileUrl || "",
+          resume_link: data.resume.resumeLink || "",
+        },
+        employment_history: data.employmentHistory?.map(job => ({
+          ...job,
+          startDate: job.startDate instanceof Date ? job.startDate.toISOString() : job.startDate,
+          endDate: job.endDate instanceof Date ? job.endDate.toISOString() : job.endDate,
+        })) || [],
+        education: data.education || [],
         skills: data.skills,
-        availability: data.availability,
-        legal_requirements: data.legalRequirements
+        availability: {
+          ...data.availability,
+          earliestStartDate: data.availability.earliestStartDate?.toISOString(),
+        },
+        legal_requirements: data.legalRequirements,
+        additional_info: data.additionalInfo,
       };
       
       // Submit to Supabase
       const { error } = await supabase
         .from('job_applications')
-        .insert([applicationData]);
+        .insert(formattedData);
         
       if (error) {
         throw error;
@@ -235,7 +224,7 @@ const JobApplicationForm = ({ positions, onClose, preselectedPosition }: JobAppl
       setTimeout(() => {
         onClose();
       }, 3000);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error submitting application:', error);
       toast({
         title: "Submission Failed",
@@ -251,7 +240,7 @@ const JobApplicationForm = ({ positions, onClose, preselectedPosition }: JobAppl
     // This check is just to ensure we have proper file storage capabilities
     // In a production app, you'd create this bucket through SQL migrations
     const { error } = await supabase.storage.getBucket('public');
-    if (error && error.code === 'PGRST116') {
+    if (error && error.message?.includes('not found')) {
       // Bucket doesn't exist, create it
       await supabase.storage.createBucket('public', { public: true });
     }
@@ -317,7 +306,7 @@ const JobApplicationForm = ({ positions, onClose, preselectedPosition }: JobAppl
                   <Button 
                     type="button" 
                     onClick={nextStep}
-                    disabled={!selectedPosition && currentStep === 0}
+                    disabled={!positionId && currentStep === 0}
                   >
                     Continue
                   </Button>

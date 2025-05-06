@@ -62,12 +62,14 @@ const ResumeUploadStep = () => {
       // In a real app, this would be the URL from your file upload service
       const mockFileUrl = URL.createObjectURL(file);
       setValue('resume.fileUrl', mockFileUrl);
+      setValue('resume.file', e.target.files as FileList);
       setIsLoading(false);
     }, 1000);
   };
 
   const removeFile = () => {
     setValue('resume.fileUrl', '');
+    setValue('resume.file', undefined);
   };
 
   return (
