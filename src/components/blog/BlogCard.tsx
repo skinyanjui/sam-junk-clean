@@ -11,12 +11,12 @@ interface BlogCardProps {
 
 const BlogCard = ({ post, featured = false }: BlogCardProps) => {
   return (
-    <Card className={`overflow-hidden ${featured ? 'hover:shadow-lg' : 'hover:shadow-md'} transition-shadow`}>
+    <Card className="overflow-hidden shadow-sm">
       <div className="aspect-[16/9] overflow-hidden">
         <img 
           src={post.imageUrl} 
           alt={post.title}
-          className={`w-full h-full object-cover ${featured ? 'transition-transform hover:scale-105' : ''}`}
+          className="w-full h-full object-cover"
         />
       </div>
       <CardContent className={`${featured ? 'p-6' : 'p-4'}`}>

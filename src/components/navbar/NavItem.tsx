@@ -27,7 +27,7 @@ const NavItem = ({ item, isActive }: NavItemProps) => {
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <button
-            className={`px-2.5 py-1.5 text-sm font-medium transition-colors hover:text-brand-red text-gray-800 flex items-center ${
+            className={`px-2.5 py-1.5 text-sm font-medium text-gray-800 flex items-center ${
               isActive ? 'text-brand-red font-semibold' : 'text-gray-800'
             }`}
           >
@@ -40,7 +40,7 @@ const NavItem = ({ item, isActive }: NavItemProps) => {
             <DropdownMenuItem key={dropdownItem.path} asChild>
               <Link
                 to={dropdownItem.path}
-                className="w-full px-4 py-2 text-sm text-gray-700 hover:text-brand-red hover:bg-gray-50 transition-colors cursor-pointer"
+                className="w-full px-4 py-2 text-sm text-gray-700 cursor-pointer"
               >
                 {dropdownItem.name}
               </Link>
@@ -54,7 +54,7 @@ const NavItem = ({ item, isActive }: NavItemProps) => {
   return (
     <Link
       to={item.path}
-      className={`px-2.5 py-1.5 text-sm font-medium transition-colors hover:text-brand-red text-gray-800 ${
+      className={`px-2.5 py-1.5 text-sm font-medium text-gray-800 ${
         isActive ? 'text-brand-red font-semibold' : 'text-gray-800'
       }`}
     >

@@ -41,16 +41,16 @@ const Footer = () => {
               className="h-14 mb-4"
             />
             <div className="flex space-x-3 mt-3">
-              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="bg-white/10 hover:bg-white/20 p-2 rounded-full transition-colors">
+              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="bg-white/10 p-2 rounded-full">
                 <Facebook size={18} />
               </a>
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="bg-white/10 hover:bg-white/20 p-2 rounded-full transition-colors">
+              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="bg-white/10 p-2 rounded-full">
                 <Instagram size={18} />
               </a>
-              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter" className="bg-white/10 hover:bg-white/20 p-2 rounded-full transition-colors">
+              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter" className="bg-white/10 p-2 rounded-full">
                 <Twitter size={18} />
               </a>
-              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="bg-white/10 hover:bg-white/20 p-2 rounded-full transition-colors">
+              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="bg-white/10 p-2 rounded-full">
                 <Linkedin size={18} />
               </a>
             </div>
@@ -69,14 +69,30 @@ const Footer = () => {
             </h3>
             <div className={`${mobileOpen.company ? 'block' : 'hidden md:block'} mt-3`}>
               <div className="grid grid-cols-2 gap-x-2 gap-y-2 text-sm">
-                <Link to="/" className="text-gray-300 hover:text-white transition-colors">{t('nav.home')}</Link>
-                <Link to="/services" className="text-gray-300 hover:text-white transition-colors">{t('nav.services')}</Link>
-                <Link to="/quote" className="text-gray-300 hover:text-white transition-colors">{t('common.getQuote')}</Link>
-                <Link to="/about" className="text-gray-300 hover:text-white transition-colors">{t('nav.about')}</Link>
-                <Link to="/blog" className="text-gray-300 hover:text-white transition-colors">{t('nav.blog')}</Link>
-                <Link to="/faq" className="text-gray-300 hover:text-white transition-colors">{t('nav.faq')}</Link>
-                <Link to="/careers" className="text-gray-300 hover:text-white transition-colors">{t('nav.careers')}</Link>
-                <Link to="/contact" className="text-gray-300 hover:text-white transition-colors">{t('nav.contact')}</Link>
+                <Link to="/" className="text-gray-300">
+                  {t('nav.home')}
+                </Link>
+                <Link to="/services" className="text-gray-300">
+                  {t('nav.services')}
+                </Link>
+                <Link to="/quote" className="text-gray-300">
+                  {t('common.getQuote')}
+                </Link>
+                <Link to="/about" className="text-gray-300">
+                  {t('nav.about')}
+                </Link>
+                <Link to="/blog" className="text-gray-300">
+                  {t('nav.blog')}
+                </Link>
+                <Link to="/faq" className="text-gray-300">
+                  {t('nav.faq')}
+                </Link>
+                <Link to="/careers" className="text-gray-300">
+                  {t('nav.careers')}
+                </Link>
+                <Link to="/contact" className="text-gray-300">
+                  {t('nav.contact')}
+                </Link>
               </div>
             </div>
           </div>
@@ -101,7 +117,7 @@ const Footer = () => {
                       <Link 
                         key={city} 
                         to={`/locations#${area.state.toLowerCase()}`}
-                        className="text-gray-300 hover:text-white transition-colors"
+                        className="text-gray-300"
                       >
                         {city}
                       </Link>
@@ -109,7 +125,7 @@ const Footer = () => {
                     {area.cities.length > 3 && (
                       <Link 
                         to={`/locations#${area.state.toLowerCase()}`}
-                        className="text-gray-300 hover:text-white transition-colors"
+                        className="text-gray-300"
                       >
                         +{area.cities.length - 3}
                       </Link>
@@ -135,11 +151,11 @@ const Footer = () => {
               <ul className="space-y-2 text-sm">
                 <li className="flex items-center justify-center md:justify-start">
                   <Phone size={16} className="mr-2 text-brand-red" />
-                  <a href="tel:+18126101657" className="text-gray-300 hover:text-white">+1 (812) 610-1657</a>
+                  <a href="tel:+18126101657" className="text-gray-300">+1 (812) 610-1657</a>
                 </li>
                 <li className="flex items-center justify-center md:justify-start">
                   <Mail size={16} className="mr-2 text-brand-red" />
-                  <a href="mailto:info@unclesamjunk.com" className="text-gray-300 hover:text-white">info@unclesamjunk.com</a>
+                  <a href="mailto:info@unclesamjunk.com" className="text-gray-300">info@unclesamjunk.com</a>
                 </li>
                 <li className="flex items-center justify-center md:justify-start">
                   <MapPin size={16} className="mr-2 text-brand-red" />
@@ -147,7 +163,7 @@ const Footer = () => {
                 </li>
               </ul>
               <div className="flex flex-col md:flex-row items-center justify-center md:justify-start gap-2 mt-4">
-                <Link to="/quote" className="inline-block bg-brand-red hover:bg-opacity-90 text-white py-1.5 px-4 rounded-lg transition-colors text-sm">
+                <Link to="/quote" className="inline-block bg-brand-red text-white py-1.5 px-4 rounded-lg">
                   {t('common.getQuote')}
                 </Link>
                 <LanguageSwitcher />
@@ -161,8 +177,12 @@ const Footer = () => {
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="mb-2 md:mb-0">{t('footer.copyright', { year: currentYear })}</p>
             <div className="flex space-x-4">
-              <Link to="/privacy" className="hover:text-white transition-colors">{t('footer.privacyPolicy')}</Link>
-              <Link to="/terms" className="hover:text-white transition-colors">{t('footer.termsOfService')}</Link>
+              <Link to="/privacy" className="text-gray-400">
+                {t('footer.privacyPolicy')}
+              </Link>
+              <Link to="/terms" className="text-gray-400">
+                {t('footer.termsOfService')}
+              </Link>
             </div>
           </div>
         </div>

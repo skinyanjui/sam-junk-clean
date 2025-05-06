@@ -17,14 +17,14 @@ const BlogCta = () => {
             <div className="flex flex-col sm:flex-row gap-4">
               <Button 
                 asChild 
-                className="bg-brand-red hover:bg-opacity-90 text-white"
+                className="bg-brand-red text-white"
               >
                 <Link to="/quote">Get a Free Quote</Link>
               </Button>
               <Button 
                 asChild
                 variant="outline" 
-                className="border-white text-white hover:bg-white hover:text-brand-navy"
+                className="border-white text-white"
               >
                 <Link to="/contact">Contact Us</Link>
               </Button>
