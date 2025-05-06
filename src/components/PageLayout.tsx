@@ -14,7 +14,7 @@ interface PageLayoutProps {
 const PageLayout = ({ 
   children, 
   showBreadcrumb = true,
-  breadcrumbClassName = "bg-gray-50 py-2" 
+  breadcrumbClassName = "bg-gray-50 py-2.5 border-b border-gray-100" 
 }: PageLayoutProps) => {
   return (
     <div className="flex flex-col min-h-screen">
@@ -31,7 +31,7 @@ const PageLayout = ({
       </main>
       <Footer />
       {/* Bottom padding for mobile sticky button */}
-      <div className="h-16 md:h-0 w-full"></div>
+      <div className="h-20 md:h-0 w-full"></div>
       
       {/* Global Toast Notifications */}
       <Toaster />

@@ -37,10 +37,10 @@ const Navbar = () => {
   return (
     <header className="fixed w-full z-50 top-0">
       <div 
-        className={`w-full transition-all duration-300 ${
+        className={`w-full transition-all duration-300 bg-gradient-to-r from-white via-white to-white/98 ${
           scrolled 
-            ? 'bg-white shadow-lg py-1 pb-0' 
-            : 'bg-white/95 py-2 pb-0'
+            ? 'shadow-lg py-1 pb-0 border-b border-gray-100' 
+            : 'py-2 pb-0'
         }`}
       >
         <div className="container-custom flex items-center">
