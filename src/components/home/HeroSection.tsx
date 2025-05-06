@@ -1,28 +1,33 @@
-
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ChevronDown } from 'lucide-react';
+
 const HeroSection = () => {
   const [isBannerVisible, setIsBannerVisible] = useState(true);
+  
   useEffect(() => {
     const handleBannerVisibilityChange = (event: CustomEvent<{
       isVisible: boolean;
     }>) => {
       setIsBannerVisible(event.detail.isVisible);
     };
+    
     document.addEventListener('promoBannerVisibilityChanged', handleBannerVisibilityChange as EventListener);
     return () => {
       document.removeEventListener('promoBannerVisibilityChanged', handleBannerVisibilityChange as EventListener);
     };
   }, []);
+  
   const scrollToNextSection = () => {
     window.scrollTo({
       top: window.innerHeight,
       behavior: 'smooth'
     });
   };
-  return <section className={`relative h-screen flex items-center overflow-hidden ${isBannerVisible ? 'mt-12 sm:mt-14 md:mt-16 lg:mt-16' : 'mt-4 sm:mt-6 md:mt-8 lg:mt-8'}`}>
+  
+  return (
+    <section className={`relative h-screen flex items-center overflow-hidden mt-0`}>
       {/* Background with solid color instead of image */}
       <div className="absolute inset-0 -z-10 bg-brand-navy"></div>
 
@@ -77,8 +82,10 @@ const HeroSection = () => {
 
       {/* Diagonal cutout at bottom */}
       <div className="absolute bottom-0 left-0 w-full h-24 bg-white z-5" style={{
-      clipPath: 'polygon(0 100%, 100% 50%, 100% 100%, 0% 100%)'
-    }}></div>
-    </section>;
+        clipPath: 'polygon(0 100%, 100% 50%, 100% 100%, 0% 100%)'
+      }}></div>
+    </section>
+  );
 };
+
 export default HeroSection;

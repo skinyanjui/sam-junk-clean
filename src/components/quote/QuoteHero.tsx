@@ -16,13 +16,8 @@ const QuoteHero = () => {
   }, []);
 
   return (
-    <section className={`${
-      isBannerVisible 
-        ? 'pt-20 sm:pt-22 md:pt-24 lg:pt-24' 
-        : 'pt-12 sm:pt-14 md:pt-16 lg:pt-16'
-    } pb-20 bg-brand-navy text-white relative`}>
-      
-      <div className="container-custom">
+    <section className="pb-20 bg-brand-navy text-white relative">
+      <div className="container-custom pt-10">
         <div className="max-w-3xl mx-auto text-center z-10 relative">
           <h1 className="text-4xl md:text-5xl font-bold mb-6">Get a Free Quote</h1>
           <p className="text-lg md:text-xl opacity-90">
