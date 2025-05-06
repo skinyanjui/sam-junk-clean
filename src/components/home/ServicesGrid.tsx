@@ -6,6 +6,7 @@ export interface ServiceItem {
   title: string;
   icon: ReactNode;
   description: string;
+  image?: string;
 }
 
 interface ServicesGridProps {
@@ -21,6 +22,7 @@ const ServicesGrid = ({ services }: ServicesGridProps) => {
           title={service.title}
           icon={service.icon}
           description={service.description}
+          image={service.image}
         />
       ))}
     </div>
