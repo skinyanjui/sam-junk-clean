@@ -1,27 +1,48 @@
 
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { Label } from '@/components/ui/label';
+import { 
+  Form,
+  FormControl, 
+  FormField, 
+  FormItem, 
+  FormLabel, 
+  FormMessage 
+} from '@/components/ui/form';
+import { PhoneInput } from '@/components/ui/phone-input';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 
-interface ContactFormData {
-  name: string;
-  email: string;
-  phone: string;
-  message: string;
-}
+// Define form validation schema
+const formSchema = z.object({
+  name: z.string().min(2, { message: "Name must be at least 2 characters." }),
+  email: z.string().email({ message: "Please enter a valid email address." }),
+  phone: z.string().optional(),
+  message: z.string().min(10, { message: "Message must be at least 10 characters." }),
+});
+
+type ContactFormValues = z.infer<typeof formSchema>;
 
 const ContactForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
   
-  const { register, handleSubmit, formState: { errors }, reset } = useForm<ContactFormData>();
+  const form = useForm<ContactFormValues>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      phone: "",
+      message: "",
+    },
+  });
 
-  const onSubmit = async (data: ContactFormData) => {
+  const onSubmit = async (data: ContactFormValues) => {
     setIsSubmitting(true);
     
     try {
@@ -38,7 +59,7 @@ const ContactForm = () => {
         title: "Message Sent!",
         description: "We'll get back to you as soon as possible.",
       });
-      reset();
+      form.reset();
     } catch (error) {
       console.error('Error submitting form:', error);
       toast({
@@ -55,82 +76,100 @@ const ContactForm = () => {
     <div className="glass-card p-8">
       <h2 className="text-2xl font-bold text-brand-navy mb-6">Send Us a Message</h2>
       
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-        <div className="space-y-2">
-          <Label htmlFor="name" className="text-gray-700">Full Name <span className="text-brand-red">*</span></Label>
-          <Input
-            id="name"
-            placeholder="John Doe"
-            {...register("name", { required: "Name is required" })}
-            className={errors.name ? "border-red-500" : ""}
-          />
-          {errors.name && (
-            <p className="text-red-500 text-sm">{errors.name.message}</p>
-          )}
-        </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="space-y-2">
-            <Label htmlFor="email" className="text-gray-700">Email <span className="text-brand-red">*</span></Label>
-            <Input
-              id="email"
-              type="email"
-              placeholder="johndoe@example.com"
-              {...register("email", { required: "Email is required", pattern: {
-                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                message: "Invalid email address"
-              }})}
-              className={errors.email ? "border-red-500" : ""}
-            />
-            {errors.email && (
-              <p className="text-red-500 text-sm">{errors.email.message}</p>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+          <FormField
+            control={form.control}
+            name="name"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Full Name <span className="text-brand-red">*</span></FormLabel>
+                <FormControl>
+                  <Input placeholder="John Doe" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
             )}
+          />
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email <span className="text-brand-red">*</span></FormLabel>
+                  <FormControl>
+                    <Input
+                      type="email"
+                      placeholder="johndoe@example.com"
+                      autoComplete="email"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            
+            <FormField
+              control={form.control}
+              name="phone"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Phone Number</FormLabel>
+                  <FormControl>
+                    <PhoneInput
+                      placeholder="(123) 456-7890"
+                      onValueChange={field.onChange}
+                      value={field.value}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
           </div>
           
-          <div className="space-y-2">
-            <Label htmlFor="phone" className="text-gray-700">Phone Number</Label>
-            <Input
-              id="phone"
-              placeholder="(123) 456-7890"
-              {...register("phone")}
-            />
-          </div>
-        </div>
-        
-        <div className="space-y-2">
-          <Label htmlFor="message" className="text-gray-700">Message <span className="text-brand-red">*</span></Label>
-          <Textarea
-            id="message"
-            placeholder="How can we help you?"
-            rows={6}
-            {...register("message", { required: "Message is required" })}
-            className={errors.message ? "border-red-500" : ""}
+          <FormField
+            control={form.control}
+            name="message"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Message <span className="text-brand-red">*</span></FormLabel>
+                <FormControl>
+                  <Textarea
+                    placeholder="How can we help you?"
+                    rows={6}
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
           />
-          {errors.message && (
-            <p className="text-red-500 text-sm">{errors.message.message}</p>
-          )}
-        </div>
-        
-        <Button 
-          type="submit" 
-          className="w-full bg-brand-red hover:bg-opacity-90 py-6"
-          disabled={isSubmitting}
-        >
-          {isSubmitting ? (
-            <span className="flex items-center">
-              <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-              </svg>
-              Sending...
-            </span>
-          ) : "Send Message"}
-        </Button>
+          
+          <Button 
+            type="submit" 
+            className="w-full bg-brand-red hover:bg-opacity-90 py-6"
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? (
+              <span className="flex items-center">
+                <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Sending...
+              </span>
+            ) : "Send Message"}
+          </Button>
 
-        <p className="text-sm text-gray-500 text-center">
-          We typically respond within 24 business hours.
-        </p>
-      </form>
+          <p className="text-sm text-gray-500 text-center">
+            We typically respond within 24 business hours.
+          </p>
+        </form>
+      </Form>
     </div>
   );
 };

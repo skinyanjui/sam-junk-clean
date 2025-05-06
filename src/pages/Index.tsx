@@ -1,4 +1,5 @@
 
+import { useEffect, useState } from 'react';
 import PageLayout from '@/components/PageLayout';
 import HeroSection from '@/components/home/HeroSection';
 import ServicesOverview from '@/components/home/ServicesOverview';
@@ -8,10 +9,21 @@ import TestimonialsSection from '@/components/home/TestimonialsSection';
 import WhyChooseUs from '@/components/home/WhyChooseUs';
 import SEO from '@/components/SEO';
 import { useTranslation } from 'react-i18next';
+import { LoadingSkeleton } from '@/components/ui/loading-skeleton';
 
 const Index = () => {
   const { t, i18n } = useTranslation();
   const currentLang = i18n.language;
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate some data loading to show skeleton state
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 800);
+    
+    return () => clearTimeout(timer);
+  }, []);
 
   // Create alternative language URLs for SEO
   const alternateLanguages = [
@@ -56,12 +68,31 @@ const Index = () => {
         lang={currentLang}
         alternateLanguages={alternateLanguages}
       />
-      <HeroSection />
-      <ServicesOverview />
-      <PricingOverview />
-      <TestimonialsSection />
-      <WhyChooseUs />
-      <CtaSection />
+      
+      {isLoading ? (
+        <div className="space-y-16 py-16">
+          <div className="container-custom">
+            <LoadingSkeleton className="h-[60vh] w-full rounded-xl" />
+          </div>
+          <div className="container-custom">
+            <LoadingSkeleton className="h-24 w-2/3 mx-auto mb-8" />
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <LoadingSkeleton variant="card" />
+              <LoadingSkeleton variant="card" />
+              <LoadingSkeleton variant="card" />
+            </div>
+          </div>
+        </div>
+      ) : (
+        <>
+          <HeroSection />
+          <ServicesOverview />
+          <PricingOverview />
+          <TestimonialsSection />
+          <WhyChooseUs />
+          <CtaSection />
+        </>
+      )}
     </PageLayout>
   );
 };
