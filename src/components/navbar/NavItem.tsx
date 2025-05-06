@@ -27,22 +27,20 @@ const NavItem = ({ item, isActive }: NavItemProps) => {
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <button
-            className={`group px-4 py-2 text-sm font-medium rounded-full transition-all duration-200 flex items-center ${
-              isActive 
-                ? 'text-white bg-brand-navy font-semibold' 
-                : 'text-gray-800 hover:text-brand-navy hover:bg-gray-100/80'
+            className={`px-2.5 py-1.5 text-sm font-medium flex items-center ${
+              isActive ? 'text-brand-red font-semibold' : 'text-gray-800'
             }`}
           >
             {item.name}
-            <ChevronDown className="ml-1 h-3 w-3 group-hover:translate-y-0.5 transition-transform" />
+            <ChevronDown className="ml-1 h-3 w-3" />
           </button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="center" sideOffset={8} className="bg-white shadow-lg rounded-xl p-1 border border-gray-100">
+        <DropdownMenuContent align="center" sideOffset={5} className="bg-white shadow-md">
           {item.dropdownItems?.map((dropdownItem) => (
             <DropdownMenuItem key={dropdownItem.path} asChild>
               <Link
                 to={dropdownItem.path}
-                className="w-full px-4 py-2.5 text-sm text-gray-700 hover:text-brand-navy hover:bg-gray-50 rounded-lg cursor-pointer transition-colors"
+                className="w-full px-4 py-2 text-sm text-gray-700 cursor-pointer"
               >
                 {dropdownItem.name}
               </Link>
@@ -56,10 +54,8 @@ const NavItem = ({ item, isActive }: NavItemProps) => {
   return (
     <Link
       to={item.path}
-      className={`px-4 py-2 text-sm font-medium rounded-full transition-all duration-200 ${
-        isActive 
-          ? 'text-white bg-brand-navy font-semibold' 
-          : 'text-gray-800 hover:text-brand-navy hover:bg-gray-100/80'
+      className={`px-2.5 py-1.5 text-sm font-medium ${
+        isActive ? 'text-brand-red font-semibold' : 'text-gray-800'
       }`}
     >
       {item.name}
