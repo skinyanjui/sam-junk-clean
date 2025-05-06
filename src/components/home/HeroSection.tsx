@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -27,7 +28,7 @@ const HeroSection = () => {
   };
   
   return (
-    <section className={`relative h-screen flex items-center overflow-hidden mt-0`}>
+    <section className={`relative h-screen flex items-center overflow-hidden mt-8`}>
       {/* Background with solid color instead of image */}
       <div className="absolute inset-0 -z-10 bg-brand-navy"></div>
 

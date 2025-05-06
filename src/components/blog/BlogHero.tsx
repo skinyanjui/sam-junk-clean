@@ -11,7 +11,7 @@ interface BlogHeroProps {
 
 const BlogHero = ({ searchQuery, setSearchQuery }: BlogHeroProps) => {
   return (
-    <section className="pt-24 py-16 bg-brand-navy text-white">
+    <section className="pt-28 py-16 bg-brand-navy text-white">
       <div className="container-custom">
         <div className="max-w-3xl mx-auto text-center">
           <h1 className="text-4xl md:text-5xl font-bold mb-6">Uncle Sam's Junk Removal Blog</h1>

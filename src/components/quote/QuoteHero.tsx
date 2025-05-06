@@ -17,7 +17,7 @@ const QuoteHero = () => {
 
   return (
     <section className="pb-20 bg-brand-navy text-white relative">
-      <div className="container-custom pt-24">
+      <div className="container-custom pt-28">
         <div className="max-w-3xl mx-auto text-center z-10 relative">
           <h1 className="text-4xl md:text-5xl font-bold mb-6">Get a Free Quote</h1>
           <p className="text-lg md:text-xl opacity-90">

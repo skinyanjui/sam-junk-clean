@@ -10,7 +10,7 @@ const ContactHero = () => {
       />
       
       {/* Hero Section */}
-      <section className="pt-24 pb-20 bg-brand-navy text-white">
+      <section className="pt-28 pb-20 bg-brand-navy text-white">
         <div className="container-custom">
           <div className="max-w-3xl mx-auto text-center">
             <h1 className="text-4xl md:text-5xl xl:text-6xl font-bold mb-6">Contact Us</h1>
