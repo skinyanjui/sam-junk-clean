@@ -25,7 +25,11 @@ const PricingOverview = () => {
             <p className="text-brand-red font-bold text-4xl mb-3">$75-$175</p>
             <div className="w-16 h-1 bg-gray-200 mx-auto mb-4"></div>
             <p className="text-gray-600 mb-6">Single items to 1/4 truck loads</p>
-            <Button asChild variant="outline" className="w-full border-brand-navy text-brand-navy hover:bg-brand-navy hover:text-white">
+            <Button 
+              asChild 
+              variant="outline" 
+              className="w-full border-brand-navy text-brand-navy hover:bg-brand-navy hover:text-white font-bold tracking-wide transition-all duration-300"
+            >
               <Link to="/pricing">See Details</Link>
             </Button>
           </div>
@@ -36,7 +40,10 @@ const PricingOverview = () => {
             <p className="text-brand-red font-bold text-4xl mb-3">$175-$450</p>
             <div className="w-16 h-1 bg-gray-200 mx-auto mb-4"></div>
             <p className="text-gray-600 mb-6">1/4 to 3/4 truck loads</p>
-            <Button asChild className="w-full bg-brand-red hover:bg-opacity-90">
+            <Button 
+              asChild 
+              className="w-full bg-brand-red hover:bg-brand-red/90 text-white font-bold tracking-wide transition-all duration-300 border border-brand-red/20"
+            >
               <Link to="/pricing">See Details</Link>
             </Button>
           </div>
@@ -46,14 +53,18 @@ const PricingOverview = () => {
             <p className="text-brand-red font-bold text-4xl mb-3">$450-$600+</p>
             <div className="w-16 h-1 bg-gray-200 mx-auto mb-4"></div>
             <p className="text-gray-600 mb-6">Full truck loads</p>
-            <Button asChild variant="outline" className="w-full border-brand-navy text-brand-navy hover:bg-brand-navy hover:text-white">
+            <Button 
+              asChild 
+              variant="outline" 
+              className="w-full border-brand-navy text-brand-navy hover:bg-brand-navy hover:text-white font-bold tracking-wide transition-all duration-300"
+            >
               <Link to="/pricing">See Details</Link>
             </Button>
           </div>
         </div>
         
         <div className="text-center mt-12">
-          <Link to="/pricing" className="inline-flex items-center text-brand-red font-medium hover:underline group">
+          <Link to="/pricing" className="inline-flex items-center text-brand-red font-bold tracking-wide hover:underline group">
             View our complete pricing guide <ArrowRight size={16} className="ml-1 transition-transform duration-300 group-hover:translate-x-1" />
           </Link>
         </div>

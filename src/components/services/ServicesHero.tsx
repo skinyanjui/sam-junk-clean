@@ -23,7 +23,7 @@ const ServicesHero = () => {
             <Button 
               asChild 
               size="lg"
-              className="bg-brand-red hover:bg-opacity-90"
+              className="bg-brand-red hover:bg-brand-red/90 text-white font-bold tracking-wide shadow-lg transition-all duration-300 hover:scale-[1.03] border border-brand-red/20"
             >
               <Link to="/quote">Get a Free Quote</Link>
             </Button>

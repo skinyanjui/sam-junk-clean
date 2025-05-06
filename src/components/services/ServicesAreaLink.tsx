@@ -11,7 +11,10 @@ const ServicesAreaLink = () => {
           <p className="text-gray-600 mb-6">
             Uncle Sam Junk Removal proudly serves the entire Tri-State area including Evansville, Henderson, Owensboro, and surrounding communities.
           </p>
-          <Button asChild className="bg-brand-navy hover:bg-opacity-90">
+          <Button 
+            asChild 
+            className="bg-brand-navy hover:bg-brand-navy/90 text-white font-bold tracking-wide shadow-lg transition-all duration-300 hover:scale-[1.03]"
+          >
             <Link to="/locations">View Our Service Areas</Link>
           </Button>
         </div>

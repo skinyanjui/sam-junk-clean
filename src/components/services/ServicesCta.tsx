@@ -15,7 +15,7 @@ const ServicesCta = () => {
             <Button 
               asChild 
               size="lg" 
-              className="bg-brand-red text-white border border-gray-300"
+              className="bg-brand-red hover:bg-brand-red/90 text-white font-bold tracking-wide border border-gray-300 shadow-lg transition-all duration-300 hover:scale-[1.02]"
             >
               <Link to="/quote">Get a Free Quote</Link>
             </Button>
@@ -23,7 +23,7 @@ const ServicesCta = () => {
               asChild 
               variant="outline" 
               size="lg"
-              className="border-white text-white border border-gray-300"
+              className="border-white text-white hover:bg-white hover:text-brand-navy font-bold tracking-wide border-2 transition-all duration-300 hover:scale-[1.02]"
             >
               <Link to="/pricing">View Pricing</Link>
             </Button>

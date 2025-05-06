@@ -11,7 +11,7 @@ const FormFooter = ({ isSubmitting }: FormFooterProps) => {
     <>
       <Button 
         type="submit" 
-        className="w-full bg-brand-red text-white text-lg py-6 shadow-md"
+        className="w-full bg-brand-red hover:bg-brand-red/90 text-white text-lg font-bold tracking-wide py-6 shadow-lg transition-all duration-300 hover:scale-[1.01] border border-brand-red/20"
         disabled={isSubmitting}
       >
         {isSubmitting ? (
@@ -27,9 +27,9 @@ const FormFooter = ({ isSubmitting }: FormFooterProps) => {
       
       <p className="text-sm text-gray-500 text-center mt-4">
         By submitting this form, you agree to our{' '}
-        <Link to="/terms" className="text-brand-navy">Terms of Service</Link>{' '}
+        <Link to="/terms" className="text-brand-navy font-medium hover:text-brand-red transition-colors">Terms of Service</Link>{' '}
         and{' '}
-        <Link to="/privacy" className="text-brand-navy">Privacy Policy</Link>.
+        <Link to="/privacy" className="text-brand-navy font-medium hover:text-brand-red transition-colors">Privacy Policy</Link>.
       </p>
     </>
   );

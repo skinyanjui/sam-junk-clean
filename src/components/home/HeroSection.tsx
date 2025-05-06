@@ -73,7 +73,7 @@ const HeroSection = () => {
               <Button 
                 asChild 
                 size="lg" 
-                className="bg-brand-red hover:bg-brand-red/90 text-white font-bold text-lg px-8 py-6 shadow-[0_8px_30px_rgb(178,34,52,0.3)] rounded-lg transition-all duration-300 hover:-translate-y-1"
+                className="bg-brand-red hover:bg-brand-red/90 text-white font-bold text-lg px-8 py-6 tracking-wide shadow-[0_8px_30px_rgb(178,34,52,0.3)] rounded-lg transition-all duration-300 hover:scale-105 border border-brand-red/20"
               >
                 <Link to="/quote">Get a Free Quote</Link>
               </Button>
@@ -81,7 +81,7 @@ const HeroSection = () => {
                 asChild 
                 variant="outline" 
                 size="lg" 
-                className="border-white/70 border-2 text-white hover:bg-white hover:text-brand-navy font-medium text-lg px-8 py-6 shadow-lg rounded-lg transition-all duration-300 hover:-translate-y-1"
+                className="border-white/70 border-2 text-white hover:bg-white hover:text-brand-navy font-bold text-lg px-8 py-6 tracking-wide shadow-lg rounded-lg transition-all duration-300 hover:scale-105"
               >
                 <Link to="/services">Our Services</Link>
               </Button>

@@ -33,14 +33,14 @@ const CtaSection = () => {
                 <Button 
                   asChild 
                   size="lg"
-                  className="bg-brand-red hover:bg-opacity-90 text-white font-bold shadow-lg transition-all duration-300 hover:translate-y-[-2px]"
+                  className="bg-brand-red hover:bg-opacity-90 text-white font-bold tracking-wide py-6 shadow-xl transition-all duration-300 hover:scale-[1.02] border border-brand-red/20"
                 >
                   <Link to="/quote">Get a Free Quote</Link>
                 </Button>
                 <Button 
                   variant="outline" 
                   size="lg"
-                  className="border-2 border-white text-white hover:bg-white hover:text-brand-navy font-medium transition-all duration-300 hover:translate-y-[-2px]"
+                  className="border-2 border-white text-white hover:bg-white hover:text-brand-navy font-bold tracking-wide py-6 transition-all duration-300 hover:scale-[1.02]"
                   onClick={handleCallClick}
                 >
                   <a href="tel:+18126101657">Call (812) 610-1657</a>
