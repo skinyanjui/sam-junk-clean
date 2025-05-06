@@ -8,7 +8,8 @@ interface ProcessStepsProps {
 
 const ProcessSteps: React.FC<ProcessStepsProps> = ({ highlightFirst = false }) => {
   // Set active step based on the highlightFirst prop
-  const activeStep = highlightFirst ? 0 : 1;
+  // Make sure activeStep can be 0, 1, or 2 to fix the type error
+  const activeStep: number = highlightFirst ? 0 : 1;
   
   return (
     <section className="py-16 bg-brand-gray">
