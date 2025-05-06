@@ -32,7 +32,7 @@ const PageLayout = ({
   return (
     <div className="flex flex-col min-h-screen">
       <Navbar />
-      <main className={`flex-grow ${isBannerVisible ? 'pt-20 sm:pt-22 md:pt-24 lg:pt-24' : 'pt-12 sm:pt-14 md:pt-16 lg:pt-16'}`}>
+      <main className={`flex-grow ${isBannerVisible ? 'pt-18 sm:pt-20 md:pt-22 lg:pt-22' : 'pt-10 sm:pt-12 md:pt-14 lg:pt-14'}`}>
         {showBreadcrumb && (
           <div className={breadcrumbClassName}>
             <Breadcrumb />

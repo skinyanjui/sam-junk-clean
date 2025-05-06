@@ -54,8 +54,8 @@ const Navbar = () => {
       <div 
         className={`w-full transition-all duration-300 ${
           scrolled 
-            ? 'bg-white shadow-lg py-3' 
-            : 'bg-white/95 py-4'
+            ? 'bg-white shadow-lg py-1' 
+            : 'bg-white/95 py-2'
         }`}
       >
         <div className="container-custom flex items-center justify-between">

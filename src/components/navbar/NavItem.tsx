@@ -35,7 +35,7 @@ const NavItem = ({ item, isActive }: NavItemProps) => {
             <ChevronDown className="ml-1 h-3 w-3" />
           </button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="center" sideOffset={5} className="bg-white border border-gray-100 shadow-md">
+        <DropdownMenuContent align="center" sideOffset={5} className="bg-white shadow-md">
           {item.dropdownItems?.map((dropdownItem) => (
             <DropdownMenuItem key={dropdownItem.path} asChild>
               <Link
