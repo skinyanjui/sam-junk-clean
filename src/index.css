@@ -103,7 +103,7 @@
   }
   
   .glass-card {
-    @apply bg-white border border-gray-100 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300;
+    @apply bg-white border border-gray-300 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300;
   }
   
   .gradient-bg {
@@ -122,10 +122,23 @@
   .hover-scale {
     @apply transition-transform duration-300 hover:scale-105;
   }
+
+  /* Add dark borders to cards and interactive elements */
+  .card, .ui-card {
+    @apply border border-gray-300;
+  }
+  
+  .form-input, .form-select, .form-textarea {
+    @apply border border-gray-300;
+  }
+  
+  .btn, button[type="submit"], button[type="button"] {
+    @apply border border-gray-300;
+  }
   
   /* Custom map styles */
   .custom-popup .leaflet-popup-content-wrapper {
-    @apply bg-white rounded-lg shadow-lg border border-gray-100 px-1;
+    @apply bg-white rounded-lg shadow-lg border border-gray-300 px-1;
   }
   
   .custom-popup .leaflet-popup-tip {

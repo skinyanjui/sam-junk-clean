@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -21,7 +22,7 @@ const HeroSection = () => {
       behavior: 'smooth'
     });
   };
-  return <section className={`relative h-screen flex items-center overflow-hidden ${isBannerVisible ? 'mt-16 sm:mt-18 md:mt-20 lg:mt-20' : 'mt-8 sm:mt-10 md:mt-12 lg:mt-12'}`}>
+  return <section className={`relative h-screen flex items-center overflow-hidden ${isBannerVisible ? 'mt-12 sm:mt-14 md:mt-16 lg:mt-16' : 'mt-4 sm:mt-6 md:mt-8 lg:mt-8'}`}>
       {/* Background with solid color instead of image */}
       <div className="absolute inset-0 -z-10 bg-brand-navy"></div>
 
@@ -42,10 +43,10 @@ const HeroSection = () => {
               We handle the heavy lifting so you don't have to!
             </p>
             <div className="flex flex-col sm:flex-row gap-5 mb-12 bg-transparent rounded">
-              <Button asChild size="lg" className="bg-brand-red hover:bg-opacity-90 text-white font-bold text-lg px-8 py-6 shadow-xl transition-all duration-300 hover:translate-y-[-2px] rounded-lg">
+              <Button asChild size="lg" className="bg-brand-red text-white font-bold text-lg px-8 py-6 shadow-xl rounded-lg">
                 <Link to="/quote">Get a Free Quote</Link>
               </Button>
-              <Button asChild variant="outline" size="lg" className="border-white border-2 text-white hover:bg-white hover:text-brand-navy font-medium text-lg px-8 py-6 shadow-lg transition-all duration-300 hover:translate-y-[-2px] rounded-lg">
+              <Button asChild variant="outline" size="lg" className="border-white border-2 text-white hover:bg-white hover:text-brand-navy font-medium text-lg px-8 py-6 shadow-lg rounded-lg">
                 <Link to="/services">Our Services</Link>
               </Button>
             </div>
@@ -53,7 +54,7 @@ const HeroSection = () => {
 
           {/* Hero image - spans 5 columns on medium screens and up */}
           <div className="md:col-span-5 relative hidden md:block">
-            <div className="relative transform transition-all duration-500 hover:scale-105">
+            <div className="relative">
               {/* Floating effect animation */}
               <div className="animate-[pulse_4s_ease-in-out_infinite]">
                 <img src="/lovable-uploads/acf3ac1c-8d3b-4125-896d-7a7416fab53a.png" alt="Uncle Sam Junk Removal" className="w-full max-w-md mx-auto drop-shadow-2xl relative z-10" />

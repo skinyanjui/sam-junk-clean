@@ -6,7 +6,7 @@ const ServicesCta = () => {
   return (
     <section className="py-16 bg-brand-gray">
       <div className="container-custom">
-        <div className="bg-brand-navy text-white p-8 md:p-12 rounded-xl shadow-lg text-center">
+        <div className="bg-brand-navy text-white p-8 md:p-12 rounded-xl shadow-lg text-center border border-gray-300">
           <h2 className="text-3xl font-bold mb-4">Need a Service Not Listed?</h2>
           <p className="text-white/90 text-lg max-w-2xl mx-auto mb-8">
             We handle many other types of junk removal situations. Contact us to discuss your specific needs and get a customized solution.
@@ -15,7 +15,7 @@ const ServicesCta = () => {
             <Button 
               asChild 
               size="lg" 
-              className="bg-brand-red text-white"
+              className="bg-brand-red text-white border border-gray-300"
             >
               <Link to="/quote">Get a Free Quote</Link>
             </Button>
@@ -23,7 +23,7 @@ const ServicesCta = () => {
               asChild 
               variant="outline" 
               size="lg"
-              className="border-white text-white"
+              className="border-white text-white border border-gray-300"
             >
               <Link to="/pricing">View Pricing</Link>
             </Button>

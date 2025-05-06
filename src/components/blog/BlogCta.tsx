@@ -6,7 +6,7 @@ const BlogCta = () => {
   return (
     <section className="py-16 bg-brand-gray">
       <div className="container-custom">
-        <div className="bg-brand-navy text-white p-8 md:p-12 rounded-xl shadow-lg">
+        <div className="bg-brand-navy text-white p-8 md:p-12 rounded-xl shadow-lg border border-gray-300">
           <div className="md:flex md:justify-between md:items-center">
             <div className="mb-6 md:mb-0 md:pr-8">
               <h2 className="text-3xl font-bold mb-4">Need Junk Removal Services?</h2>
@@ -17,14 +17,14 @@ const BlogCta = () => {
             <div className="flex flex-col sm:flex-row gap-4">
               <Button 
                 asChild 
-                className="bg-brand-red text-white"
+                className="bg-brand-red text-white border border-gray-300"
               >
                 <Link to="/quote">Get a Free Quote</Link>
               </Button>
               <Button 
                 asChild
                 variant="outline" 
-                className="border-white text-white"
+                className="border-white text-white border border-gray-300"
               >
                 <Link to="/contact">Contact Us</Link>
               </Button>

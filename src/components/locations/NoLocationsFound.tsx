@@ -12,13 +12,13 @@ const NoLocationsFound = ({ searchTerm, clearSearch }: NoLocationsFoundProps) =>
   const { t } = useTranslation();
   
   return (
-    <div className="text-center py-12 bg-brand-gray/50 rounded-lg">
+    <div className="text-center py-12 bg-brand-gray/50 rounded-lg border border-gray-300">
       <MapPin size={48} className="mx-auto mb-4 text-gray-400" />
       <h3 className="text-xl font-bold text-brand-navy mb-2">{t('locations.noAreasFound')}</h3>
       <p className="text-gray-600 mb-4">
         {t('locations.noAreasMessage', { searchTerm })}
       </p>
-      <Button onClick={clearSearch}>{t('locations.clearSearch')}</Button>
+      <Button onClick={clearSearch} className="border border-gray-300">{t('locations.clearSearch')}</Button>
     </div>
   );
 };

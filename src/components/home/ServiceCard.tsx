@@ -14,7 +14,7 @@ const ServiceCard = ({ title, icon, description }: ServiceCardProps) => {
   const { t } = useTranslation();
   
   return (
-    <div className="bg-white p-8 rounded-xl shadow-sm text-center border border-gray-100">
+    <div className="bg-white p-8 rounded-xl shadow-sm text-center border border-gray-300">
       <div className="mb-5 inline-flex items-center justify-center w-16 h-16 rounded-full bg-brand-red/10 text-brand-red">
         {icon}
       </div>
