@@ -1,36 +1,27 @@
-
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ChevronDown } from 'lucide-react';
-
 const HeroSection = () => {
   const [isBannerVisible, setIsBannerVisible] = useState(true);
-
   useEffect(() => {
-    const handleBannerVisibilityChange = (event: CustomEvent<{isVisible: boolean}>) => {
+    const handleBannerVisibilityChange = (event: CustomEvent<{
+      isVisible: boolean;
+    }>) => {
       setIsBannerVisible(event.detail.isVisible);
     };
-
     document.addEventListener('promoBannerVisibilityChanged', handleBannerVisibilityChange as EventListener);
     return () => {
       document.removeEventListener('promoBannerVisibilityChanged', handleBannerVisibilityChange as EventListener);
     };
   }, []);
-
   const scrollToNextSection = () => {
     window.scrollTo({
       top: window.innerHeight,
       behavior: 'smooth'
     });
   };
-
-  return (
-    <section className={`relative h-screen flex items-center overflow-hidden ${
-      isBannerVisible 
-        ? 'mt-16 sm:mt-18 md:mt-20 lg:mt-20' 
-        : 'mt-8 sm:mt-10 md:mt-12 lg:mt-12'
-    }`}>
+  return <section className={`relative h-screen flex items-center overflow-hidden ${isBannerVisible ? 'mt-16 sm:mt-18 md:mt-20 lg:mt-20' : 'mt-8 sm:mt-10 md:mt-12 lg:mt-12'}`}>
       {/* Background with solid color instead of image */}
       <div className="absolute inset-0 -z-10 bg-brand-navy"></div>
 
@@ -50,20 +41,11 @@ const HeroSection = () => {
               Professional junk removal services in the Tri-State area. 
               We handle the heavy lifting so you don't have to!
             </p>
-            <div className="flex flex-col sm:flex-row gap-5 mb-12">
-              <Button 
-                asChild 
-                size="lg" 
-                className="bg-brand-red hover:bg-opacity-90 text-white font-bold text-lg px-8 py-6 shadow-xl transition-all duration-300 hover:translate-y-[-2px] rounded-lg"
-              >
+            <div className="flex flex-col sm:flex-row gap-5 mb-12 bg-transparent rounded">
+              <Button asChild size="lg" className="bg-brand-red hover:bg-opacity-90 text-white font-bold text-lg px-8 py-6 shadow-xl transition-all duration-300 hover:translate-y-[-2px] rounded-lg">
                 <Link to="/quote">Get a Free Quote</Link>
               </Button>
-              <Button 
-                asChild 
-                variant="outline" 
-                size="lg" 
-                className="border-white border-2 text-white hover:bg-white hover:text-brand-navy font-medium text-lg px-8 py-6 shadow-lg transition-all duration-300 hover:translate-y-[-2px] rounded-lg"
-              >
+              <Button asChild variant="outline" size="lg" className="border-white border-2 text-white hover:bg-white hover:text-brand-navy font-medium text-lg px-8 py-6 shadow-lg transition-all duration-300 hover:translate-y-[-2px] rounded-lg">
                 <Link to="/services">Our Services</Link>
               </Button>
             </div>
@@ -74,11 +56,7 @@ const HeroSection = () => {
             <div className="relative transform transition-all duration-500 hover:scale-105">
               {/* Floating effect animation */}
               <div className="animate-[pulse_4s_ease-in-out_infinite]">
-                <img
-                  src="/lovable-uploads/acf3ac1c-8d3b-4125-896d-7a7416fab53a.png"
-                  alt="Uncle Sam Junk Removal"
-                  className="w-full max-w-md mx-auto drop-shadow-2xl relative z-10"
-                />
+                <img src="/lovable-uploads/acf3ac1c-8d3b-4125-896d-7a7416fab53a.png" alt="Uncle Sam Junk Removal" className="w-full max-w-md mx-auto drop-shadow-2xl relative z-10" />
               </div>
               {/* Decorative elements behind the image */}
               <div className="absolute top-[-20%] right-[-10%] w-64 h-64 bg-brand-red opacity-20 rounded-full blur-2xl z-0"></div>
@@ -90,22 +68,16 @@ const HeroSection = () => {
 
       {/* Scroll down indicator */}
       <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10 text-white">
-        <button 
-          onClick={scrollToNextSection}
-          className="flex flex-col items-center opacity-80 hover:opacity-100 transition-opacity"
-        >
+        <button onClick={scrollToNextSection} className="flex flex-col items-center opacity-80 hover:opacity-100 transition-opacity">
           <span className="text-sm font-medium mb-2">Scroll Down</span>
           <ChevronDown size={24} className="animate-bounce" />
         </button>
       </div>
 
       {/* Diagonal cutout at bottom */}
-      <div 
-        className="absolute bottom-0 left-0 w-full h-24 bg-white z-5" 
-        style={{clipPath: 'polygon(0 100%, 100% 50%, 100% 100%, 0% 100%)'}}
-      ></div>
-    </section>
-  );
+      <div className="absolute bottom-0 left-0 w-full h-24 bg-white z-5" style={{
+      clipPath: 'polygon(0 100%, 100% 50%, 100% 100%, 0% 100%)'
+    }}></div>
+    </section>;
 };
-
 export default HeroSection;
