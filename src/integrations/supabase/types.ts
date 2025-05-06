@@ -9,7 +9,177 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      blogs: {
+        Row: {
+          author: string
+          category: string
+          content: string
+          created_at: string
+          date: string
+          excerpt: string
+          id: string
+          image_url: string
+          slug: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          author: string
+          category: string
+          content: string
+          created_at?: string
+          date: string
+          excerpt: string
+          id?: string
+          image_url: string
+          slug: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          author?: string
+          category?: string
+          content?: string
+          created_at?: string
+          date?: string
+          excerpt?: string
+          id?: string
+          image_url?: string
+          slug?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      contact_submissions: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          message: string
+          name: string
+          phone: string | null
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          message: string
+          name: string
+          phone?: string | null
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          message?: string
+          name?: string
+          phone?: string | null
+        }
+        Relationships: []
+      }
+      job_applications: {
+        Row: {
+          additional_info: string | null
+          availability: Json
+          created_at: string
+          education: Json | null
+          employment_history: Json | null
+          id: string
+          legal_requirements: Json
+          personal_info: Json
+          position_id: string
+          position_title: string
+          resume_info: Json
+          skills: Json | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          additional_info?: string | null
+          availability: Json
+          created_at?: string
+          education?: Json | null
+          employment_history?: Json | null
+          id?: string
+          legal_requirements: Json
+          personal_info: Json
+          position_id: string
+          position_title: string
+          resume_info: Json
+          skills?: Json | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          additional_info?: string | null
+          availability?: Json
+          created_at?: string
+          education?: Json | null
+          employment_history?: Json | null
+          id?: string
+          legal_requirements?: Json
+          personal_info?: Json
+          position_id?: string
+          position_title?: string
+          resume_info?: Json
+          skills?: Json | null
+          status?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      quote_requests: {
+        Row: {
+          address: string
+          city: string
+          contact_preference: string | null
+          created_at: string
+          description: string | null
+          email: string
+          id: string
+          image_url: string | null
+          job_type: string
+          name: string
+          phone: string
+          same_day: boolean | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          address: string
+          city: string
+          contact_preference?: string | null
+          created_at?: string
+          description?: string | null
+          email: string
+          id?: string
+          image_url?: string | null
+          job_type: string
+          name: string
+          phone: string
+          same_day?: boolean | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          address?: string
+          city?: string
+          contact_preference?: string | null
+          created_at?: string
+          description?: string | null
+          email?: string
+          id?: string
+          image_url?: string | null
+          job_type?: string
+          name?: string
+          phone?: string
+          same_day?: boolean | null
+          status?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

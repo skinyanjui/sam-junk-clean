@@ -1,15 +1,14 @@
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
-import { Briefcase, ArrowLeft, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { DialogFooter } from '@/components/ui/dialog';
+import { DialogTitle, DialogDescription } from '@/components/ui/dialog';
+import { Steps, Step } from '@/components/ui/steps';
+import { CheckCircle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
-import { Progress } from '@/components/ui/progress';
+import { supabase } from '@/integrations/supabase/client';
 
-// Form Step Components
+// Form steps
 import PersonalInfoStep from './form-steps/PersonalInfoStep';
 import ResumeUploadStep from './form-steps/ResumeUploadStep';
 import EmploymentHistoryStep from './form-steps/EmploymentHistoryStep';
@@ -19,161 +18,107 @@ import AvailabilityStep from './form-steps/AvailabilityStep';
 import LegalRequirementsStep from './form-steps/LegalRequirementsStep';
 import ReviewStep from './form-steps/ReviewStep';
 
-// Define the main form schema with Zod
-export const applicationFormSchema = z.object({
-  // Personal Information
-  personalInfo: z.object({
-    fullName: z.string().min(2, { message: 'Name must be at least 2 characters' }),
-    email: z.string().email({ message: 'Please enter a valid email address' }),
-    phone: z.string().min(10, { message: 'Please enter a valid phone number' }),
-    address: z.string().optional(),
-    city: z.string().optional(),
-    state: z.string().optional(),
-    zipCode: z.string().optional(),
-    dateOfBirth: z.date().optional(),
-    pronouns: z.string().optional(),
-    veteranStatus: z.enum(['yes', 'no', 'prefer_not_to_say']).optional(),
-  }),
-  
-  // Position Info
-  positionInfo: z.object({
-    positionId: z.string({ required_error: 'Please select a position' }),
-    coverLetter: z.string().min(50, { message: 'Cover letter should be at least 50 characters' }),
-  }),
-  
-  // Resume
-  resume: z.object({
-    fileUrl: z.string().optional(),
-    resumeLink: z.string().url().optional(),
-  }).refine(data => data.fileUrl || data.resumeLink, {
-    message: "Either upload a resume or provide a link",
-    path: ["fileUrl"],
-  }),
-  
-  // Employment History
-  employmentHistory: z.array(
-    z.object({
-      employer: z.string().min(1, { message: 'Employer name is required' }),
-      jobTitle: z.string().min(1, { message: 'Job title is required' }),
-      startDate: z.date({ required_error: 'Start date is required' }),
-      endDate: z.date().optional(),
-      isCurrentJob: z.boolean().optional(),
-      responsibilities: z.string().optional(),
-    })
-  ).optional(),
-  
-  // Education
-  education: z.array(
-    z.object({
-      institution: z.string().min(1, { message: 'Institution name is required' }),
-      degree: z.string().min(1, { message: 'Degree/certificate is required' }),
-      fieldOfStudy: z.string().optional(),
-      graduationYear: z.string().optional(),
-    })
-  ).optional(),
-  
-  // Skills
-  skills: z.object({
-    drivingExperience: z.boolean().optional(),
-    liftingCapability: z.boolean().optional(),
-    customerService: z.boolean().optional(),
-    teamwork: z.boolean().optional(),
-    organizationalSkills: z.boolean().optional(),
-    problemSolving: z.boolean().optional(),
-    additionalSkills: z.string().optional(),
-  }),
-  
-  // Availability
-  availability: z.object({
-    workType: z.enum(['full_time', 'part_time', 'contract', 'temporary']),
-    earliestStartDate: z.date(),
-    hasDriverLicense: z.boolean(),
-    driverLicenseState: z.string().optional(),
-    driverLicenseNumber: z.string().optional(),
-    hasReliableTransportation: z.boolean(),
-    preferredSchedule: z.string().optional(),
-  }),
-  
-  // Legal Requirements
-  legalRequirements: z.object({
-    isLegallyEligibleToWork: z.boolean(),
-    isOver18: z.boolean(),
-    willComplyWithBackgroundCheck: z.boolean(),
-    canPerformPhysicalTasks: z.boolean(),
-    acknowledgeTerms: z.boolean(),
-  }),
-  
-  // Additional Info
-  additionalInfo: z.string().optional(),
-});
+interface Position {
+  id: number;
+  title: string;
+}
 
-export type ApplicationFormValues = z.infer<typeof applicationFormSchema>;
+export interface ApplicationFormValues {
+  position: string;
+  personalInfo: {
+    firstName: string;
+    lastName: string;
+    email: string;
+    phone: string;
+    address: string;
+    city: string;
+    state: string;
+    zipCode: string;
+  };
+  resume: {
+    file: FileList;
+    linkedinUrl?: string;
+  };
+  employmentHistory: {
+    hasExperience: boolean;
+    jobs: {
+      employer: string;
+      position: string;
+      startDate: Date;
+      endDate?: Date;
+      current: boolean;
+      description: string;
+    }[];
+  };
+  education: {
+    highestLevel: string;
+    institutions: {
+      name: string;
+      degree: string;
+      fieldOfStudy: string;
+      graduationYear: number;
+    }[];
+  };
+  skills: {
+    drivingExperience: boolean;
+    liftingCapability: boolean;
+    customerService: boolean;
+    teamwork: boolean;
+    organizationalSkills: boolean;
+    problemSolving: boolean;
+    additionalSkills: string;
+  };
+  availability: {
+    workType: 'full-time' | 'part-time' | 'either';
+    earliestStartDate: Date;
+    hoursAvailable: string;
+    weekendAvailability: boolean;
+    additionalNotes: string;
+  };
+  legalRequirements: {
+    isLegallyEligibleToWork: boolean;
+    isOver18: boolean;
+    willComplyWithBackgroundCheck: boolean;
+    canPerformPhysicalTasks: boolean;
+    acknowledgeTerms: boolean;
+  };
+  additionalInfo?: string;
+}
 
 interface JobApplicationFormProps {
-  positions: Array<{
-    id: number;
-    title: string;
-  }>;
+  positions: Position[];
   onClose: () => void;
   preselectedPosition?: number;
 }
 
 const JobApplicationForm = ({ positions, onClose, preselectedPosition }: JobApplicationFormProps) => {
-  const { toast } = useToast();
   const [currentStep, setCurrentStep] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isCompleted, setIsCompleted] = useState(false);
+  const [resumePreview, setResumePreview] = useState<string | null>(null);
+  const { toast } = useToast();
   
-  const steps = [
-    "Personal Information",
-    "Resume",
-    "Employment History",
-    "Education",
-    "Skills",
-    "Availability",
-    "Legal Requirements",
-    "Review"
-  ];
-  
-  // Initialize form with default values
   const methods = useForm<ApplicationFormValues>({
-    resolver: zodResolver(applicationFormSchema),
     defaultValues: {
+      position: preselectedPosition?.toString() || "",
       personalInfo: {
-        fullName: '',
-        email: '',
-        phone: '',
-        address: '',
-        city: '',
-        state: '',
-        zipCode: '',
-        veteranStatus: 'prefer_not_to_say',
+        firstName: "",
+        lastName: "",
+        email: "",
+        phone: "",
+        address: "",
+        city: "",
+        state: "",
+        zipCode: ""
       },
-      positionInfo: {
-        positionId: preselectedPosition ? String(preselectedPosition) : '',
-        coverLetter: '',
+      employmentHistory: {
+        hasExperience: false,
+        jobs: []
       },
-      resume: {
-        fileUrl: '',
-        resumeLink: '',
+      education: {
+        highestLevel: "",
+        institutions: []
       },
-      employmentHistory: [
-        {
-          employer: '',
-          jobTitle: '',
-          startDate: undefined,
-          endDate: undefined,
-          isCurrentJob: false,
-          responsibilities: '',
-        }
-      ],
-      education: [
-        {
-          institution: '',
-          degree: '',
-          fieldOfStudy: '',
-          graduationYear: '',
-        }
-      ],
       skills: {
         drivingExperience: false,
         liftingCapability: false,
@@ -181,231 +126,223 @@ const JobApplicationForm = ({ positions, onClose, preselectedPosition }: JobAppl
         teamwork: false,
         organizationalSkills: false,
         problemSolving: false,
-        additionalSkills: '',
+        additionalSkills: ""
       },
       availability: {
-        workType: 'full_time',
+        workType: "full-time",
         earliestStartDate: new Date(),
-        hasDriverLicense: false,
-        driverLicenseState: '',
-        driverLicenseNumber: '',
-        hasReliableTransportation: false,
-        preferredSchedule: '',
+        hoursAvailable: "",
+        weekendAvailability: false,
+        additionalNotes: ""
       },
       legalRequirements: {
         isLegallyEligibleToWork: false,
         isOver18: false,
         willComplyWithBackgroundCheck: false,
         canPerformPhysicalTasks: false,
-        acknowledgeTerms: false,
-      },
-      additionalInfo: '',
-    },
-    mode: "onChange"
-  });
-
-  // Get values from local storage if available
-  React.useEffect(() => {
-    const savedData = localStorage.getItem('job-application-data');
-    if (savedData) {
-      try {
-        const parsedData = JSON.parse(savedData);
-        
-        // Fix date objects that were stringified
-        if (parsedData.personalInfo?.dateOfBirth) {
-          parsedData.personalInfo.dateOfBirth = new Date(parsedData.personalInfo.dateOfBirth);
-        }
-        if (parsedData.availability?.earliestStartDate) {
-          parsedData.availability.earliestStartDate = new Date(parsedData.availability.earliestStartDate);
-        }
-        if (parsedData.employmentHistory) {
-          parsedData.employmentHistory = parsedData.employmentHistory.map((job: any) => ({
-            ...job,
-            startDate: job.startDate ? new Date(job.startDate) : undefined,
-            endDate: job.endDate ? new Date(job.endDate) : undefined,
-          }));
-        }
-        
-        methods.reset(parsedData);
-        toast({
-          title: "Application draft restored",
-          description: "Your previously saved application has been loaded.",
-        });
-      } catch (error) {
-        console.error("Error restoring form data:", error);
+        acknowledgeTerms: false
       }
     }
-  }, []);
+  });
+  
+  const { handleSubmit, watch } = methods;
+  const selectedPosition = watch('position');
 
-  // Save form data to local storage on changes
-  const watchedValues = methods.watch();
-  React.useEffect(() => {
-    localStorage.setItem('job-application-data', JSON.stringify(watchedValues));
-  }, [watchedValues]);
+  const steps = [
+    { name: "Personal Information", component: <PersonalInfoStep /> },
+    { name: "Resume", component: <ResumeUploadStep resumePreview={resumePreview} setResumePreview={setResumePreview} /> },
+    { name: "Employment History", component: <EmploymentHistoryStep /> },
+    { name: "Education", component: <EducationStep /> },
+    { name: "Skills", component: <SkillsStep /> },
+    { name: "Availability", component: <AvailabilityStep /> },
+    { name: "Legal Requirements", component: <LegalRequirementsStep /> },
+    { name: "Review", component: <ReviewStep /> }
+  ];
 
-  const nextStep = async () => {
-    const stepFieldsMap: Record<number, string[]> = {
-      0: ['personalInfo', 'positionInfo'], // Personal Info step
-      1: ['resume'],                       // Resume step
-      2: ['employmentHistory'],            // Employment History step
-      3: ['education'],                    // Education step
-      4: ['skills'],                       // Skills step
-      5: ['availability'],                 // Availability step
-      6: ['legalRequirements'],            // Legal Requirements step
-      // Step 7 is review, no validation needed
-    };
-
+  const nextStep = () => {
     if (currentStep < steps.length - 1) {
-      // Validate only the fields for the current step
-      const fieldsToValidate = stepFieldsMap[currentStep];
-      
-      if (fieldsToValidate) {
-        const isValid = await methods.trigger(fieldsToValidate as any);
-        if (isValid) {
-          setCurrentStep(prev => prev + 1);
-          window.scrollTo(0, 0);
-        }
-      } else {
-        // If no specific fields to validate for this step, just proceed
-        setCurrentStep(prev => prev + 1);
-        window.scrollTo(0, 0);
-      }
+      setCurrentStep(currentStep + 1);
     }
   };
 
   const prevStep = () => {
     if (currentStep > 0) {
-      setCurrentStep(prev => prev - 1);
-      window.scrollTo(0, 0);
+      setCurrentStep(currentStep - 1);
     }
   };
 
   const onSubmit = async (data: ApplicationFormValues) => {
     setIsSubmitting(true);
+    
     try {
-      // In a real application, you would send this data to your backend
-      console.log('Application submitted:', data);
+      // Convert FileList to File for upload
+      const resumeFile = data.resume.file[0];
+      let resumeUrl = "";
       
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      if (resumeFile) {
+        const fileName = `resume_${Date.now()}_${resumeFile.name}`;
+        const { error: uploadError } = await supabase.storage
+          .from('public')
+          .upload(fileName, resumeFile);
+          
+        if (uploadError) {
+          throw uploadError;
+        }
+        
+        // Get public URL
+        const { data: { publicUrl } } = supabase.storage
+          .from('public')
+          .getPublicUrl(fileName);
+          
+        resumeUrl = publicUrl;
+      }
       
+      // Find the position title
+      const positionTitle = positions.find(p => p.id.toString() === data.position)?.title || "Unknown Position";
+      
+      // Format application data for Supabase
+      const applicationData = {
+        position_id: data.position,
+        position_title: positionTitle,
+        personal_info: data.personalInfo,
+        resume_info: {
+          resume_url: resumeUrl,
+          linkedin_url: data.resume.linkedinUrl
+        },
+        employment_history: data.employmentHistory,
+        education: data.education,
+        skills: data.skills,
+        availability: data.availability,
+        legal_requirements: data.legalRequirements
+      };
+      
+      // Submit to Supabase
+      const { error } = await supabase
+        .from('job_applications')
+        .insert([applicationData]);
+        
+      if (error) {
+        throw error;
+      }
+      
+      setIsCompleted(true);
       toast({
-        title: "Application submitted!",
-        description: "We've received your application and will contact you soon.",
+        title: "Application Submitted!",
+        description: "Thank you for applying. We'll review your application soon.",
       });
       
-      // Clear saved application data
-      localStorage.removeItem('job-application-data');
-      
-      // Close the dialog
-      onClose();
+      // Reset form after 3 seconds and close
+      setTimeout(() => {
+        onClose();
+      }, 3000);
     } catch (error) {
       console.error('Error submitting application:', error);
       toast({
-        title: "Submission failed",
-        description: "There was an error submitting your application. Please try again.",
+        title: "Submission Failed",
+        description: "There was a problem submitting your application. Please try again.",
         variant: "destructive"
       });
-    } finally {
       setIsSubmitting(false);
     }
   };
-  
-  const renderStepContent = () => {
-    switch (currentStep) {
-      case 0:
-        return <PersonalInfoStep positions={positions} />;
-      case 1:
-        return <ResumeUploadStep />;
-      case 2:
-        return <EmploymentHistoryStep />;
-      case 3:
-        return <EducationStep />;
-      case 4:
-        return <SkillsStep />;
-      case 5:
-        return <AvailabilityStep />;
-      case 6:
-        return <LegalRequirementsStep />;
-      case 7:
-        return <ReviewStep />;
-      default:
-        return null;
+
+  // Create a storage bucket for file uploads if we don't already have one
+  const ensureStorageBucket = async () => {
+    // This check is just to ensure we have proper file storage capabilities
+    // In a production app, you'd create this bucket through SQL migrations
+    const { error } = await supabase.storage.getBucket('public');
+    if (error && error.code === 'PGRST116') {
+      // Bucket doesn't exist, create it
+      await supabase.storage.createBucket('public', { public: true });
     }
   };
 
-  const progress = ((currentStep + 1) / steps.length) * 100;
+  // Ensure storage bucket exists when component mounts
+  ensureStorageBucket();
 
   return (
-    <FormProvider {...methods}>
-      <form onSubmit={methods.handleSubmit(onSubmit)} className="space-y-6 px-2">
-        <div className="flex items-center gap-2 mb-4">
-          <Briefcase className="h-5 w-5 text-brand-red" />
-          <h2 className="text-lg font-semibold">Job Application</h2>
-        </div>
-        
-        {/* Progress bar and steps */}
-        <div className="mb-6 space-y-2">
-          <div className="flex justify-between text-sm">
-            <span>Step {currentStep + 1} of {steps.length}</span>
-            <span>{steps[currentStep]}</span>
+    <div className="max-w-2xl mx-auto">
+      <DialogTitle className="text-2xl font-bold text-brand-navy mb-2">
+        {isCompleted ? "Application Submitted!" : "Job Application"}
+      </DialogTitle>
+      <DialogDescription className="text-gray-600 mb-6">
+        {isCompleted 
+          ? "Thank you for your interest in joining our team. We'll be in touch soon."
+          : "Please complete all sections of the application form below."
+        }
+      </DialogDescription>
+      
+      {isCompleted ? (
+        <div className="text-center py-10">
+          <div className="mx-auto w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
+            <CheckCircle className="text-green-600 w-10 h-10" />
           </div>
-          <Progress value={progress} className="h-2" />
+          <h3 className="text-xl font-semibold mb-2">Application Successfully Submitted</h3>
+          <p className="text-gray-600 mb-6">
+            We've received your application and will review it shortly. Thank you for your interest in joining Uncle Sam Junk Removal!
+          </p>
         </div>
-
-        {/* Step content */}
-        <div className="space-y-6">
-          {renderStepContent()}
-        </div>
-
-        {/* Navigation buttons */}
-        <DialogFooter className="flex gap-2 sm:justify-between mt-6">
-          <div>
-            {currentStep > 0 && (
+      ) : (
+        <FormProvider {...methods}>
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
+            <div className="hidden md:block mb-8">
+              <Steps active={currentStep} count={steps.length}>
+                {steps.map((step, index) => (
+                  <Step key={index} title={step.name} />
+                ))}
+              </Steps>
+            </div>
+            
+            <div className="md:hidden mb-4">
+              <h3 className="font-medium text-gray-700">
+                Step {currentStep + 1} of {steps.length}: {steps[currentStep].name}
+              </h3>
+            </div>
+            
+            <div className="py-4">
+              {steps[currentStep].component}
+            </div>
+            
+            <div className="flex justify-between pt-6 border-t">
               <Button 
                 type="button" 
                 variant="outline" 
-                onClick={prevStep}
-                className="flex items-center gap-2"
-                disabled={isSubmitting}
+                onClick={currentStep === 0 ? onClose : prevStep}
               >
-                <ArrowLeft className="h-4 w-4" /> Back
+                {currentStep === 0 ? "Cancel" : "Previous"}
               </Button>
-            )}
-          </div>
-          
-          <div className="flex gap-2">
-            <Button 
-              type="button" 
-              variant="outline" 
-              onClick={onClose}
-              disabled={isSubmitting}
-            >
-              Cancel
-            </Button>
-            
-            {currentStep < steps.length - 1 ? (
-              <Button 
-                type="button" 
-                className="bg-brand-navy hover:bg-opacity-90"
-                onClick={nextStep}
-                disabled={isSubmitting}
-              >
-                Next <ArrowRight className="h-4 w-4 ml-1" />
-              </Button>
-            ) : (
-              <Button 
-                type="submit" 
-                className="bg-brand-red hover:bg-opacity-90"
-                disabled={isSubmitting}
-              >
-                {isSubmitting ? "Submitting..." : "Submit Application"}
-              </Button>
-            )}
-          </div>
-        </DialogFooter>
-      </form>
-    </FormProvider>
+              
+              <div className="space-x-2">
+                {currentStep < steps.length - 1 ? (
+                  <Button 
+                    type="button" 
+                    onClick={nextStep}
+                    disabled={!selectedPosition && currentStep === 0}
+                  >
+                    Continue
+                  </Button>
+                ) : (
+                  <Button 
+                    type="submit" 
+                    disabled={isSubmitting}
+                  >
+                    {isSubmitting ? (
+                      <span className="flex items-center">
+                        <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        Submitting...
+                      </span>
+                    ) : "Submit Application"}
+                  </Button>
+                )}
+              </div>
+            </div>
+          </form>
+        </FormProvider>
+      )}
+    </div>
   );
 };
 

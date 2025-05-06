@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { useToast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
 
 // Form components
 import ValidationSummary from './form/ValidationSummary';
@@ -26,6 +27,7 @@ const QuoteForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [imageFile, setImageFile] = useState<File | null>(null);
   const { toast } = useToast();
   
   const methods = useForm<QuoteFormData>();
@@ -34,6 +36,7 @@ const QuoteForm = () => {
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
+      setImageFile(file);
       const reader = new FileReader();
       reader.onloadend = () => {
         setImagePreview(reader.result as string);
@@ -44,23 +47,73 @@ const QuoteForm = () => {
 
   const handleImageRemove = () => {
     setImagePreview(null);
+    setImageFile(null);
   };
 
-  const onSubmit = (data: QuoteFormData) => {
+  const onSubmit = async (data: QuoteFormData) => {
     setIsSubmitting(true);
     
-    // Simulate API request
-    setTimeout(() => {
-      console.log('Form submitted:', data);
+    try {
+      let imageUrl = null;
+      
+      // Upload image if exists
+      if (imageFile) {
+        const fileName = `quote_request_${Date.now()}_${imageFile.name}`;
+        const { error: uploadError, data: uploadData } = await supabase.storage
+          .from('public')
+          .upload(fileName, imageFile);
+          
+        if (uploadError) {
+          throw uploadError;
+        }
+        
+        // Get the public URL
+        const { data: { publicUrl } } = supabase.storage
+          .from('public')
+          .getPublicUrl(fileName);
+          
+        imageUrl = publicUrl;
+      }
+      
+      // Insert quote request into Supabase
+      const { error } = await supabase
+        .from('quote_requests')
+        .insert([{
+          name: data.name,
+          email: data.email,
+          phone: data.phone,
+          address: data.address,
+          city: data.city,
+          job_type: data.jobType,
+          description: data.description,
+          same_day: data.sameDay,
+          contact_preference: data.contactPreference,
+          image_url: imageUrl
+        }]);
+        
+      if (error) {
+        throw error;
+      }
+      
       toast({
         title: "Quote Request Submitted!",
         description: "We'll contact you shortly with a free estimate.",
       });
-      setIsSubmitting(false);
-      setIsSubmitted(false);
-      setImagePreview(null);
+      
       reset();
-    }, 1500);
+      setImagePreview(null);
+      setImageFile(null);
+      setIsSubmitted(false);
+    } catch (error) {
+      console.error('Error submitting quote request:', error);
+      toast({
+        title: "Submission Failed",
+        description: "There was a problem sending your quote request. Please try again.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const onError = () => {

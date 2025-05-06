@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
 
 interface ContactFormData {
   name: string;
@@ -20,19 +21,34 @@ const ContactForm = () => {
   
   const { register, handleSubmit, formState: { errors }, reset } = useForm<ContactFormData>();
 
-  const onSubmit = (data: ContactFormData) => {
+  const onSubmit = async (data: ContactFormData) => {
     setIsSubmitting(true);
     
-    // Simulate API request
-    setTimeout(() => {
-      console.log('Form submitted:', data);
+    try {
+      // Submit to Supabase
+      const { error } = await supabase
+        .from('contact_submissions')
+        .insert([data]);
+      
+      if (error) {
+        throw error;
+      }
+      
       toast({
         title: "Message Sent!",
         description: "We'll get back to you as soon as possible.",
       });
-      setIsSubmitting(false);
       reset();
-    }, 1500);
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      toast({
+        title: "Submission Failed",
+        description: "There was a problem sending your message. Please try again.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
