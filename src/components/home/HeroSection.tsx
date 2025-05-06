@@ -31,15 +31,8 @@ const HeroSection = () => {
         ? 'mt-16 sm:mt-18 md:mt-20 lg:mt-20' 
         : 'mt-8 sm:mt-10 md:mt-12 lg:mt-12'
     }`}>
-      {/* Background image with overlay */}
-      <div className="absolute inset-0 -z-10">
-        <img 
-          src="https://images.unsplash.com/photo-1571568154021-5a3580633ebb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" 
-          alt="Junk removal service" 
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-brand-navy/90 to-brand-navy/75"></div>
-      </div>
+      {/* Background with solid color instead of image */}
+      <div className="absolute inset-0 -z-10 bg-brand-navy"></div>
 
       {/* Content container */}
       <div className="container-custom relative z-10 mt-[-2rem] md:mt-[-4rem]">

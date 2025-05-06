@@ -32,8 +32,6 @@ const ServicesHero = () => {
           ? 'pt-20 sm:pt-22 md:pt-24 lg:pt-24' 
           : 'pt-12 sm:pt-14 md:pt-16 lg:pt-16'
       } pb-16 bg-brand-navy text-white relative`}>
-        {/* Add a subtle pattern overlay */}
-        <div className="absolute inset-0 opacity-5 bg-[url('https://www.transparenttextures.com/patterns/diamond-upholstery.png')]"></div>
         
         <div className="container-custom">
           <div className="max-w-3xl mx-auto text-center z-10 relative">

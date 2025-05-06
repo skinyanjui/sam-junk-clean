@@ -21,8 +21,6 @@ const QuoteHero = () => {
         ? 'pt-24 sm:pt-26 md:pt-28 lg:pt-28' 
         : 'pt-16 sm:pt-18 md:pt-20 lg:pt-20'
     } pb-20 bg-brand-navy text-white relative`}>
-      {/* Add a subtle pattern overlay */}
-      <div className="absolute inset-0 opacity-5 bg-[url('https://www.transparenttextures.com/patterns/diamond-upholstery.png')]"></div>
       
       <div className="container-custom">
         <div className="max-w-3xl mx-auto text-center z-10 relative">
