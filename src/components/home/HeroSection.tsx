@@ -17,7 +17,7 @@ const HeroSection = () => {
       <div className="absolute inset-0 -z-10 bg-brand-navy"></div>
 
       {/* Content container */}
-      <div className="container-custom relative z-10 mt-[-2rem] md:mt-[-4rem]">
+      <div className="container-custom relative z-10 mt-[-1rem] md:mt-[-3rem]">
         <div className="grid md:grid-cols-12 gap-8 items-center">
           {/* Hero content - spans 7 columns on medium screens and up */}
           <div className="md:col-span-7 text-white">

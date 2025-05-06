@@ -19,8 +19,8 @@ const PageLayout = ({
   return (
     <div className="flex flex-col min-h-screen">
       <Navbar />
-      {/* Static spacer for header */}
-      <div className="h-[80px]"></div>
+      {/* Static spacer for header with increased padding */}
+      <div className="h-[100px]"></div>
       <main className="flex-grow">
         {showBreadcrumb && (
           <div className={breadcrumbClassName}>
