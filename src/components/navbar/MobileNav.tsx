@@ -1,6 +1,5 @@
 
 import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
 import MobileMenuItem from './MobileMenuItem';
 
 interface MobileNavProps {
@@ -35,9 +34,9 @@ const MobileNav = ({ navStructure, currentPath, isOpen, openDropdown, setOpenDro
           />
         ))}
         <div className="mt-4">
-          <Button asChild className="w-full bg-brand-red hover:bg-opacity-90">
-            <Link to="/quote">Get a Free Quote</Link>
-          </Button>
+          <Link to="/quote" className="block w-full bg-brand-red hover:bg-opacity-90 text-white font-medium py-2.5 px-4 rounded-lg text-center">
+            Get a Free Quote
+          </Link>
         </div>
       </nav>
     </div>
