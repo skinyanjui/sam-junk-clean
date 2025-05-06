@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
-import { ApplicationFormValues } from '../JobApplicationForm';
+import { ApplicationFormValues } from '../types/ApplicationFormValues';
 import { ListCheck } from 'lucide-react';
 import {
   FormField,
@@ -66,7 +66,7 @@ const SkillsStep = () => {
           <FormField
             key={skill.id}
             control={control}
-            name={`skills.${skill.id as keyof ApplicationFormValues['skills']}`}
+            name={`skills.${String(skill.id) as keyof ApplicationFormValues['skills']}`}
             render={({ field }) => (
               <FormItem className="flex flex-row space-x-3 space-y-0 items-start rounded-md border p-4">
                 <FormControl>

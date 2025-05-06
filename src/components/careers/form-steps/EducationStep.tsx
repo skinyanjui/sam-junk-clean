@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { useFormContext, useFieldArray } from 'react-hook-form';
-import { ApplicationFormValues } from '../JobApplicationForm';
+import { ApplicationFormValues } from '../types/ApplicationFormValues';
 import { School, Plus, Trash2 } from 'lucide-react';
 import {
   FormField,
