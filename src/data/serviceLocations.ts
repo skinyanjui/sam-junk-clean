@@ -8,8 +8,8 @@ export const serviceLocations: LocationData[] = [
     isPrimary: true,
     serviceRadius: "30+ miles from Evansville",
     primaryCity: "Evansville",
-    contactPhone: "(800) 555-1234",
-    contactEmail: "indiana@unclesamjunk.com",
+    contactPhone: "(812) 610-1657",
+    contactEmail: "indiana@unclesamjunkremoval.com",
     serviceAreas: [
       "Evansville", 
       "Newburgh", 
@@ -29,8 +29,8 @@ export const serviceLocations: LocationData[] = [
     isPrimary: false,
     serviceRadius: "25+ miles from Owensboro",
     primaryCity: "Owensboro",
-    contactPhone: "(800) 555-5678",
-    contactEmail: "kentucky@unclesamjunk.com",
+    contactPhone: "(812) 610-1657",
+    contactEmail: "kentucky@unclesamjunkremoval.com",
     serviceAreas: [
       "Owensboro",
       "Henderson", 
@@ -50,8 +50,8 @@ export const serviceLocations: LocationData[] = [
     isPrimary: false,
     serviceRadius: "20+ miles from Mt. Carmel",
     primaryCity: "Mt. Carmel",
-    contactPhone: "(800) 555-9012",
-    contactEmail: "illinois@unclesamjunk.com",
+    contactPhone: "(812) 610-1657",
+    contactEmail: "illinois@unclesamjunkremoval.com",
     serviceAreas: [
       "Mt. Carmel", 
       "Grayville", 

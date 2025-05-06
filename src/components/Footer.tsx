@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Facebook, Instagram, Twitter, Linkedin, Phone, Mail, MapPin, ChevronDown, ChevronUp } from 'lucide-react';
@@ -154,7 +155,7 @@ const Footer = () => {
                 </li>
                 <li className="flex items-center justify-center md:justify-start">
                   <Mail size={16} className="mr-2 text-brand-red" />
-                  <a href="mailto:info@unclesamjunk.com" className="text-gray-300">info@unclesamjunk.com</a>
+                  <a href="mailto:info@unclesamjunkremoval.com" className="text-gray-300">info@unclesamjunkremoval.com</a>
                 </li>
                 <li className="flex items-center justify-center md:justify-start">
                   <MapPin size={16} className="mr-2 text-brand-red" />
