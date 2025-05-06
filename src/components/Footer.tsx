@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Facebook, Instagram, Twitter, Linkedin, Phone, Mail, MapPin, ChevronDown, ChevronUp } from 'lucide-react';
@@ -38,7 +37,7 @@ const Footer = () => {
             <img 
               src="/lovable-uploads/acf3ac1c-8d3b-4125-896d-7a7416fab53a.png" 
               alt="Uncle Sam Junk Removal" 
-              className="h-14 mb-4"
+              className="h-20 mb-4"
             />
             <div className="flex space-x-3 mt-3">
               <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="bg-white/10 p-2 rounded-full">
