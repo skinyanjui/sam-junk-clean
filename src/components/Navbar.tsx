@@ -30,13 +30,13 @@ const Navbar = () => {
 
   // Listen for banner visibility changes
   useEffect(() => {
-    const handleBannerVisibilityChange = (event: any) => {
+    const handleBannerVisibilityChange = (event: CustomEvent<{isVisible: boolean}>) => {
       setIsBannerVisible(event.detail.isVisible);
     };
 
-    document.addEventListener('promoBannerVisibilityChanged', handleBannerVisibilityChange);
+    document.addEventListener('promoBannerVisibilityChanged', handleBannerVisibilityChange as EventListener);
     return () => {
-      document.removeEventListener('promoBannerVisibilityChanged', handleBannerVisibilityChange);
+      document.removeEventListener('promoBannerVisibilityChanged', handleBannerVisibilityChange as EventListener);
     };
   }, []);
 

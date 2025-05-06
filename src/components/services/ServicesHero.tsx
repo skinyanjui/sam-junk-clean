@@ -8,13 +8,13 @@ const ServicesHero = () => {
   const [isBannerVisible, setIsBannerVisible] = useState(true);
 
   useEffect(() => {
-    const handleBannerVisibilityChange = (event: any) => {
+    const handleBannerVisibilityChange = (event: CustomEvent<{isVisible: boolean}>) => {
       setIsBannerVisible(event.detail.isVisible);
     };
 
-    document.addEventListener('promoBannerVisibilityChanged', handleBannerVisibilityChange);
+    document.addEventListener('promoBannerVisibilityChanged', handleBannerVisibilityChange as EventListener);
     return () => {
-      document.removeEventListener('promoBannerVisibilityChanged', handleBannerVisibilityChange);
+      document.removeEventListener('promoBannerVisibilityChanged', handleBannerVisibilityChange as EventListener);
     };
   }, []);
 
@@ -27,7 +27,11 @@ const ServicesHero = () => {
       />
       
       {/* Hero Section */}
-      <section className={`${isBannerVisible ? 'pt-20' : 'pt-12'} pb-16 bg-brand-navy text-white relative`}>
+      <section className={`${
+        isBannerVisible 
+          ? 'pt-20 sm:pt-22 md:pt-24 lg:pt-24' 
+          : 'pt-12 sm:pt-14 md:pt-16 lg:pt-16'
+      } pb-16 bg-brand-navy text-white relative`}>
         {/* Add a subtle pattern overlay */}
         <div className="absolute inset-0 opacity-5 bg-[url('https://www.transparenttextures.com/patterns/diamond-upholstery.png')]"></div>
         

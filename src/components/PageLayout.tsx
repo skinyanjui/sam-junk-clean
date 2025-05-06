@@ -19,20 +19,20 @@ const PageLayout = ({
   const [isBannerVisible, setIsBannerVisible] = useState(true);
 
   useEffect(() => {
-    const handleBannerVisibilityChange = (event: any) => {
+    const handleBannerVisibilityChange = (event: CustomEvent<{isVisible: boolean}>) => {
       setIsBannerVisible(event.detail.isVisible);
     };
 
-    document.addEventListener('promoBannerVisibilityChanged', handleBannerVisibilityChange);
+    document.addEventListener('promoBannerVisibilityChanged', handleBannerVisibilityChange as EventListener);
     return () => {
-      document.removeEventListener('promoBannerVisibilityChanged', handleBannerVisibilityChange);
+      document.removeEventListener('promoBannerVisibilityChanged', handleBannerVisibilityChange as EventListener);
     };
   }, []);
 
   return (
     <div className="flex flex-col min-h-screen">
       <Navbar />
-      <main className={`flex-grow ${isBannerVisible ? 'pt-24 md:pt-28' : 'pt-16 md:pt-20'}`}>
+      <main className={`flex-grow ${isBannerVisible ? 'pt-24 sm:pt-26 md:pt-28 lg:pt-28' : 'pt-16 sm:pt-18 md:pt-20 lg:pt-20'}`}>
         {showBreadcrumb && (
           <div className={breadcrumbClassName}>
             <Breadcrumb />

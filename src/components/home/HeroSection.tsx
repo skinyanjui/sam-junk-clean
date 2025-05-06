@@ -8,13 +8,13 @@ const HeroSection = () => {
   const [isBannerVisible, setIsBannerVisible] = useState(true);
 
   useEffect(() => {
-    const handleBannerVisibilityChange = (event: any) => {
+    const handleBannerVisibilityChange = (event: CustomEvent<{isVisible: boolean}>) => {
       setIsBannerVisible(event.detail.isVisible);
     };
 
-    document.addEventListener('promoBannerVisibilityChanged', handleBannerVisibilityChange);
+    document.addEventListener('promoBannerVisibilityChanged', handleBannerVisibilityChange as EventListener);
     return () => {
-      document.removeEventListener('promoBannerVisibilityChanged', handleBannerVisibilityChange);
+      document.removeEventListener('promoBannerVisibilityChanged', handleBannerVisibilityChange as EventListener);
     };
   }, []);
 
@@ -26,7 +26,11 @@ const HeroSection = () => {
   };
 
   return (
-    <section className={`relative h-screen flex items-center overflow-hidden ${isBannerVisible ? 'mt-16 md:mt-20' : 'mt-8 md:mt-12'}`}>
+    <section className={`relative h-screen flex items-center overflow-hidden ${
+      isBannerVisible 
+        ? 'mt-16 sm:mt-18 md:mt-20 lg:mt-20' 
+        : 'mt-8 sm:mt-10 md:mt-12 lg:mt-12'
+    }`}>
       {/* Background image with overlay */}
       <div className="absolute inset-0 -z-10">
         <img 
