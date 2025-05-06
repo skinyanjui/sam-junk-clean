@@ -151,7 +151,7 @@ const Footer = () => {
               <ul className="space-y-2 text-sm">
                 <li className="flex items-center justify-center md:justify-start">
                   <Phone size={16} className="mr-2 text-brand-red" />
-                  <a href="tel:+18126101657" className="text-gray-300">+1 (812) 610-1657</a>
+                  <a href="tel:+18126101657" className="text-gray-300">(812) 610-1657</a>
                 </li>
                 <li className="flex items-center justify-center md:justify-start">
                   <Mail size={16} className="mr-2 text-brand-red" />

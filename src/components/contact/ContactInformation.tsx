@@ -15,7 +15,7 @@ const ContactInformation = () => {
             <h3 className="text-xl font-semibold text-brand-navy mb-1">Phone</h3>
             <p className="text-gray-700">
               <a href="tel:+18126101657" className="hover:text-brand-red transition-colors text-lg">
-                +1 (812) 610-1657
+                (812) 610-1657
               </a>
             </p>
           </div>
