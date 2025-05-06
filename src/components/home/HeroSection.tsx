@@ -1,7 +1,7 @@
 
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, Star, Award, CircleCheck } from 'lucide-react';
 
 const HeroSection = () => {
   const scrollToNextSection = () => {
@@ -13,63 +13,116 @@ const HeroSection = () => {
   
   return (
     <section className="relative h-screen flex items-center overflow-hidden">
-      {/* Background with solid color instead of image */}
-      <div className="absolute inset-0 -z-10 bg-brand-navy"></div>
+      {/* Premium gradient background with animated particles */}
+      <div className="absolute inset-0 -z-10">
+        <div className="absolute inset-0 bg-gradient-to-br from-brand-navy via-brand-navy/95 to-black"></div>
+        
+        {/* Premium animated patterns */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-0 left-0 w-full h-full bg-[url('https://images.unsplash.com/photo-1548684606-74b9d30bda5f')] bg-cover opacity-10 mix-blend-overlay"></div>
+        </div>
+        
+        {/* Animated floating shapes for premium feel */}
+        <div className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-brand-blue/10 blur-3xl animate-[pulse_15s_ease-in-out_infinite]"></div>
+        <div className="absolute top-3/4 left-2/3 w-96 h-96 rounded-full bg-brand-red/10 blur-3xl animate-[pulse_20s_ease-in-out_infinite_1s]"></div>
+        <div className="absolute top-1/3 right-1/4 w-80 h-80 rounded-full bg-brand-yellow/5 blur-3xl animate-[pulse_18s_ease-in-out_infinite_0.5s]"></div>
+      </div>
 
       {/* Content container */}
       <div className="container-custom relative z-10 mt-[-1rem] md:mt-[-3rem]">
+        {/* Premium badge - social proof & scarcity principles */}
+        <div className="absolute top-0 right-10 md:right-20 transform -translate-y-1/2 hidden md:flex items-center gap-2 bg-white/10 backdrop-blur-md px-4 py-2 rounded-full text-white/90 text-sm border border-white/20 shadow-lg">
+          <Star className="text-brand-yellow w-4 h-4" />
+          <span>Trusted by 10,000+ homeowners</span>
+        </div>
+
         <div className="grid md:grid-cols-12 gap-8 items-center">
-          {/* Hero content - spans 7 columns on medium screens and up */}
-          <div className="md:col-span-7 text-white">
+          {/* Hero content - spans 12 columns on medium screens for premium feel */}
+          <div className="md:col-span-12 lg:col-span-8 text-white">
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold mb-6 leading-tight tracking-tight">
-              Uncle Sam Wants <span className="text-brand-red">YOU</span> <br />
+              Uncle Sam Wants <span className="text-brand-red animate-[pulse_3s_ease-in-out_infinite]">YOU</span> <br />
               <span className="relative inline-block">
                 <span className="relative z-10">to Live Junk-Free!</span>
                 <span className="absolute bottom-2 left-0 h-3 w-full bg-brand-red/30 -z-10"></span>
               </span>
             </h1>
+            
             <p className="text-xl md:text-2xl opacity-90 mb-10 leading-relaxed max-w-2xl">
               Professional junk removal services in the Tri-State area. 
               We handle the heavy lifting so you don't have to!
             </p>
-            <div className="flex flex-col sm:flex-row gap-5 mb-12 bg-transparent rounded">
-              <Button asChild size="lg" className="bg-brand-red text-white font-bold text-lg px-8 py-6 shadow-xl rounded-lg">
+            
+            {/* Value proposition points - development & accomplishment principle */}
+            <div className="flex flex-col space-y-3 mb-10">
+              <div className="flex items-center gap-2">
+                <CircleCheck className="text-brand-red h-5 w-5" />
+                <span className="text-white/80">Premium service with same-day availability</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <CircleCheck className="text-brand-red h-5 w-5" />
+                <span className="text-white/80">Veteran-owned, professional and reliable</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <CircleCheck className="text-brand-red h-5 w-5" />
+                <span className="text-white/80">Eco-friendly disposal guaranteed</span>
+              </div>
+            </div>
+            
+            {/* Enhanced CTA section */}
+            <div className="flex flex-col sm:flex-row gap-5 mb-12 relative">
+              <Button 
+                asChild 
+                size="lg" 
+                className="bg-brand-red hover:bg-brand-red/90 text-white font-bold text-lg px-8 py-6 shadow-[0_8px_30px_rgb(178,34,52,0.3)] rounded-lg transition-all duration-300 hover:-translate-y-1"
+              >
                 <Link to="/quote">Get a Free Quote</Link>
               </Button>
-              <Button asChild variant="outline" size="lg" className="border-white border-2 text-white hover:bg-white hover:text-brand-navy font-medium text-lg px-8 py-6 shadow-lg rounded-lg">
+              <Button 
+                asChild 
+                variant="outline" 
+                size="lg" 
+                className="border-white/70 border-2 text-white hover:bg-white hover:text-brand-navy font-medium text-lg px-8 py-6 shadow-lg rounded-lg transition-all duration-300 hover:-translate-y-1"
+              >
                 <Link to="/services">Our Services</Link>
               </Button>
+              
+              {/* Premium badge - social influence principle */}
+              <div className="absolute -bottom-10 left-0 flex items-center gap-2 md:hidden">
+                <Award className="text-brand-yellow w-5 h-5" />
+                <span className="text-white/80 text-sm">Top-rated in Tri-State area</span>
+              </div>
             </div>
           </div>
 
-          {/* Hero image - spans 5 columns on medium screens and up */}
-          <div className="md:col-span-5 relative hidden md:block">
-            <div className="relative">
-              {/* Floating effect animation */}
-              <div className="animate-[pulse_4s_ease-in-out_infinite]">
-                <img 
-                  src="https://images.unsplash.com/photo-1487252665478-49b61b47f302" 
-                  alt="Junk Removal Service" 
-                  className="w-full max-w-md mx-auto drop-shadow-2xl relative z-10 rounded-lg object-cover h-[400px]" 
-                />
-              </div>
-              {/* Decorative elements behind the image */}
-              <div className="absolute top-[-20%] right-[-10%] w-64 h-64 bg-brand-red opacity-20 rounded-full blur-2xl z-0"></div>
-              <div className="absolute bottom-[-10%] left-[-15%] w-80 h-80 bg-brand-blue opacity-20 rounded-full blur-2xl z-0"></div>
+          {/* Visual elements column - creates space and visual balance */}
+          <div className="hidden lg:block lg:col-span-4">
+            <div className="relative h-[500px] w-full">
+              {/* Premium decorative elements */}
+              <div className="absolute top-1/4 right-1/4 w-40 h-40 rounded-full border-4 border-white/10 transform rotate-45"></div>
+              <div className="absolute bottom-1/4 left-1/3 w-60 h-60 rounded-full border-4 border-white/5"></div>
+              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-gradient-to-br from-brand-red/20 to-brand-blue/20 rounded-full blur-xl"></div>
+              
+              {/* Floating elements */}
+              <div className="absolute top-0 right-10 w-20 h-20 bg-brand-red/10 rounded-full blur-xl animate-[pulse_4s_ease-in-out_infinite]"></div>
+              <div className="absolute bottom-20 left-10 w-16 h-16 bg-brand-blue/10 rounded-full blur-xl animate-[pulse_4s_ease-in-out_infinite_0.5s]"></div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Scroll down indicator */}
+      {/* Enhanced scroll down indicator */}
       <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10 text-white">
-        <button onClick={scrollToNextSection} className="flex flex-col items-center opacity-80 hover:opacity-100 transition-opacity">
-          <span className="text-sm font-medium mb-2">Scroll Down</span>
-          <ChevronDown size={24} className="animate-bounce" />
+        <button 
+          onClick={scrollToNextSection} 
+          className="flex flex-col items-center opacity-80 hover:opacity-100 transition-opacity group"
+          aria-label="Scroll down to learn more"
+        >
+          <span className="text-sm font-medium mb-2 group-hover:text-brand-red transition-colors">Scroll Down</span>
+          <ChevronDown size={24} className="animate-bounce group-hover:text-brand-red transition-colors" />
         </button>
       </div>
 
-      {/* Diagonal cutout at bottom */}
+      {/* Diagonal cutout at bottom with enhanced styling */}
       <div className="absolute bottom-0 left-0 w-full h-24 bg-white z-5" style={{
         clipPath: 'polygon(0 100%, 100% 50%, 100% 100%, 0% 100%)'
       }}></div>
