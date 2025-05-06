@@ -12,7 +12,7 @@ const HeroSection = () => {
   };
 
   return (
-    <section className="relative h-screen flex items-center overflow-hidden">
+    <section className="relative h-screen flex items-center overflow-hidden mt-16 md:mt-20">
       {/* Background image with overlay */}
       <div className="absolute inset-0 -z-10">
         <img 
@@ -24,7 +24,7 @@ const HeroSection = () => {
       </div>
 
       {/* Content container */}
-      <div className="container-custom relative z-10 mt-[-4rem]">
+      <div className="container-custom relative z-10 mt-[-2rem] md:mt-[-4rem]">
         <div className="grid md:grid-cols-12 gap-8 items-center">
           {/* Hero content - spans 7 columns on medium screens and up */}
           <div className="md:col-span-7 text-white">

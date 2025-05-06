@@ -19,7 +19,7 @@ const PageLayout = ({
   return (
     <div className="flex flex-col min-h-screen">
       <Navbar />
-      <main className="flex-grow pt-20">
+      <main className="flex-grow pt-24 md:pt-28">
         {showBreadcrumb && (
           <div className={breadcrumbClassName}>
             <Breadcrumb />

@@ -9,9 +9,9 @@ const PromoLBanner = () => {
   if (!isVisible) return null;
 
   return (
-    <div className="bg-brand-navy py-2 px-4 text-center relative animate-fade-in">
+    <div className="bg-brand-navy py-3 px-4 text-center relative animate-fade-in">
       <div className="container-custom flex items-center justify-center">
-        <p className="text-white text-sm md:text-base font-medium">
+        <p className="text-white text-sm md:text-base font-medium py-0.5">
           <span className="mr-2">🎉 Spring cleaning special: 15% off your first junk removal!</span>
           <Link 
             to="/quote" 
