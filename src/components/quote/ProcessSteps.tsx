@@ -1,7 +1,11 @@
 
 import React from 'react';
 
-const ProcessSteps = () => {
+interface ProcessStepsProps {
+  highlightFirst?: boolean;
+}
+
+const ProcessSteps: React.FC<ProcessStepsProps> = ({ highlightFirst = false }) => {
   return (
     <section className="py-16 bg-brand-gray">
       <div className="container-custom">
@@ -12,7 +16,7 @@ const ProcessSteps = () => {
           </p>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-white p-6 rounded-lg shadow-sm">
+            <div className={`bg-white p-6 rounded-lg shadow-sm ${highlightFirst ? 'ring-2 ring-brand-red' : ''}`}>
               <div className="text-brand-navy font-bold text-4xl mb-3">1</div>
               <h3 className="text-xl font-bold text-brand-navy mb-2">Submit your request</h3>
               <p className="text-gray-600">Fill out our form with details about your junk removal needs.</p>
