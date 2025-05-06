@@ -1,5 +1,5 @@
 
-import { ReactNode, useState, useEffect } from 'react';
+import { ReactNode } from 'react';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import { Breadcrumb } from './Breadcrumb';
@@ -16,24 +16,11 @@ const PageLayout = ({
   showBreadcrumb = true,
   breadcrumbClassName = "bg-gray-50 py-2" 
 }: PageLayoutProps) => {
-  const [isBannerVisible, setIsBannerVisible] = useState(true);
-
-  useEffect(() => {
-    const handleBannerVisibilityChange = (event: CustomEvent<{isVisible: boolean}>) => {
-      setIsBannerVisible(event.detail.isVisible);
-    };
-
-    document.addEventListener('promoBannerVisibilityChanged', handleBannerVisibilityChange as EventListener);
-    return () => {
-      document.removeEventListener('promoBannerVisibilityChanged', handleBannerVisibilityChange as EventListener);
-    };
-  }, []);
-
   return (
     <div className="flex flex-col min-h-screen">
       <Navbar />
-      {/* Adjustable spacer based on banner visibility */}
-      <div className={`${isBannerVisible ? 'h-[120px]' : 'h-[80px]'} transition-all duration-300`}></div>
+      {/* Static spacer for header */}
+      <div className="h-[80px]"></div>
       <main className="flex-grow">
         {showBreadcrumb && (
           <div className={breadcrumbClassName}>

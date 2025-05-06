@@ -1,23 +1,9 @@
 
-import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import SEO from '@/components/SEO';
 
 const ServicesHero = () => {
-  const [isBannerVisible, setIsBannerVisible] = useState(true);
-
-  useEffect(() => {
-    const handleBannerVisibilityChange = (event: CustomEvent<{isVisible: boolean}>) => {
-      setIsBannerVisible(event.detail.isVisible);
-    };
-
-    document.addEventListener('promoBannerVisibilityChanged', handleBannerVisibilityChange as EventListener);
-    return () => {
-      document.removeEventListener('promoBannerVisibilityChanged', handleBannerVisibilityChange as EventListener);
-    };
-  }, []);
-
   return (
     <>
       <SEO

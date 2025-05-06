@@ -1,20 +1,7 @@
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 const QuoteHero = () => {
-  const [isBannerVisible, setIsBannerVisible] = useState(true);
-
-  useEffect(() => {
-    const handleBannerVisibilityChange = (event: CustomEvent<{isVisible: boolean}>) => {
-      setIsBannerVisible(event.detail.isVisible);
-    };
-
-    document.addEventListener('promoBannerVisibilityChanged', handleBannerVisibilityChange as EventListener);
-    return () => {
-      document.removeEventListener('promoBannerVisibilityChanged', handleBannerVisibilityChange as EventListener);
-    };
-  }, []);
-
   return (
     <section className="pb-20 bg-brand-navy text-white relative">
       <div className="container-custom pt-12">

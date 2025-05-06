@@ -1,25 +1,9 @@
 
-import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ChevronDown } from 'lucide-react';
 
 const HeroSection = () => {
-  const [isBannerVisible, setIsBannerVisible] = useState(true);
-  
-  useEffect(() => {
-    const handleBannerVisibilityChange = (event: CustomEvent<{
-      isVisible: boolean;
-    }>) => {
-      setIsBannerVisible(event.detail.isVisible);
-    };
-    
-    document.addEventListener('promoBannerVisibilityChanged', handleBannerVisibilityChange as EventListener);
-    return () => {
-      document.removeEventListener('promoBannerVisibilityChanged', handleBannerVisibilityChange as EventListener);
-    };
-  }, []);
-  
   const scrollToNextSection = () => {
     window.scrollTo({
       top: window.innerHeight,
@@ -28,7 +12,7 @@ const HeroSection = () => {
   };
   
   return (
-    <section className={`relative h-screen flex items-center overflow-hidden`}>
+    <section className="relative h-screen flex items-center overflow-hidden">
       {/* Background with solid color instead of image */}
       <div className="absolute inset-0 -z-10 bg-brand-navy"></div>
 

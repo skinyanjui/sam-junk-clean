@@ -6,14 +6,12 @@ import DesktopNav from './navbar/DesktopNav';
 import MobileNav from './navbar/MobileNav';
 import MobileToggle from './navbar/MobileToggle';
 import MobileCta from './navbar/MobileCta';
-import PromoLBanner from './PromoLBanner';
 import { navStructure } from './navbar/navData';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
-  const [isBannerVisible, setIsBannerVisible] = useState(true);
   const location = useLocation();
 
   // Handle scroll effect
@@ -28,18 +26,6 @@ const Navbar = () => {
     };
   }, []);
 
-  // Listen for banner visibility changes
-  useEffect(() => {
-    const handleBannerVisibilityChange = (event: CustomEvent<{isVisible: boolean}>) => {
-      setIsBannerVisible(event.detail.isVisible);
-    };
-
-    document.addEventListener('promoBannerVisibilityChanged', handleBannerVisibilityChange as EventListener);
-    return () => {
-      document.removeEventListener('promoBannerVisibilityChanged', handleBannerVisibilityChange as EventListener);
-    };
-  }, []);
-
   // Close mobile menu when route changes
   useEffect(() => {
     setIsOpen(false);
@@ -49,8 +35,7 @@ const Navbar = () => {
   const toggleMenu = () => setIsOpen(!isOpen);
 
   return (
-    <header className={`fixed w-full z-50 top-0 ${!isBannerVisible ? 'banner-closed' : ''}`}>
-      <PromoLBanner />
+    <header className="fixed w-full z-50 top-0">
       <div 
         className={`w-full transition-all duration-300 ${
           scrolled 
