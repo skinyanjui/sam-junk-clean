@@ -1,9 +1,23 @@
 
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ChevronDown } from 'lucide-react';
 
 const HeroSection = () => {
+  const [isBannerVisible, setIsBannerVisible] = useState(true);
+
+  useEffect(() => {
+    const handleBannerVisibilityChange = (event: any) => {
+      setIsBannerVisible(event.detail.isVisible);
+    };
+
+    document.addEventListener('promoBannerVisibilityChanged', handleBannerVisibilityChange);
+    return () => {
+      document.removeEventListener('promoBannerVisibilityChanged', handleBannerVisibilityChange);
+    };
+  }, []);
+
   const scrollToNextSection = () => {
     window.scrollTo({
       top: window.innerHeight,
@@ -12,7 +26,7 @@ const HeroSection = () => {
   };
 
   return (
-    <section className="relative h-screen flex items-center overflow-hidden mt-16 md:mt-20">
+    <section className={`relative h-screen flex items-center overflow-hidden ${isBannerVisible ? 'mt-16 md:mt-20' : 'mt-8 md:mt-12'}`}>
       {/* Background image with overlay */}
       <div className="absolute inset-0 -z-10">
         <img 

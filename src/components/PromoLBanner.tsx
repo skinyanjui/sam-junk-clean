@@ -1,10 +1,18 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { X } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const PromoLBanner = () => {
   const [isVisible, setIsVisible] = useState(true);
+
+  // When visibility changes, dispatch a custom event so other components can react
+  useEffect(() => {
+    // Dispatch a custom event when the banner visibility changes
+    document.dispatchEvent(new CustomEvent('promoBannerVisibilityChanged', { 
+      detail: { isVisible } 
+    }));
+  }, [isVisible]);
 
   if (!isVisible) return null;
 

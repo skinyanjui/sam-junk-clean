@@ -1,9 +1,22 @@
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 const QuoteHero = () => {
+  const [isBannerVisible, setIsBannerVisible] = useState(true);
+
+  useEffect(() => {
+    const handleBannerVisibilityChange = (event: any) => {
+      setIsBannerVisible(event.detail.isVisible);
+    };
+
+    document.addEventListener('promoBannerVisibilityChanged', handleBannerVisibilityChange);
+    return () => {
+      document.removeEventListener('promoBannerVisibilityChanged', handleBannerVisibilityChange);
+    };
+  }, []);
+
   return (
-    <section className="pt-24 pb-20 bg-brand-navy text-white relative">
+    <section className={`${isBannerVisible ? 'pt-24' : 'pt-16'} pb-20 bg-brand-navy text-white relative`}>
       {/* Add a subtle pattern overlay */}
       <div className="absolute inset-0 opacity-5 bg-[url('https://www.transparenttextures.com/patterns/diamond-upholstery.png')]"></div>
       

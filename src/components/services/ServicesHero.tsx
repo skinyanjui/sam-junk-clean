@@ -1,9 +1,23 @@
 
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import SEO from '@/components/SEO';
 
 const ServicesHero = () => {
+  const [isBannerVisible, setIsBannerVisible] = useState(true);
+
+  useEffect(() => {
+    const handleBannerVisibilityChange = (event: any) => {
+      setIsBannerVisible(event.detail.isVisible);
+    };
+
+    document.addEventListener('promoBannerVisibilityChanged', handleBannerVisibilityChange);
+    return () => {
+      document.removeEventListener('promoBannerVisibilityChanged', handleBannerVisibilityChange);
+    };
+  }, []);
+
   return (
     <>
       <SEO
@@ -13,7 +27,7 @@ const ServicesHero = () => {
       />
       
       {/* Hero Section */}
-      <section className="pt-20 pb-16 bg-brand-navy text-white relative">
+      <section className={`${isBannerVisible ? 'pt-20' : 'pt-12'} pb-16 bg-brand-navy text-white relative`}>
         {/* Add a subtle pattern overlay */}
         <div className="absolute inset-0 opacity-5 bg-[url('https://www.transparenttextures.com/patterns/diamond-upholstery.png')]"></div>
         
