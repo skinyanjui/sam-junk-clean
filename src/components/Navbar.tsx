@@ -43,10 +43,16 @@ const Navbar = () => {
             : 'bg-white/95 py-2 pb-0'
         }`}
       >
-        <div className="container-custom flex items-center justify-between">
-          <NavLogo />
-          <DesktopNav navStructure={navStructure} currentPath={location.pathname} />
-          <MobileToggle isOpen={isOpen} toggleMenu={toggleMenu} />
+        <div className="container-custom flex items-center">
+          <div className="flex-none">
+            <NavLogo />
+          </div>
+          <div className="flex-1 flex justify-center">
+            <DesktopNav navStructure={navStructure} currentPath={location.pathname} />
+          </div>
+          <div className="flex-none">
+            <MobileToggle isOpen={isOpen} toggleMenu={toggleMenu} />
+          </div>
         </div>
 
         <MobileNav 

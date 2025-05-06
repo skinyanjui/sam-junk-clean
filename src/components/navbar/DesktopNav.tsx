@@ -17,7 +17,7 @@ interface DesktopNavProps {
 
 const DesktopNav = ({ navStructure, currentPath }: DesktopNavProps) => {
   return (
-    <nav className="hidden md:flex items-center space-x-2">
+    <nav className="hidden md:flex items-center justify-center space-x-4">
       {navStructure.map((item) => (
         <NavItem 
           key={item.path} 
@@ -27,7 +27,7 @@ const DesktopNav = ({ navStructure, currentPath }: DesktopNavProps) => {
       ))}
       <a 
         href="tel:+18126101657" 
-        className="ml-4 flex items-center gap-1.5 bg-brand-red text-white px-3.5 py-2 rounded-lg shadow-sm"
+        className="ml-4 flex items-center gap-1.5 bg-brand-red text-white px-3.5 py-2 rounded-lg shadow-sm border-0"
       >
         <Phone size={16} />
         <span className="font-semibold">(812) 610-1657</span>
