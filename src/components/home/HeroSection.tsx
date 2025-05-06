@@ -47,7 +47,11 @@ const HeroSection = () => {
             <div className="relative">
               {/* Floating effect animation */}
               <div className="animate-[pulse_4s_ease-in-out_infinite]">
-                <img src="/lovable-uploads/acf3ac1c-8d3b-4125-896d-7a7416fab53a.png" alt="Uncle Sam Junk Removal" className="w-full max-w-md mx-auto drop-shadow-2xl relative z-10" />
+                <img 
+                  src="https://images.unsplash.com/photo-1487252665478-49b61b47f302" 
+                  alt="Junk Removal Service" 
+                  className="w-full max-w-md mx-auto drop-shadow-2xl relative z-10 rounded-lg object-cover h-[400px]" 
+                />
               </div>
               {/* Decorative elements behind the image */}
               <div className="absolute top-[-20%] right-[-10%] w-64 h-64 bg-brand-red opacity-20 rounded-full blur-2xl z-0"></div>
