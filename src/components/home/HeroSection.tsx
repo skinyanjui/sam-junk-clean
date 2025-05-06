@@ -4,17 +4,26 @@ import { Button } from '@/components/ui/button';
 
 const HeroSection = () => {
   return (
-    <section className="relative bg-gradient-to-b from-brand-navy to-brand-navy/95 text-white pt-32 pb-36 overflow-hidden">
+    <section className="relative bg-brand-navy pt-32 pb-36 overflow-hidden">
+      {/* Full background image with overlay */}
+      <div className="absolute inset-0 bg-black/50 z-0">
+        <img 
+          src="https://images.unsplash.com/photo-1571568154021-5a3580633ebb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" 
+          alt="Junk removal service" 
+          className="w-full h-full object-cover mix-blend-overlay opacity-80"
+        />
+      </div>
+      
       {/* Pattern overlay */}
-      <div className="absolute inset-0 opacity-5 bg-[url('https://www.transparenttextures.com/patterns/diamond-upholstery.png')]"></div>
+      <div className="absolute inset-0 opacity-5 bg-[url('https://www.transparenttextures.com/patterns/diamond-upholstery.png')] z-10"></div>
       
       {/* Decorative elements */}
-      <div className="absolute top-20 left-10 w-64 h-64 bg-brand-red opacity-10 rounded-full blur-3xl"></div>
-      <div className="absolute bottom-10 right-10 w-80 h-80 bg-brand-blue opacity-10 rounded-full blur-3xl"></div>
+      <div className="absolute top-20 left-10 w-64 h-64 bg-brand-red opacity-10 rounded-full blur-3xl z-10"></div>
+      <div className="absolute bottom-10 right-10 w-80 h-80 bg-brand-blue opacity-10 rounded-full blur-3xl z-10"></div>
       
-      <div className="container-custom relative z-10">
+      <div className="container-custom relative z-20">
         <div className="grid md:grid-cols-2 gap-12 items-center">
-          <div>
+          <div className="text-white backdrop-blur-sm bg-black/30 p-8 rounded-xl border border-white/10 shadow-2xl">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-6 leading-tight">
               Uncle Sam Wants YOU... <br className="hidden sm:block" />
               <span className="text-brand-red drop-shadow-sm">to Live Junk-Free!</span>
@@ -41,20 +50,18 @@ const HeroSection = () => {
               </Button>
             </div>
           </div>
-          <div className="relative hidden md:flex justify-end items-center">
-            <div className="absolute -left-8 -top-8 w-40 h-40 bg-brand-blue opacity-20 rounded-full blur-2xl"></div>
-            <div className="absolute -right-12 -bottom-12 w-56 h-56 bg-brand-red opacity-20 rounded-full blur-2xl"></div>
+          <div className="relative hidden md:block">
             <img
               src="/lovable-uploads/acf3ac1c-8d3b-4125-896d-7a7416fab53a.png"
               alt="Uncle Sam Junk Removal"
-              className="w-full max-w-md mx-auto animate-fade-in rounded-xl shadow-2xl border-4 border-white/10 relative z-10 hover-scale transition-all duration-500"
+              className="w-full max-w-md mx-auto drop-shadow-2xl rounded-xl relative z-10 hover-scale transition-all duration-500"
             />
           </div>
         </div>
       </div>
       
       {/* Diagonal cutout at bottom */}
-      <div className="absolute bottom-0 left-0 w-full h-28 bg-white" style={{clipPath: 'polygon(0 100%, 100% 0, 100% 100%, 0% 100%)'}}></div>
+      <div className="absolute bottom-0 left-0 w-full h-28 bg-white z-20" style={{clipPath: 'polygon(0 100%, 100% 0, 100% 100%, 0% 100%)'}}></div>
     </section>
   );
 };
