@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { useFormContext } from 'react-hook-form';
-import { ApplicationFormValues } from '../JobApplicationForm';
+import { ApplicationFormValues } from '../types/ApplicationFormValues';
 import { FormField, FormItem, FormLabel, FormControl, FormDescription, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -9,7 +9,8 @@ import { Label } from '@/components/ui/label';
 import { Upload, Loader, AlertTriangle, FileText, X } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
-const ResumeUploadStep = () => {
+// This is the same component but now using the externalized type from our new types file
+const ResumeUploadStep: React.FC = () => {
   const { control, setValue, watch } = useFormContext<ApplicationFormValues>();
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);

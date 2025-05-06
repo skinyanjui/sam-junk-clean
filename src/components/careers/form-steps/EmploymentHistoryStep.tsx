@@ -41,7 +41,7 @@ const EmploymentHistoryStep = () => {
       startDate: undefined,
       endDate: undefined,
       isCurrentJob: false,
-      responsibilities: '',
+      description: '', // Changed from responsibilities to description to match the type
     });
   };
 
@@ -136,7 +136,9 @@ const EmploymentHistoryStep = () => {
                             )}
                           >
                             {field.value ? (
-                              format(field.value, "MMM yyyy")
+                              typeof field.value === 'string' 
+                                ? field.value 
+                                : format(field.value, "MMM yyyy")
                             ) : (
                               <span>Select date</span>
                             )}
@@ -147,7 +149,7 @@ const EmploymentHistoryStep = () => {
                       <PopoverContent className="w-auto p-0" align="start">
                         <Calendar
                           mode="single"
-                          selected={field.value}
+                          selected={field.value instanceof Date ? field.value : undefined}
                           onSelect={field.onChange}
                           disabled={(date) => date > new Date()}
                           initialFocus
@@ -197,7 +199,9 @@ const EmploymentHistoryStep = () => {
                                 )}
                               >
                                 {field.value ? (
-                                  format(field.value, "MMM yyyy")
+                                  typeof field.value === 'string' 
+                                    ? field.value 
+                                    : format(field.value, "MMM yyyy")
                                 ) : (
                                   <span>Select date</span>
                                 )}
@@ -208,7 +212,7 @@ const EmploymentHistoryStep = () => {
                           <PopoverContent className="w-auto p-0" align="start">
                             <Calendar
                               mode="single"
-                              selected={field.value}
+                              selected={field.value instanceof Date ? field.value : undefined}
                               onSelect={field.onChange}
                               disabled={(date) => date > new Date()}
                               initialFocus
@@ -226,7 +230,7 @@ const EmploymentHistoryStep = () => {
 
             <FormField
               control={control}
-              name={`employmentHistory.${index}.responsibilities`}
+              name={`employmentHistory.${index}.description`}
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Responsibilities & Achievements</FormLabel>
@@ -234,7 +238,10 @@ const EmploymentHistoryStep = () => {
                     <Textarea 
                       placeholder="Describe your key responsibilities, achievements, and relevant skills..."
                       className="min-h-[100px]" 
-                      {...field} 
+                      value={field.value || ''}
+                      onChange={field.onChange}
+                      onBlur={field.onBlur}
+                      name={field.name}
                     />
                   </FormControl>
                   <FormMessage />

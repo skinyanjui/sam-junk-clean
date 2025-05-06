@@ -1,8 +1,12 @@
 
-import PageLayout from '@/components/PageLayout';
-import SEO from '@/components/SEO';
 import { useState } from 'react';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { ArrowRight } from 'lucide-react';
+
+import PageLayout from '@/components/PageLayout';
+import SEO from '@/components/SEO';
 import JobApplicationForm from '@/components/careers/JobApplicationForm';
 import CareerHero from '@/components/careers/CareerHero';
 import WhyWorkWithUs from '@/components/careers/WhyWorkWithUs';
@@ -10,9 +14,6 @@ import JobListings from '@/components/careers/JobListings';
 import ApplicationProcess from '@/components/careers/ApplicationProcess';
 import CareersCta from '@/components/careers/CareersCta';
 import { jobListings } from '@/components/careers/jobData';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { ArrowRight } from 'lucide-react';
 
 const Careers = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);

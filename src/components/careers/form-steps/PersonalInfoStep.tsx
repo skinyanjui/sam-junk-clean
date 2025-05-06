@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
-import { ApplicationFormValues } from '../JobApplicationForm';
+import { ApplicationFormValues } from '../types/ApplicationFormValues';
 import { User, Calendar, AtSign, Phone } from 'lucide-react';
 import {
   FormField,

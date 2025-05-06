@@ -1,8 +1,8 @@
 
 import React from 'react';
-import { useFormContext } from 'react-hook-form';
-import { ApplicationFormValues } from '../JobApplicationForm';
-import { Calendar, CalendarIcon } from 'lucide-react';
+import { useFormContext, Controller } from 'react-hook-form';
+import { ApplicationFormValues } from '../types/ApplicationFormValues';
+import { Calendar as CalendarIcon } from 'lucide-react';
 import {
   FormField,
   FormItem,
@@ -21,19 +21,19 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
-import { Calendar as CalendarComponent } from '@/components/ui/calendar';
+import { Calendar } from '@/components/ui/calendar';
 import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
 
-const AvailabilityStep = () => {
+const AvailabilityStep: React.FC = () => {
   const { control, watch } = useFormContext<ApplicationFormValues>();
   
-  const hasDriverLicense = watch('availability.hasDriverLicense') || false;
+  const hasDriverLicense = watch('availability.hasDriverLicense');
 
   return (
     <div className="space-y-6">
       <div className="flex items-center gap-2">
-        <Calendar className="h-5 w-5 text-brand-navy" />
+        <CalendarIcon className="h-5 w-5 text-brand-navy" />
         <h3 className="text-lg font-medium">Availability & Requirements</h3>
       </div>
       
@@ -114,7 +114,7 @@ const AvailabilityStep = () => {
                 </FormControl>
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0" align="start">
-                <CalendarComponent
+                <Calendar
                   mode="single"
                   selected={field.value}
                   onSelect={field.onChange}
@@ -155,7 +155,7 @@ const AvailabilityStep = () => {
       <div className="border-t pt-6 mt-6">
         <h4 className="text-base font-medium mb-4">Transportation Requirements</h4>
 
-        <FormField
+        <Controller
           control={control}
           name="availability.hasDriverLicense"
           render={({ field }) => (
@@ -178,13 +178,16 @@ const AvailabilityStep = () => {
 
         {hasDriverLicense && (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-            <FormField
+            <Controller
               control={control}
               name="availability.driverLicenseState"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Driver's License State</FormLabel>
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <Select 
+                    onValueChange={field.onChange} 
+                    value={field.value || ''}
+                  >
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue placeholder="Select state" />
@@ -264,7 +267,7 @@ const AvailabilityStep = () => {
           </div>
         )}
 
-        <FormField
+        <Controller
           control={control}
           name="availability.hasReliableTransportation"
           render={({ field }) => (

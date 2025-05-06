@@ -27,13 +27,13 @@ const EducationStep = () => {
       institution: '',
       degree: '',
       fieldOfStudy: '',
-      graduationYear: '',
+      graduationYear: undefined, // Changed from '' to undefined to fix type error
     });
   };
 
   // Generate years for dropdown (from current year back 80 years)
   const currentYear = new Date().getFullYear();
-  const years = Array.from({ length: 80 }, (_, i) => (currentYear - i).toString());
+  const years = Array.from({ length: 80 }, (_, i) => (currentYear - i));
 
   return (
     <div className="space-y-6">
@@ -143,7 +143,10 @@ const EducationStep = () => {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Graduation Year</FormLabel>
-                    <Select onValueChange={field.onChange} value={field.value}>
+                    <Select 
+                      onValueChange={(value) => field.onChange(value === 'Current' ? value : Number(value))} 
+                      value={field.value?.toString()}
+                    >
                       <FormControl>
                         <SelectTrigger>
                           <SelectValue placeholder="Select year" />
@@ -152,7 +155,7 @@ const EducationStep = () => {
                       <SelectContent>
                         <SelectItem value="Current">Currently Enrolled</SelectItem>
                         {years.map((year) => (
-                          <SelectItem key={year} value={year}>
+                          <SelectItem key={year} value={year.toString()}>
                             {year}
                           </SelectItem>
                         ))}
