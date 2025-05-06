@@ -28,7 +28,7 @@ const HeroSection = () => {
   };
   
   return (
-    <section className={`relative h-screen flex items-center overflow-hidden mt-8`}>
+    <section className={`relative h-screen flex items-center overflow-hidden`}>
       {/* Background with solid color instead of image */}
       <div className="absolute inset-0 -z-10 bg-brand-navy"></div>
 
