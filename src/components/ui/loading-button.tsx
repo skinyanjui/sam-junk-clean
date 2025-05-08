@@ -35,7 +35,7 @@ const LoadingButton = React.forwardRef<HTMLButtonElement, LoadingButtonProps>(
       <Button
         ref={ref}
         className={cn(
-          "transition-all duration-200 relative",
+          "transition-all duration-200 relative shadow-sm",
           isLoading && "opacity-90",
           className
         )}

@@ -35,7 +35,7 @@ const MobileNav = ({ navStructure, currentPath, isOpen, openDropdown, setOpenDro
           />
         ))}
         <div className="mt-4">
-          <Button asChild className="w-full bg-brand-red hover:bg-opacity-90">
+          <Button asChild className="w-full bg-brand-red hover:bg-opacity-90 shadow-md">
             <Link to="/quote">Get a Free Quote</Link>
           </Button>
         </div>

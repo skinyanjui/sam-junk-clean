@@ -123,22 +123,23 @@
     @apply transition-transform duration-300 hover:scale-105;
   }
 
-  /* Add dark borders to cards and interactive elements */
+  /* Modify borders to be lighter */
   .card, .ui-card {
-    @apply border border-gray-300;
+    @apply border border-gray-200;
   }
   
   .form-input, .form-select, .form-textarea {
-    @apply border border-gray-300;
+    @apply border border-gray-200;
   }
   
+  /* Remove dark borders from buttons */
   .btn, button[type="submit"], button[type="button"] {
-    @apply border border-gray-300;
+    @apply border-0;
   }
   
   /* Custom map styles */
   .custom-popup .leaflet-popup-content-wrapper {
-    @apply bg-white rounded-lg shadow-lg border border-gray-300 px-1;
+    @apply bg-white rounded-lg shadow-lg border border-gray-100 px-1;
   }
   
   .custom-popup .leaflet-popup-tip {

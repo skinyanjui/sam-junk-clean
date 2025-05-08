@@ -27,20 +27,20 @@ const NavItem = ({ item, isActive }: NavItemProps) => {
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <button
-            className={`px-2.5 py-1.5 text-sm font-medium flex items-center ${
-              isActive ? 'text-brand-red font-semibold' : 'text-gray-800'
+            className={`px-2.5 py-1.5 text-sm font-medium flex items-center transition-colors ${
+              isActive ? 'text-brand-red font-semibold' : 'text-gray-800 hover:text-brand-red'
             }`}
           >
             {item.name}
             <ChevronDown className="ml-1 h-3 w-3" />
           </button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="center" sideOffset={5} className="bg-white shadow-md">
+        <DropdownMenuContent align="center" sideOffset={5} className="bg-white shadow-md rounded-md overflow-hidden">
           {item.dropdownItems?.map((dropdownItem) => (
-            <DropdownMenuItem key={dropdownItem.path} asChild>
+            <DropdownMenuItem key={dropdownItem.path} asChild className="cursor-pointer">
               <Link
                 to={dropdownItem.path}
-                className="w-full px-4 py-2 text-sm text-gray-700 cursor-pointer"
+                className="w-full px-4 py-2 text-sm text-gray-700 hover:text-brand-red hover:bg-gray-50 transition-colors"
               >
                 {dropdownItem.name}
               </Link>
@@ -54,8 +54,8 @@ const NavItem = ({ item, isActive }: NavItemProps) => {
   return (
     <Link
       to={item.path}
-      className={`px-2.5 py-1.5 text-sm font-medium ${
-        isActive ? 'text-brand-red font-semibold' : 'text-gray-800'
+      className={`px-2.5 py-1.5 text-sm font-medium transition-colors ${
+        isActive ? 'text-brand-red font-semibold' : 'text-gray-800 hover:text-brand-red'
       }`}
     >
       {item.name}

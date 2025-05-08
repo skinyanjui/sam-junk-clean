@@ -11,14 +11,14 @@ const MobileToggle = ({ isOpen, toggleMenu }: MobileToggleProps) => {
     <div className="flex items-center md:hidden">
       <a 
         href="tel:+18126101657" 
-        className="mr-4 bg-brand-red text-white p-2 rounded-lg hover:bg-opacity-90 shadow-sm"
+        className="mr-4 bg-brand-red text-white p-2 rounded-lg hover:bg-opacity-90 shadow-sm transition-all duration-300"
         aria-label="Call us"
       >
         <Phone size={18} />
       </a>
       <button
         onClick={toggleMenu}
-        className="text-brand-navy p-1.5 focus:outline-none"
+        className="text-brand-navy p-1.5 focus:outline-none transition-colors duration-300"
         aria-label="Toggle menu"
       >
         {isOpen ? <X size={22} /> : <Menu size={22} />}
