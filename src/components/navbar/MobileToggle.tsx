@@ -19,7 +19,7 @@ const MobileToggle = ({ isOpen, toggleMenu }: MobileToggleProps) => {
         }`}
         aria-label="Call us"
       >
-        <Phone size={isLandscapeMobile ? 16 : 18} className="touch-target" />
+        <Phone size={isLandscapeMobile ? 14 : 16} className="touch-target" />
       </a>
       <button
         onClick={toggleMenu}
@@ -29,8 +29,8 @@ const MobileToggle = ({ isOpen, toggleMenu }: MobileToggleProps) => {
         aria-label="Toggle menu"
       >
         {isOpen ? 
-          <X size={isLandscapeMobile ? 20 : 22} className="touch-target" /> : 
-          <Menu size={isLandscapeMobile ? 20 : 22} className="touch-target" />
+          <X size={isLandscapeMobile ? 18 : 20} className="touch-target" /> : 
+          <Menu size={isLandscapeMobile ? 18 : 20} className="touch-target" />
         }
       </button>
     </div>

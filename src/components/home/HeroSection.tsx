@@ -71,10 +71,7 @@ const HeroSection = () => {
           <div className="md:col-span-12 lg:col-span-8 text-white">
             <h1 className={`text-4xl ${isLandscapeMobile ? 'text-4xl' : 'sm:text-5xl md:text-6xl lg:text-7xl'} font-extrabold mb-4 md:mb-6 leading-tight tracking-tight`}>
               Uncle Sam Wants <span className="text-brand-red animate-[pulse_3s_ease-in-out_infinite]">YOU</span> <br className={isLandscapeMobile ? 'hidden' : 'inline'} />
-              <span className="relative inline-block">
-                <span className="relative z-10">to Live Junk-Free!</span>
-                <span className="absolute bottom-2 left-0 h-3 w-full bg-brand-red/30 -z-10"></span>
-              </span>
+              to Live Junk-Free!
             </h1>
             
             <p className={`${isLandscapeMobile ? 'text-base mb-4' : 'text-lg sm:text-xl md:text-2xl mb-6 md:mb-10'} opacity-90 leading-relaxed max-w-2xl`}>
