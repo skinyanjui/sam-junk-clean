@@ -1,11 +1,14 @@
 
-import { Check, MapPin } from 'lucide-react';
+import { Check, Award, Users, Truck, Calendar, Leaf, Shield } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { Card } from '@/components/ui/card';
-import { useIsMobile } from '@/hooks/use-mobile';
+import { Badge } from '@/components/ui/badge';
+import { useTranslation } from 'react-i18next';
 
 const WhyChooseUs = () => {
+  const { t } = useTranslation();
+  
   const benefits = [
     'Veteran-owned and operated business',
     'Fast and reliable service - often same-day',
@@ -15,22 +18,21 @@ const WhyChooseUs = () => {
     'Serving the entire Tri-State area'
   ];
 
-  const serviceAreas = [
-    { name: 'Evansville, IN', x: 40, y: 40 },
-    { name: 'Newburgh, IN', x: 50, y: 35 },
-    { name: 'Henderson, KY', x: 38, y: 55 },
-    { name: 'Owensboro, KY', x: 25, y: 65 },
-    { name: 'Mt. Carmel, IL', x: 60, y: 20 },
-    { name: 'Princeton, IN', x: 55, y: 30 },
-    { name: 'Boonville, IN', x: 45, y: 50 },
-    { name: 'Vincennes, IN', x: 65, y: 25 },
-    { name: 'Madisonville, KY', x: 30, y: 70 },
-    { name: 'Carmi, IL', x: 15, y: 30 },
-    { name: 'Fairfield, IL', x: 10, y: 15 },
-    { name: 'Grayville, IL', x: 18, y: 25 },
+  // Service statistics to showcase coverage
+  const serviceStats = [
+    { value: '25+', label: 'Cities Served', icon: Truck },
+    { value: '3', label: 'States Covered', icon: Shield },
+    { value: '1000+', label: 'Satisfied Customers', icon: Users },
+    { value: '24h', label: 'Response Time', icon: Calendar },
   ];
 
-  const isMobile = useIsMobile();
+  // Certifications and recognitions
+  const certifications = [
+    { name: 'Veteran Owned', color: 'bg-brand-navy/10 text-brand-navy' },
+    { name: 'Fully Insured', color: 'bg-brand-red/10 text-brand-red' },
+    { name: 'Eco Friendly', color: 'bg-green-100 text-green-800' },
+    { name: 'BBB Accredited', color: 'bg-blue-100 text-blue-800' },
+  ];
 
   return (
     <section className="py-24 bg-gradient-to-b from-white to-brand-gray/40 relative">
@@ -38,7 +40,7 @@ const WhyChooseUs = () => {
       <div className="absolute top-0 left-0 w-full h-1/2 bg-[url('https://www.transparenttextures.com/patterns/subtle-white-feathers.png')] opacity-[0.05]"></div>
       
       <div className="container-custom relative z-10">
-        <div className="md:flex items-center gap-16">
+        <div className="md:flex items-start gap-16">
           <div className="md:w-1/2 mb-12 md:mb-0">
             <span className="text-brand-red font-semibold uppercase tracking-wider mb-2 block">Why Choose Us</span>
             <h2 className="text-4xl md:text-5xl font-bold text-brand-navy mb-8">Why Choose Uncle Sam?</h2>
@@ -60,59 +62,69 @@ const WhyChooseUs = () => {
             </Button>
           </div>
           
-          <div className="md:w-1/2">
-            <Card className="p-6 shadow-xl overflow-hidden rounded-xl border-0 bg-white">
-              <h3 className="text-2xl font-bold text-brand-navy mb-6">Our Service Area</h3>
-              <div className="aspect-[4/3] bg-white relative rounded-lg border border-gray-200 overflow-hidden">
-                {/* Stylized map */}
-                <div className="absolute inset-0 bg-gradient-to-br from-brand-gray/30 to-white rounded-lg overflow-hidden">
-                  {/* State borders with enhanced styling */}
-                  <div className="absolute w-1/3 h-full left-0 border-r-2 border-dashed border-gray-300/50"></div>
-                  <div className="absolute w-1/3 h-full right-0 border-l-2 border-dashed border-gray-300/50"></div>
-                  <div className="absolute w-full h-1/2 top-0 border-b-2 border-dashed border-gray-300/50"></div>
-                  
-                  {/* Rivers with enhanced styling */}
-                  <div className="absolute w-2 h-full bg-blue-200/70 left-1/3 top-0 transform -rotate-12"></div>
-                  <div className="absolute w-2 h-2/3 bg-blue-200/70 left-2/3 bottom-0 transform rotate-6"></div>
-                  
-                  {/* State backgrounds with subtle coloring */}
-                  <div className="absolute top-0 left-0 w-1/3 h-full bg-green-50/30"></div>
-                  <div className="absolute top-0 left-1/3 w-1/3 h-full bg-blue-50/30"></div>
-                  <div className="absolute bottom-0 h-1/2 w-full bg-yellow-50/30"></div>
-                  
-                  {/* State labels with enhanced styling */}
-                  <div className="absolute top-1/4 left-1/6 text-xs font-bold text-gray-500/80 bg-white/70 px-2 py-1 rounded-md shadow-sm">ILLINOIS</div>
-                  <div className="absolute top-1/4 left-1/2 text-xs font-bold text-gray-500/80 bg-white/70 px-2 py-1 rounded-md shadow-sm">INDIANA</div>
-                  <div className="absolute bottom-1/4 left-1/3 text-xs font-bold text-gray-500/80 bg-white/70 px-2 py-1 rounded-md shadow-sm">KENTUCKY</div>
-                  
-                  {/* Service area locations with enhanced styling */}
-                  {serviceAreas.map((area, index) => (
-                    <div 
-                      key={index} 
-                      className="absolute transition-all duration-300 hover:scale-110 hover:z-20"
-                      style={{ 
-                        left: `${area.x}%`, 
-                        top: `${area.y}%`,
-                        zIndex: 10
-                      }}
-                    >
-                      <div className="relative group">
-                        <div className="absolute -inset-2 bg-brand-red/10 rounded-full scale-0 group-hover:scale-100 transition-transform duration-300"></div>
-                        <MapPin 
-                          size={isMobile ? 16 : 20} 
-                          className="text-brand-red drop-shadow-sm" 
-                          fill="rgba(178, 34, 52, 0.3)"
-                        />
-                        <span className="absolute whitespace-nowrap -translate-x-1/2 -bottom-1 left-1/2 text-[8px] sm:text-xs font-medium text-gray-700 bg-white/80 px-1 rounded">
-                          {isMobile ? area.name.split(',')[0] : area.name}
-                        </span>
-                      </div>
+          <div className="md:w-1/2 space-y-8">
+            {/* Service coverage statistics */}
+            <Card className="p-6 shadow-lg rounded-xl border-0 bg-white">
+              <h3 className="text-2xl font-bold text-brand-navy mb-6">Our Service Coverage</h3>
+              
+              <div className="grid grid-cols-2 gap-4">
+                {serviceStats.map((stat, index) => (
+                  <div key={index} className="text-center p-4 bg-brand-gray/50 rounded-lg">
+                    <div className="mx-auto bg-white rounded-full w-12 h-12 flex items-center justify-center mb-2 shadow-sm">
+                      <stat.icon className="h-6 w-6 text-brand-red" />
                     </div>
+                    <div className="text-3xl font-bold text-brand-navy">{stat.value}</div>
+                    <div className="text-sm text-gray-600">{stat.label}</div>
+                  </div>
+                ))}
+              </div>
+              
+              <div className="mt-6 pt-6 border-t border-gray-100">
+                <div className="flex flex-wrap gap-2 justify-center">
+                  {certifications.map((cert, index) => (
+                    <Badge key={index} className={`px-3 py-1 ${cert.color}`}>
+                      {cert.name}
+                    </Badge>
                   ))}
                 </div>
               </div>
-              <p className="text-sm text-center mt-4 text-gray-600">Serving the entire Tri-State area with junk removal services</p>
-              <Link to="/locations" className="flex justify-center mt-4 text-brand-red hover:underline text-sm">View all service locations</Link>
+            </Card>
+            
+            {/* Service timeline */}
+            <Card className="p-6 shadow-lg rounded-xl border-0 bg-gradient-to-br from-white to-brand-gray/30">
+              <h3 className="text-2xl font-bold text-brand-navy mb-6">Our Service Process</h3>
+              
+              <div className="space-y-4">
+                <div className="flex items-center gap-4">
+                  <div className="bg-brand-navy rounded-full w-10 h-10 flex items-center justify-center text-white font-bold shrink-0">1</div>
+                  <div className="bg-white p-4 rounded-lg shadow-sm flex-grow">
+                    <h4 className="font-bold text-brand-navy">Contact Us</h4>
+                    <p className="text-gray-600 text-sm">Request a quote online or by phone</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-center gap-4">
+                  <div className="bg-brand-navy rounded-full w-10 h-10 flex items-center justify-center text-white font-bold shrink-0">2</div>
+                  <div className="bg-white p-4 rounded-lg shadow-sm flex-grow">
+                    <h4 className="font-bold text-brand-navy">Get a Quote</h4>
+                    <p className="text-gray-600 text-sm">Receive a transparent, no-obligation price</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-center gap-4">
+                  <div className="bg-brand-red rounded-full w-10 h-10 flex items-center justify-center text-white font-bold shrink-0">3</div>
+                  <div className="bg-white p-4 rounded-lg shadow-sm flex-grow">
+                    <h4 className="font-bold text-brand-navy">Junk Removal</h4>
+                    <p className="text-gray-600 text-sm">We haul away your items quickly and efficiently</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="mt-6 text-center">
+                <Link to="/locations" className="text-brand-red hover:underline inline-flex items-center">
+                  View all service locations
+                </Link>
+              </div>
             </Card>
           </div>
         </div>
