@@ -2,17 +2,47 @@
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ChevronDown, Star, Award, CircleCheck } from 'lucide-react';
+import { useIsMobile, useOrientation } from '@/hooks/use-mobile';
+import { useEffect, useState } from 'react';
 
 const HeroSection = () => {
+  const isMobile = useIsMobile();
+  const orientation = useOrientation();
+  const isLandscapeMobile = isMobile && orientation === 'landscape';
+  
+  // Handle viewport height for mobile devices
+  const [viewportHeight, setViewportHeight] = useState("100vh");
+  
+  useEffect(() => {
+    const updateViewportHeight = () => {
+      // This helps handle the mobile browser address bar
+      const vh = window.innerHeight * 0.01;
+      document.documentElement.style.setProperty('--vh', `${vh}px`);
+      setViewportHeight(`calc(var(--vh, 1vh) * 100)`);
+    };
+    
+    updateViewportHeight();
+    window.addEventListener('resize', updateViewportHeight);
+    window.addEventListener('orientationchange', updateViewportHeight);
+    
+    return () => {
+      window.removeEventListener('resize', updateViewportHeight);
+      window.removeEventListener('orientationchange', updateViewportHeight);
+    };
+  }, []);
+  
   const scrollToNextSection = () => {
     window.scrollTo({
-      top: window.innerHeight,
+      top: isLandscapeMobile ? window.innerHeight * 0.9 : window.innerHeight,
       behavior: 'smooth'
     });
   };
   
   return (
-    <section className="relative h-screen flex items-center overflow-hidden">
+    <section 
+      className="relative flex items-center overflow-hidden"
+      style={{ height: isLandscapeMobile ? "auto" : viewportHeight, minHeight: isLandscapeMobile ? "90vh" : "auto" }}
+    >
       {/* Premium gradient background with animated particles */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-gradient-to-br from-brand-navy via-brand-navy/95 to-black"></div>
@@ -29,7 +59,7 @@ const HeroSection = () => {
       </div>
 
       {/* Content container */}
-      <div className="container-custom relative z-10 mt-[-1rem] md:mt-[-3rem]">
+      <div className={`container-custom relative z-10 ${isLandscapeMobile ? 'py-20' : 'mt-[-1rem] md:mt-[-3rem]'}`}>
         {/* Premium badge - social proof & scarcity principles */}
         <div className="absolute top-0 right-10 md:right-20 transform -translate-y-1/2 hidden md:flex items-center gap-2 bg-white/10 backdrop-blur-md px-4 py-2 rounded-full text-white/90 text-sm border border-white/20 shadow-lg">
           <Star className="text-brand-yellow w-4 h-4" />
@@ -39,55 +69,63 @@ const HeroSection = () => {
         <div className="grid md:grid-cols-12 gap-8 items-center">
           {/* Hero content - spans 12 columns on medium screens for premium feel */}
           <div className="md:col-span-12 lg:col-span-8 text-white">
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold mb-6 leading-tight tracking-tight">
-              Uncle Sam Wants <span className="text-brand-red animate-[pulse_3s_ease-in-out_infinite]">YOU</span> <br />
+            <h1 className={`text-4xl ${isLandscapeMobile ? 'text-4xl' : 'sm:text-5xl md:text-6xl lg:text-7xl'} font-extrabold mb-4 md:mb-6 leading-tight tracking-tight`}>
+              Uncle Sam Wants <span className="text-brand-red animate-[pulse_3s_ease-in-out_infinite]">YOU</span> <br className={isLandscapeMobile ? 'hidden' : 'inline'} />
               <span className="relative inline-block">
                 <span className="relative z-10">to Live Junk-Free!</span>
                 <span className="absolute bottom-2 left-0 h-3 w-full bg-brand-red/30 -z-10"></span>
               </span>
             </h1>
             
-            <p className="text-xl md:text-2xl opacity-90 mb-10 leading-relaxed max-w-2xl">
+            <p className={`${isLandscapeMobile ? 'text-base mb-4' : 'text-lg sm:text-xl md:text-2xl mb-6 md:mb-10'} opacity-90 leading-relaxed max-w-2xl`}>
               Professional junk removal services in the Tri-State area. 
               We handle the heavy lifting so you don't have to!
             </p>
             
             {/* Value proposition points - development & accomplishment principle */}
-            <div className="flex flex-col space-y-3 mb-10">
+            <div className={`flex flex-col space-y-2 md:space-y-3 ${isLandscapeMobile ? 'mb-4' : 'mb-6 md:mb-10'}`}>
               <div className="flex items-center gap-2">
-                <CircleCheck className="text-brand-red h-5 w-5" />
-                <span className="text-white/80">Premium service with same-day availability</span>
+                <CircleCheck className="text-brand-red h-4 w-4 sm:h-5 sm:w-5" />
+                <span className={`text-white/80 ${isLandscapeMobile ? 'text-sm' : ''}`}>Premium service with same-day availability</span>
               </div>
               <div className="flex items-center gap-2">
-                <CircleCheck className="text-brand-red h-5 w-5" />
-                <span className="text-white/80">Veteran-owned, professional and reliable</span>
+                <CircleCheck className="text-brand-red h-4 w-4 sm:h-5 sm:w-5" />
+                <span className={`text-white/80 ${isLandscapeMobile ? 'text-sm' : ''}`}>Veteran-owned, professional and reliable</span>
               </div>
               <div className="flex items-center gap-2">
-                <CircleCheck className="text-brand-red h-5 w-5" />
-                <span className="text-white/80">Eco-friendly disposal guaranteed</span>
+                <CircleCheck className="text-brand-red h-4 w-4 sm:h-5 sm:w-5" />
+                <span className={`text-white/80 ${isLandscapeMobile ? 'text-sm' : ''}`}>Eco-friendly disposal guaranteed</span>
               </div>
             </div>
             
             {/* Enhanced CTA section */}
-            <div className="flex flex-col sm:flex-row gap-5 mb-12 relative">
+            <div className={`flex ${isLandscapeMobile ? 'flex-row gap-3' : 'flex-col sm:flex-row gap-4 sm:gap-5'} ${isLandscapeMobile ? 'mb-4' : 'mb-8 md:mb-12'} relative`}>
               <Button 
                 asChild 
-                size="lg" 
-                className="bg-brand-red hover:bg-brand-red/90 text-white font-bold text-lg px-8 py-6 tracking-wide shadow-[0_8px_30px_rgb(178,34,52,0.3)] rounded-lg transition-all duration-300 hover:scale-105 border border-brand-red/20"
+                size={isLandscapeMobile ? "default" : "lg"}
+                className={`bg-brand-red hover:bg-brand-red/90 text-white font-bold ${
+                  isLandscapeMobile 
+                    ? 'text-sm px-4 py-2' 
+                    : 'text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-6'
+                } tracking-wide shadow-[0_8px_30px_rgb(178,34,52,0.3)] rounded-lg transition-all duration-300 hover:scale-105 border border-brand-red/20`}
               >
                 <Link to="/quote">Get a Free Quote</Link>
               </Button>
               <Button 
                 asChild 
                 variant="outline" 
-                size="lg" 
-                className="border-white/70 border-2 text-white hover:bg-white hover:text-brand-navy font-bold text-lg px-8 py-6 tracking-wide shadow-lg rounded-lg transition-all duration-300 hover:scale-105"
+                size={isLandscapeMobile ? "default" : "lg"}
+                className={`border-white/70 border-2 text-white hover:bg-white hover:text-brand-navy font-bold ${
+                  isLandscapeMobile 
+                    ? 'text-sm px-4 py-2' 
+                    : 'text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-6'
+                } tracking-wide shadow-lg rounded-lg transition-all duration-300 hover:scale-105`}
               >
                 <Link to="/services">Our Services</Link>
               </Button>
               
               {/* Premium badge - social influence principle */}
-              <div className="absolute -bottom-10 left-0 flex items-center gap-2 md:hidden">
+              <div className={`${isLandscapeMobile ? 'hidden' : 'absolute -bottom-10 left-0 flex items-center gap-2 md:hidden'}`}>
                 <Award className="text-brand-yellow w-5 h-5" />
                 <span className="text-white/80 text-sm">Top-rated in Tri-State area</span>
               </div>
@@ -110,20 +148,22 @@ const HeroSection = () => {
         </div>
       </div>
 
-      {/* Enhanced scroll down indicator */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10 text-white">
-        <button 
-          onClick={scrollToNextSection} 
-          className="flex flex-col items-center opacity-80 hover:opacity-100 transition-opacity group"
-          aria-label="Scroll down to learn more"
-        >
-          <span className="text-sm font-medium mb-2 group-hover:text-brand-red transition-colors">Scroll Down</span>
-          <ChevronDown size={24} className="animate-bounce group-hover:text-brand-red transition-colors" />
-        </button>
-      </div>
+      {/* Enhanced scroll down indicator - hide on landscape mobile */}
+      {!isLandscapeMobile && (
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10 text-white">
+          <button 
+            onClick={scrollToNextSection} 
+            className="flex flex-col items-center opacity-80 hover:opacity-100 transition-opacity group"
+            aria-label="Scroll down to learn more"
+          >
+            <span className="text-sm font-medium mb-2 group-hover:text-brand-red transition-colors">Scroll Down</span>
+            <ChevronDown size={24} className="animate-bounce group-hover:text-brand-red transition-colors" />
+          </button>
+        </div>
+      )}
 
       {/* Diagonal cutout at bottom with enhanced styling */}
-      <div className="absolute bottom-0 left-0 w-full h-24 bg-white z-5" style={{
+      <div className="absolute bottom-0 left-0 w-full h-16 sm:h-24 bg-white z-5" style={{
         clipPath: 'polygon(0 100%, 100% 50%, 100% 100%, 0% 100%)'
       }}></div>
     </section>

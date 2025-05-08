@@ -27,7 +27,7 @@ const NavItem = ({ item, isActive }: NavItemProps) => {
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <button
-            className={`px-2.5 py-1.5 text-sm font-medium flex items-center transition-colors ${
+            className={`px-2 lg:px-2.5 py-1 lg:py-1.5 text-sm font-medium flex items-center transition-colors ${
               isActive ? 'text-brand-red font-semibold' : 'text-gray-800 hover:text-brand-red'
             }`}
           >
@@ -35,7 +35,11 @@ const NavItem = ({ item, isActive }: NavItemProps) => {
             <ChevronDown className="ml-1 h-3 w-3" />
           </button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="center" sideOffset={5} className="bg-white shadow-md rounded-md overflow-hidden">
+        <DropdownMenuContent 
+          align="center" 
+          sideOffset={5} 
+          className="bg-white shadow-md rounded-md overflow-hidden z-50 w-48 lg:w-56"
+        >
           {item.dropdownItems?.map((dropdownItem) => (
             <DropdownMenuItem key={dropdownItem.path} asChild className="cursor-pointer">
               <Link
@@ -54,7 +58,7 @@ const NavItem = ({ item, isActive }: NavItemProps) => {
   return (
     <Link
       to={item.path}
-      className={`px-2.5 py-1.5 text-sm font-medium transition-colors ${
+      className={`px-2 lg:px-2.5 py-1 lg:py-1.5 text-sm font-medium transition-colors ${
         isActive ? 'text-brand-red font-semibold' : 'text-gray-800 hover:text-brand-red'
       }`}
     >

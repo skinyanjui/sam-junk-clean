@@ -79,6 +79,11 @@
   h1, h2, h3, h4, h5, h6 {
     @apply font-montserrat font-bold;
   }
+  
+  /* Set a custom property for viewport height to handle mobile browsers */
+  :root {
+    --vh: 1vh;
+  }
 }
 
 @layer components {
@@ -99,7 +104,7 @@
   }
 
   .section-title {
-    @apply text-3xl md:text-4xl font-bold text-brand-navy mb-6;
+    @apply text-2xl sm:text-3xl md:text-4xl font-bold text-brand-navy mb-6;
   }
   
   .glass-card {
@@ -137,6 +142,32 @@
     @apply border-0;
   }
   
+  /* Responsive landscape mode adjustments */
+  @media (orientation: landscape) and (max-height: 600px) {
+    .landscape-compact {
+      @apply py-2 text-sm;
+    }
+    
+    .landscape-section {
+      @apply py-8;
+    }
+    
+    .landscape-hide {
+      @apply hidden;
+    }
+  }
+  
+  /* Enhance tablet experience */
+  @media (min-width: 768px) and (max-width: 1023px) {
+    .tablet-adjust {
+      @apply text-base px-3 py-2;
+    }
+    
+    .tablet-grid {
+      @apply grid-cols-2;
+    }
+  }
+  
   /* Custom map styles */
   .custom-popup .leaflet-popup-content-wrapper {
     @apply bg-white rounded-lg shadow-lg border border-gray-100 px-1;
@@ -148,6 +179,33 @@
   
   .custom-popup .leaflet-popup-content {
     @apply p-2 m-0;
+  }
+}
+
+/* Accessibility improvements */
+@layer utilities {
+  .focus-visible-ring {
+    @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-red focus-visible:ring-opacity-75;
+  }
+  
+  /* Improved touch targets for mobile */
+  .touch-target {
+    @apply min-h-[44px] min-w-[44px];
+  }
+  
+  /* Orientation-specific styles */
+  .landscape\:py-2 {
+    @media (orientation: landscape) {
+      padding-top: 0.5rem;
+      padding-bottom: 0.5rem;
+    }
+  }
+  
+  .landscape\:text-sm {
+    @media (orientation: landscape) {
+      font-size: 0.875rem;
+      line-height: 1.25rem;
+    }
   }
 }
 

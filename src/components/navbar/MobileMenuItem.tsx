@@ -16,9 +16,16 @@ interface MobileMenuItemProps {
   isActive: boolean;
   openDropdown: string | null;
   setOpenDropdown: (dropdown: string | null) => void;
+  isLandscape?: boolean;
 }
 
-const MobileMenuItem = ({ item, isActive, openDropdown, setOpenDropdown }: MobileMenuItemProps) => {
+const MobileMenuItem = ({ 
+  item, 
+  isActive, 
+  openDropdown, 
+  setOpenDropdown,
+  isLandscape = false 
+}: MobileMenuItemProps) => {
   const toggleDropdown = () => {
     setOpenDropdown(openDropdown === item.name ? null : item.name);
   };
@@ -28,28 +35,30 @@ const MobileMenuItem = ({ item, isActive, openDropdown, setOpenDropdown }: Mobil
       <div className="border-b border-gray-100">
         <button 
           onClick={toggleDropdown}
-          className={`flex justify-between items-center w-full py-2.5 px-2 font-medium ${
+          className={`flex justify-between items-center w-full ${isLandscape ? 'py-1.5 px-1.5 text-sm' : 'py-2.5 px-2'} font-medium ${
             isActive ? 'text-brand-red' : 'text-brand-navy'
           }`}
         >
           {item.name}
           {openDropdown === item.name ? (
-            <ChevronUp size={18} />
+            <ChevronUp size={isLandscape ? 16 : 18} />
           ) : (
-            <ChevronDown size={18} />
+            <ChevronDown size={isLandscape ? 16 : 18} />
           )}
         </button>
         {openDropdown === item.name && (
-          <div className="ml-4 pb-2 border-t border-gray-50">
-            {item.dropdownItems?.map((dropdownItem) => (
-              <Link
-                key={dropdownItem.path}
-                to={dropdownItem.path}
-                className="block py-2 px-4 text-gray-700 hover:text-brand-red"
-              >
-                {dropdownItem.name}
-              </Link>
-            ))}
+          <div className={`${isLandscape ? 'ml-2 pb-1' : 'ml-4 pb-2'} border-t border-gray-50`}>
+            <div className={isLandscape ? "grid grid-cols-2 gap-x-1" : ""}>
+              {item.dropdownItems?.map((dropdownItem) => (
+                <Link
+                  key={dropdownItem.path}
+                  to={dropdownItem.path}
+                  className={`block ${isLandscape ? 'py-1.5 px-2 text-xs' : 'py-2 px-4 text-sm'} text-gray-700 hover:text-brand-red`}
+                >
+                  {dropdownItem.name}
+                </Link>
+              ))}
+            </div>
           </div>
         )}
       </div>
@@ -60,7 +69,7 @@ const MobileMenuItem = ({ item, isActive, openDropdown, setOpenDropdown }: Mobil
     <div className="border-b border-gray-100">
       <Link
         to={item.path}
-        className={`block py-2.5 px-2 font-medium ${
+        className={`block ${isLandscape ? 'py-1.5 px-1.5 text-sm' : 'py-2.5 px-2'} font-medium ${
           isActive ? 'text-brand-red' : 'text-brand-navy'
         }`}
       >
