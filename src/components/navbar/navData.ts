@@ -34,8 +34,8 @@ export const navStructure = [
       { name: 'Veterans', path: '/about#veterans' },
       { name: 'FAQ', path: '/faq' },
       { name: 'Blog', path: '/blog' },
-      { name: 'Careers', path: '/careers' }
+      { name: 'Careers', path: '/careers' },
+      { name: 'Contact', path: '/contact' }
     ]
   },
-  { name: 'Contact', path: '/contact', hasDropdown: false },
 ];
