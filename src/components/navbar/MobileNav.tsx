@@ -2,7 +2,7 @@
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import MobileMenuItem from './MobileMenuItem';
-import { useEffect, useState } from 'react';
+import { useResponsiveLayout } from '@/hooks/use-mobile';
 
 interface MobileNavProps {
   navStructure: Array<{
@@ -21,29 +21,14 @@ interface MobileNavProps {
 }
 
 const MobileNav = ({ navStructure, currentPath, isOpen, openDropdown, setOpenDropdown }: MobileNavProps) => {
-  const [isLandscape, setIsLandscape] = useState(false);
-
-  useEffect(() => {
-    const checkOrientation = () => {
-      setIsLandscape(window.matchMedia("(orientation: landscape)").matches);
-    };
-    
-    checkOrientation();
-    window.addEventListener("orientationchange", checkOrientation);
-    window.addEventListener("resize", checkOrientation);
-    
-    return () => {
-      window.removeEventListener("orientationchange", checkOrientation);
-      window.removeEventListener("resize", checkOrientation);
-    };
-  }, []);
+  const { isLandscapeMobile } = useResponsiveLayout();
   
   if (!isOpen) return null;
   
   return (
     <div className="md:hidden bg-white border-t">
-      <nav className={`flex ${isLandscape ? 'flex-row justify-between' : 'flex-col'} container-custom pb-4`}>
-        <div className={`${isLandscape ? 'w-3/5 pr-4' : 'w-full'} overflow-y-auto max-h-[60vh]`}>
+      <nav className={`flex ${isLandscapeMobile ? 'flex-row justify-between' : 'flex-col'} container-custom pb-4`}>
+        <div className={`${isLandscapeMobile ? 'w-3/5 pr-4' : 'w-full'} overflow-y-auto ${isLandscapeMobile ? 'max-h-[40vh]' : 'max-h-[60vh]'}`}>
           {navStructure.map((item) => (
             <MobileMenuItem
               key={item.path}
@@ -51,13 +36,18 @@ const MobileNav = ({ navStructure, currentPath, isOpen, openDropdown, setOpenDro
               isActive={currentPath === item.path}
               openDropdown={openDropdown}
               setOpenDropdown={setOpenDropdown}
-              isLandscape={isLandscape}
+              isLandscape={isLandscapeMobile}
             />
           ))}
         </div>
         
-        <div className={`mt-4 ${isLandscape ? 'w-2/5 pl-2 self-center' : 'w-full'}`}>
-          <Button asChild className={`w-full bg-brand-red hover:bg-opacity-90 text-white ${isLandscape ? 'text-sm py-2' : 'py-6 text-base'} font-semibold tracking-wide transition-all duration-300 shadow-[0_4px_12px_rgba(178,34,52,0.25)]`}>
+        <div className={`mt-4 ${isLandscapeMobile ? 'w-2/5 pl-2 self-center' : 'w-full'}`}>
+          <Button 
+            asChild 
+            className={`w-full bg-brand-red hover:bg-opacity-90 text-white ${
+              isLandscapeMobile ? 'text-sm py-2' : 'py-6 text-base'
+            } font-semibold tracking-wide transition-all duration-300 shadow-[0_4px_12px_rgba(178,34,52,0.25)]`}
+          >
             <Link to="/quote">Get a Free Quote</Link>
           </Button>
         </div>

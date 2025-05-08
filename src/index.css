@@ -84,6 +84,18 @@
   :root {
     --vh: 1vh;
   }
+  
+  /* Fix for iOS input zoom */
+  @media screen and (max-width: 767px) {
+    input, select, textarea {
+      font-size: 16px !important;
+    }
+  }
+  
+  /* Improved accessibility focus styles */
+  :focus-visible {
+    @apply outline-brand-red outline-2 outline-offset-2;
+  }
 }
 
 @layer components {
@@ -142,6 +154,22 @@
     @apply border-0;
   }
   
+  /* Enhanced touch targets for mobile */
+  .touch-target {
+    @apply min-h-[44px] min-w-[44px] flex items-center justify-center;
+  }
+  
+  /* Optimized form fields for mobile */
+  .mobile-form-field {
+    @apply mb-6;
+  }
+  
+  .mobile-form-field input,
+  .mobile-form-field select,
+  .mobile-form-field textarea {
+    @apply h-12 text-base;
+  }
+  
   /* Responsive landscape mode adjustments */
   @media (orientation: landscape) and (max-height: 600px) {
     .landscape-compact {
@@ -155,6 +183,14 @@
     .landscape-hide {
       @apply hidden;
     }
+    
+    .landscape-text-sm {
+      @apply text-sm;
+    }
+    
+    .landscape-p-2 {
+      @apply p-2;
+    }
   }
   
   /* Enhance tablet experience */
@@ -165,6 +201,14 @@
     
     .tablet-grid {
       @apply grid-cols-2;
+    }
+    
+    .tablet-text-base {
+      @apply text-base;
+    }
+    
+    .tablet-p-4 {
+      @apply p-4;
     }
   }
   
@@ -207,6 +251,20 @@
       line-height: 1.25rem;
     }
   }
+  
+  /* Prevent text size adjustment on orientation change */
+  .text-adjust-none {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+  
+  /* Helper for proper image aspect ratios */
+  .responsive-img {
+    @apply w-full h-auto object-cover;
+  }
+  
+  /* Safe area insets for modern iOS devices */
+  .safe-area-inset-bottom {
+    padding-bottom: env(safe-area-inset-bottom, 0);
+  }
 }
-
-/* Remove App.css rules as we're defining everything in index.css */
