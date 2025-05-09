@@ -5,9 +5,9 @@ const NavLogo = () => {
   return (
     <Link to="/" className="flex items-center">
       <img 
-        src="/lovable-uploads/4cf42708-88ba-4818-a535-0ad1dba464c4.png" 
+        src="/lovable-uploads/78c1523b-6914-4dad-8114-e021500b535e.png" 
         alt="Uncle Sam Junk Removal" 
-        className="h-20 md:h-24"
+        className="h-16 md:h-20"
       />
     </Link>
   );
