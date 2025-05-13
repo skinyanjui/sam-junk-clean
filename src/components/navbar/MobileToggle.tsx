@@ -14,12 +14,12 @@ const MobileToggle = ({ isOpen, toggleMenu }: MobileToggleProps) => {
     <div className="flex items-center md:hidden">
       <a 
         href="tel:+18126101657" 
-        className={`mr-4 bg-brand-red text-white p-2 rounded-lg hover:bg-opacity-90 shadow-sm transition-all duration-300 ${
+        className={`mr-3 bg-brand-red text-white p-1.5 rounded-lg hover:bg-opacity-90 shadow-sm transition-all duration-300 ${
           isLandscapeMobile ? 'scale-90' : ''
         }`}
         aria-label="Call us"
       >
-        <Phone size={isLandscapeMobile ? 14 : 16} className="touch-target" />
+        <Phone size={isLandscapeMobile ? 12 : 14} className="touch-target" />
       </a>
       <button
         onClick={toggleMenu}

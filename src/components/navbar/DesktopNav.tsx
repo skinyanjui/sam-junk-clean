@@ -27,10 +27,10 @@ const DesktopNav = ({ navStructure, currentPath }: DesktopNavProps) => {
       ))}
       <a 
         href="tel:+18126101657" 
-        className="ml-3 lg:ml-4 flex items-center gap-1 lg:gap-1.5 bg-brand-red text-white px-2.5 lg:px-3.5 py-1.5 lg:py-2 rounded-lg shadow-sm hover:bg-opacity-90 transition-all duration-300"
+        className="ml-3 lg:ml-4 flex items-center gap-1 lg:gap-1.5 bg-brand-red text-white px-2 lg:px-3 py-1 lg:py-1.5 rounded-lg shadow-sm hover:bg-opacity-90 transition-all duration-300"
       >
         <Phone size={14} />
-        <span className="font-semibold text-sm lg:text-base whitespace-nowrap">(812) 610-1657</span>
+        <span className="font-semibold text-xs lg:text-sm whitespace-nowrap">(812) 610-1657</span>
       </a>
     </nav>
   );
