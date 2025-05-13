@@ -35,24 +35,28 @@ const MobileNav = ({ navStructure, currentPath, isOpen, openDropdown, setOpenDro
       className="md:hidden bg-white border-t shadow-md"
     >
       <nav className={`flex ${isLandscapeMobile ? 'flex-row justify-between' : 'flex-col'} container-custom py-3`}>
-        <div className={`${isLandscapeMobile ? 'w-3/5 pr-4' : 'w-full'} overflow-y-auto ${isLandscapeMobile ? 'max-h-[40vh]' : 'max-h-[60vh]'} space-y-0.5`}>
-          {navStructure.map((item) => (
-            <MobileMenuItem
-              key={item.path}
-              item={item}
-              isActive={currentPath === item.path}
-              openDropdown={openDropdown}
-              setOpenDropdown={setOpenDropdown}
-              isLandscape={isLandscapeMobile}
-            />
+        <div className={`${isLandscapeMobile ? 'w-3/5 pr-4' : 'w-full'} overflow-y-auto ${isLandscapeMobile ? 'max-h-[40vh]' : 'max-h-[60vh]'}`}>
+          {navStructure.map((item, index) => (
+            <div 
+              key={item.path} 
+              className={`${index !== 0 ? 'border-t border-gray-100' : ''} py-1`}
+            >
+              <MobileMenuItem
+                item={item}
+                isActive={currentPath === item.path}
+                openDropdown={openDropdown}
+                setOpenDropdown={setOpenDropdown}
+                isLandscape={isLandscapeMobile}
+              />
+            </div>
           ))}
         </div>
         
-        <div className={`mt-4 ${isLandscapeMobile ? 'w-2/5 pl-4 self-center' : 'w-full'}`}>
+        <div className={`mt-4 ${isLandscapeMobile ? 'w-2/5 pl-4 self-center' : 'w-full'} border-t border-gray-200 pt-4`}>
           <Button 
             asChild 
             className={`w-full bg-brand-red hover:bg-brand-red/90 text-white ${
-              isLandscapeMobile ? 'text-sm py-2' : 'py-2.5 text-base'
+              isLandscapeMobile ? 'text-sm py-2' : 'py-3 text-base'
             } font-semibold tracking-wide transition-all duration-300 shadow-md rounded-md`}
           >
             <Link to="/quote">Get a Free Quote</Link>

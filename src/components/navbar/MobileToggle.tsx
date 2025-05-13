@@ -15,7 +15,7 @@ const MobileToggle = ({ isOpen, toggleMenu }: MobileToggleProps) => {
     <div className="flex items-center md:hidden">
       <a 
         href="tel:+18126101657" 
-        className="mr-3 text-brand-red text-sm font-medium hover:text-brand-navy transition-colors duration-300"
+        className="mr-3 text-brand-red text-sm font-medium hover:text-brand-navy transition-colors duration-300 border border-brand-red/30 rounded-md px-2 py-0.5"
         aria-label="Call us"
       >
         (812) 610-1657
@@ -23,12 +23,12 @@ const MobileToggle = ({ isOpen, toggleMenu }: MobileToggleProps) => {
       <motion.button
         whileTap={{ scale: 0.95 }}
         onClick={toggleMenu}
-        className="text-brand-navy p-1 focus:outline-none transition-colors duration-300 focus-visible-ring rounded-md"
+        className="text-brand-navy p-0.5 focus:outline-none transition-colors duration-300 focus-visible-ring rounded-md"
         aria-label="Toggle menu"
       >
         {isOpen ? 
-          <X size={18} className="touch-target" /> : 
-          <Menu size={18} className="touch-target" />
+          <X size={16} className="touch-target" /> : 
+          <Menu size={16} className="touch-target" />
         }
       </motion.button>
     </div>

@@ -1,7 +1,7 @@
 
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { ChevronDown, Star, Award, CircleCheck } from 'lucide-react';
+import { Star, Award, CircleCheck } from 'lucide-react';
 import { useIsMobile, useOrientation } from '@/hooks/use-mobile';
 import { useEffect, useState } from 'react';
 
@@ -30,13 +30,6 @@ const HeroSection = () => {
       window.removeEventListener('orientationchange', updateViewportHeight);
     };
   }, []);
-  
-  const scrollToNextSection = () => {
-    window.scrollTo({
-      top: isLandscapeMobile ? window.innerHeight * 0.9 : window.innerHeight,
-      behavior: 'smooth'
-    });
-  };
   
   return (
     <section 
@@ -145,19 +138,7 @@ const HeroSection = () => {
         </div>
       </div>
 
-      {/* Enhanced scroll down indicator - hide on landscape mobile */}
-      {!isLandscapeMobile && (
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10 text-white">
-          <button 
-            onClick={scrollToNextSection} 
-            className="flex flex-col items-center opacity-80 hover:opacity-100 transition-opacity group"
-            aria-label="Scroll down to learn more"
-          >
-            <span className="text-sm font-medium mb-2 group-hover:text-brand-red transition-colors">Scroll Down</span>
-            <ChevronDown size={24} className="animate-bounce group-hover:text-brand-red transition-colors" />
-          </button>
-        </div>
-      )}
+      {/* Removed Scroll Down Component */}
 
       {/* Diagonal cutout at bottom with enhanced styling */}
       <div className="absolute bottom-0 left-0 w-full h-16 sm:h-24 bg-white z-5" style={{

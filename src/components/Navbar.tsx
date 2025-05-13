@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import NavLogo from './navbar/NavLogo';
@@ -44,9 +45,9 @@ const Navbar = () => {
         transition={{ type: 'spring', stiffness: 100, damping: 20 }}
         className={`w-full transition-all duration-300 ${
           scrolled 
-            ? 'bg-white shadow-md py-1.5' 
-            : 'bg-white py-2'
-        } ${isLandscapeMobile ? 'py-1' : ''}`}
+            ? 'bg-white shadow-md py-1' 
+            : 'bg-white py-1.5'
+        } ${isLandscapeMobile ? 'py-0.5' : ''}`}
       >
         <div className="container-custom flex items-center justify-between">
           <NavLogo />

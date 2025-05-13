@@ -4,14 +4,14 @@ import { motion } from 'framer-motion';
 
 const NavLogo = () => {
   return (
-    <Link to="/" className="flex items-center py-1 transition-all duration-300">
+    <Link to="/" className="flex items-center transition-all duration-300">
       <motion.img 
         initial={{ opacity: 0.8 }}
         whileHover={{ scale: 1.03, opacity: 1 }}
         transition={{ duration: 0.3 }}
         src="/lovable-uploads/b102b174-1562-4730-9825-d6bf5822fef0.png" 
         alt="Uncle Sam Junk Removal" 
-        className="h-10 md:h-12 object-contain"
+        className="h-12 md:h-14 object-contain" 
       />
     </Link>
   );
