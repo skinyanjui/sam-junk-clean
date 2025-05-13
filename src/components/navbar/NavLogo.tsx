@@ -5,7 +5,7 @@ const NavLogo = () => {
   return (
     <Link to="/" className="flex items-center">
       <img 
-        src="/lovable-uploads/78c1523b-6914-4dad-8114-e021500b535e.png" 
+        src="/lovable-uploads/b102b174-1562-4730-9825-d6bf5822fef0.png" 
         alt="Uncle Sam Junk Removal" 
         className="h-16 md:h-20"
       />
