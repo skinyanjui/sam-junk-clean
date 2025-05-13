@@ -26,12 +26,12 @@ const About = () => {
             <div>
               <h2 className="section-title">Our Story</h2>
               <p className="text-gray-700 mb-6">
-                Uncle Sam Junk Removal was founded in 2015 by Mike Johnson, a U.S. Army veteran 
+                Uncle Sam Junk Removal was founded in 2025 by Samuel Kinyanjui, a U.S. Marine Corps veteran 
                 with a passion for service and a vision to create a junk removal company that 
                 embodied the American values of hard work, integrity, and community service.
               </p>
               <p className="text-gray-700 mb-6">
-                After returning from overseas service, Mike noticed how many people in the Tri-State 
+                After returning from overseas service, Samuel noticed how many people in the Tri-State 
                 area struggled with removing unwanted items from their homes and businesses. 
                 He started with just one truck and a commitment to provide reliable, honest service 
                 to his neighbors.
