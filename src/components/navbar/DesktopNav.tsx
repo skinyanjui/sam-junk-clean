@@ -18,7 +18,7 @@ interface DesktopNavProps {
 
 const DesktopNav = ({ navStructure, currentPath }: DesktopNavProps) => {
   return (
-    <nav className="hidden md:flex items-center space-x-2 lg:space-x-4">
+    <nav className="hidden md:flex items-center space-x-1 lg:space-x-2">
       {navStructure.map((item) => (
         <NavItem 
           key={item.path} 
@@ -30,11 +30,11 @@ const DesktopNav = ({ navStructure, currentPath }: DesktopNavProps) => {
         asChild
         variant="outline"
         size="sm"
-        className="ml-3 lg:ml-4 bg-white border-brand-red text-brand-red hover:bg-brand-red hover:text-white transition-all duration-300 flex items-center gap-1.5 rounded-lg font-medium shadow-sm"
+        className="ml-3 lg:ml-4 bg-white border-brand-red text-brand-red hover:bg-brand-red hover:text-white transition-colors duration-300 flex items-center gap-1 rounded-md text-sm shadow-sm"
       >
-        <a href="tel:+18126101657">
-          <Phone size={14} strokeWidth={2.5} />
-          <span className="text-xs lg:text-sm whitespace-nowrap">(812) 610-1657</span>
+        <a href="tel:+18126101657" className="flex items-center px-2 py-1">
+          <Phone size={14} className="mr-1" strokeWidth={2.5} />
+          <span className="font-medium">(812) 610-1657</span>
         </a>
       </Button>
     </nav>

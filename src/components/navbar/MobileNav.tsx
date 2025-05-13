@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import MobileMenuItem from './MobileMenuItem';
 import { useResponsiveLayout } from '@/hooks/use-mobile';
+import { motion } from 'framer-motion';
 
 interface MobileNavProps {
   navStructure: Array<{
@@ -26,9 +27,15 @@ const MobileNav = ({ navStructure, currentPath, isOpen, openDropdown, setOpenDro
   if (!isOpen) return null;
   
   return (
-    <div className="md:hidden bg-white border-t shadow-sm">
+    <motion.div
+      initial={{ opacity: 0, y: -10 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -10 }}
+      transition={{ duration: 0.2 }}
+      className="md:hidden bg-white border-t shadow-md"
+    >
       <nav className={`flex ${isLandscapeMobile ? 'flex-row justify-between' : 'flex-col'} container-custom py-3`}>
-        <div className={`${isLandscapeMobile ? 'w-3/5 pr-4' : 'w-full'} overflow-y-auto ${isLandscapeMobile ? 'max-h-[40vh]' : 'max-h-[60vh]'} space-y-1`}>
+        <div className={`${isLandscapeMobile ? 'w-3/5 pr-4' : 'w-full'} overflow-y-auto ${isLandscapeMobile ? 'max-h-[40vh]' : 'max-h-[60vh]'} space-y-0.5`}>
           {navStructure.map((item) => (
             <MobileMenuItem
               key={item.path}
@@ -45,14 +52,14 @@ const MobileNav = ({ navStructure, currentPath, isOpen, openDropdown, setOpenDro
           <Button 
             asChild 
             className={`w-full bg-brand-red hover:bg-brand-red/90 text-white ${
-              isLandscapeMobile ? 'text-sm py-2' : 'py-3 text-base'
+              isLandscapeMobile ? 'text-sm py-2' : 'py-2.5 text-base'
             } font-semibold tracking-wide transition-all duration-300 shadow-md rounded-md`}
           >
             <Link to="/quote">Get a Free Quote</Link>
           </Button>
         </div>
       </nav>
-    </div>
+    </motion.div>
   );
 };
 

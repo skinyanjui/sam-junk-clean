@@ -8,6 +8,7 @@ import MobileToggle from './navbar/MobileToggle';
 import MobileCta from './navbar/MobileCta';
 import { navStructure } from './navbar/navData';
 import { useResponsiveLayout } from '@/hooks/use-mobile';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -38,12 +39,15 @@ const Navbar = () => {
 
   return (
     <header className="fixed w-full z-50 top-0">
-      <div 
+      <motion.div 
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+        transition={{ type: 'spring', stiffness: 100, damping: 20 }}
         className={`w-full transition-all duration-300 ${
           scrolled 
             ? 'bg-white shadow-md py-1.5' 
-            : 'bg-white py-2.5'
-        } ${isLandscapeMobile ? 'py-1.5' : ''}`}
+            : 'bg-white py-2'
+        } ${isLandscapeMobile ? 'py-1' : ''}`}
       >
         <div className="container-custom flex items-center justify-between">
           <NavLogo />
@@ -51,16 +55,20 @@ const Navbar = () => {
           <MobileToggle isOpen={isOpen} toggleMenu={toggleMenu} />
         </div>
 
-        <MobileNav 
-          navStructure={navStructure} 
-          currentPath={location.pathname} 
-          isOpen={isOpen}
-          openDropdown={openDropdown}
-          setOpenDropdown={setOpenDropdown}
-        />
+        <AnimatePresence>
+          {isOpen && (
+            <MobileNav 
+              navStructure={navStructure} 
+              currentPath={location.pathname} 
+              isOpen={isOpen}
+              openDropdown={openDropdown}
+              setOpenDropdown={setOpenDropdown}
+            />
+          )}
+        </AnimatePresence>
         
         <MobileCta />
-      </div>
+      </motion.div>
     </header>
   );
 };
