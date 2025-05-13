@@ -41,8 +41,8 @@ const Navbar = () => {
       <div 
         className={`w-full transition-all duration-300 ${
           scrolled 
-            ? 'bg-white shadow-lg py-1 pb-0' 
-            : 'bg-white/95 py-2 pb-0'
+            ? 'bg-white shadow-lg py-1' 
+            : 'bg-white/95 py-2'
         } ${isLandscapeMobile ? 'py-1' : ''}`}
       >
         <div className="container-custom flex items-center justify-between">
