@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Facebook, Instagram, Twitter, Linkedin, Phone, Mail, MapPin, ChevronDown, ChevronUp } from 'lucide-react';
@@ -35,7 +36,7 @@ const Footer = () => {
           {/* Company Info - Simplified */}
           <div className="flex flex-col items-center md:items-start">
             <img 
-              src="/lovable-uploads/b102b174-1562-4730-9825-d6bf5822fef0.png" 
+              src="/lovable-uploads/0a130540-8be2-4b60-b8fb-e8815548d584.png" 
               alt="Uncle Sam Junk Removal" 
               className="h-16 md:h-20 mb-4"
             />
