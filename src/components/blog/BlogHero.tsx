@@ -11,7 +11,7 @@ interface BlogHeroProps {
 
 const BlogHero = ({ searchQuery, setSearchQuery }: BlogHeroProps) => {
   return (
-    <section className="py-16 bg-brand-navy text-white">
+    <section className="py-16 bg-brand-navy text-white relative">
       <div className="container-custom">
         <div className="max-w-3xl mx-auto text-center">
           <h1 className="text-4xl md:text-5xl font-bold mb-6">Uncle Sam's Junk Removal Blog</h1>
@@ -49,6 +49,9 @@ const BlogHero = ({ searchQuery, setSearchQuery }: BlogHeroProps) => {
           </div>
         </div>
       </div>
+      
+      {/* Add diagonal cutout at the bottom */}
+      <div className="absolute bottom-0 left-0 w-full h-16 bg-white" style={{clipPath: 'polygon(0 100%, 100% 0, 100% 100%, 0% 100%)'}}></div>
     </section>
   );
 };

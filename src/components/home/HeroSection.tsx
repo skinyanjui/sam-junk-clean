@@ -95,7 +95,7 @@ const HeroSection = () => {
               </div>
             </div>
             
-            {/* Enhanced CTA section */}
+            {/* Enhanced CTA section with improved button contrast */}
             <div className={`flex ${isLandscapeMobile ? 'flex-row gap-3' : 'flex-col sm:flex-row gap-4 sm:gap-5'} ${isLandscapeMobile ? 'mb-4' : 'mb-8 md:mb-12'} relative`}>
               <Button 
                 asChild 
@@ -112,7 +112,7 @@ const HeroSection = () => {
                 asChild 
                 variant="outline" 
                 size={isLandscapeMobile ? "default" : "lg"}
-                className={`border-white/70 border-2 text-white hover:bg-white hover:text-brand-navy font-bold ${
+                className={`border-white text-white bg-white/10 hover:bg-white hover:text-brand-navy font-bold ${
                   isLandscapeMobile 
                     ? 'text-sm px-4 py-2' 
                     : 'text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-6'
