@@ -13,7 +13,7 @@ const ServicesHero = () => {
       />
       
       {/* Hero Section */}
-      <section className="py-16 bg-brand-navy text-white relative">
+      <section className="py-16 bg-brand-navy text-white">
         <div className="container-custom">
           <div className="max-w-3xl mx-auto text-center z-10 relative">
             <h1 className="text-4xl md:text-5xl font-bold mb-6">Our Services</h1>

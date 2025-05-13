@@ -1,5 +1,14 @@
 
 import { Star, MapPin } from 'lucide-react';
+import { useIsMobile, useOrientation } from '@/hooks/use-mobile';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import { Card } from '@/components/ui/card';
 
 type Testimonial = {
   name: string;
@@ -9,6 +18,10 @@ type Testimonial = {
 };
 
 const TestimonialsSection = () => {
+  const isMobile = useIsMobile();
+  const orientation = useOrientation();
+  const isLandscapeMobile = isMobile && orientation === 'landscape';
+  
   const testimonials = [
     {
       name: 'Sarah Johnson',
@@ -27,6 +40,18 @@ const TestimonialsSection = () => {
       location: 'Newburgh, IN',
       quote: 'Fast response for a same-day junk removal. They arrived on time and completed the job quickly.',
       rating: 5
+    },
+    {
+      name: 'Robert Douglas',
+      location: 'Owensboro, KY',
+      quote: 'The team was professional and friendly. They made the whole process completely stress-free.',
+      rating: 5
+    },
+    {
+      name: 'Amanda Carter',
+      location: 'Boonville, IN',
+      quote: 'I\'ve used them twice now for estate cleanouts. Their prices are fair and the service is exceptional.',
+      rating: 5
     }
   ];
   
@@ -37,12 +62,12 @@ const TestimonialsSection = () => {
   };
 
   return (
-    <section className="py-24 bg-white relative overflow-hidden">
+    <section className="py-20 bg-white relative overflow-hidden">
       {/* Background elements */}
       <div className="absolute top-0 left-0 w-64 h-64 bg-brand-red/5 rounded-full blur-3xl"></div>
       <div className="absolute bottom-0 right-0 w-96 h-96 bg-brand-blue/5 rounded-full blur-3xl"></div>
       
-      <div className="container-custom text-center mb-16 relative z-10">
+      <div className="container-custom text-center mb-10 relative z-10">
         <span className="text-brand-red font-semibold uppercase tracking-wider mb-2 block">Happy Customers</span>
         <h2 className="text-4xl md:text-5xl font-bold text-brand-navy mb-6">Customer Testimonials</h2>
         <div className="w-20 h-1 bg-brand-red mx-auto mb-6"></div>
@@ -52,31 +77,45 @@ const TestimonialsSection = () => {
       </div>
       
       <div className="container-custom relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {testimonials.map((testimonial, index) => (
-            <div 
-              key={index} 
-              className="bg-white border border-gray-100 p-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2"
-            >
-              <div className="flex mb-4">
-                {renderStars(testimonial.rating)}
-              </div>
-              <p className="text-gray-700 italic mb-6 leading-relaxed text-lg">"{testimonial.quote}"</p>
-              <div className="flex items-center border-t border-gray-100 pt-4 mt-auto">
-                <div className="bg-brand-navy/10 w-12 h-12 rounded-full flex items-center justify-center text-brand-navy font-bold text-lg mr-4">
-                  {testimonial.name.charAt(0)}
-                </div>
-                <div>
-                  <p className="font-semibold text-brand-navy">{testimonial.name}</p>
-                  <p className="text-sm text-gray-500 flex items-center">
-                    <MapPin size={14} className="mr-1" />
-                    {testimonial.location}
-                  </p>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
+        <Carousel
+          opts={{
+            align: "start",
+            loop: testimonials.length > 3,
+          }}
+          className="w-full"
+        >
+          <CarouselContent className="-ml-4">
+            {testimonials.map((testimonial, index) => (
+              <CarouselItem 
+                key={index} 
+                className={`pl-4 ${isMobile ? 'basis-full' : isLandscapeMobile ? 'basis-1/2' : 'basis-1/3'} min-h-[280px]`}
+              >
+                <Card className="bg-white border border-gray-100 p-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 h-full flex flex-col">
+                  <div className="flex mb-4">
+                    {renderStars(testimonial.rating)}
+                  </div>
+                  <p className="text-gray-700 italic mb-6 leading-relaxed text-lg flex-grow">&quot;{testimonial.quote}&quot;</p>
+                  <div className="flex items-center border-t border-gray-100 pt-4 mt-auto">
+                    <div className="bg-brand-navy/10 w-12 h-12 rounded-full flex items-center justify-center text-brand-navy font-bold text-lg mr-4">
+                      {testimonial.name.charAt(0)}
+                    </div>
+                    <div>
+                      <p className="font-semibold text-brand-navy">{testimonial.name}</p>
+                      <p className="text-sm text-gray-500 flex items-center">
+                        <MapPin size={14} className="mr-1" />
+                        {testimonial.location}
+                      </p>
+                    </div>
+                  </div>
+                </Card>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <div className="hidden sm:flex justify-end gap-2 mt-8">
+            <CarouselPrevious className="relative -left-0 static bg-brand-navy text-white hover:bg-brand-navy/80" />
+            <CarouselNext className="relative -right-0 static bg-brand-navy text-white hover:bg-brand-navy/80" />
+          </div>
+        </Carousel>
       </div>
     </section>
   );

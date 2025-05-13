@@ -33,22 +33,16 @@ const HeroSection = () => {
   
   return (
     <section 
-      className="relative flex items-center overflow-hidden"
+      className="relative flex items-center overflow-hidden bg-brand-navy"
       style={{ height: isLandscapeMobile ? "auto" : viewportHeight, minHeight: isLandscapeMobile ? "90vh" : "auto" }}
     >
-      {/* Premium gradient background with animated particles */}
+      {/* Simplified gradient background */}
       <div className="absolute inset-0 -z-10">
-        <div className="absolute inset-0 bg-gradient-to-br from-brand-navy via-brand-navy/95 to-black"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-brand-navy to-brand-navy/90"></div>
         
-        {/* Premium animated patterns */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-0 left-0 w-full h-full bg-[url('https://images.unsplash.com/photo-1548684606-74b9d30bda5f')] bg-cover opacity-10 mix-blend-overlay"></div>
-        </div>
-        
-        {/* Animated floating shapes for premium feel */}
+        {/* Subtle animated elements */}
         <div className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-brand-blue/10 blur-3xl animate-[pulse_15s_ease-in-out_infinite]"></div>
         <div className="absolute top-3/4 left-2/3 w-96 h-96 rounded-full bg-brand-red/10 blur-3xl animate-[pulse_20s_ease-in-out_infinite_1s]"></div>
-        <div className="absolute top-1/3 right-1/4 w-80 h-80 rounded-full bg-brand-yellow/5 blur-3xl animate-[pulse_18s_ease-in-out_infinite_0.5s]"></div>
       </div>
 
       {/* Content container */}
@@ -129,18 +123,10 @@ const HeroSection = () => {
               <div className="absolute top-1/4 right-1/4 w-40 h-40 rounded-full border-4 border-white/10 transform rotate-45"></div>
               <div className="absolute bottom-1/4 left-1/3 w-60 h-60 rounded-full border-4 border-white/5"></div>
               <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-gradient-to-br from-brand-red/20 to-brand-blue/20 rounded-full blur-xl"></div>
-              
-              {/* Floating elements */}
-              <div className="absolute top-0 right-10 w-20 h-20 bg-brand-red/10 rounded-full blur-xl animate-[pulse_4s_ease-in-out_infinite]"></div>
-              <div className="absolute bottom-20 left-10 w-16 h-16 bg-brand-blue/10 rounded-full blur-xl animate-[pulse_4s_ease-in-out_infinite_0.5s]"></div>
             </div>
           </div>
         </div>
       </div>
-
-      {/* Removed Scroll Down Component */}
-      
-      {/* Removed diagonal cutout */}
     </section>
   );
 };

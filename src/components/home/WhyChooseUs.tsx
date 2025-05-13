@@ -1,8 +1,8 @@
 
-import { Check, Award, Users, Truck, Calendar, Leaf, Shield } from 'lucide-react';
+import { Check, Award, Users, Truck, Calendar, Shield } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
-import { Card } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { useTranslation } from 'react-i18next';
 import { useIsMobile, useOrientation } from '@/hooks/use-mobile';
@@ -13,134 +13,152 @@ const WhyChooseUs = () => {
   const orientation = useOrientation();
   const isLandscapeMobile = isMobile && orientation === 'landscape';
   
+  // Restructured benefits with icons
   const benefits = [
-    'Veteran-owned and operated business',
-    'Fast and reliable service - often same-day',
-    'Eco-friendly disposal and recycling practices',
-    'Licensed and fully insured for your protection',
-    'Fair, transparent pricing - no hidden fees',
-    'Serving the entire Tri-State area'
+    { 
+      title: 'Veteran-Owned',
+      description: 'We bring military precision and values to every job',
+      icon: Shield,
+      color: 'bg-brand-blue/10 text-brand-blue'
+    },
+    { 
+      title: 'Same-Day Service',
+      description: 'Fast and reliable service when you need it most',
+      icon: Calendar,
+      color: 'bg-brand-red/10 text-brand-red'
+    },
+    { 
+      title: 'Eco-Friendly',
+      description: 'Responsible disposal with recycling prioritized',
+      icon: Check,
+      color: 'bg-green-100 text-green-700'
+    },
+    { 
+      title: 'Tri-State Coverage',
+      description: 'Serving the entire Evansville metro area',
+      icon: Truck,
+      color: 'bg-amber-100 text-amber-700'
+    }
   ];
 
-  // Service statistics to showcase coverage
+  // Service statistics with more visual appeal
   const serviceStats = [
-    { value: '25+', label: 'Cities Served', icon: Truck },
-    { value: '3', label: 'States Covered', icon: Shield },
-    { value: '1000+', label: 'Satisfied Customers', icon: Users },
-    { value: '24h', label: 'Response Time', icon: Calendar },
-  ];
-
-  // Certifications and recognitions
-  const certifications = [
-    { name: 'Veteran Owned', color: 'bg-brand-navy/10 text-brand-navy' },
-    { name: 'Fully Insured', color: 'bg-brand-red/10 text-brand-red' },
-    { name: 'Eco Friendly', color: 'bg-green-100 text-green-800' },
-    { name: 'BBB Accredited', color: 'bg-blue-100 text-blue-800' },
+    { value: '25+', label: 'Cities Served' },
+    { value: '3', label: 'States Covered' },
+    { value: '1000+', label: 'Satisfied Customers' },
+    { value: '24h', label: 'Response Time' },
   ];
 
   return (
-    <section className={`py-16 sm:py-20 lg:py-24 bg-gradient-to-b from-white to-brand-gray/40 relative ${
-      isLandscapeMobile ? 'pb-20' : ''
-    }`}>
-      {/* Background decorative elements */}
-      <div className="absolute top-0 left-0 w-full h-1/2 bg-[url('https://www.transparenttextures.com/patterns/subtle-white-feathers.png')] opacity-[0.05]"></div>
-      
-      <div className="container-custom relative z-10">
-        <div className="md:flex items-start gap-8 lg:gap-16">
-          <div className={`md:w-1/2 mb-12 md:mb-0 ${isLandscapeMobile ? 'mb-6' : ''}`}>
-            <span className="text-brand-red font-semibold uppercase tracking-wider mb-2 block">Why Choose Us</span>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-brand-navy mb-6 sm:mb-8">Why Choose Uncle Sam?</h2>
-            
-            {/* For landscape mobile, use a grid layout for benefits */}
-            <div className={`${isLandscapeMobile ? 'grid grid-cols-2 gap-3' : 'space-y-5'}`}>
-              {benefits.map((item, index) => (
-                <div key={index} className={`flex items-start bg-white p-3 sm:p-4 rounded-lg shadow-sm hover:shadow-md transition-all duration-300 ${
-                  isLandscapeMobile ? 'p-2 text-sm' : ''
-                }`}>
-                  <div className="bg-brand-red/10 rounded-full p-1 mr-3 flex-shrink-0">
-                    <Check className="text-brand-red" size={isLandscapeMobile ? 14 : 18} aria-hidden="true" />
-                  </div>
-                  <span className="text-gray-700">{item}</span>
+    <section className="py-16 sm:py-24 bg-gradient-to-b from-white to-brand-gray/40">
+      <div className="container-custom">
+        <div className="text-center mb-12">
+          <span className="text-brand-red font-semibold uppercase tracking-wider mb-2 block">Why Choose Us</span>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-brand-navy mb-6">The Uncle Sam Advantage</h2>
+          <div className="w-20 h-1 bg-brand-red mx-auto mb-6"></div>
+          <p className="text-lg max-w-2xl mx-auto text-gray-600">
+            Our mission is to provide exceptional junk removal services with military precision, 
+            environmental responsibility, and a commitment to our community.
+          </p>
+        </div>
+        
+        {/* Benefits Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+          {benefits.map((benefit, index) => (
+            <Card key={index} className="border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+              <CardContent className="p-6">
+                <div className={`w-12 h-12 rounded-full ${benefit.color} flex items-center justify-center mb-4`}>
+                  <benefit.icon className="h-6 w-6" />
                 </div>
-              ))}
+                <h3 className="text-xl font-bold text-brand-navy mb-2">{benefit.title}</h3>
+                <p className="text-gray-600">{benefit.description}</p>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+        
+        {/* Stats Section */}
+        <div className="bg-white rounded-2xl shadow-xl overflow-hidden mb-12">
+          <div className="grid grid-cols-2 md:grid-cols-4">
+            {serviceStats.map((stat, index) => (
+              <div 
+                key={index} 
+                className={`p-6 md:p-8 text-center ${
+                  index < serviceStats.length - 1 ? 'border-r border-gray-100' : ''
+                }`}
+              >
+                <p className="text-4xl md:text-5xl font-bold text-brand-navy mb-2">{stat.value}</p>
+                <p className="text-gray-500 text-sm md:text-base">{stat.label}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+        
+        {/* Service Process */}
+        <div className="bg-brand-navy text-white rounded-2xl overflow-hidden">
+          <div className="grid md:grid-cols-2">
+            <div className="p-8 md:p-10">
+              <Badge className="bg-brand-red hover:bg-brand-red mb-4">Our Process</Badge>
+              <h3 className="text-2xl md:text-3xl font-bold mb-6">Simple, Fast & Efficient</h3>
+              
+              <div className="space-y-6">
+                <div className="flex items-start gap-4">
+                  <div className="bg-white/10 rounded-full w-8 h-8 flex items-center justify-center text-white font-bold shrink-0 mt-1">1</div>
+                  <div>
+                    <h4 className="font-bold text-xl mb-2">Contact Us</h4>
+                    <p className="text-white/80">Call or fill out our online form for a free quote</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-start gap-4">
+                  <div className="bg-white/10 rounded-full w-8 h-8 flex items-center justify-center text-white font-bold shrink-0 mt-1">2</div>
+                  <div>
+                    <h4 className="font-bold text-xl mb-2">Get Your Quote</h4>
+                    <p className="text-white/80">Receive a transparent, no-obligation price</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-start gap-4">
+                  <div className="bg-brand-red rounded-full w-8 h-8 flex items-center justify-center text-white font-bold shrink-0 mt-1">3</div>
+                  <div>
+                    <h4 className="font-bold text-xl mb-2">We Do The Work</h4>
+                    <p className="text-white/80">Our team handles everything from loading to disposal</p>
+                  </div>
+                </div>
+              </div>
+              
+              <Button 
+                asChild 
+                className="mt-8 bg-brand-red hover:bg-brand-red/90"
+              >
+                <Link to="/quote">Get Started Today</Link>
+              </Button>
             </div>
-            <Button 
-              asChild 
-              className={`mt-8 bg-brand-navy hover:bg-opacity-90 transition-all duration-300 hover:translate-y-[-2px] ${
-                isLandscapeMobile ? 'mt-4 py-1.5 text-sm' : ''
-              }`}
-            >
-              <Link to="/about">Learn More About Us</Link>
-            </Button>
-          </div>
-          
-          <div className="md:w-1/2 space-y-6 sm:space-y-8">
-            {/* Service coverage statistics */}
-            <Card className="p-4 sm:p-6 shadow-lg rounded-xl border-0 bg-white">
-              <h3 className="text-xl sm:text-2xl font-bold text-brand-navy mb-4 sm:mb-6">Our Service Coverage</h3>
-              
-              <div className="grid grid-cols-2 gap-3 sm:gap-4">
-                {serviceStats.map((stat, index) => (
-                  <div key={index} className="text-center p-3 sm:p-4 bg-brand-gray/50 rounded-lg">
-                    <div className="mx-auto bg-white rounded-full w-10 sm:w-12 h-10 sm:h-12 flex items-center justify-center mb-2 shadow-sm">
-                      <stat.icon className="h-5 w-5 sm:h-6 sm:w-6 text-brand-red" />
-                    </div>
-                    <div className="text-2xl sm:text-3xl font-bold text-brand-navy">{stat.value}</div>
-                    <div className="text-xs sm:text-sm text-gray-600">{stat.label}</div>
-                  </div>
-                ))}
-              </div>
-              
-              <div className="mt-4 sm:mt-6 pt-4 sm:pt-6 border-t border-gray-100">
-                <div className="flex flex-wrap gap-1.5 sm:gap-2 justify-center">
-                  {certifications.map((cert, index) => (
-                    <Badge key={index} className={`px-2 sm:px-3 py-0.5 sm:py-1 text-xs ${cert.color}`}>
-                      {cert.name}
-                    </Badge>
-                  ))}
-                </div>
-              </div>
-            </Card>
             
-            {/* Service timeline - hidden on landscape mobile to save space */}
-            <Card className={`p-4 sm:p-6 shadow-lg rounded-xl border-0 bg-gradient-to-br from-white to-brand-gray/30 ${
-              isLandscapeMobile ? 'hidden' : 'block'
-            }`}>
-              <h3 className="text-xl sm:text-2xl font-bold text-brand-navy mb-4 sm:mb-6">Our Service Process</h3>
-              
-              <div className="space-y-3 sm:space-y-4">
-                <div className="flex items-center gap-3 sm:gap-4">
-                  <div className="bg-brand-navy rounded-full w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center text-white font-bold shrink-0">1</div>
-                  <div className="bg-white p-3 sm:p-4 rounded-lg shadow-sm flex-grow">
-                    <h4 className="font-bold text-brand-navy">Contact Us</h4>
-                    <p className="text-gray-600 text-xs sm:text-sm">Request a quote online or by phone</p>
-                  </div>
+            <div className="bg-[url('https://images.unsplash.com/photo-1561837506-d5a4236b7a96')] bg-cover bg-center h-64 md:h-auto relative">
+              <div className="absolute inset-0 bg-black/30"></div>
+              <div className="absolute bottom-6 left-6 bg-white/90 backdrop-blur-sm p-4 rounded-lg max-w-[80%]">
+                <div className="flex items-center gap-2 mb-2">
+                  <Award className="text-brand-red h-5 w-5" />
+                  <span className="font-bold text-brand-navy">Veteran Owned & Operated</span>
                 </div>
-                
-                <div className="flex items-center gap-3 sm:gap-4">
-                  <div className="bg-brand-navy rounded-full w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center text-white font-bold shrink-0">2</div>
-                  <div className="bg-white p-3 sm:p-4 rounded-lg shadow-sm flex-grow">
-                    <h4 className="font-bold text-brand-navy">Get a Quote</h4>
-                    <p className="text-gray-600 text-xs sm:text-sm">Receive a transparent, no-obligation price</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-center gap-3 sm:gap-4">
-                  <div className="bg-brand-red rounded-full w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center text-white font-bold shrink-0">3</div>
-                  <div className="bg-white p-3 sm:p-4 rounded-lg shadow-sm flex-grow">
-                    <h4 className="font-bold text-brand-navy">Junk Removal</h4>
-                    <p className="text-gray-600 text-xs sm:text-sm">We haul away your items quickly and efficiently</p>
-                  </div>
-                </div>
+                <p className="text-sm text-gray-700">
+                  Uncle Sam is proud to employ U.S. veterans
+                </p>
               </div>
-              
-              <div className="mt-4 sm:mt-6 text-center">
-                <Link to="/locations" className="text-brand-red hover:underline inline-flex items-center">
-                  View all service locations
-                </Link>
-              </div>
-            </Card>
+            </div>
           </div>
+        </div>
+        
+        {/* Centered CTA Button */}
+        <div className="text-center mt-12">
+          <Button 
+            asChild 
+            size="lg" 
+            className="bg-brand-navy hover:bg-brand-navy/90"
+          >
+            <Link to="/about">Learn More About Us</Link>
+          </Button>
         </div>
       </div>
     </section>
