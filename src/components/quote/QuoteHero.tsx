@@ -12,9 +12,6 @@ const QuoteHero = () => {
           </p>
         </div>
       </div>
-      
-      {/* Add a subtle diagonal cutout at the bottom */}
-      <div className="absolute bottom-0 left-0 w-full h-16 bg-white" style={{clipPath: 'polygon(0 100%, 100% 0, 100% 100%, 0% 100%)'}}></div>
     </section>
   );
 };

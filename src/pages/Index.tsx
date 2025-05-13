@@ -10,6 +10,7 @@ import WhyChooseUs from '@/components/home/WhyChooseUs';
 import SEO from '@/components/SEO';
 import { useTranslation } from 'react-i18next';
 import { LoadingSkeleton } from '@/components/ui/loading-skeleton';
+import SectionSeparator from '@/components/ui/section-separator';
 
 const Index = () => {
   const { t, i18n } = useTranslation();
@@ -106,10 +107,15 @@ const Index = () => {
       ) : (
         <>
           <HeroSection />
+          <SectionSeparator variant="gradient" padding="md" />
           <ServicesOverview />
+          <SectionSeparator variant="gradient" padding="md" />
           <PricingOverview />
+          <SectionSeparator variant="gradient" padding="md" />
           <TestimonialsSection />
+          <SectionSeparator variant="gradient" padding="md" />
           <WhyChooseUs />
+          <SectionSeparator variant="gradient" padding="md" />
           <CtaSection />
         </>
       )}

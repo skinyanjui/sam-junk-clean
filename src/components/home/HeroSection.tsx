@@ -139,11 +139,8 @@ const HeroSection = () => {
       </div>
 
       {/* Removed Scroll Down Component */}
-
-      {/* Diagonal cutout at bottom with enhanced styling */}
-      <div className="absolute bottom-0 left-0 w-full h-16 sm:h-24 bg-white z-5" style={{
-        clipPath: 'polygon(0 100%, 100% 50%, 100% 100%, 0% 100%)'
-      }}></div>
+      
+      {/* Removed diagonal cutout */}
     </section>
   );
 };

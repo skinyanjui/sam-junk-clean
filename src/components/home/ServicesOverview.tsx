@@ -6,7 +6,7 @@ import { servicesData } from './ServicesData';
 
 const ServicesOverview = () => {
   return (
-    <section className="py-24 bg-white relative">
+    <section className="py-20 bg-white relative">
       {/* Subtle background pattern */}
       <div className="absolute inset-0 opacity-[0.03] bg-[url('https://www.transparenttextures.com/patterns/subtle-white-feathers.png')]"></div>
       

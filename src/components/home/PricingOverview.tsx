@@ -37,7 +37,7 @@ const PricingOverview = () => {
   ];
 
   return (
-    <section className="py-16 md:py-24 bg-gradient-to-b from-brand-gray to-white relative">
+    <section className="py-20 bg-gradient-to-b from-brand-gray to-white relative">
       {/* Subtle background pattern */}
       <div className="absolute inset-0 opacity-[0.02] bg-[url('https://www.transparenttextures.com/patterns/subtle-dots.png')]"></div>
       

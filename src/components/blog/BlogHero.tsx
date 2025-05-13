@@ -1,5 +1,4 @@
 
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Search } from 'lucide-react';
 import { Input } from '@/components/ui/input';
@@ -49,9 +48,6 @@ const BlogHero = ({ searchQuery, setSearchQuery }: BlogHeroProps) => {
           </div>
         </div>
       </div>
-      
-      {/* Add diagonal cutout at the bottom */}
-      <div className="absolute bottom-0 left-0 w-full h-16 bg-white" style={{clipPath: 'polygon(0 100%, 100% 0, 100% 100%, 0% 100%)'}}></div>
     </section>
   );
 };
