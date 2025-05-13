@@ -1,5 +1,4 @@
 
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 
@@ -35,9 +34,15 @@ const MobileMenuItem = ({
       <div className="border-b border-gray-100">
         <button 
           onClick={toggleDropdown}
-          className={`flex justify-between items-center w-full ${isLandscape ? 'py-1.5 px-1.5 text-sm' : 'py-2.5 px-2'} font-medium ${
-            isActive ? 'text-brand-red' : 'text-brand-navy'
-          }`}
+          className={`flex justify-between items-center w-full ${
+            isLandscape ? 'py-2 px-2.5 text-sm' : 'py-3 px-3'
+          } font-medium rounded-md ${
+            isActive 
+              ? 'text-brand-red bg-gray-50' 
+              : openDropdown === item.name 
+                ? 'text-brand-navy bg-gray-50' 
+                : 'text-brand-navy hover:bg-gray-50'
+          } transition-colors`}
         >
           {item.name}
           {openDropdown === item.name ? (
@@ -53,7 +58,9 @@ const MobileMenuItem = ({
                 <Link
                   key={dropdownItem.path}
                   to={dropdownItem.path}
-                  className={`block ${isLandscape ? 'py-1.5 px-2 text-xs' : 'py-2 px-4 text-sm'} text-gray-700 hover:text-brand-red`}
+                  className={`block ${
+                    isLandscape ? 'py-2 px-2.5 text-sm' : 'py-2.5 px-4 text-base'
+                  } text-gray-700 hover:text-brand-red hover:bg-gray-50 rounded transition-colors`}
                 >
                   {dropdownItem.name}
                 </Link>
@@ -69,9 +76,13 @@ const MobileMenuItem = ({
     <div className="border-b border-gray-100">
       <Link
         to={item.path}
-        className={`block ${isLandscape ? 'py-1.5 px-1.5 text-sm' : 'py-2.5 px-2'} font-medium ${
-          isActive ? 'text-brand-red' : 'text-brand-navy'
-        }`}
+        className={`block ${
+          isLandscape ? 'py-2 px-2.5 text-sm' : 'py-3 px-3'
+        } font-medium rounded-md ${
+          isActive 
+            ? 'text-brand-red bg-gray-50' 
+            : 'text-brand-navy hover:text-brand-red hover:bg-gray-50'
+        } transition-colors`}
       >
         {item.name}
       </Link>

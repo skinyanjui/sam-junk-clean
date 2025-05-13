@@ -26,9 +26,9 @@ const MobileNav = ({ navStructure, currentPath, isOpen, openDropdown, setOpenDro
   if (!isOpen) return null;
   
   return (
-    <div className="md:hidden bg-white border-t">
-      <nav className={`flex ${isLandscapeMobile ? 'flex-row justify-between' : 'flex-col'} container-custom pb-4`}>
-        <div className={`${isLandscapeMobile ? 'w-3/5 pr-4' : 'w-full'} overflow-y-auto ${isLandscapeMobile ? 'max-h-[40vh]' : 'max-h-[60vh]'}`}>
+    <div className="md:hidden bg-white border-t shadow-sm">
+      <nav className={`flex ${isLandscapeMobile ? 'flex-row justify-between' : 'flex-col'} container-custom py-3`}>
+        <div className={`${isLandscapeMobile ? 'w-3/5 pr-4' : 'w-full'} overflow-y-auto ${isLandscapeMobile ? 'max-h-[40vh]' : 'max-h-[60vh]'} space-y-1`}>
           {navStructure.map((item) => (
             <MobileMenuItem
               key={item.path}
@@ -41,12 +41,12 @@ const MobileNav = ({ navStructure, currentPath, isOpen, openDropdown, setOpenDro
           ))}
         </div>
         
-        <div className={`mt-4 ${isLandscapeMobile ? 'w-2/5 pl-2 self-center' : 'w-full'}`}>
+        <div className={`mt-4 ${isLandscapeMobile ? 'w-2/5 pl-4 self-center' : 'w-full'}`}>
           <Button 
             asChild 
-            className={`w-full bg-brand-red hover:bg-opacity-90 text-white ${
-              isLandscapeMobile ? 'text-sm py-2' : 'py-6 text-base'
-            } font-semibold tracking-wide transition-all duration-300 shadow-[0_4px_12px_rgba(178,34,52,0.25)]`}
+            className={`w-full bg-brand-red hover:bg-brand-red/90 text-white ${
+              isLandscapeMobile ? 'text-sm py-2' : 'py-3 text-base'
+            } font-semibold tracking-wide transition-all duration-300 shadow-md rounded-md`}
           >
             <Link to="/quote">Get a Free Quote</Link>
           </Button>

@@ -1,5 +1,6 @@
 
 import { Menu, Phone, X } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import { useResponsiveLayout } from '@/hooks/use-mobile';
 
 interface MobileToggleProps {
@@ -12,15 +13,19 @@ const MobileToggle = ({ isOpen, toggleMenu }: MobileToggleProps) => {
   
   return (
     <div className="flex items-center md:hidden">
-      <a 
-        href="tel:+18126101657" 
-        className={`mr-3 bg-brand-red text-white p-1.5 rounded-lg hover:bg-opacity-90 shadow-sm transition-all duration-300 ${
-          isLandscapeMobile ? 'scale-90' : ''
-        }`}
-        aria-label="Call us"
+      <Button 
+        asChild
+        variant="outline"
+        size="sm"
+        className="mr-2 bg-white border-brand-red text-brand-red hover:bg-brand-red hover:text-white transition-all duration-300 p-1.5 rounded-lg shadow-sm"
       >
-        <Phone size={isLandscapeMobile ? 12 : 14} className="touch-target" />
-      </a>
+        <a 
+          href="tel:+18126101657" 
+          aria-label="Call us"
+        >
+          <Phone size={isLandscapeMobile ? 14 : 16} className="touch-target" />
+        </a>
+      </Button>
       <button
         onClick={toggleMenu}
         className={`text-brand-navy p-1.5 focus:outline-none transition-colors duration-300 focus-visible-ring ${

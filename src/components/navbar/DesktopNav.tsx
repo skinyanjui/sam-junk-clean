@@ -1,5 +1,6 @@
 
 import { Phone } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import NavItem from './NavItem';
 
 interface DesktopNavProps {
@@ -17,7 +18,7 @@ interface DesktopNavProps {
 
 const DesktopNav = ({ navStructure, currentPath }: DesktopNavProps) => {
   return (
-    <nav className="hidden md:flex items-center space-x-1 lg:space-x-2">
+    <nav className="hidden md:flex items-center space-x-2 lg:space-x-4">
       {navStructure.map((item) => (
         <NavItem 
           key={item.path} 
@@ -25,13 +26,17 @@ const DesktopNav = ({ navStructure, currentPath }: DesktopNavProps) => {
           isActive={currentPath === item.path}
         />
       ))}
-      <a 
-        href="tel:+18126101657" 
-        className="ml-3 lg:ml-4 flex items-center gap-1 lg:gap-1.5 bg-brand-red text-white px-2 lg:px-3 py-1 lg:py-1.5 rounded-lg shadow-sm hover:bg-opacity-90 transition-all duration-300"
+      <Button 
+        asChild
+        variant="outline"
+        size="sm"
+        className="ml-3 lg:ml-4 bg-white border-brand-red text-brand-red hover:bg-brand-red hover:text-white transition-all duration-300 flex items-center gap-1.5 rounded-lg font-medium shadow-sm"
       >
-        <Phone size={14} />
-        <span className="font-semibold text-xs lg:text-sm whitespace-nowrap">(812) 610-1657</span>
-      </a>
+        <a href="tel:+18126101657">
+          <Phone size={14} strokeWidth={2.5} />
+          <span className="text-xs lg:text-sm whitespace-nowrap">(812) 610-1657</span>
+        </a>
+      </Button>
     </nav>
   );
 };
