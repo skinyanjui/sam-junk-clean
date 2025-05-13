@@ -27,7 +27,7 @@ export const servicesData: ServiceData[] = [
       'Moving debris cleanup',
       'Hoarding cleanup assistance'
     ],
-    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f',
+    image: 'https://images.unsplash.com/photo-1603796846097-bee99e4a601f',
     relatedBlogs: [
       {
         title: "The Ultimate Guide to Decluttering Your Garage",
@@ -52,7 +52,7 @@ export const servicesData: ServiceData[] = [
       'Commercial property cleanups',
       'Warehouse and storage space clearing'
     ],
-    image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085',
+    image: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952',
     relatedBlogs: [
       {
         title: "How Junk Removal Services Are Becoming More Eco-Friendly",
@@ -73,7 +73,7 @@ export const servicesData: ServiceData[] = [
       'Air conditioners and HVAC units',
       'Water heaters'
     ],
-    image: 'https://images.unsplash.com/photo-1571175443880-49e1d25b2bc5',
+    image: 'https://images.unsplash.com/photo-1584438875946-25aa27a1645e',
     relatedBlogs: [
       {
         title: "10 Items You Should Never Throw in the Trash",
@@ -94,7 +94,7 @@ export const servicesData: ServiceData[] = [
       'Concrete patio removal',
       'Small structure teardowns'
     ],
-    image: 'https://images.unsplash.com/photo-1605810230434-7631ac76ec81',
+    image: 'https://images.unsplash.com/photo-1589939705384-5185137a7f0f',
     relatedBlogs: [
       {
         title: "Preparing for a Home Renovation? Here's How to Handle the Debris",
@@ -115,7 +115,7 @@ export const servicesData: ServiceData[] = [
       'Documentation for estate purposes',
       'Final property sweep and cleaning'
     ],
-    image: 'https://images.unsplash.com/photo-1721322800607-8c38375eef04',
+    image: 'https://images.unsplash.com/photo-1606170033648-5d55a3edf314',
     relatedBlogs: [],
     relatedServices: ["residential", "appliance-removal"]
   },
@@ -131,7 +131,7 @@ export const servicesData: ServiceData[] = [
       'Scheduled pickups available',
       'Contact-free service options'
     ],
-    image: 'https://images.unsplash.com/photo-1488590528505-98d2b5aba04b',
+    image: 'https://images.unsplash.com/photo-1610641818989-c2051b5e2cfd',
     relatedBlogs: [],
     relatedServices: ["residential"]
   }
