@@ -1,6 +1,5 @@
 
-import { Menu, Phone, X } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Menu, X } from 'lucide-react';
 import { useResponsiveLayout } from '@/hooks/use-mobile';
 import { motion } from 'framer-motion';
 
@@ -14,25 +13,22 @@ const MobileToggle = ({ isOpen, toggleMenu }: MobileToggleProps) => {
   
   return (
     <div className="flex items-center md:hidden">
-      <Button 
-        asChild
-        variant="outline"
-        size="sm"
-        className="mr-2 bg-white border-brand-red text-brand-red hover:bg-brand-red hover:text-white transition-all duration-300 p-1.5 rounded-md shadow-sm"
+      <a 
+        href="tel:+18126101657" 
+        className="mr-3 text-brand-red text-sm font-medium hover:text-brand-navy transition-colors duration-300"
+        aria-label="Call us"
       >
-        <a href="tel:+18126101657" aria-label="Call us">
-          <Phone size={16} className="touch-target" />
-        </a>
-      </Button>
+        (812) 610-1657
+      </a>
       <motion.button
         whileTap={{ scale: 0.95 }}
         onClick={toggleMenu}
-        className="text-brand-navy p-1.5 focus:outline-none transition-colors duration-300 focus-visible-ring rounded-md"
+        className="text-brand-navy p-1 focus:outline-none transition-colors duration-300 focus-visible-ring rounded-md"
         aria-label="Toggle menu"
       >
         {isOpen ? 
-          <X size={20} className="touch-target" /> : 
-          <Menu size={20} className="touch-target" />
+          <X size={18} className="touch-target" /> : 
+          <Menu size={18} className="touch-target" />
         }
       </motion.button>
     </div>
