@@ -23,7 +23,7 @@ const ServicesCta = () => {
               asChild 
               variant="outline" 
               size="lg"
-              className="border-white text-white hover:bg-white hover:text-brand-navy font-bold tracking-wide border-2 transition-all duration-300 hover:scale-[1.02]"
+              className="border-white text-white bg-white/10 hover:bg-white hover:text-brand-navy font-bold tracking-wide border-2 transition-all duration-300 hover:scale-[1.02]"
             >
               <Link to="/pricing">View Pricing</Link>
             </Button>
@@ -35,3 +35,4 @@ const ServicesCta = () => {
 };
 
 export default ServicesCta;
+

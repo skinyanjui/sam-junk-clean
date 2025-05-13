@@ -40,7 +40,7 @@ const CtaSection = () => {
                 <Button 
                   variant="outline" 
                   size="lg"
-                  className="border-2 border-white text-white hover:bg-white hover:text-brand-navy font-bold tracking-wide py-6 transition-all duration-300 hover:scale-[1.02]"
+                  className="border-2 border-white text-white bg-white/10 hover:bg-white hover:text-brand-navy font-bold tracking-wide py-6 transition-all duration-300 hover:scale-[1.02]"
                   onClick={handleCallClick}
                 >
                   <a href="tel:+18126101657">Call (812) 610-1657</a>
@@ -55,3 +55,4 @@ const CtaSection = () => {
 };
 
 export default CtaSection;
+

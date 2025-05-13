@@ -24,7 +24,7 @@ const BlogCta = () => {
               <Button 
                 asChild
                 variant="outline" 
-                className="border-white text-white hover:bg-white hover:text-brand-navy font-bold tracking-wide border-2 transition-all duration-300 hover:scale-[1.03]"
+                className="border-white text-white bg-white/10 hover:bg-white hover:text-brand-navy font-bold tracking-wide border-2 transition-all duration-300 hover:scale-[1.03]"
               >
                 <Link to="/contact">Contact Us</Link>
               </Button>
@@ -37,3 +37,4 @@ const BlogCta = () => {
 };
 
 export default BlogCta;
+
