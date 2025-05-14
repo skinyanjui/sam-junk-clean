@@ -121,7 +121,7 @@ const About = () => {
             </div>
             <div>
               <img 
-                src="/lovable-uploads/fc8d2f67-4877-4ef7-b65c-31802376e819.png" 
+                src="/lovable-uploads/92c7287f-ec89-4c0f-9ad4-a2ed585a70a3.png" 
                 alt="Uncle Sam Junk Removal" 
                 className="rounded-lg shadow-lg w-full max-w-md mx-auto"
               />

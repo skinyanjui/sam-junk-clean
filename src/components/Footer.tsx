@@ -36,7 +36,7 @@ const Footer = () => {
           {/* Company Info - Simplified */}
           <div className="flex flex-col items-center md:items-start">
             <img 
-              src="/lovable-uploads/0a130540-8be2-4b60-b8fb-e8815548d584.png" 
+              src="/lovable-uploads/92c7287f-ec89-4c0f-9ad4-a2ed585a70a3.png" 
               alt="Uncle Sam Junk Removal" 
               className="h-16 md:h-20 mb-4"
             />
