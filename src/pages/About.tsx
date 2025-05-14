@@ -38,7 +38,7 @@ const About = () => {
               </p>
               <p className="text-gray-700">
                 Today, Uncle Sam Junk Removal has grown into a trusted name in the community, 
-                with a fleet of trucks and a dedicated team of professionals who share our 
+                with a dedicated team of professionals who share our 
                 commitment to excellent service and environmental responsibility.
               </p>
             </div>
