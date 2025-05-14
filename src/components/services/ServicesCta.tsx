@@ -1,7 +1,7 @@
 
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import SectionSeparator from '@/components/ui/section-separator';
+import Divider from '@/components/ui/divider';
 
 const ServicesCta = () => {
   return (
@@ -31,7 +31,7 @@ const ServicesCta = () => {
           </div>
         </div>
       </div>
-      <SectionSeparator variant="gradient" padding="none" />
+      <Divider padding="none" />
     </section>
   );
 };

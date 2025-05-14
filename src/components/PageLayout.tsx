@@ -5,7 +5,7 @@ import Footer from './Footer';
 import { Breadcrumb } from './Breadcrumb';
 import { Toaster } from './ui/toaster';
 import { useResponsiveLayout } from '@/hooks/use-mobile';
-import SectionSeparator from './ui/section-separator';
+import Divider from './ui/divider';
 
 interface PageLayoutProps {
   children: ReactNode;
@@ -51,13 +51,13 @@ const PageLayout = ({
             <div className={`${breadcrumbClassName} ${isMobile && isLandscape ? 'py-1' : ''}`}>
               <Breadcrumb />
             </div>
-            <SectionSeparator variant="default" padding="none" />
+            <Divider padding="none" />
           </>
         )}
         {children}
       </main>
       
-      <SectionSeparator variant="gradient" padding="md" />
+      <Divider padding="md" />
       <Footer />
       
       {/* Bottom padding for mobile sticky button */}
