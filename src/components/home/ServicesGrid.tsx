@@ -1,4 +1,3 @@
-
 import { ReactNode, useState, useEffect } from 'react';
 import ServiceCard from './ServiceCard';
 import { LoadingSkeleton } from '@/components/ui/loading-skeleton';
@@ -15,6 +14,7 @@ export interface ServiceItem {
   icon: ReactNode;
   description: string;
   image?: string;
+  alt?: string;
 }
 
 interface ServicesGridProps {
