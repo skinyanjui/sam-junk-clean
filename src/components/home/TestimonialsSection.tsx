@@ -1,6 +1,6 @@
 
-import { Star, MapPin } from 'lucide-react';
-import { useIsMobile, useOrientation } from '@/hooks/use-mobile';
+import { Star, MapPin, Quote } from 'lucide-react';
+import { useResponsiveLayout } from '@/hooks/use-mobile';
 import {
   Carousel,
   CarouselContent,
@@ -18,9 +18,7 @@ type Testimonial = {
 };
 
 const TestimonialsSection = () => {
-  const isMobile = useIsMobile();
-  const orientation = useOrientation();
-  const isLandscapeMobile = isMobile && orientation === 'landscape';
+  const { isMobile, isLandscapeMobile } = useResponsiveLayout();
   
   const testimonials = [
     {
@@ -57,22 +55,24 @@ const TestimonialsSection = () => {
   
   const renderStars = (rating: number) => {
     return Array(rating).fill(0).map((_, i) => (
-      <Star key={i} size={18} fill="#FFD700" color="#FFD700" />
+      <Star key={i} size={16} fill="#FFD700" color="#FFD700" />
     ));
   };
 
   return (
-    <section className="py-20 bg-white relative overflow-hidden">
+    <section className={`py-16 ${isMobile ? 'px-4 py-12' : 'py-20'} bg-white relative overflow-hidden`}>
       {/* Background elements */}
       <div className="absolute top-0 left-0 w-64 h-64 bg-brand-red/5 rounded-full blur-3xl"></div>
       <div className="absolute bottom-0 right-0 w-96 h-96 bg-brand-blue/5 rounded-full blur-3xl"></div>
       
       <div className="container-custom text-center mb-10 relative z-10">
         <span className="text-brand-red font-semibold uppercase tracking-wider mb-2 block">Happy Customers</span>
-        <h2 className="text-4xl md:text-5xl font-bold text-brand-navy mb-6">Customer Testimonials</h2>
+        <h2 className={`${isMobile ? 'text-3xl' : 'text-4xl md:text-5xl'} font-bold text-brand-navy mb-4`}>
+          What Our Customers Say
+        </h2>
         <div className="w-20 h-1 bg-brand-red mx-auto mb-6"></div>
-        <p className="text-lg max-w-3xl mx-auto text-gray-600">
-          Don't just take our word for it. See what our satisfied customers have to say.
+        <p className={`${isMobile ? 'text-base' : 'text-lg'} max-w-3xl mx-auto text-gray-600`}>
+          Don't just take our word for it. See what our satisfied customers have to say about our services.
         </p>
       </div>
       
@@ -90,19 +90,22 @@ const TestimonialsSection = () => {
                 key={index} 
                 className={`pl-4 ${isMobile ? 'basis-full' : isLandscapeMobile ? 'basis-1/2' : 'basis-1/3'} min-h-[280px]`}
               >
-                <Card className="bg-white border border-gray-100 p-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 h-full flex flex-col">
+                <Card className="bg-white border border-gray-100 p-6 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 h-full flex flex-col">
+                  <div className="mb-2 text-brand-red">
+                    <Quote size={24} className="opacity-50" />
+                  </div>
                   <div className="flex mb-4">
                     {renderStars(testimonial.rating)}
                   </div>
-                  <p className="text-gray-700 italic mb-6 leading-relaxed text-lg flex-grow">&quot;{testimonial.quote}&quot;</p>
+                  <p className="text-gray-700 mb-6 leading-relaxed flex-grow">&quot;{testimonial.quote}&quot;</p>
                   <div className="flex items-center border-t border-gray-100 pt-4 mt-auto">
-                    <div className="bg-brand-navy/10 w-12 h-12 rounded-full flex items-center justify-center text-brand-navy font-bold text-lg mr-4">
+                    <div className="bg-brand-navy/10 w-10 h-10 rounded-full flex items-center justify-center text-brand-navy font-bold text-lg mr-3">
                       {testimonial.name.charAt(0)}
                     </div>
                     <div>
                       <p className="font-semibold text-brand-navy">{testimonial.name}</p>
                       <p className="text-sm text-gray-500 flex items-center">
-                        <MapPin size={14} className="mr-1" />
+                        <MapPin size={12} className="mr-1" />
                         {testimonial.location}
                       </p>
                     </div>
@@ -111,9 +114,9 @@ const TestimonialsSection = () => {
               </CarouselItem>
             ))}
           </CarouselContent>
-          <div className="hidden sm:flex justify-end gap-2 mt-8">
-            <CarouselPrevious className="relative -left-0 static bg-brand-navy text-white hover:bg-brand-navy/80" />
-            <CarouselNext className="relative -right-0 static bg-brand-navy text-white hover:bg-brand-navy/80" />
+          <div className="hidden sm:flex justify-center gap-2 mt-8">
+            <CarouselPrevious className="relative static bg-brand-navy text-white hover:bg-brand-navy/80" />
+            <CarouselNext className="relative static bg-brand-navy text-white hover:bg-brand-navy/80" />
           </div>
         </Carousel>
       </div>

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import SEO from '@/components/SEO';
 import { useResponsiveLayout } from '@/hooks/use-mobile';
+import { Package2 } from 'lucide-react';
 
 const ServicesHero = () => {
   const { isMobile, orientation } = useResponsiveLayout();
@@ -20,6 +21,9 @@ const ServicesHero = () => {
       <section className={`${isMobile ? 'py-10 px-4' : 'py-16'} ${isLandscape && isMobile ? 'py-8' : ''} bg-brand-navy text-white`}>
         <div className="container-custom">
           <div className="max-w-3xl mx-auto text-center z-10 relative">
+            <span className="inline-flex items-center justify-center w-16 h-16 mb-4 rounded-full bg-brand-red/20">
+              <Package2 className="h-8 w-8 text-brand-red" />
+            </span>
             <h1 className={`${isMobile ? 'text-3xl' : 'text-3xl md:text-4xl lg:text-5xl'} font-bold ${isMobile ? 'mb-3' : 'mb-4 md:mb-6'}`}>
               Our Services
             </h1>

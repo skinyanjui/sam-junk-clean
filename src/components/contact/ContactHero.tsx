@@ -1,6 +1,7 @@
 
 import SEO from '@/components/SEO';
 import { useResponsiveLayout } from '@/hooks/use-mobile';
+import { Mail } from 'lucide-react';
 
 const ContactHero = () => {
   const { isMobile, orientation } = useResponsiveLayout();
@@ -17,6 +18,9 @@ const ContactHero = () => {
       <section className={`${isMobile ? 'py-10' : 'py-20'} ${isLandscape && isMobile ? 'py-8' : ''} bg-brand-navy text-white`}>
         <div className="container-custom">
           <div className="max-w-3xl mx-auto text-center">
+            <span className="inline-flex items-center justify-center w-16 h-16 mb-4 rounded-full bg-brand-red/20">
+              <Mail className="h-8 w-8 text-brand-red" />
+            </span>
             <h1 className={`${isMobile ? 'text-3xl' : 'text-4xl md:text-5xl xl:text-6xl'} font-bold ${isMobile ? 'mb-3' : 'mb-6'}`}>
               Contact Us
             </h1>

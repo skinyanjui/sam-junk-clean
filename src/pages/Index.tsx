@@ -11,6 +11,8 @@ import SEO from '@/components/SEO';
 import { useTranslation } from 'react-i18next';
 import { LoadingSkeleton } from '@/components/ui/loading-skeleton';
 import SectionSeparator from '@/components/ui/section-separator';
+import FeaturedProjects from '@/components/home/FeaturedProjects';
+import ProcessSection from '@/components/home/ProcessSection';
 
 const Index = () => {
   const { t, i18n } = useTranslation();
@@ -105,17 +107,28 @@ const Index = () => {
           </div>
         </div>
       ) : (
-        <div className="space-y-4 md:space-y-0">
+        <div className="space-y-4 md:space-y-6">
           <HeroSection />
-          <SectionSeparator variant="gradient" padding="md" />
+          <SectionSeparator variant="gradient" padding="lg" />
+          
+          <ProcessSection />
+          <SectionSeparator variant="gradient" padding="lg" />
+          
           <ServicesOverview />
-          <SectionSeparator variant="gradient" padding="md" />
+          <SectionSeparator variant="gradient" padding="lg" />
+          
+          <FeaturedProjects />
+          <SectionSeparator variant="gradient" padding="lg" />
+          
           <PricingOverview />
-          <SectionSeparator variant="gradient" padding="md" />
-          <TestimonialsSection />
-          <SectionSeparator variant="gradient" padding="md" />
+          <SectionSeparator variant="gradient" padding="lg" />
+          
           <WhyChooseUs />
-          <SectionSeparator variant="gradient" padding="md" />
+          <SectionSeparator variant="gradient" padding="lg" />
+          
+          <TestimonialsSection />
+          <SectionSeparator variant="gradient" padding="lg" />
+          
           <CtaSection />
         </div>
       )}

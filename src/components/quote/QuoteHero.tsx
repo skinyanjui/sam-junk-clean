@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { useResponsiveLayout } from '@/hooks/use-mobile';
+import { FileText } from 'lucide-react';
 
 const QuoteHero = () => {
   const { isMobile, orientation } = useResponsiveLayout();
@@ -10,6 +11,9 @@ const QuoteHero = () => {
     <section className={`${isMobile ? 'py-10' : 'py-20'} ${isLandscape && isMobile ? 'py-8' : ''} bg-brand-navy text-white`}>
       <div className="container-custom">
         <div className="max-w-3xl mx-auto text-center z-10 relative">
+          <span className="inline-flex items-center justify-center w-16 h-16 mb-4 rounded-full bg-brand-red/20">
+            <FileText className="h-8 w-8 text-brand-red" />
+          </span>
           <h1 className={`${isMobile ? 'text-3xl' : 'text-4xl md:text-5xl'} font-bold ${isMobile ? 'mb-3' : 'mb-6'}`}>
             Get a Free Quote
           </h1>
