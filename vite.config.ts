@@ -20,8 +20,12 @@ export default defineConfig(({ mode }) => ({
     alias: {
       "@": path.resolve(__dirname, "./src"),
     },
+    // Ensure directories aren't treated as modules
+    preserveSymlinks: false
   },
   build: {
+    // Show detailed build errors
+    reportCompressedSize: true,
     // Optimize chunk size
     cssCodeSplit: true,
     chunkSizeWarningLimit: 1000,
@@ -29,7 +33,7 @@ export default defineConfig(({ mode }) => ({
       output: {
         manualChunks: {
           vendor: ['react', 'react-dom', 'react-router-dom'],
-          ui: ['@/components/ui'],
+          ui: ['@/components/ui/button', '@/components/ui/form']  // Specify individual UI components instead of entire directory
         }
       }
     },
