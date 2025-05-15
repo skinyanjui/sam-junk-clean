@@ -10,6 +10,7 @@ interface PhoneFormFieldProps {
   register: any;
   error?: string;
   inputBorderClass?: string;
+  showValidation?: boolean;
 }
 
 export const PhoneFormField = ({ 
@@ -18,14 +19,15 @@ export const PhoneFormField = ({
   placeholder,
   register, 
   error,
-  inputBorderClass = 'border-gray-400'
+  inputBorderClass = 'border-gray-400',
+  showValidation = true
 }: PhoneFormFieldProps) => {
   return (
-    <FormField id={id} label={label} error={error}>
+    <FormField id={id} label={label} error={error} showValidation={showValidation}>
       <PhoneInput
         id={id}
         placeholder={placeholder}
-        className={`bg-white ${inputBorderClass}`}
+        className={`bg-white ${inputBorderClass} ${error ? 'border-red-500' : ''}`}
         {...register}
       />
     </FormField>

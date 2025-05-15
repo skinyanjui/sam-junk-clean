@@ -13,6 +13,7 @@ import { TextFormField } from './fields/TextFormField';
 import { PhoneFormField } from './fields/PhoneFormField';
 import { SelectFormField } from './fields/SelectFormField';
 import { DatePickerField } from './fields/DatePickerField';
+import SuccessView from './SuccessView';
 
 // Form schema for validation
 const bookingSchema = z.object({
@@ -38,6 +39,7 @@ const BookingForm = ({
   onSuccess 
 }: BookingFormProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formSubmitted, setFormSubmitted] = useState(false);
   const { toast } = useToast();
   
   const form = useForm<BookingFormValues>({
@@ -47,7 +49,8 @@ const BookingForm = ({
       phone: '',
       email: '',
       service: ''
-    }
+    },
+    mode: 'onChange' // Enable validation on change
   });
 
   const onSubmit = async (data: BookingFormValues) => {
@@ -64,7 +67,7 @@ const BookingForm = ({
         description: "We'll contact you shortly to confirm your appointment.",
       });
       
-      form.reset();
+      setFormSubmitted(true);
       
       if (onSuccess) {
         onSuccess();
@@ -79,6 +82,11 @@ const BookingForm = ({
     } finally {
       setIsSubmitting(false);
     }
+  };
+
+  const resetForm = () => {
+    form.reset();
+    setFormSubmitted(false);
   };
 
   // Available time slots
@@ -104,6 +112,36 @@ const BookingForm = ({
   
   // Define darker border color for form elements
   const inputBorderClass = "border-gray-400";
+  
+  if (formSubmitted) {
+    return (
+      <div className={cn(
+        "rounded-lg overflow-hidden shadow-lg", 
+        isHeroVariant 
+          ? "bg-white border border-gray-300" 
+          : "bg-white border border-gray-300",
+        className
+      )}>
+        <div className={cn(
+          "px-6 py-4",
+          "bg-brand-navy"
+        )}>
+          <h3 className="text-white font-bold flex items-center gap-2 text-xl">
+            <CalendarClock className="h-5 w-5" />
+            Schedule a Pickup
+          </h3>
+        </div>
+        
+        <div className="p-6">
+          <SuccessView 
+            title="Booking Successful!" 
+            message="We've received your booking request. Our team will contact you shortly to confirm your appointment." 
+            resetForm={resetForm}
+          />
+        </div>
+      </div>
+    );
+  }
   
   return (
     <div className={cn(

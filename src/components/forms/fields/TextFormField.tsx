@@ -11,6 +11,7 @@ interface TextFormFieldProps {
   error?: string;
   type?: string;
   inputBorderClass?: string;
+  showValidation?: boolean;
 }
 
 export const TextFormField = ({ 
@@ -20,15 +21,16 @@ export const TextFormField = ({
   register, 
   error,
   type = 'text',
-  inputBorderClass = 'border-gray-400'
+  inputBorderClass = 'border-gray-400',
+  showValidation = true
 }: TextFormFieldProps) => {
   return (
-    <FormField id={id} label={label} error={error}>
+    <FormField id={id} label={label} error={error} showValidation={showValidation}>
       <Input
         id={id}
         type={type}
         placeholder={placeholder}
-        className={`bg-white ${inputBorderClass}`}
+        className={`bg-white ${inputBorderClass} ${error ? 'border-red-500' : ''}`}
         {...register}
       />
     </FormField>
