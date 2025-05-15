@@ -16,6 +16,7 @@ import Terms from "./pages/Terms";
 import NotFound from "./pages/NotFound";
 import FAQ from "./pages/FAQ";
 import Blog from "./pages/Blog";
+import BlogPost from "./pages/BlogPost";
 import Careers from "./pages/Careers";
 import Locations from "./pages/Locations";
 import { Suspense } from "react";
@@ -53,6 +54,7 @@ const App = () => (
               <Route path="/terms" element={<Terms />} />
               <Route path="/faq" element={<FAQ />} />
               <Route path="/blog" element={<Blog />} />
+              <Route path="/blog/:slug" element={<BlogPost />} />
               <Route path="/careers" element={<Careers />} />
               <Route path="/locations" element={<Locations />} />
               <Route path="*" element={<NotFound />} />

@@ -38,4 +38,5 @@ export const navStructure = [
       { name: 'Contact', path: '/contact' }
     ]
   },
+  { name: 'Blog', path: '/blog', hasDropdown: false },
 ];

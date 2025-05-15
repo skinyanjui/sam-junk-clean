@@ -1,143 +1,114 @@
 
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:xhtml="http://www.w3.org/1999/xhtml"
-        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
-        xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://unclesamjunkremoval.com/</loc>
     <lastmod>2025-05-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://unclesamjunkremoval.com/?lang=en"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://unclesamjunkremoval.com/?lang=es"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://unclesamjunkremoval.com/"/>
   </url>
   <url>
     <loc>https://unclesamjunkremoval.com/services</loc>
     <lastmod>2025-05-15</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://unclesamjunkremoval.com/services?lang=en"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://unclesamjunkremoval.com/services?lang=es"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://unclesamjunkremoval.com/services"/>
-    <image:image>
-      <image:loc>https://lovable.dev/opengraph-image-p98pqg.png</image:loc>
-      <image:title>Uncle Sam Junk Removal Services</image:title>
-    </image:image>
+    <priority>0.9</priority>
   </url>
   <url>
     <loc>https://unclesamjunkremoval.com/pricing</loc>
     <lastmod>2025-05-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://unclesamjunkremoval.com/pricing?lang=en"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://unclesamjunkremoval.com/pricing?lang=es"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://unclesamjunkremoval.com/pricing"/>
   </url>
   <url>
     <loc>https://unclesamjunkremoval.com/quote</loc>
     <lastmod>2025-05-15</lastmod>
-    <changefreq>yearly</changefreq>
+    <changefreq>monthly</changefreq>
     <priority>0.9</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://unclesamjunkremoval.com/quote?lang=en"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://unclesamjunkremoval.com/quote?lang=es"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://unclesamjunkremoval.com/quote"/>
   </url>
   <url>
     <loc>https://unclesamjunkremoval.com/about</loc>
     <lastmod>2025-05-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://unclesamjunkremoval.com/about?lang=en"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://unclesamjunkremoval.com/about?lang=es"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://unclesamjunkremoval.com/about"/>
   </url>
   <url>
     <loc>https://unclesamjunkremoval.com/contact</loc>
     <lastmod>2025-05-15</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://unclesamjunkremoval.com/contact?lang=en"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://unclesamjunkremoval.com/contact?lang=es"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://unclesamjunkremoval.com/contact"/>
-  </url>
-  <url>
-    <loc>https://unclesamjunkremoval.com/faq</loc>
-    <lastmod>2025-05-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://unclesamjunkremoval.com/faq?lang=en"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://unclesamjunkremoval.com/faq?lang=es"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://unclesamjunkremoval.com/faq"/>
   </url>
   <url>
     <loc>https://unclesamjunkremoval.com/blog</loc>
     <lastmod>2025-05-15</lastmod>
     <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://unclesamjunkremoval.com/faq</loc>
+    <lastmod>2025-05-15</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://unclesamjunkremoval.com/blog?lang=en"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://unclesamjunkremoval.com/blog?lang=es"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://unclesamjunkremoval.com/blog"/>
   </url>
   <url>
     <loc>https://unclesamjunkremoval.com/careers</loc>
     <lastmod>2025-05-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://unclesamjunkremoval.com/careers?lang=en"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://unclesamjunkremoval.com/careers?lang=es"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://unclesamjunkremoval.com/careers"/>
   </url>
   <url>
     <loc>https://unclesamjunkremoval.com/locations</loc>
     <lastmod>2025-05-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://unclesamjunkremoval.com/locations?lang=en"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://unclesamjunkremoval.com/locations?lang=es"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://unclesamjunkremoval.com/locations"/>
   </url>
+  
+  <!-- Blog Posts -->
   <url>
-    <loc>https://unclesamjunkremoval.com/services/residential</loc>
+    <loc>https://unclesamjunkremoval.com/blog/prepare-for-junk-removal</loc>
     <lastmod>2025-05-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://unclesamjunkremoval.com/services/commercial</loc>
+    <loc>https://unclesamjunkremoval.com/blog/environmental-benefits-junk-removal</loc>
     <lastmod>2025-05-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://unclesamjunkremoval.com/services/appliance-removal</loc>
+    <loc>https://unclesamjunkremoval.com/blog/diy-vs-professional-removal</loc>
     <lastmod>2025-05-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://unclesamjunkremoval.com/services/estate-cleanouts</loc>
+    <loc>https://unclesamjunkremoval.com/blog/spring-cleaning-guide</loc>
     <lastmod>2025-05-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://unclesamjunkremoval.com/privacy</loc>
+    <loc>https://unclesamjunkremoval.com/blog/recycle-donate-discard</loc>
     <lastmod>2025-05-15</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://unclesamjunkremoval.com/privacy?lang=en"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://unclesamjunkremoval.com/privacy?lang=es"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://unclesamjunkremoval.com/privacy"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://unclesamjunkremoval.com/terms</loc>
+    <loc>https://unclesamjunkremoval.com/blog/garage-transformation</loc>
     <lastmod>2025-05-15</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://unclesamjunkremoval.com/terms?lang=en"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://unclesamjunkremoval.com/terms?lang=es"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://unclesamjunkremoval.com/terms"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://unclesamjunkremoval.com/blog/electronic-waste-disposal</loc>
+    <lastmod>2025-05-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://unclesamjunkremoval.com/blog/hoarded-home-transformation</loc>
+    <lastmod>2025-05-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
 </urlset>

@@ -1,73 +1,103 @@
 
 import { BlogPost } from '@/types/blog';
 
-// Sample blog posts
+// Sample blog posts based on requested topics
 export const blogPosts: BlogPost[] = [
   {
     id: '1',
-    title: 'How to Properly Dispose of Electronic Waste',
-    excerpt: 'Learn about the environmental impact of e-waste and how to responsibly dispose of your old electronics.',
-    category: 'Tips & Advice',
-    date: 'May 2, 2025',
+    title: 'How to Prepare Your Home for Junk Removal Service',
+    excerpt: 'Learn the essential steps to prepare your home for a smooth and efficient junk removal experience.',
+    category: 'Preparation',
+    date: 'May 12, 2025',
     author: 'Mike Johnson',
-    imageUrl: 'https://images.unsplash.com/photo-1550009158-9ebf69173e03',
-    slug: 'dispose-electronic-waste'
+    imageUrl: 'https://images.unsplash.com/photo-1584835732100-9c7b00ad260c',
+    slug: 'prepare-for-junk-removal'
   },
   {
     id: '2',
-    title: 'The Cost of Hoarding: Financial and Emotional Impact',
-    excerpt: 'Exploring the hidden costs of keeping too much stuff and how decluttering can improve your life.',
-    category: 'Lifestyle',
-    date: 'April 25, 2025',
+    title: 'Environmental Benefits of Professional Junk Removal',
+    excerpt: 'Discover how proper junk disposal contributes to environmental conservation and sustainability.',
+    category: 'Sustainability',
+    date: 'May 5, 2025',
     author: 'Sarah Williams',
-    imageUrl: 'https://images.unsplash.com/photo-1534653299134-96a171b61581',
-    slug: 'cost-of-hoarding'
+    imageUrl: 'https://images.unsplash.com/photo-1532996122724-e3c354a0b15b',
+    slug: 'environmental-benefits-junk-removal'
   },
   {
     id: '3',
-    title: 'Commercial Junk Removal: What Businesses Need to Know',
-    excerpt: 'A complete guide for businesses looking to efficiently manage office cleanouts and junk disposal.',
-    category: 'Business',
-    date: 'April 18, 2025',
+    title: 'DIY vs. Professional Junk Removal: What You Need to Know',
+    excerpt: 'Compare the pros and cons of handling junk removal yourself versus hiring professionals.',
+    category: 'Comparison',
+    date: 'April 28, 2025',
     author: 'James Rodriguez',
-    imageUrl: 'https://images.unsplash.com/photo-1556761175-5973dc0f32e7',
-    slug: 'commercial-junk-removal'
+    imageUrl: 'https://images.unsplash.com/photo-1530124566582-a618bc2615dc',
+    slug: 'diy-vs-professional-removal'
   },
   {
     id: '4',
-    title: '5 Ways to Reuse and Recycle Household Items',
-    excerpt: 'Creative ideas for giving new life to old items instead of throwing them away.',
-    category: 'Sustainability',
-    date: 'April 10, 2025',
+    title: 'Spring Cleaning Guide: Decluttering Your Home for the New Season',
+    excerpt: 'A comprehensive guide to decluttering and organizing your home during the spring season.',
+    category: 'Seasonal',
+    date: 'April 15, 2025',
     author: 'Emily Chen',
-    imageUrl: 'https://images.unsplash.com/photo-1532996122724-e3c354a0b15b',
-    slug: 'reuse-recycle-items'
+    imageUrl: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952',
+    slug: 'spring-cleaning-guide'
   },
   {
     id: '5',
-    title: 'Spring Cleaning: The Ultimate Checklist',
-    excerpt: 'Get your home ready for spring with this comprehensive cleaning and decluttering guide.',
-    category: 'Tips & Advice',
-    date: 'March 28, 2025',
+    title: 'Recycle, Donate, or Discard: Making the Right Choice for Your Items',
+    excerpt: 'Learn how to determine whether your unwanted items should be recycled, donated, or discarded.',
+    category: 'Recycling',
+    date: 'April 8, 2025',
     author: 'Mike Johnson',
-    imageUrl: 'https://images.unsplash.com/photo-1528740561666-dc2479dc08ab',
-    slug: 'spring-cleaning-checklist'
+    imageUrl: 'https://images.unsplash.com/photo-1604187351574-c75ca79f5807',
+    slug: 'recycle-donate-discard'
   },
   {
     id: '6',
-    title: 'The Environmental Impact of Improper Waste Disposal',
-    excerpt: 'Understanding how incorrect waste disposal affects our planet and what you can do about it.',
-    category: 'Sustainability',
-    date: 'March 15, 2025',
+    title: 'Amazing Transformation: From Cluttered Garage to Organized Workspace',
+    excerpt: 'See the incredible before and after transformation of a cluttered garage into a functional workspace.',
+    category: 'Transformations',
+    date: 'March 30, 2025',
     author: 'Lisa Morgan',
-    imageUrl: 'https://images.unsplash.com/photo-1610392347604-86b8deafd3e9',
-    slug: 'environmental-impact-waste'
+    imageUrl: 'https://images.unsplash.com/photo-1530563885674-66db9af5a785',
+    slug: 'garage-transformation'
+  },
+  {
+    id: '7',
+    title: 'Fall Cleanup: Preparing Your Yard and Home for Winter',
+    excerpt: 'Essential tips for clearing out your yard and home before the winter months arrive.',
+    category: 'Seasonal',
+    date: 'March 22, 2025',
+    author: 'David Wilson',
+    imageUrl: 'https://images.unsplash.com/photo-1508739773434-c26b3d09e071',
+    slug: 'fall-cleanup-guide'
+  },
+  {
+    id: '8',
+    title: 'Electronic Waste Disposal: What You Need to Know',
+    excerpt: 'Learn the proper ways to dispose of electronic waste to minimize environmental impact.',
+    category: 'Recycling',
+    date: 'March 15, 2025',
+    author: 'Sarah Williams',
+    imageUrl: 'https://images.unsplash.com/photo-1550009158-9ebf69173e03',
+    slug: 'electronic-waste-disposal'
+  },
+  {
+    id: '9',
+    title: 'From Hoarded Home to Haven: A Complete Transformation Story',
+    excerpt: 'The inspiring story of how professional junk removal transformed a hoarded house into a comfortable home.',
+    category: 'Transformations',
+    date: 'March 5, 2025',
+    author: 'James Rodriguez',
+    imageUrl: 'https://images.unsplash.com/photo-1484154218962-a197022b5858',
+    slug: 'hoarded-home-transformation'
   }
 ];
 
 // Related links for blog readers
 export const relatedLinks = [
-  { title: "FAQ", description: "Find answers to common questions", path: "/faq", icon: null },
-  { title: "Services", description: "Learn about what we offer", path: "/services", icon: null },
-  { title: "Get a Quote", description: "Free, no-obligation estimate", path: "/quote", icon: null },
+  { title: "FAQ", description: "Find answers to common questions about junk removal", path: "/faq", icon: null },
+  { title: "Services", description: "Learn about our full range of junk removal services", path: "/services", icon: null },
+  { title: "Get a Quote", description: "Free, no-obligation estimate for your project", path: "/quote", icon: null },
 ];
