@@ -109,6 +109,9 @@ const QuoteForm = ({ onFormSuccess }: QuoteFormProps) => {
         throw error;
       }
       
+      // Send notification to admin email (can be implemented with an edge function)
+      // This would be the place to add a webhook call to notify about new quote requests
+      
       toast({
         title: "Quote Request Submitted!",
         description: "We'll contact you shortly with a free estimate.",

@@ -16,6 +16,11 @@ Allow: /faq
 Allow: /blog
 Allow: /careers
 Allow: /locations
+Allow: /services
+Allow: /quote
+Allow: /about
+Allow: /contact
+Allow: /pricing
 
 # Specific crawler directives
 User-agent: Googlebot

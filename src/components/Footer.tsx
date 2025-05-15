@@ -41,16 +41,16 @@ const Footer = () => {
               className="h-16 md:h-20 mb-4"
             />
             <div className="flex space-x-3 mt-3">
-              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="bg-white/10 p-2 rounded-full">
+              <a href="https://facebook.com/unclesamjunkremoval" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="bg-white/10 p-2 rounded-full">
                 <Facebook size={18} />
               </a>
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="bg-white/10 p-2 rounded-full">
+              <a href="https://instagram.com/unclesamjunkremoval" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="bg-white/10 p-2 rounded-full">
                 <Instagram size={18} />
               </a>
-              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter" className="bg-white/10 p-2 rounded-full">
+              <a href="https://twitter.com/unclesamjunk" target="_blank" rel="noopener noreferrer" aria-label="Twitter" className="bg-white/10 p-2 rounded-full">
                 <Twitter size={18} />
               </a>
-              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="bg-white/10 p-2 rounded-full">
+              <a href="https://linkedin.com/company/unclesamjunkremoval" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="bg-white/10 p-2 rounded-full">
                 <Linkedin size={18} />
               </a>
             </div>
