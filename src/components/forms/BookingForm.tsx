@@ -4,17 +4,15 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { CalendarClock } from 'lucide-react';
-import { format } from 'date-fns';
-
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Calendar } from '@/components/ui/calendar';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { PhoneInput } from '@/components/ui/phone-input';
-import { LoadingButton } from '@/components/ui/loading-button';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
+import { LoadingButton } from '@/components/ui/loading-button';
+
+// Import form field components
+import { TextFormField } from './fields/TextFormField';
+import { PhoneFormField } from './fields/PhoneFormField';
+import { SelectFormField } from './fields/SelectFormField';
+import { DatePickerField } from './fields/DatePickerField';
 
 // Form schema for validation
 const bookingSchema = z.object({
@@ -127,130 +125,72 @@ const BookingForm = ({
       
       <form onSubmit={form.handleSubmit(onSubmit)} className="p-6 space-y-4">
         {/* Name Input */}
-        <div>
-          <label className="block text-sm font-medium mb-1 text-gray-700">
-            Name
-          </label>
-          <Input
-            {...form.register('name')}
-            placeholder="Your full name"
-            className={`bg-white ${inputBorderClass}`}
-          />
-          {form.formState.errors.name && (
-            <p className="mt-1 text-sm text-red-500">{form.formState.errors.name.message}</p>
-          )}
-        </div>
+        <TextFormField
+          id="name"
+          label="Name"
+          placeholder="Your full name"
+          register={form.register('name')}
+          error={form.formState.errors.name?.message}
+          inputBorderClass={inputBorderClass}
+        />
         
         {/* Phone Input */}
-        <div>
-          <label className="block text-sm font-medium mb-1 text-gray-700">
-            Phone
-          </label>
-          <PhoneInput
-            {...form.register('phone')}
-            placeholder="(555) 555-5555"
-            className={`bg-white ${inputBorderClass}`}
-          />
-          {form.formState.errors.phone && (
-            <p className="mt-1 text-sm text-red-500">{form.formState.errors.phone.message}</p>
-          )}
-        </div>
+        <PhoneFormField
+          id="phone"
+          label="Phone"
+          placeholder="(555) 555-5555"
+          register={form.register('phone')}
+          error={form.formState.errors.phone?.message}
+          inputBorderClass={inputBorderClass}
+        />
         
         {/* Email Input */}
-        <div>
-          <label className="block text-sm font-medium mb-1 text-gray-700">
-            Email
-          </label>
-          <Input
-            {...form.register('email')}
-            type="email"
-            placeholder="you@example.com"
-            className={`bg-white ${inputBorderClass}`}
-          />
-          {form.formState.errors.email && (
-            <p className="mt-1 text-sm text-red-500">{form.formState.errors.email.message}</p>
-          )}
-        </div>
+        <TextFormField
+          id="email"
+          label="Email"
+          placeholder="you@example.com"
+          type="email"
+          register={form.register('email')}
+          error={form.formState.errors.email?.message}
+          inputBorderClass={inputBorderClass}
+        />
         
         {/* Service Type */}
-        <div>
-          <label className="block text-sm font-medium mb-1 text-gray-700">
-            Service Needed
-          </label>
-          <Select onValueChange={(value) => form.setValue('service', value)}>
-            <SelectTrigger className={`bg-white ${inputBorderClass}`}>
-              <SelectValue placeholder="Select service" />
-            </SelectTrigger>
-            <SelectContent>
-              {serviceOptions.map((service) => (
-                <SelectItem key={service} value={service}>{service}</SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          {form.formState.errors.service && (
-            <p className="mt-1 text-sm text-red-500">{form.formState.errors.service.message}</p>
-          )}
-        </div>
+        <SelectFormField
+          id="service"
+          label="Service Needed"
+          placeholder="Select service"
+          options={serviceOptions}
+          onValueChange={(value) => form.setValue('service', value)}
+          error={form.formState.errors.service?.message}
+          inputBorderClass={inputBorderClass}
+        />
         
         {/* Date Picker */}
-        <div>
-          <label className="block text-sm font-medium mb-1 text-gray-700">
-            Preferred Date
-          </label>
-          <Popover>
-            <PopoverTrigger asChild>
-              <Button
-                variant="outline"
-                className={cn(
-                  "w-full justify-start text-left font-normal bg-white",
-                  inputBorderClass,
-                  !form.getValues('date') && "text-muted-foreground"
-                )}
-              >
-                {form.getValues('date') ? (
-                  format(form.getValues('date'), 'PPP')
-                ) : (
-                  <span>Select a date</span>
-                )}
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent className="w-auto p-0" align="start">
-              <Calendar
-                mode="single"
-                selected={form.getValues('date')}
-                onSelect={(date) => date && form.setValue('date', date)}
-                disabled={(date) => 
-                  date < new Date() || 
-                  date > new Date(new Date().setMonth(new Date().getMonth() + 3))
-                }
-                initialFocus
-              />
-            </PopoverContent>
-          </Popover>
-          {form.formState.errors.date && (
-            <p className="mt-1 text-sm text-red-500">{form.formState.errors.date.message?.toString()}</p>
-          )}
-        </div>
+        <DatePickerField
+          id="date"
+          label="Preferred Date"
+          placeholder="Select a date"
+          selectedDate={form.getValues('date')}
+          onSelect={(date) => date && form.setValue('date', date)}
+          error={form.formState.errors.date?.message?.toString()}
+          inputBorderClass={inputBorderClass}
+          disabledDates={(date) => 
+            date < new Date() || 
+            date > new Date(new Date().setMonth(new Date().getMonth() + 3))
+          }
+        />
         
         {/* Time Picker */}
-        <div>
-          <label className="block text-sm font-medium mb-1 text-gray-700">
-            Preferred Time
-          </label>
-          <Select onValueChange={(value) => form.setValue('time', value)}>
-            <SelectTrigger className={`bg-white ${inputBorderClass}`}>
-              <SelectValue placeholder="Select time" />
-            </SelectTrigger>
-            <SelectContent>
-              {timeSlots.map((time) => (
-                <SelectItem key={time} value={time}>{time}</SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          {form.formState.errors.time && (
-            <p className="mt-1 text-sm text-red-500">{form.formState.errors.time.message}</p>
-          )}
-        </div>
+        <SelectFormField
+          id="time"
+          label="Preferred Time"
+          placeholder="Select time"
+          options={timeSlots}
+          onValueChange={(value) => form.setValue('time', value)}
+          error={form.formState.errors.time?.message}
+          inputBorderClass={inputBorderClass}
+        />
         
         {/* Submit Button */}
         <LoadingButton 
