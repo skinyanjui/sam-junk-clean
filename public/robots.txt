@@ -1,23 +1,31 @@
 
+# Uncle Sam Junk Removal Robots.txt
+# https://unclesamjunkremoval.com
+
 # Allow Google to access everything
 User-agent: Googlebot
 Allow: /
 Crawl-delay: 1
 
+# Allow Google Images
+User-agent: Googlebot-Image
+Allow: /
+
 # Allow all other crawlers
 User-agent: *
 Allow: /
 
-# Block specific admin and API paths
+# Block admin and API paths
 Disallow: /admin/
 Disallow: /api/
 Disallow: /temp/
+Disallow: /drafts/
 
-# Specific page permissions with priority
+# Prioritize specific page permissions
 Allow: /
 Allow: /services
-Allow: /quote
 Allow: /locations
+Allow: /quote
 Allow: /pricing
 Allow: /faq
 Allow: /blog
@@ -30,7 +38,7 @@ Allow: /terms
 # Sitemap location
 Sitemap: https://unclesamjunkremoval.com/sitemap.xml
 
-# Specific crawler directives for other search engines
+# Specific crawler directives
 User-agent: Bingbot
 Allow: /
 Crawl-delay: 1
@@ -44,7 +52,7 @@ Allow: /
 User-agent: DuckDuckBot
 Allow: /
 
-# Crawl delay for some bots
+# Crawl delay for known aggressive bots
 User-agent: AhrefsBot
 Crawl-delay: 10
 
@@ -54,6 +62,8 @@ Crawl-delay: 10
 User-agent: PetalBot
 Crawl-delay: 10
 
-# Image crawling
-User-agent: Googlebot-Image
-Allow: /
+User-agent: SemrushBot
+Crawl-delay: 10
+
+User-agent: BLEXBot
+Crawl-delay: 20
