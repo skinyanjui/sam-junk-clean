@@ -18,7 +18,9 @@ const ServiceInformation = ({ errors }: ServiceInformationProps) => {
     'Appliance Removal',
     'Light Demolition',
     'Estate Cleanout',
-    'Curbside Pickup',
+    'Garage Cleanout',
+    'Yard Debris Removal',
+    'Construction Debris',
     'Other'
   ];
 

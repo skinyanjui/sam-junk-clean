@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -89,10 +88,10 @@ const BookingForm = ({
     setFormSubmitted(false);
   };
 
-  // Available time slots
+  // Updated time slots from 7am to 5pm with 1-hour blocks
   const timeSlots = [
-    '8:00 AM', '9:00 AM', '10:00 AM', '11:00 AM', '12:00 PM',
-    '1:00 PM', '2:00 PM', '3:00 PM', '4:00 PM', '5:00 PM'
+    '7:00 AM', '8:00 AM', '9:00 AM', '10:00 AM', '11:00 AM', 
+    '12:00 PM', '1:00 PM', '2:00 PM', '3:00 PM', '4:00 PM', '5:00 PM'
   ];
   
   // Available services
@@ -114,6 +113,7 @@ const BookingForm = ({
   const inputBorderClass = "border-gray-400";
   
   if (formSubmitted) {
+    
     return (
       <div className={cn(
         "rounded-lg overflow-hidden shadow-lg", 
