@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import PageLayout from '@/components/PageLayout';
@@ -59,7 +58,7 @@ const BlogPostPage = () => {
           <LoadingSkeleton variant="card" className="h-64 mb-8" />
           <LoadingSkeleton className="h-12 w-3/4 mb-4" />
           <LoadingSkeleton className="h-6 w-1/3 mb-8" />
-          <LoadingSkeleton className="h-32" count={3} className2="mb-4" />
+          <LoadingSkeleton className="h-32" count={3} />
         </div>
       </PageLayout>
     );

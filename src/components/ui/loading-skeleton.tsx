@@ -9,6 +9,7 @@ interface LoadingSkeletonProps {
   className?: string;
   height?: string;
   width?: string;
+  gap?: string;
 }
 
 export function LoadingSkeleton({
@@ -17,6 +18,7 @@ export function LoadingSkeleton({
   className,
   height,
   width,
+  gap = "space-y-2",
 }: LoadingSkeletonProps) {
   const renderSkeleton = () => {
     switch (variant) {
@@ -70,14 +72,15 @@ export function LoadingSkeleton({
       case "text":
       default:
         return (
-          <div className={cn("space-y-2", className)}>
+          <div className={cn(gap, className)}>
             {Array.from({ length: count }).map((_, i) => (
               <Skeleton 
                 key={i} 
-                className={cn("h-4 w-full", 
+                className={cn(
+                  "h-4 w-full", 
                   i === count - 1 && count > 1 ? "w-4/5" : "",
-                  height ? { height } : {},
-                  width ? { width } : {}
+                  height ? `h-${height}` : "",
+                  width ? `w-${width}` : ""
                 )} 
               />
             ))}

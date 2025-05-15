@@ -2,7 +2,7 @@
 import PageLayout from '@/components/PageLayout';
 import SEO from '@/components/SEO';
 import { useState, useEffect } from 'react';
-import { Calendar, Tag, recycle } from 'lucide-react';
+import { Calendar, Tag, Recycle } from 'lucide-react';
 import { relatedLinks } from '@/data/blogData';
 import { BlogPost } from '@/types/blog';
 import BlogHero from '@/components/blog/BlogHero';
@@ -64,7 +64,7 @@ const Blog = () => {
     } else if (link.title === "Services") {
       return { ...link, icon: Tag };
     } else if (link.title === "Get a Quote") {
-      return { ...link, icon: recycle };
+      return { ...link, icon: Recycle };
     }
     return link;
   });
@@ -75,7 +75,7 @@ const Blog = () => {
         title="Blog | Uncle Sam Junk Removal"
         description="Stay informed with the latest tips, advice, and news on junk removal, recycling, and sustainable waste management from Uncle Sam Junk Removal."
         keywords="junk removal blog, waste management tips, decluttering advice, recycling guide, Tri-State area junk removal"
-        schema={{
+        structuredData={{
           "@context": "https://schema.org",
           "@type": "Blog",
           "name": "Uncle Sam Junk Removal Blog",
