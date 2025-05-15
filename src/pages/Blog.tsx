@@ -103,10 +103,10 @@ const Blog = () => {
         <>
           <FeaturedPosts posts={blogPosts} />
           
-          <section className="py-16 bg-brand-gray">
+          <section className="py-16 bg-brand-gray" aria-labelledby="articles-heading">
             <div className="container-custom">
               <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
-                <h2 className="text-3xl font-bold text-brand-navy mb-4 md:mb-0">
+                <h2 id="articles-heading" className="text-3xl font-bold text-brand-navy mb-4 md:mb-0">
                   {searchQuery || activeCategory ? 'Search Results' : 'All Articles'}
                 </h2>
                 
