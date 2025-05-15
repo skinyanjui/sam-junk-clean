@@ -7,12 +7,14 @@ interface SectionSeparatorProps {
   className?: string;
   variant?: 'default' | 'gradient' | 'dashed' | 'dotted';
   padding?: 'sm' | 'md' | 'lg' | 'xl' | 'none';
+  mobileOnly?: boolean;
 }
 
 const SectionSeparator = ({ 
   className,
   variant = 'default',
   padding = 'md',
+  mobileOnly = false,
 }: SectionSeparatorProps) => {
   
   // Map old variants to appropriate colors
@@ -23,11 +25,13 @@ const SectionSeparator = ({
     dotted: "#0006"
   };
   
+  const mobileOnlyClass = mobileOnly ? 'md:hidden' : '';
+  
   return (
     <Divider 
       color={variantToColor[variant]}
       padding={padding}
-      className={className}
+      className={cn(mobileOnlyClass, className)}
     />
   );
 };

@@ -2,8 +2,11 @@
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import SEO from '@/components/SEO';
+import { useResponsiveLayout } from '@/hooks/use-mobile';
 
 const ServicesHero = () => {
+  const { isMobile } = useResponsiveLayout();
+  
   return (
     <>
       <SEO
@@ -13,11 +16,11 @@ const ServicesHero = () => {
       />
       
       {/* Hero Section */}
-      <section className="py-16 bg-brand-navy text-white">
+      <section className={`py-12 ${isMobile ? 'px-4' : 'py-16'} bg-brand-navy text-white`}>
         <div className="container-custom">
           <div className="max-w-3xl mx-auto text-center z-10 relative">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">Our Services</h1>
-            <p className="text-lg md:text-xl opacity-90 mb-8">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 md:mb-6">Our Services</h1>
+            <p className="text-lg md:text-xl opacity-90 mb-6 md:mb-8">
               From residential cleanouts to commercial junk removal, Uncle Sam wants YOU to live clutter-free!
             </p>
             <Button 

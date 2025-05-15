@@ -2,14 +2,17 @@
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import Divider from '@/components/ui/divider';
+import { useResponsiveLayout } from '@/hooks/use-mobile';
 
 const ServicesCta = () => {
+  const { isMobile } = useResponsiveLayout();
+  
   return (
-    <section className="py-16 bg-brand-gray">
+    <section className={`py-12 ${isMobile ? 'px-4' : 'py-16'} bg-brand-gray`}>
       <div className="container-custom">
-        <div className="bg-brand-navy text-white p-8 md:p-12 rounded-xl shadow-lg text-center border border-gray-300">
-          <h2 className="text-3xl font-bold mb-4">Need a Service Not Listed?</h2>
-          <p className="text-white/90 text-lg max-w-2xl mx-auto mb-8">
+        <div className="bg-brand-navy text-white p-6 md:p-12 rounded-xl shadow-lg text-center border border-gray-300">
+          <h2 className="text-2xl md:text-3xl font-bold mb-3 md:mb-4">Need a Service Not Listed?</h2>
+          <p className="text-white/90 text-base md:text-lg max-w-2xl mx-auto mb-6 md:mb-8">
             We handle many other types of junk removal situations. Contact us to discuss your specific needs and get a customized solution.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">

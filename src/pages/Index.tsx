@@ -60,7 +60,7 @@ const Index = () => {
   };
 
   return (
-    <PageLayout showBreadcrumb={false}>
+    <PageLayout showBreadcrumb={false} spacing="default">
       <SEO 
         title={t('seo.home.title')}
         description={t('seo.home.description')}
@@ -71,7 +71,7 @@ const Index = () => {
       />
       
       {isLoading ? (
-        <div className="space-y-16 py-16">
+        <div className="space-y-16 py-8 px-4 md:py-16 md:px-6">
           <div className="container-custom">
             {/* Hero skeleton */}
             <LoadingSkeleton variant="image" className="h-[60vh] w-full rounded-xl" />
@@ -105,7 +105,7 @@ const Index = () => {
           </div>
         </div>
       ) : (
-        <>
+        <div className="space-y-4 md:space-y-0">
           <HeroSection />
           <SectionSeparator variant="gradient" padding="md" />
           <ServicesOverview />
@@ -117,7 +117,7 @@ const Index = () => {
           <WhyChooseUs />
           <SectionSeparator variant="gradient" padding="md" />
           <CtaSection />
-        </>
+        </div>
       )}
     </PageLayout>
   );

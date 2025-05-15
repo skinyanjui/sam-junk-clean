@@ -11,12 +11,14 @@ interface PageLayoutProps {
   children: ReactNode;
   showBreadcrumb?: boolean;
   breadcrumbClassName?: string; 
+  spacing?: 'default' | 'compact' | 'spacious';
 }
 
 const PageLayout = ({ 
   children, 
   showBreadcrumb = true,
-  breadcrumbClassName = "bg-gray-50 py-2" 
+  breadcrumbClassName = "bg-gray-50 py-2",
+  spacing = 'default'
 }: PageLayoutProps) => {
   const { isMobile, isTablet, orientation } = useResponsiveLayout();
   const isLandscape = orientation === 'landscape';
@@ -39,13 +41,26 @@ const PageLayout = ({
     return 'h-0';
   };
   
+  // Section spacing class based on the spacing prop
+  const getSectionSpacing = () => {
+    switch (spacing) {
+      case 'compact':
+        return 'space-y-6 md:space-y-10';
+      case 'spacious':
+        return 'space-y-16 md:space-y-24';
+      case 'default':
+      default:
+        return 'space-y-12 md:space-y-16';
+    }
+  };
+  
   return (
     <div className="flex flex-col min-h-screen max-w-[100vw] overflow-x-hidden">
       <Navbar />
       {/* Dynamic spacer for header */}
       <div className={getHeaderSpacerHeight()}></div>
       
-      <main className="flex-grow w-full">
+      <main className={`flex-grow w-full ${getSectionSpacing()}`}>
         {showBreadcrumb && (
           <>
             <div className={`${breadcrumbClassName} ${isMobile && isLandscape ? 'py-1' : ''}`}>
