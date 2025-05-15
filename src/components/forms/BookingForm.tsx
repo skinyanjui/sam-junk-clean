@@ -104,12 +104,15 @@ const BookingForm = ({
   // Styling variations based on where the form is used
   const isHeroVariant = variant === 'hero';
   
+  // Define darker border color for form elements
+  const inputBorderClass = "border-gray-400";
+  
   return (
     <div className={cn(
       "rounded-lg overflow-hidden shadow-lg", 
       isHeroVariant 
-        ? "bg-white border border-gray-200" 
-        : "bg-white border border-gray-200",
+        ? "bg-white border border-gray-300" 
+        : "bg-white border border-gray-300",
       className
     )}>
       <div className={cn(
@@ -131,7 +134,7 @@ const BookingForm = ({
           <Input
             {...form.register('name')}
             placeholder="Your full name"
-            className="bg-white border-gray-300"
+            className={`bg-white ${inputBorderClass}`}
           />
           {form.formState.errors.name && (
             <p className="mt-1 text-sm text-red-500">{form.formState.errors.name.message}</p>
@@ -146,7 +149,7 @@ const BookingForm = ({
           <PhoneInput
             {...form.register('phone')}
             placeholder="(555) 555-5555"
-            className="bg-white border-gray-300"
+            className={`bg-white ${inputBorderClass}`}
           />
           {form.formState.errors.phone && (
             <p className="mt-1 text-sm text-red-500">{form.formState.errors.phone.message}</p>
@@ -162,7 +165,7 @@ const BookingForm = ({
             {...form.register('email')}
             type="email"
             placeholder="you@example.com"
-            className="bg-white border-gray-300"
+            className={`bg-white ${inputBorderClass}`}
           />
           {form.formState.errors.email && (
             <p className="mt-1 text-sm text-red-500">{form.formState.errors.email.message}</p>
@@ -175,7 +178,7 @@ const BookingForm = ({
             Service Needed
           </label>
           <Select onValueChange={(value) => form.setValue('service', value)}>
-            <SelectTrigger className="bg-white border-gray-300">
+            <SelectTrigger className={`bg-white ${inputBorderClass}`}>
               <SelectValue placeholder="Select service" />
             </SelectTrigger>
             <SelectContent>
@@ -199,7 +202,8 @@ const BookingForm = ({
               <Button
                 variant="outline"
                 className={cn(
-                  "w-full justify-start text-left font-normal bg-white border-gray-300",
+                  "w-full justify-start text-left font-normal bg-white",
+                  inputBorderClass,
                   !form.getValues('date') && "text-muted-foreground"
                 )}
               >
@@ -234,7 +238,7 @@ const BookingForm = ({
             Preferred Time
           </label>
           <Select onValueChange={(value) => form.setValue('time', value)}>
-            <SelectTrigger className="bg-white border-gray-300">
+            <SelectTrigger className={`bg-white ${inputBorderClass}`}>
               <SelectValue placeholder="Select time" />
             </SelectTrigger>
             <SelectContent>

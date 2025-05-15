@@ -47,7 +47,7 @@ const HeroSection = () => {
       </div>
 
       {/* Content container */}
-      <div className={`container-custom relative z-10 ${isLandscapeMobile ? 'py-20' : 'mt-[-1rem] md:mt-[-3rem]'}`}>
+      <div className={`container-custom relative z-10 py-8 md:py-0 ${isLandscapeMobile ? 'py-20' : 'mt-[-1rem] md:mt-[-3rem]'}`}>
         {/* Premium badge - social proof & scarcity principles */}
         <div className="absolute top-0 right-10 md:right-20 transform -translate-y-1/2 hidden md:flex items-center gap-2 bg-white/10 backdrop-blur-md px-4 py-2 rounded-full text-white/90 text-sm border border-white/20 shadow-lg">
           <Star className="text-brand-yellow w-4 h-4" />
