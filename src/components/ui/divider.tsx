@@ -10,7 +10,7 @@ interface DividerProps {
 
 const Divider = ({
   className,
-  color = "#0006",
+  color = "#333",
   thickness = 1,
   padding = "md",
 }: DividerProps) => {

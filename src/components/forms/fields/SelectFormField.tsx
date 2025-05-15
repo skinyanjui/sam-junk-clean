@@ -26,7 +26,7 @@ export const SelectFormField = ({
   options,
   onValueChange,
   error,
-  inputBorderClass = 'border-gray-400'
+  inputBorderClass = 'border-gray-500'
 }: SelectFormFieldProps) => {
   return (
     <FormField id={id} label={label} error={error}>

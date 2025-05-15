@@ -19,7 +19,7 @@ export const PhoneFormField = ({
   placeholder,
   register, 
   error,
-  inputBorderClass = 'border-gray-400',
+  inputBorderClass = 'border-gray-500',
   showValidation = true
 }: PhoneFormFieldProps) => {
   return (

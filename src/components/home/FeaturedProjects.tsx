@@ -47,7 +47,7 @@ const FeaturedProjects = () => {
 
         <div className={`grid ${isMobile && isLandscape ? 'grid-cols-2 gap-4' : isMobile ? 'grid-cols-1 gap-6' : 'md:grid-cols-3 gap-6'} mt-8`}>
           {projects.map((project, index) => (
-            <div key={index} className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+            <div key={index} className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 border border-gray-400">
               <div className="relative h-48 overflow-hidden">
                 <img 
                   src={project.image} 

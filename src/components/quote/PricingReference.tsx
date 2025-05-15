@@ -4,7 +4,7 @@ import { ArrowRight } from 'lucide-react';
 
 const PricingReference = () => {
   return (
-    <div className="bg-brand-gray/50 p-4 rounded-lg border border-gray-200">
+    <div className="bg-brand-gray/50 p-4 rounded-lg border border-gray-400 shadow-sm">
       <h3 className="text-lg font-bold text-brand-navy mb-2">What You Can Expect</h3>
       <p className="text-gray-700 text-sm mb-3">
         Our pricing is based on the volume of junk, material type, and accessibility. Here's a quick reference:
@@ -25,7 +25,7 @@ const PricingReference = () => {
         </div>
       </div>
       
-      <div className="text-sm border-t border-gray-200 pt-2 mt-2">
+      <div className="text-sm border-t border-gray-400 pt-2 mt-2">
         <Link 
           to="/pricing" 
           className="inline-flex items-center text-brand-red hover:underline text-sm"

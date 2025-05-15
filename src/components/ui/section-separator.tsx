@@ -13,16 +13,16 @@ interface SectionSeparatorProps {
 const SectionSeparator = ({ 
   className,
   variant = 'default',
-  padding = 'sm', // Changed default from 'md' to 'sm'
+  padding = 'sm',
   mobileOnly = false,
 }: SectionSeparatorProps) => {
   
-  // Map old variants to appropriate colors
+  // Map variants to darker colors
   const variantToColor = {
-    default: "#0006",
-    gradient: "#0006", // Using same dark color for all variants for consistency
-    dashed: "#0006",
-    dotted: "#0006"
+    default: "#333",
+    gradient: "#333",
+    dashed: "#333",
+    dotted: "#333"
   };
   
   const mobileOnlyClass = mobileOnly ? 'md:hidden' : '';

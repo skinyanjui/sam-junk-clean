@@ -21,7 +21,7 @@ export const TextFormField = ({
   register, 
   error,
   type = 'text',
-  inputBorderClass = 'border-gray-400',
+  inputBorderClass = 'border-gray-500',
   showValidation = true
 }: TextFormFieldProps) => {
   return (
