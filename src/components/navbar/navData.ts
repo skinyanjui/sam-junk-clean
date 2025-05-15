@@ -31,6 +31,7 @@ export const navStructure = [
     dropdownItems: [
       { name: 'Our Story', path: '/about' },
       { name: 'FAQ', path: '/faq' },
+      { name: 'Blog', path: '/blog' },
       { name: 'Careers', path: '/careers' },
       { name: 'Contact', path: '/contact' }
     ]
