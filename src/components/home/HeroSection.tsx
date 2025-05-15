@@ -148,7 +148,7 @@ const HeroSection = () => {
         {/* Mobile booking form (smaller version) */}
         <div className={`${isMobile ? 'mt-4' : 'mt-8'} md:hidden`}>
           <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/10 shadow-lg">
-            <BookingForm variant="hero-compact" />
+            <BookingForm variant="hero" className="scale-95 transform origin-top" />
           </div>
         </div>
       </div>
