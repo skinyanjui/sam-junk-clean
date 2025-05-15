@@ -1,4 +1,3 @@
-
 {
   "common": {
     "getQuote": "Get a Free Quote",
@@ -135,6 +134,32 @@
       }
     }
   },
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "subtitle": "Find answers to the most common questions about our junk removal services",
+    "searchPlaceholder": "Search questions...",
+    "clearSearch": "Clear",
+    "noQuestionsFound": "No questions found",
+    "noMatchingQuestions": "We couldn't find any questions matching",
+    "tryAdjusting": "Try using different keywords or browse all categories",
+    "viewAllArticles": "Clear Search",
+    "showing": "Showing",
+    "articles": "article",
+    "articles_plural": "articles",
+    "relatedResources": "Related Resources",
+    "ourBlog": "Our Blog",
+    "blogDescription": "Check out our blog for helpful tips, guides, and insights on junk removal, decluttering, and sustainable disposal methods.",
+    "readArticles": "Read Articles",
+    "needQuote": "Need a Quote?",
+    "quoteDescription": "Ready to get rid of your junk? Get a free, no-obligation quote for our professional junk removal services.",
+    "getFreeQuote": "Get a Free Quote",
+    "serviceAreas": "Service Areas",
+    "areasDescription": "Find out if we service your area. We cover the entire Tri-State area with our junk removal services.",
+    "checkCoverage": "Check Coverage",
+    "stillHaveQuestions": "Still have questions?",
+    "teamHelpDescription": "Our team is here to help with any questions you may have about our junk removal services.",
+    "contactUs": "Contact Us"
+  },
   "seo": {
     "home": {
       "title": "Uncle Sam Junk Removal | Tri-State Area Junk Removal Services",
@@ -159,6 +184,10 @@
     "locations": {
       "title": "Service Locations | Uncle Sam Junk Removal",
       "description": "Uncle Sam Junk Removal proudly serves the Tri-State area including Evansville, IN, Owensboro, KY, and Mt. Carmel, IL. Find junk removal services in your area."
+    },
+    "faq": {
+      "title": "Frequently Asked Questions | Uncle Sam Junk Removal",
+      "description": "Find answers to common questions about our junk removal services, pricing, accepted items, disposal practices, and more. Uncle Sam Junk Removal serves the Tri-State area with professional junk removal services."
     }
   }
 }

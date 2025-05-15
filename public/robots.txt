@@ -77,3 +77,6 @@ Crawl-delay: 20
 
 # Explicitly allow blog post URLs
 Allow: /blog/*
+
+# Explicitly allow FAQ page
+Allow: /faq
