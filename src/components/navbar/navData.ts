@@ -33,10 +33,8 @@ export const navStructure = [
       { name: 'Our Team', path: '/about#team' },
       { name: 'Veterans', path: '/about#veterans' },
       { name: 'FAQ', path: '/faq' },
-      { name: 'Blog', path: '/blog' },
       { name: 'Careers', path: '/careers' },
       { name: 'Contact', path: '/contact' }
     ]
   },
-  { name: 'Blog', path: '/blog', hasDropdown: false },
 ];
