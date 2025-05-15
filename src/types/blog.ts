@@ -8,4 +8,6 @@ export type BlogPost = {
   author: string;
   imageUrl: string;
   slug: string;
+  readTime?: string; // Optional reading time
+  tags?: string[]; // Optional array of tags for categorization and SEO
 };

@@ -29,6 +29,7 @@ Allow: /quote
 Allow: /pricing
 Allow: /faq
 Allow: /blog
+Allow: /blog/
 Allow: /careers
 Allow: /about
 Allow: /contact
@@ -52,6 +53,9 @@ Allow: /
 User-agent: DuckDuckBot
 Allow: /
 
+User-agent: LinkedInBot
+Allow: /
+
 # Crawl delay for known aggressive bots
 User-agent: AhrefsBot
 Crawl-delay: 10
@@ -66,4 +70,10 @@ User-agent: SemrushBot
 Crawl-delay: 10
 
 User-agent: BLEXBot
+Crawl-delay: 10
+
+User-agent: MJ12Bot
 Crawl-delay: 20
+
+# Explicitly allow blog post URLs
+Allow: /blog/*
