@@ -41,11 +41,11 @@ const WhyChooseUs = () => {
     }
   ];
 
-  // Service statistics with more visual appeal
+  // Updated service statistics without customer count
   const serviceStats = [
     { value: '25+', label: 'Cities Served' },
     { value: '3', label: 'States Covered' },
-    { value: '1000+', label: 'Satisfied Customers' },
+    { value: '5+', label: 'Years Experience' },
     { value: '24h', label: 'Response Time' },
   ];
 
