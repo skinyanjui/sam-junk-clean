@@ -28,8 +28,8 @@
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 0 0% 90%;
-    --input: 0 0% 90%;
+    --border: 0 0% 75%;
+    --input: 0 0% 75%;
     --ring: 0 0% 20%;
 
     --radius: 0.5rem;
@@ -139,13 +139,13 @@
     @apply transition-transform duration-300 hover:scale-105;
   }
 
-  /* Modify borders to be lighter */
+  /* Modify borders to be darker globally */
   .card, .ui-card {
-    @apply border border-gray-200;
+    @apply border border-gray-400;
   }
   
   .form-input, .form-select, .form-textarea {
-    @apply border border-gray-200;
+    @apply border border-gray-400;
   }
   
   /* Remove dark borders from buttons */

@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -71,6 +70,13 @@ export default {
 				"brand-yellow": "#FFD700",
 				"brand-blue": "#3B9EDC",
 				"brand-green": "#6C8E6B",
+				// Added darker border and neutral colors
+				"border-dark": "#555555",
+				"border-medium": "#777777",
+				"neutral-800": "#333333",
+				"neutral-700": "#444444",
+				"neutral-600": "#555555",
+				"neutral-500": "#666666",
 			},
 			borderRadius: {
 				lg: 'var(--radius)',

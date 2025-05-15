@@ -10,17 +10,17 @@ interface DividerProps {
 
 const Divider = ({
   className,
-  color = "#333",
+  color = "#555", // Darker default color
   thickness = 1,
   padding = "md",
 }: DividerProps) => {
   
   const paddingClasses = {
     none: 'py-0',
-    sm: 'py-2', // Reduced from py-4
-    md: 'py-4', // Reduced from py-8
-    lg: 'py-6', // Reduced from py-12
-    xl: 'py-10' // Reduced from py-16
+    sm: 'py-2',
+    md: 'py-4',
+    lg: 'py-6',
+    xl: 'py-10'
   };
   
   return (

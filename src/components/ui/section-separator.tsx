@@ -19,10 +19,10 @@ const SectionSeparator = ({
   
   // Map variants to darker colors
   const variantToColor = {
-    default: "#333",
-    gradient: "#333",
-    dashed: "#333",
-    dotted: "#333"
+    default: "#555", // Darker gray
+    gradient: "#444", // Darker gray for gradient
+    dashed: "#555", // Darker gray for dashed
+    dotted: "#555"  // Darker gray for dotted
   };
   
   const mobileOnlyClass = mobileOnly ? 'md:hidden' : '';
