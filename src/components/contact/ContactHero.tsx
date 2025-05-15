@@ -1,7 +1,11 @@
 
 import SEO from '@/components/SEO';
+import { useResponsiveLayout } from '@/hooks/use-mobile';
 
 const ContactHero = () => {
+  const { isMobile, orientation } = useResponsiveLayout();
+  const isLandscape = orientation === 'landscape';
+  
   return (
     <>
       <SEO
@@ -10,11 +14,13 @@ const ContactHero = () => {
       />
       
       {/* Hero Section */}
-      <section className="py-20 bg-brand-navy text-white">
+      <section className={`${isMobile ? 'py-10' : 'py-20'} ${isLandscape && isMobile ? 'py-8' : ''} bg-brand-navy text-white`}>
         <div className="container-custom">
           <div className="max-w-3xl mx-auto text-center">
-            <h1 className="text-4xl md:text-5xl xl:text-6xl font-bold mb-6">Contact Us</h1>
-            <p className="text-lg md:text-xl opacity-95 max-w-2xl mx-auto">
+            <h1 className={`${isMobile ? 'text-3xl' : 'text-4xl md:text-5xl xl:text-6xl'} font-bold ${isMobile ? 'mb-3' : 'mb-6'}`}>
+              Contact Us
+            </h1>
+            <p className={`${isMobile ? 'text-base' : 'text-lg md:text-xl'} opacity-95 max-w-2xl mx-auto`}>
               Have questions or need a quote? Our team is standing by to help you reclaim your space!
             </p>
           </div>
