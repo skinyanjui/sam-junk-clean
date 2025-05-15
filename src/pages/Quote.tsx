@@ -20,12 +20,59 @@ const Quote = () => {
     });
   };
 
+  // Define schema for Quote page
+  const quoteSchemaData = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Free Junk Removal Quote | Uncle Sam Junk Removal",
+    "description": "Request a free quote for junk removal services. Fast, transparent pricing with no hidden fees.",
+    "url": "https://unclesamjunkremoval.com/quote",
+    "breadcrumb": {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://unclesamjunkremoval.com"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Get a Quote",
+          "item": "https://unclesamjunkremoval.com/quote"
+        }
+      ]
+    },
+    "mainEntity": {
+      "@type": "Service",
+      "name": "Junk Removal Quote Request",
+      "serviceType": "Junk Removal",
+      "provider": {
+        "@type": "LocalBusiness",
+        "name": "Uncle Sam Junk Removal",
+        "telephone": "+18126101657",
+        "email": "info@unclesamjunkremoval.com"
+      },
+      "areaServed": {
+        "@type": "GeoCircle",
+        "geoMidpoint": {
+          "@type": "GeoCoordinates",
+          "latitude": "37.9748",
+          "longitude": "-87.5558"
+        },
+        "geoRadius": "50"
+      }
+    }
+  };
+
   return (
     <PageLayout>
       <SEO 
-        title={t('seo.quote.title', 'Free Quote | Uncle Sam Junk Removal')}
-        description={t('seo.quote.description', 'Request a free quote for junk removal services. Fast, transparent pricing with no hidden fees.')}
+        title="Free Junk Removal Quote"
+        description="Request a free quote for junk removal services in the Tri-State area. Fast, transparent pricing with no hidden fees. Same-day service available."
         keywords="junk removal quote, free estimate, online quote, junk pickup pricing, Evansville junk removal, Henderson junk removal"
+        structuredData={quoteSchemaData}
       />
 
       {/* Hero Section */}

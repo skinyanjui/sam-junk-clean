@@ -21,4 +21,25 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  build: {
+    // Optimize chunk size
+    cssCodeSplit: true,
+    chunkSizeWarningLimit: 1000,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom', 'react-router-dom'],
+          ui: ['@/components/ui'],
+        }
+      }
+    },
+    // Generate source maps for production builds
+    sourcemap: mode === 'development',
+    // Minify output in production
+    minify: mode === 'production' ? 'esbuild' : false,
+  },
+  // Optimize performance with faster HMR
+  optimizeDeps: {
+    include: ['react', 'react-dom', 'react-router-dom']
+  },
 }));

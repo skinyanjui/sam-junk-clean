@@ -1,7 +1,9 @@
 
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
   <url>
     <loc>https://unclesamjunkremoval.com/</loc>
     <lastmod>2025-05-15</lastmod>
@@ -19,6 +21,10 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://unclesamjunkremoval.com/services?lang=en"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://unclesamjunkremoval.com/services?lang=es"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://unclesamjunkremoval.com/services"/>
+    <image:image>
+      <image:loc>https://lovable.dev/opengraph-image-p98pqg.png</image:loc>
+      <image:title>Uncle Sam Junk Removal Services</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://unclesamjunkremoval.com/pricing</loc>
@@ -91,6 +97,30 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://unclesamjunkremoval.com/locations?lang=en"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://unclesamjunkremoval.com/locations?lang=es"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://unclesamjunkremoval.com/locations"/>
+  </url>
+  <url>
+    <loc>https://unclesamjunkremoval.com/services/residential</loc>
+    <lastmod>2025-05-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://unclesamjunkremoval.com/services/commercial</loc>
+    <lastmod>2025-05-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://unclesamjunkremoval.com/services/appliance-removal</loc>
+    <lastmod>2025-05-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://unclesamjunkremoval.com/services/estate-cleanouts</loc>
+    <lastmod>2025-05-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://unclesamjunkremoval.com/privacy</loc>

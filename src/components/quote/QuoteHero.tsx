@@ -8,13 +8,19 @@ const QuoteHero = () => {
   const isLandscape = orientation === 'landscape';
   
   return (
-    <section className={`${isMobile ? 'py-10' : 'py-20'} ${isLandscape && isMobile ? 'py-8' : ''} bg-brand-navy text-white`}>
+    <section 
+      className={`${isMobile ? 'py-10' : 'py-20'} ${isLandscape && isMobile ? 'py-8' : ''} bg-brand-navy text-white`}
+      aria-labelledby="quote-hero-heading"
+    >
       <div className="container-custom">
         <div className="max-w-3xl mx-auto text-center z-10 relative">
-          <span className="inline-flex items-center justify-center w-16 h-16 mb-4 rounded-full bg-brand-red/20">
+          <span className="inline-flex items-center justify-center w-16 h-16 mb-4 rounded-full bg-brand-red/20" aria-hidden="true">
             <FileText className="h-8 w-8 text-brand-red" />
           </span>
-          <h1 className={`${isMobile ? 'text-3xl' : 'text-4xl md:text-5xl'} font-bold ${isMobile ? 'mb-3' : 'mb-6'}`}>
+          <h1 
+            id="quote-hero-heading"
+            className={`${isMobile ? 'text-3xl' : 'text-4xl md:text-5xl'} font-bold ${isMobile ? 'mb-3' : 'mb-6'}`}
+          >
             Get a Free Quote
           </h1>
           <p className={`${isMobile ? 'text-base' : 'text-lg md:text-xl'} opacity-95 max-w-2xl mx-auto`}>

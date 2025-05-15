@@ -12,6 +12,7 @@ interface SEOProps {
   structuredData?: Record<string, any>;
   lang?: string;
   alternateLanguages?: { lang: string; url: string }[];
+  cityLocation?: string;
 }
 
 const SEO = ({
@@ -24,9 +25,19 @@ const SEO = ({
   structuredData,
   lang = 'en',
   alternateLanguages = [],
+  cityLocation,
 }: SEOProps) => {
   const location = useLocation();
-  const fullTitle = title.includes('Uncle Sam') ? title : `${title} | Uncle Sam Junk Removal`;
+  
+  // Format title properly based on page type and location
+  let fullTitle = title;
+  if (cityLocation && !title.includes(cityLocation)) {
+    // For location-specific pages
+    fullTitle = `${title.includes('Junk Removal') ? title : title + ' Junk Removal Services'} in ${cityLocation} | Uncle Sam Junk Removal`;
+  } else if (!title.includes('Uncle Sam')) {
+    // For regular pages
+    fullTitle = `${title} | Uncle Sam Junk Removal`;
+  }
   
   // Create dynamic canonical URL based on current route
   const baseUrl = 'https://unclesamjunkremoval.com';
@@ -37,8 +48,13 @@ const SEO = ({
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
     "name": "Uncle Sam Junk Removal",
-    "image": "https://lovable.dev/opengraph-image-p98pqg.png",
-    "telephone": "+18005551234",
+    "image": ogImage,
+    "telephone": "+18126101657",
+    "email": "info@unclesamjunkremoval.com",
+    "url": baseUrl,
+    "logo": ogImage,
+    "priceRange": "$$",
+    "description": description,
     "address": {
       "@type": "PostalAddress",
       "addressLocality": "Evansville",
@@ -50,8 +66,15 @@ const SEO = ({
       "latitude": 37.9748,
       "longitude": -87.5558
     },
-    "url": "https://unclesamjunkremoval.com",
-    "priceRange": "$$",
+    "areaServed": {
+      "@type": "GeoCircle",
+      "geoMidpoint": {
+        "@type": "GeoCoordinates",
+        "latitude": 37.9748,
+        "longitude": -87.5558
+      },
+      "geoRadius": "50"
+    },
     "openingHoursSpecification": [
       {
         "@type": "OpeningHoursSpecification",
@@ -66,8 +89,47 @@ const SEO = ({
         "opens": "07:00",
         "closes": "19:00"
       }
+    ],
+    "sameAs": [
+      "https://facebook.com/unclesamjunkremoval",
+      "https://instagram.com/unclesamjunkremoval",
+      "https://twitter.com/unclesamjunk"
     ]
   };
+
+  // Add Service schema if we're on a service page
+  if (location.pathname.includes('/services')) {
+    defaultStructuredData["hasOfferCatalog"] = {
+      "@type": "OfferCatalog",
+      "name": "Junk Removal Services",
+      "itemListElement": [
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Residential Junk Removal",
+            "description": "Complete junk removal services for homes and apartments in the Tri-State area."
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Commercial Junk Removal",
+            "description": "Professional junk removal for offices, retail spaces, and businesses."
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Appliance Removal",
+            "description": "Safe and eco-friendly removal and disposal of refrigerators, washers, dryers, and other appliances."
+          }
+        }
+      ]
+    };
+  }
 
   // Use provided structured data or default local business data
   const finalStructuredData = structuredData || defaultStructuredData;
@@ -80,6 +142,10 @@ const SEO = ({
       <meta name="keywords" content={keywords} />
       <link rel="canonical" href={dynamicCanonical} />
       <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+      
+      {/* Performance optimization with preconnect */}
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       
       {/* Open Graph / Facebook */}
       <meta property="og:type" content={ogType} />
@@ -113,6 +179,12 @@ const SEO = ({
       <meta name="robots" content="index, follow" />
       <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
       <meta name="bingbot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+      
+      {/* Accessibility and mobile optimization */}
+      <meta name="theme-color" content="#B22234" />
+      <meta name="apple-mobile-web-app-capable" content="yes" />
+      <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+      <meta name="format-detection" content="telephone=no" />
       
       {/* Structured Data */}
       <script type="application/ld+json">

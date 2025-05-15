@@ -34,29 +34,61 @@ const Index = () => {
     { lang: 'es', url: 'https://unclesamjunkremoval.com/?lang=es' }
   ];
 
-  // Structured data for homepage
+  // Structured data for homepage including FAQ and Service markups
   const homeStructuredData = {
     "@context": "https://schema.org",
     "@type": "WebPage",
     "name": t('seo.home.title'),
     "description": t('seo.home.description'),
     "url": "https://unclesamjunkremoval.com",
+    "breadcrumb": {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://unclesamjunkremoval.com"
+        }
+      ]
+    },
     "mainEntity": {
       "@type": "Organization",
       "name": "Uncle Sam Junk Removal",
       "url": "https://unclesamjunkremoval.com",
       "logo": "https://lovable.dev/opengraph-image-p98pqg.png",
       "sameAs": [
-        "https://facebook.com",
-        "https://twitter.com",
-        "https://instagram.com",
-        "https://linkedin.com"
+        "https://facebook.com/unclesamjunkremoval",
+        "https://twitter.com/unclesamjunk",
+        "https://instagram.com/unclesamjunkremoval"
       ],
       "contactPoint": {
         "@type": "ContactPoint",
         "telephone": "+18126101657",
         "contactType": "customer service",
         "availableLanguage": ["English", "Spanish"]
+      },
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Junk Removal Services",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Residential Junk Removal",
+              "description": "Home cleanouts, garage junk, and household item removal"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Commercial Junk Removal",
+              "description": "Office cleanouts, retail space, and business junk removal"
+            }
+          }
+        ]
       }
     }
   };
@@ -64,8 +96,8 @@ const Index = () => {
   return (
     <PageLayout showBreadcrumb={false} spacing="compact">
       <SEO 
-        title={t('seo.home.title')}
-        description={t('seo.home.description')}
+        title="Professional Junk Removal Services | Uncle Sam Junk Removal"
+        description="Fast, reliable junk removal services across the Tri-State area. Residential & commercial cleanouts, furniture & appliance removal. Get a free quote today!"
         keywords="junk removal, Evansville junk removal, Henderson junk removal, Tri-State area, same-day service, furniture removal, appliance removal, veteran owned"
         structuredData={homeStructuredData}
         lang={currentLang}

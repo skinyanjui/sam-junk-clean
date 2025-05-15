@@ -55,6 +55,7 @@ const HeroSection = () => {
         paddingTop: isMobile ? "2rem" : "0",
         paddingBottom: isMobile ? "2rem" : "0"
       }}
+      aria-label="Main junk removal services"
     >
       {/* Background elements */}
       <div className="absolute inset-0 -z-10">
@@ -68,7 +69,7 @@ const HeroSection = () => {
         isMobile ? 'py-4' : 'py-8 md:py-0'
       } ${isLandscapeMobile ? 'py-12' : 'mt-0 md:mt-[-3rem]'}`}>
         {/* Premium badge - desktop only */}
-        <div className="absolute top-0 right-10 md:right-20 transform -translate-y-1/2 hidden md:flex items-center gap-2 bg-white/10 backdrop-blur-md px-4 py-2 rounded-full text-white/90 text-sm border border-white/20 shadow-lg">
+        <div className="absolute top-0 right-10 md:right-20 transform -translate-y-1/2 hidden md:flex items-center gap-2 bg-white/10 backdrop-blur-md px-4 py-2 rounded-full text-white/90 text-sm border border-white/20 shadow-lg" aria-hidden="true">
           <Star className="text-brand-yellow w-4 h-4" />
           <span>Over 12,000+ happy customers</span>
         </div>
@@ -91,22 +92,22 @@ const HeroSection = () => {
             </p>
             
             {/* Value proposition points */}
-            <div className={`flex flex-col space-y-2 md:space-y-3 ${
+            <ul className={`flex flex-col space-y-2 md:space-y-3 ${
               isMobile ? 'mb-3' : isLandscapeMobile ? 'mb-4' : 'mb-6 md:mb-8'
-            }`}>
-              <div className="flex items-center gap-2">
-                <CircleCheck className="text-brand-red h-4 w-4 sm:h-5 sm:w-5 flex-shrink-0" />
+            } list-none pl-0`} aria-label="Our service advantages">
+              <li className="flex items-center gap-2">
+                <CircleCheck className="text-brand-red h-4 w-4 sm:h-5 sm:w-5 flex-shrink-0" aria-hidden="true" />
                 <span className={`text-white/80 ${isMobile || isLandscapeMobile ? 'text-sm' : ''}`}>Fast response times with same-day service</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <CircleCheck className="text-brand-red h-4 w-4 sm:h-5 sm:w-5 flex-shrink-0" />
+              </li>
+              <li className="flex items-center gap-2">
+                <CircleCheck className="text-brand-red h-4 w-4 sm:h-5 sm:w-5 flex-shrink-0" aria-hidden="true" />
                 <span className={`text-white/80 ${isMobile || isLandscapeMobile ? 'text-sm' : ''}`}>Veteran-owned, licensed & fully insured</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <CircleCheck className="text-brand-red h-4 w-4 sm:h-5 sm:w-5 flex-shrink-0" />
+              </li>
+              <li className="flex items-center gap-2">
+                <CircleCheck className="text-brand-red h-4 w-4 sm:h-5 sm:w-5 flex-shrink-0" aria-hidden="true" />
                 <span className={`text-white/80 ${isMobile || isLandscapeMobile ? 'text-sm' : ''}`}>95% recycling rate - we're committed to the environment</span>
-              </div>
-            </div>
+              </li>
+            </ul>
             
             {/* CTA section */}
             <div className={`flex ${
@@ -125,12 +126,12 @@ const HeroSection = () => {
                 className="bg-transparent border border-white hover:bg-white hover:text-brand-navy transition-colors duration-300 gap-2 font-semibold"
                 onClick={handleCallClick}
               >
-                <Phone size={isMobile ? 16 : 20} />
-                <a href="tel:+18126101657">(812) 610-1657</a>
+                <Phone size={isMobile ? 16 : 20} aria-hidden="true" />
+                <a href="tel:+18126101657" aria-label="Call us at (812) 610-1657">(812) 610-1657</a>
               </Button>
               
               {/* Premium badge - tablet only */}
-              <div className={`${isMobile || isLandscapeMobile ? 'hidden' : 'absolute -bottom-8 left-0 flex items-center gap-2 md:hidden'}`}>
+              <div className={`${isMobile || isLandscapeMobile ? 'hidden' : 'absolute -bottom-8 left-0 flex items-center gap-2 md:hidden'}`} aria-hidden="true">
                 <Award className="text-brand-yellow w-5 h-5" />
                 <span className="text-white/80 text-sm">5-star rated in the Tri-State area</span>
               </div>

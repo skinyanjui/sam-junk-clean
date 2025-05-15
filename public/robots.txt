@@ -3,31 +3,36 @@
 User-agent: *
 Allow: /
 
-# Block specific paths
+# Block specific admin and API paths
 Disallow: /admin/
 Disallow: /api/
 Disallow: /temp/
 
-# Sitemap location
-Sitemap: https://unclesamjunkremoval.com/sitemap.xml
-
-# Specific page permissions
+# Specific page permissions with priority
+Allow: /
+Allow: /services
+Allow: /quote
+Allow: /locations
+Allow: /pricing
 Allow: /faq
 Allow: /blog
 Allow: /careers
-Allow: /locations
-Allow: /services
-Allow: /quote
 Allow: /about
 Allow: /contact
-Allow: /pricing
+Allow: /privacy
+Allow: /terms
+
+# Sitemap location
+Sitemap: https://unclesamjunkremoval.com/sitemap.xml
 
 # Specific crawler directives
 User-agent: Googlebot
 Allow: /
+Crawl-delay: 1
 
 User-agent: Bingbot
 Allow: /
+Crawl-delay: 1
 
 User-agent: Twitterbot
 Allow: /
@@ -47,3 +52,7 @@ Crawl-delay: 10
 
 User-agent: PetalBot
 Crawl-delay: 10
+
+# Image crawling
+User-agent: Googlebot-Image
+Allow: /
