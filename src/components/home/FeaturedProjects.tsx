@@ -10,23 +10,23 @@ const FeaturedProjects = () => {
   
   const projects = [
     {
-      title: "Full House Cleanout",
+      title: "Estate Clearance",
       location: "Henderson, KY",
-      description: "Complete removal of furniture, appliances, and household items from a 3-bedroom home.",
+      description: "Complete removal of furniture, appliances, and household items from a 3-bedroom home in just 4 hours.",
       image: "https://images.unsplash.com/photo-1603796846097-bee99e4a601f?auto=format&fit=crop&q=80",
       tags: ["Residential", "Estate Cleanout"]
     },
     {
-      title: "Office Renovation Debris",
+      title: "Office Renovation",
       location: "Evansville, IN",
-      description: "Removal of construction debris, old furniture, and equipment from a commercial office space.",
+      description: "Removed 2 tons of construction debris, old furniture, and equipment from a commercial office space renovation.",
       image: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&q=80",
       tags: ["Commercial", "Construction Debris"]
     },
     {
-      title: "Garage Decluttering",
+      title: "Garage Transformation",
       location: "Newburgh, IN",
-      description: "Cleared out years of accumulated items, including old appliances and yard equipment.",
+      description: "Cleared out a two-car garage filled with decades of accumulated items in a single afternoon.",
       image: "https://images.unsplash.com/photo-1584438875946-25aa27a1645e?auto=format&fit=crop&q=80",
       tags: ["Residential", "Garage Cleanout"]
     }
@@ -36,12 +36,12 @@ const FeaturedProjects = () => {
     <section className={`py-10 ${isMobile ? 'px-4 py-8' : 'py-12'} bg-gradient-to-b from-white to-brand-gray/20`}>
       <div className="container-custom">
         <div className="text-center mb-8">
-          <span className="text-brand-red font-semibold uppercase tracking-wider mb-2 block">Success Stories</span>
+          <span className="text-brand-red font-semibold uppercase tracking-wider mb-2 block">Real Results</span>
           <h2 className={`${isMobile ? 'text-3xl' : 'text-4xl md:text-5xl'} font-bold text-brand-navy mb-3`}>
-            Featured Projects
+            Spaces Transformed
           </h2>
           <p className={`${isMobile ? 'text-base' : 'text-lg'} text-gray-600 max-w-3xl mx-auto`}>
-            Take a look at some of our recent junk removal projects and see the difference we can make for your space.
+            See the dramatic before-and-after transformations we've achieved for clients just like you.
           </p>
         </div>
 

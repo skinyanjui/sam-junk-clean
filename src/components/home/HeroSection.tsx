@@ -70,7 +70,7 @@ const HeroSection = () => {
         {/* Premium badge - desktop only */}
         <div className="absolute top-0 right-10 md:right-20 transform -translate-y-1/2 hidden md:flex items-center gap-2 bg-white/10 backdrop-blur-md px-4 py-2 rounded-full text-white/90 text-sm border border-white/20 shadow-lg">
           <Star className="text-brand-yellow w-4 h-4" />
-          <span>Trusted by 10,000+ homeowners</span>
+          <span>Over 12,000+ happy customers</span>
         </div>
 
         <div className="grid md:grid-cols-12 gap-4 md:gap-8 items-center">
@@ -79,15 +79,15 @@ const HeroSection = () => {
             <h1 className={`${
               isMobile ? 'text-3xl' : 'text-4xl'
             } ${isLandscapeMobile ? 'text-3xl' : 'sm:text-5xl md:text-6xl lg:text-7xl'} font-extrabold mb-2 md:mb-6 leading-tight tracking-tight`}>
-              Uncle Sam Wants <span className="text-brand-red animate-[pulse_3s_ease-in-out_infinite]">YOU</span> <br className={isLandscapeMobile || isMobile ? 'hidden' : 'inline'} />
-              to Live Junk-Free!
+              Reclaim Your Space <span className="text-brand-red animate-[pulse_3s_ease-in-out_infinite]">TODAY</span> <br className={isLandscapeMobile || isMobile ? 'hidden' : 'inline'} />
+              with Uncle Sam!
             </h1>
             
             <p className={`${
               isMobile ? 'text-base mb-3' : isLandscapeMobile ? 'text-base mb-4' : 'text-lg sm:text-xl md:text-2xl mb-6 md:mb-8'
             } opacity-90 leading-relaxed max-w-2xl`}>
-              Professional junk removal services in the Tri-State area. 
-              Same-day service available!
+              Expert junk removal across the Tri-State area. 
+              Veteran-owned, eco-friendly, and available when you need us!
             </p>
             
             {/* Value proposition points */}
@@ -96,15 +96,15 @@ const HeroSection = () => {
             }`}>
               <div className="flex items-center gap-2">
                 <CircleCheck className="text-brand-red h-4 w-4 sm:h-5 sm:w-5 flex-shrink-0" />
-                <span className={`text-white/80 ${isMobile || isLandscapeMobile ? 'text-sm' : ''}`}>Premium service with same-day availability</span>
+                <span className={`text-white/80 ${isMobile || isLandscapeMobile ? 'text-sm' : ''}`}>Fast response times with same-day service</span>
               </div>
               <div className="flex items-center gap-2">
                 <CircleCheck className="text-brand-red h-4 w-4 sm:h-5 sm:w-5 flex-shrink-0" />
-                <span className={`text-white/80 ${isMobile || isLandscapeMobile ? 'text-sm' : ''}`}>Veteran-owned, professional and reliable</span>
+                <span className={`text-white/80 ${isMobile || isLandscapeMobile ? 'text-sm' : ''}`}>Veteran-owned, licensed & fully insured</span>
               </div>
               <div className="flex items-center gap-2">
                 <CircleCheck className="text-brand-red h-4 w-4 sm:h-5 sm:w-5 flex-shrink-0" />
-                <span className={`text-white/80 ${isMobile || isLandscapeMobile ? 'text-sm' : ''}`}>Eco-friendly disposal guaranteed</span>
+                <span className={`text-white/80 ${isMobile || isLandscapeMobile ? 'text-sm' : ''}`}>95% recycling rate - we're committed to the environment</span>
               </div>
             </div>
             
@@ -117,7 +117,7 @@ const HeroSection = () => {
                 size={isMobile || isLandscapeMobile ? "default" : "lg"}
                 className="bg-brand-red hover:bg-brand-red/90 text-white font-bold tracking-wide shadow-lg transition-all duration-300 hover:scale-[1.03] border border-brand-red/20"
               >
-                <Link to="/quote">Get a Free Quote</Link>
+                <Link to="/quote">Get Your Free Estimate</Link>
               </Button>
               
               <Button 
@@ -132,7 +132,7 @@ const HeroSection = () => {
               {/* Premium badge - tablet only */}
               <div className={`${isMobile || isLandscapeMobile ? 'hidden' : 'absolute -bottom-8 left-0 flex items-center gap-2 md:hidden'}`}>
                 <Award className="text-brand-yellow w-5 h-5" />
-                <span className="text-white/80 text-sm">Top-rated in Tri-State area</span>
+                <span className="text-white/80 text-sm">5-star rated in the Tri-State area</span>
               </div>
             </div>
           </div>

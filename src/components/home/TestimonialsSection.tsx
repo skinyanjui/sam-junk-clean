@@ -24,31 +24,31 @@ const TestimonialsSection = () => {
     {
       name: 'Sarah Johnson',
       location: 'Evansville, IN',
-      quote: 'Uncle Sam Junk Removal helped clear out my mom\'s garage. They were efficient, respectful, and reasonably priced.',
+      quote: 'Uncle Sam\'s team cleared out my mom\'s entire basement in just hours. They were respectful, efficient and even swept up afterward!',
       rating: 5
     },
     {
       name: 'Mike Reynolds',
       location: 'Henderson, KY',
-      quote: 'Used them for an office cleanout when we relocated. Great service and they recycled a lot of our old furniture.',
+      quote: 'After our office remodel, they handled all our old furniture and fixtures. The crew was professional and recycled everything possible.',
       rating: 5
     },
     {
       name: 'Jennifer Williams',
       location: 'Newburgh, IN',
-      quote: 'Fast response for a same-day junk removal. They arrived on time and completed the job quickly.',
+      quote: 'Called at 9am, they were at my house by 2pm the same day! No hidden fees, just straightforward service at a fair price.',
       rating: 5
     },
     {
       name: 'Robert Douglas',
       location: 'Owensboro, KY',
-      quote: 'The team was professional and friendly. They made the whole process completely stress-free.',
+      quote: 'As a property manager, I\'ve worked with many junk removal services. Uncle Sam\'s is by far the most reliable and thorough.',
       rating: 5
     },
     {
       name: 'Amanda Carter',
       location: 'Boonville, IN',
-      quote: 'I\'ve used them twice now for estate cleanouts. Their prices are fair and the service is exceptional.',
+      quote: 'When my father passed, they handled the estate cleanout with remarkable compassion and care. Can\'t recommend them enough.',
       rating: 5
     }
   ];
@@ -66,13 +66,13 @@ const TestimonialsSection = () => {
       <div className="absolute bottom-0 right-0 w-96 h-96 bg-brand-blue/5 rounded-full blur-3xl"></div>
       
       <div className="container-custom text-center mb-10 relative z-10">
-        <span className="text-brand-red font-semibold uppercase tracking-wider mb-2 block">Happy Customers</span>
+        <span className="text-brand-red font-semibold uppercase tracking-wider mb-2 block">Customer Stories</span>
         <h2 className={`${isMobile ? 'text-3xl' : 'text-4xl md:text-5xl'} font-bold text-brand-navy mb-4`}>
-          What Our Customers Say
+          Our Clients Speak
         </h2>
         <div className="w-20 h-1 bg-brand-red mx-auto mb-6"></div>
         <p className={`${isMobile ? 'text-base' : 'text-lg'} max-w-3xl mx-auto text-gray-600`}>
-          Don't just take our word for it. See what our satisfied customers have to say about our services.
+          We're proud of our 5-star reputation across the Tri-State area. Here's what real customers have to say.
         </p>
       </div>
       

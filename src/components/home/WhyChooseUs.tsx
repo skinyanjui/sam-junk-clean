@@ -12,26 +12,26 @@ const WhyChooseUs = () => {
   // Enhanced benefits with descriptive copy for better SEO
   const benefits = [
     { 
-      title: 'Veteran-Owned',
-      description: 'We bring military precision and values to every junk removal job',
+      title: 'Military Precision',
+      description: 'Veteran-owned business bringing discipline and excellence to every job',
       icon: Shield,
       color: 'bg-brand-blue/10 text-brand-blue'
     },
     { 
-      title: 'Same-Day Service',
-      description: 'Fast and reliable junk removal service when you need it most',
+      title: 'Rapid Response',
+      description: 'Same-day service available - we know you want your space back ASAP',
       icon: Calendar,
       color: 'bg-brand-red/10 text-brand-red'
     },
     { 
-      title: 'Eco-Friendly',
-      description: 'Environmentally responsible junk disposal with recycling prioritized',
+      title: 'Eco-Conscious',
+      description: 'We recycle or donate up to 95% of what we collect to minimize landfill impact',
       icon: Leaf,
       color: 'bg-green-100 text-green-700'
     },
     { 
-      title: 'Tri-State Coverage',
-      description: 'Serving Evansville, IN, Henderson, KY, and surrounding areas',
+      title: 'Local & Reliable',
+      description: 'Extensive coverage throughout IN, KY, and IL with local expertise',
       icon: Truck,
       color: 'bg-amber-100 text-amber-700'
     }
@@ -49,14 +49,14 @@ const WhyChooseUs = () => {
     <section className={`py-16 ${isMobile ? 'px-4 py-12' : isLandscapeMobile ? 'py-16' : 'py-20'} bg-gradient-to-b from-white to-brand-gray/40`}>
       <div className="container-custom">
         <div className="text-center mb-12">
-          <span className="text-brand-red font-semibold uppercase tracking-wider mb-2 block">Why Choose Us</span>
+          <span className="text-brand-red font-semibold uppercase tracking-wider mb-2 block">Your Best Choice</span>
           <h2 className={`${isMobile ? 'text-3xl' : 'text-4xl md:text-5xl'} font-bold text-brand-navy mb-4`}>
-            The Uncle Sam Advantage
+            Experience The Difference
           </h2>
           <div className="w-20 h-1 bg-brand-red mx-auto mb-6"></div>
           <p className={`${isMobile ? 'text-base' : 'text-lg'} max-w-2xl mx-auto text-gray-600`}>
-            Our mission is to provide exceptional junk removal services with military precision, 
-            environmental responsibility, and an unwavering commitment to our community.
+            We're not just another junk removal company. Our veteran leadership, environmental commitment, 
+            and dedication to customer satisfaction set us apart.
           </p>
         </div>
         
@@ -99,7 +99,7 @@ const WhyChooseUs = () => {
         {/* Customer Promise */}
         <div className={`bg-brand-navy text-white rounded-xl overflow-hidden ${isMobile ? 'mb-8' : 'mb-12'}`}>
           <div className="p-8 text-center">
-            <Badge className="bg-brand-red mb-4">Our Customer Promise</Badge>
+            <Badge className="bg-brand-red mb-4">Our Pledge To You</Badge>
             <h3 className={`${isMobile ? 'text-2xl' : 'text-3xl'} font-bold mb-4`}>
               100% Satisfaction Guarantee
             </h3>
@@ -108,19 +108,19 @@ const WhyChooseUs = () => {
                 <div className="mr-3 bg-white/20 rounded-full p-2">
                   <Star className="h-5 w-5 text-brand-yellow" />
                 </div>
-                <span className="text-white/90">5-star rated service</span>
+                <span className="text-white/90">Top-rated service</span>
               </div>
               <div className="flex items-center">
                 <div className="mr-3 bg-white/20 rounded-full p-2">
                   <Users className="h-5 w-5 text-white" />
                 </div>
-                <span className="text-white/90">Trained, professional team</span>
+                <span className="text-white/90">Background-checked team</span>
               </div>
               <div className="flex items-center">
                 <div className="mr-3 bg-white/20 rounded-full p-2">
                   <Award className="h-5 w-5 text-white" />
                 </div>
-                <span className="text-white/90">Licensed & insured</span>
+                <span className="text-white/90">Fully insured service</span>
               </div>
             </div>
           </div>

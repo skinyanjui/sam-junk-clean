@@ -12,26 +12,26 @@ const PricingOverview = () => {
   // Pricing tiers data
   const pricingTiers = [
     {
-      name: "Small Jobs",
+      name: "Small Loads",
       price: "$75-$175",
-      description: "Single items to 1/4 truck loads",
-      features: ["Single item removal", "Small furniture", "Garage cleanouts", "E-waste disposal"],
+      description: "Single items to 1/4 truck",
+      features: ["Furniture pieces", "Appliance removal", "Small cleanouts", "Quick, single-item pickups"],
       popular: false,
       ctaText: "See Details"
     },
     {
-      name: "Medium Jobs",
+      name: "Medium Loads",
       price: "$175-$450",
       description: "1/4 to 3/4 truck loads",
-      features: ["Multiple items", "Room cleanouts", "Appliance removal", "Construction debris"],
+      features: ["Room renovations", "Basement cleanouts", "Multi-item removal", "Office cleanups"],
       popular: true,
       ctaText: "See Details"
     },
     {
-      name: "Large Jobs",
+      name: "Full Loads",
       price: "$450-$600+",
-      description: "Full truck loads",
-      features: ["Full home cleanouts", "Estate cleanouts", "Commercial spaces", "Heavy materials"],
+      description: "Complete truck loads",
+      features: ["Whole home cleanouts", "Large estate clearings", "Commercial projects", "Construction debris"],
       popular: false,
       ctaText: "See Details"
     }
@@ -44,13 +44,13 @@ const PricingOverview = () => {
       
       <div className="container-custom relative z-10">
         <div className="text-center mb-6 md:mb-8">
-          <span className="text-brand-red font-semibold uppercase tracking-wider mb-1 block">Simple & Transparent</span>
+          <span className="text-brand-red font-semibold uppercase tracking-wider mb-1 block">Clear & Upfront</span>
           <h2 className={`${isMobile ? 'text-3xl' : 'text-4xl md:text-5xl'} font-bold text-brand-navy mb-3`}>
-            Our Pricing
+            No-Surprise Pricing
           </h2>
           <div className="w-20 h-1 bg-brand-red mx-auto mb-3"></div>
           <p className={`${isMobile ? 'text-base' : 'text-lg'} max-w-3xl mx-auto text-gray-600 leading-relaxed`}>
-            Simple, transparent pricing with no hidden fees. We provide upfront estimates based on the volume of junk.
+            You pay only for the space your items take up in our truck. Get a free estimate before we start any work.
           </p>
         </div>
         
@@ -69,7 +69,7 @@ const PricingOverview = () => {
               >
                 <CardHeader className={`text-center pb-3 ${isMobile ? 'pt-3 px-3' : ''}`}>
                   {tier.popular && (
-                    <Badge className="bg-brand-red mb-1 mx-auto">Most Popular</Badge>
+                    <Badge className="bg-brand-red mb-1 mx-auto">Most Common</Badge>
                   )}
                   <h3 className="text-lg font-bold text-brand-navy mb-1">{tier.name}</h3>
                   <p className="text-brand-red font-bold text-2xl md:text-2xl mb-1">{tier.price}</p>

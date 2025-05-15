@@ -9,26 +9,26 @@ const ProcessSection = () => {
   const steps = [
     {
       number: "01",
-      title: "Contact Us",
-      description: "Call or fill out our online form to schedule your free estimate.",
+      title: "Book Online or Call",
+      description: "Schedule your free, no-obligation estimate via our form or direct call.",
       color: "bg-brand-red"
     },
     {
       number: "02",
-      title: "Get a Quote",
-      description: "Our team will provide a clear, upfront price based on your junk volume.",
+      title: "Get an Upfront Price",
+      description: "Our team provides a transparent quote based on your specific needs.",
       color: "bg-brand-navy"
     },
     {
       number: "03",
-      title: "Schedule Service",
-      description: "Pick a convenient time and we'll arrive with our truck and team.",
+      title: "Schedule Removal",
+      description: "Pick a time that works for you - same day options available!",
       color: "bg-brand-blue"
     },
     {
       number: "04",
-      title: "Relax",
-      description: "We'll remove your junk quickly and dispose of it responsibly.",
+      title: "Enjoy Your Space",
+      description: "We handle the heavy lifting and responsibly dispose of everything.",
       color: "bg-green-600"
     }
   ];
@@ -37,12 +37,12 @@ const ProcessSection = () => {
     <section className={`py-10 ${isMobile ? 'px-4 py-8' : 'py-12'}`}>
       <div className="container-custom">
         <div className="text-center mb-8">
-          <Badge className="bg-brand-navy mb-3">How It Works</Badge>
+          <Badge className="bg-brand-navy mb-3">Simple Process</Badge>
           <h2 className={`${isMobile ? 'text-3xl' : 'text-4xl md:text-5xl'} font-bold text-brand-navy mb-3`}>
-            Simple, 4-Step Process
+            Junk Removal Made Easy
           </h2>
           <p className={`${isMobile ? 'text-base' : 'text-lg'} text-gray-600 max-w-2xl mx-auto`}>
-            We've made junk removal as easy as possible. Here's how we tackle the mess so you don't have to.
+            From booking to cleanup, we've streamlined everything to save you time and hassle.
           </p>
         </div>
 
