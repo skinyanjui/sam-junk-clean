@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Star, Award, CircleCheck } from 'lucide-react';
 import { useIsMobile, useOrientation } from '@/hooks/use-mobile';
 import { useEffect, useState } from 'react';
+import BookingForm from '@/components/forms/BookingForm';
 
 const HeroSection = () => {
   const isMobile = useIsMobile();
@@ -54,8 +55,8 @@ const HeroSection = () => {
         </div>
 
         <div className="grid md:grid-cols-12 gap-8 items-center">
-          {/* Hero content - spans 12 columns on medium screens for premium feel */}
-          <div className="md:col-span-12 lg:col-span-8 text-white">
+          {/* Hero content */}
+          <div className="md:col-span-7 lg:col-span-7 text-white">
             <h1 className={`text-4xl ${isLandscapeMobile ? 'text-4xl' : 'sm:text-5xl md:text-6xl lg:text-7xl'} font-extrabold mb-4 md:mb-6 leading-tight tracking-tight`}>
               Uncle Sam Wants <span className="text-brand-red animate-[pulse_3s_ease-in-out_infinite]">YOU</span> <br className={isLandscapeMobile ? 'hidden' : 'inline'} />
               to Live Junk-Free!
@@ -116,15 +117,15 @@ const HeroSection = () => {
             </div>
           </div>
 
-          {/* Visual elements column - creates space and visual balance */}
-          <div className="hidden lg:block lg:col-span-4">
-            <div className="relative h-[500px] w-full">
-              {/* Premium decorative elements */}
-              <div className="absolute top-1/4 right-1/4 w-40 h-40 rounded-full border-4 border-white/10 transform rotate-45"></div>
-              <div className="absolute bottom-1/4 left-1/3 w-60 h-60 rounded-full border-4 border-white/5"></div>
-              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-gradient-to-br from-brand-red/20 to-brand-blue/20 rounded-full blur-xl"></div>
-            </div>
+          {/* Booking form column - replaces the decorative elements */}
+          <div className="hidden md:block md:col-span-5 lg:col-span-5">
+            <BookingForm variant="hero" className="max-w-md mx-auto" />
           </div>
+        </div>
+        
+        {/* Mobile booking form (full width below content) */}
+        <div className="mt-8 md:hidden">
+          <BookingForm variant="hero" />
         </div>
       </div>
     </section>
