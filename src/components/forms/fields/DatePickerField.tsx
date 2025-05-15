@@ -6,6 +6,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { FormField } from './FormField';
+import { CalendarIcon } from 'lucide-react';
 
 interface DatePickerFieldProps {
   id: string;
@@ -41,6 +42,7 @@ export const DatePickerField = ({
               !selectedDate && "text-muted-foreground"
             )}
           >
+            <CalendarIcon className="mr-2 h-4 w-4" />
             {selectedDate ? (
               format(selectedDate, 'PPP')
             ) : (
