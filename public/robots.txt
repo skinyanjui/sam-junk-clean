@@ -1,5 +1,10 @@
 
-# Allow all crawlers
+# Allow Google to access everything
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 1
+
+# Allow all other crawlers
 User-agent: *
 Allow: /
 
@@ -25,11 +30,7 @@ Allow: /terms
 # Sitemap location
 Sitemap: https://unclesamjunkremoval.com/sitemap.xml
 
-# Specific crawler directives
-User-agent: Googlebot
-Allow: /
-Crawl-delay: 1
-
+# Specific crawler directives for other search engines
 User-agent: Bingbot
 Allow: /
 Crawl-delay: 1
