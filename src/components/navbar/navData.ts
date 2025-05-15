@@ -29,9 +29,7 @@ export const navStructure = [
     path: '/about', 
     hasDropdown: true,
     dropdownItems: [
-      { name: 'Our Story', path: '/about#story' },
-      { name: 'Our Team', path: '/about#team' },
-      { name: 'Veterans', path: '/about#veterans' },
+      { name: 'Our Story', path: '/about' },
       { name: 'FAQ', path: '/faq' },
       { name: 'Careers', path: '/careers' },
       { name: 'Contact', path: '/contact' }
