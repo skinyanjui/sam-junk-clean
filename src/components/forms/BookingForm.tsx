@@ -106,18 +106,17 @@ const BookingForm = ({
   
   return (
     <div className={cn(
-      "rounded-lg overflow-hidden", 
-      isHeroVariant ? "bg-white/10 backdrop-blur-md border border-white/20" : "bg-white shadow-lg border border-gray-200",
+      "rounded-lg overflow-hidden shadow-lg", 
+      isHeroVariant 
+        ? "bg-white border border-gray-200" 
+        : "bg-white border border-gray-200",
       className
     )}>
       <div className={cn(
         "px-6 py-4",
-        isHeroVariant ? "bg-brand-navy/50" : "bg-brand-navy"
+        "bg-brand-navy"
       )}>
-        <h3 className={cn(
-          "text-white font-bold flex items-center gap-2",
-          isHeroVariant ? "text-lg" : "text-xl"
-        )}>
+        <h3 className="text-white font-bold flex items-center gap-2 text-xl">
           <CalendarClock className="h-5 w-5" />
           Schedule a Pickup
         </h3>
@@ -126,18 +125,13 @@ const BookingForm = ({
       <form onSubmit={form.handleSubmit(onSubmit)} className="p-6 space-y-4">
         {/* Name Input */}
         <div>
-          <label className={cn(
-            "block text-sm font-medium mb-1",
-            isHeroVariant ? "text-white" : "text-gray-700"
-          )}>
+          <label className="block text-sm font-medium mb-1 text-gray-700">
             Name
           </label>
           <Input
             {...form.register('name')}
             placeholder="Your full name"
-            className={cn(
-              isHeroVariant && "bg-white/20 text-white placeholder:text-white/70 border-white/30"
-            )}
+            className="bg-white border-gray-300"
           />
           {form.formState.errors.name && (
             <p className="mt-1 text-sm text-red-500">{form.formState.errors.name.message}</p>
@@ -146,18 +140,13 @@ const BookingForm = ({
         
         {/* Phone Input */}
         <div>
-          <label className={cn(
-            "block text-sm font-medium mb-1",
-            isHeroVariant ? "text-white" : "text-gray-700"
-          )}>
+          <label className="block text-sm font-medium mb-1 text-gray-700">
             Phone
           </label>
           <PhoneInput
             {...form.register('phone')}
             placeholder="(555) 555-5555"
-            className={cn(
-              isHeroVariant && "bg-white/20 text-white placeholder:text-white/70 border-white/30"
-            )}
+            className="bg-white border-gray-300"
           />
           {form.formState.errors.phone && (
             <p className="mt-1 text-sm text-red-500">{form.formState.errors.phone.message}</p>
@@ -166,19 +155,14 @@ const BookingForm = ({
         
         {/* Email Input */}
         <div>
-          <label className={cn(
-            "block text-sm font-medium mb-1",
-            isHeroVariant ? "text-white" : "text-gray-700"
-          )}>
+          <label className="block text-sm font-medium mb-1 text-gray-700">
             Email
           </label>
           <Input
             {...form.register('email')}
             type="email"
             placeholder="you@example.com"
-            className={cn(
-              isHeroVariant && "bg-white/20 text-white placeholder:text-white/70 border-white/30"
-            )}
+            className="bg-white border-gray-300"
           />
           {form.formState.errors.email && (
             <p className="mt-1 text-sm text-red-500">{form.formState.errors.email.message}</p>
@@ -187,16 +171,11 @@ const BookingForm = ({
         
         {/* Service Type */}
         <div>
-          <label className={cn(
-            "block text-sm font-medium mb-1",
-            isHeroVariant ? "text-white" : "text-gray-700"
-          )}>
+          <label className="block text-sm font-medium mb-1 text-gray-700">
             Service Needed
           </label>
           <Select onValueChange={(value) => form.setValue('service', value)}>
-            <SelectTrigger className={cn(
-              isHeroVariant && "bg-white/20 text-white border-white/30"
-            )}>
+            <SelectTrigger className="bg-white border-gray-300">
               <SelectValue placeholder="Select service" />
             </SelectTrigger>
             <SelectContent>
@@ -212,21 +191,15 @@ const BookingForm = ({
         
         {/* Date Picker */}
         <div>
-          <label className={cn(
-            "block text-sm font-medium mb-1",
-            isHeroVariant ? "text-white" : "text-gray-700"
-          )}>
+          <label className="block text-sm font-medium mb-1 text-gray-700">
             Preferred Date
           </label>
           <Popover>
             <PopoverTrigger asChild>
               <Button
-                variant={isHeroVariant ? "outline" : "outline"}
+                variant="outline"
                 className={cn(
-                  "w-full justify-start text-left font-normal",
-                  isHeroVariant 
-                    ? "bg-white/20 text-white border-white/30 hover:bg-white/30" 
-                    : "",
+                  "w-full justify-start text-left font-normal bg-white border-gray-300",
                   !form.getValues('date') && "text-muted-foreground"
                 )}
               >
@@ -247,7 +220,6 @@ const BookingForm = ({
                   date > new Date(new Date().setMonth(new Date().getMonth() + 3))
                 }
                 initialFocus
-                className={cn("p-3 pointer-events-auto")}
               />
             </PopoverContent>
           </Popover>
@@ -258,16 +230,11 @@ const BookingForm = ({
         
         {/* Time Picker */}
         <div>
-          <label className={cn(
-            "block text-sm font-medium mb-1",
-            isHeroVariant ? "text-white" : "text-gray-700"
-          )}>
+          <label className="block text-sm font-medium mb-1 text-gray-700">
             Preferred Time
           </label>
           <Select onValueChange={(value) => form.setValue('time', value)}>
-            <SelectTrigger className={cn(
-              isHeroVariant && "bg-white/20 text-white border-white/30"
-            )}>
+            <SelectTrigger className="bg-white border-gray-300">
               <SelectValue placeholder="Select time" />
             </SelectTrigger>
             <SelectContent>
@@ -286,12 +253,7 @@ const BookingForm = ({
           type="submit"
           isLoading={isSubmitting}
           loadingText="Submitting..."
-          className={cn(
-            "w-full", 
-            isHeroVariant 
-              ? "bg-brand-red hover:bg-brand-red/90 text-white" 
-              : "bg-brand-red hover:bg-brand-red/90 text-white"
-          )}
+          className="w-full bg-brand-red hover:bg-brand-red/90 text-white font-medium"
         >
           Schedule Pickup
         </LoadingButton>
