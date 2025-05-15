@@ -19,7 +19,7 @@ const SEO = ({
   title = 'Uncle Sam Junk Removal | Tri-State Area Junk Removal Services',
   description = 'Uncle Sam Junk Removal offers professional junk removal services in the Tri-State area. Veteran-owned business serving residential and commercial clients.',
   canonicalUrl,
-  ogImage = 'https://lovable.dev/opengraph-image-p98pqg.png',
+  ogImage = 'https://unclesamjunkremoval.com',
   ogType = 'website',
   keywords = 'junk removal, trash removal, cleanout services, appliance removal, furniture removal, Evansville, Henderson, Tri-State area, veteran owned',
   structuredData,
