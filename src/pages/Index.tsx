@@ -62,7 +62,7 @@ const Index = () => {
   };
 
   return (
-    <PageLayout showBreadcrumb={false} spacing="default">
+    <PageLayout showBreadcrumb={false} spacing="compact">
       <SEO 
         title={t('seo.home.title')}
         description={t('seo.home.description')}
@@ -73,20 +73,20 @@ const Index = () => {
       />
       
       {isLoading ? (
-        <div className="space-y-16 py-8 px-4 md:py-16 md:px-6">
+        <div className="space-y-8 py-4 px-4 md:py-8 md:px-6">
           <div className="container-custom">
             {/* Hero skeleton */}
             <LoadingSkeleton variant="image" className="h-[60vh] w-full rounded-xl" />
           </div>
           <div className="container-custom">
             {/* Title skeleton */}
-            <div className="flex flex-col items-center mb-8">
-              <LoadingSkeleton height="2.5rem" width="60%" className="mb-3" />
+            <div className="flex flex-col items-center mb-4">
+              <LoadingSkeleton height="2.5rem" width="60%" className="mb-2" />
               <LoadingSkeleton height="1.5rem" width="80%" />
             </div>
             
             {/* Services cards skeleton */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <LoadingSkeleton variant="card" />
               <LoadingSkeleton variant="card" />
               <LoadingSkeleton variant="card" />
@@ -94,12 +94,12 @@ const Index = () => {
           </div>
 
           {/* Pricing skeleton */}
-          <div className="container-custom bg-brand-gray py-8 px-6 rounded-xl">
-            <div className="flex flex-col items-center mb-8">
-              <LoadingSkeleton height="2.5rem" width="40%" className="mb-3" />
+          <div className="container-custom bg-brand-gray py-4 px-4 rounded-xl">
+            <div className="flex flex-col items-center mb-4">
+              <LoadingSkeleton height="2.5rem" width="40%" className="mb-2" />
               <LoadingSkeleton height="1.5rem" width="60%" />
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <LoadingSkeleton height="15rem" className="rounded-lg" />
               <LoadingSkeleton height="15rem" className="rounded-lg" />
               <LoadingSkeleton height="15rem" className="rounded-lg" />
@@ -107,27 +107,27 @@ const Index = () => {
           </div>
         </div>
       ) : (
-        <div className="space-y-4 md:space-y-6">
+        <div className="space-y-2 md:space-y-3">
           <HeroSection />
-          <SectionSeparator variant="gradient" padding="lg" />
+          <SectionSeparator variant="gradient" padding="sm" />
           
           <ProcessSection />
-          <SectionSeparator variant="gradient" padding="lg" />
+          <SectionSeparator variant="gradient" padding="sm" />
           
           <ServicesOverview />
-          <SectionSeparator variant="gradient" padding="lg" />
+          <SectionSeparator variant="gradient" padding="sm" />
           
           <FeaturedProjects />
-          <SectionSeparator variant="gradient" padding="lg" />
+          <SectionSeparator variant="gradient" padding="sm" />
           
           <PricingOverview />
-          <SectionSeparator variant="gradient" padding="lg" />
+          <SectionSeparator variant="gradient" padding="sm" />
           
           <WhyChooseUs />
-          <SectionSeparator variant="gradient" padding="lg" />
+          <SectionSeparator variant="gradient" padding="sm" />
           
           <TestimonialsSection />
-          <SectionSeparator variant="gradient" padding="lg" />
+          <SectionSeparator variant="gradient" padding="sm" />
           
           <CtaSection />
         </div>

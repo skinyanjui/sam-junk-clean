@@ -34,11 +34,11 @@ const ProcessSection = () => {
   ];
 
   return (
-    <section className={`py-16 ${isMobile ? 'px-4' : 'py-20'}`}>
+    <section className={`py-10 ${isMobile ? 'px-4 py-8' : 'py-12'}`}>
       <div className="container-custom">
-        <div className="text-center mb-12">
+        <div className="text-center mb-8">
           <Badge className="bg-brand-navy mb-3">How It Works</Badge>
-          <h2 className={`${isMobile ? 'text-3xl' : 'text-4xl md:text-5xl'} font-bold text-brand-navy mb-4`}>
+          <h2 className={`${isMobile ? 'text-3xl' : 'text-4xl md:text-5xl'} font-bold text-brand-navy mb-3`}>
             Simple, 4-Step Process
           </h2>
           <p className={`${isMobile ? 'text-base' : 'text-lg'} text-gray-600 max-w-2xl mx-auto`}>
@@ -46,11 +46,11 @@ const ProcessSection = () => {
           </p>
         </div>
 
-        <div className={`grid ${isMobile && isLandscape ? 'grid-cols-2 gap-4' : isMobile ? 'grid-cols-1 gap-6' : 'grid-cols-2 md:grid-cols-4 gap-6'} mt-10`}>
+        <div className={`grid ${isMobile && isLandscape ? 'grid-cols-2 gap-4' : isMobile ? 'grid-cols-1 gap-4' : 'grid-cols-2 md:grid-cols-4 gap-5'} mt-8`}>
           {steps.map((step, index) => (
             <div key={step.number} className="relative">
               {/* Number indicator */}
-              <div className={`${step.color} text-white w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold mb-4 shadow-lg`}>
+              <div className={`${step.color} text-white w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold mb-3 shadow-lg`}>
                 {step.number}
               </div>
               

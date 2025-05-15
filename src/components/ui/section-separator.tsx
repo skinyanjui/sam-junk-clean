@@ -13,7 +13,7 @@ interface SectionSeparatorProps {
 const SectionSeparator = ({ 
   className,
   variant = 'default',
-  padding = 'md',
+  padding = 'sm', // Changed default from 'md' to 'sm'
   mobileOnly = false,
 }: SectionSeparatorProps) => {
   

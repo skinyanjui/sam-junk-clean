@@ -17,10 +17,10 @@ const Divider = ({
   
   const paddingClasses = {
     none: 'py-0',
-    sm: 'py-4',
-    md: 'py-8',
-    lg: 'py-12',
-    xl: 'py-16'
+    sm: 'py-2', // Reduced from py-4
+    md: 'py-4', // Reduced from py-8
+    lg: 'py-6', // Reduced from py-12
+    xl: 'py-10' // Reduced from py-16
   };
   
   return (

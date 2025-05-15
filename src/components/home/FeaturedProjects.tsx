@@ -33,11 +33,11 @@ const FeaturedProjects = () => {
   ];
 
   return (
-    <section className={`py-16 ${isMobile ? 'px-4' : 'py-20'} bg-gradient-to-b from-white to-brand-gray/20`}>
+    <section className={`py-10 ${isMobile ? 'px-4 py-8' : 'py-12'} bg-gradient-to-b from-white to-brand-gray/20`}>
       <div className="container-custom">
-        <div className="text-center mb-10">
+        <div className="text-center mb-8">
           <span className="text-brand-red font-semibold uppercase tracking-wider mb-2 block">Success Stories</span>
-          <h2 className={`${isMobile ? 'text-3xl' : 'text-4xl md:text-5xl'} font-bold text-brand-navy mb-4`}>
+          <h2 className={`${isMobile ? 'text-3xl' : 'text-4xl md:text-5xl'} font-bold text-brand-navy mb-3`}>
             Featured Projects
           </h2>
           <p className={`${isMobile ? 'text-base' : 'text-lg'} text-gray-600 max-w-3xl mx-auto`}>
@@ -45,7 +45,7 @@ const FeaturedProjects = () => {
           </p>
         </div>
 
-        <div className={`grid ${isMobile && isLandscape ? 'grid-cols-2 gap-4' : isMobile ? 'grid-cols-1 gap-8' : 'md:grid-cols-3 gap-8'} mt-12`}>
+        <div className={`grid ${isMobile && isLandscape ? 'grid-cols-2 gap-4' : isMobile ? 'grid-cols-1 gap-6' : 'md:grid-cols-3 gap-6'} mt-8`}>
           {projects.map((project, index) => (
             <div key={index} className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
               <div className="relative h-48 overflow-hidden">
@@ -62,10 +62,10 @@ const FeaturedProjects = () => {
                   ))}
                 </div>
               </div>
-              <div className="p-5">
+              <div className="p-4">
                 <div className="text-sm text-gray-500 mb-1">{project.location}</div>
                 <h3 className="text-xl font-bold text-brand-navy mb-2">{project.title}</h3>
-                <p className="text-gray-600 mb-4">{project.description}</p>
+                <p className="text-gray-600 mb-3">{project.description}</p>
                 <Link to="/quote" className="inline-flex items-center text-brand-red font-medium hover:underline">
                   Request similar service <ArrowRight size={16} className="ml-1" />
                 </Link>
@@ -74,7 +74,7 @@ const FeaturedProjects = () => {
           ))}
         </div>
         
-        <div className="text-center mt-10">
+        <div className="text-center mt-8">
           <Button asChild className="bg-brand-navy hover:bg-brand-navy/90">
             <Link to="/services">View All Services</Link>
           </Button>

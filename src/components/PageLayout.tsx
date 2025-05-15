@@ -45,12 +45,12 @@ const PageLayout = ({
   const getSectionSpacing = () => {
     switch (spacing) {
       case 'compact':
-        return 'space-y-6 md:space-y-10';
+        return 'space-y-4 md:space-y-6'; // Reduced from space-y-6 md:space-y-10
       case 'spacious':
-        return 'space-y-16 md:space-y-24';
+        return 'space-y-12 md:space-y-16'; // Reduced from space-y-16 md:space-y-24
       case 'default':
       default:
-        return 'space-y-12 md:space-y-16';
+        return 'space-y-8 md:space-y-12'; // Reduced from space-y-12 md:space-y-16
     }
   };
   
@@ -72,7 +72,7 @@ const PageLayout = ({
         {children}
       </main>
       
-      <Divider padding="md" />
+      <Divider padding="sm" />
       <Footer />
       
       {/* Bottom padding for mobile sticky button */}
