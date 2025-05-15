@@ -13,40 +13,40 @@ const WhyChooseUs = () => {
   const orientation = useOrientation();
   const isLandscapeMobile = isMobile && orientation === 'landscape';
   
-  // Restructured benefits with icons
+  // Enhanced benefits with descriptive copy for better SEO
   const benefits = [
     { 
       title: 'Veteran-Owned',
-      description: 'We bring military precision and values to every job',
+      description: 'We bring military precision and values to every junk removal job',
       icon: Shield,
       color: 'bg-brand-blue/10 text-brand-blue'
     },
     { 
       title: 'Same-Day Service',
-      description: 'Fast and reliable service when you need it most',
+      description: 'Fast and reliable junk removal service when you need it most',
       icon: Calendar,
       color: 'bg-brand-red/10 text-brand-red'
     },
     { 
-      title: 'Eco-Friendly',
-      description: 'Responsible disposal with recycling prioritized',
+      title: 'Eco-Friendly Disposal',
+      description: 'Environmentally responsible junk disposal with recycling prioritized',
       icon: Check,
       color: 'bg-green-100 text-green-700'
     },
     { 
       title: 'Tri-State Coverage',
-      description: 'Serving the entire Evansville metro area',
+      description: 'Comprehensive junk removal serving the entire Evansville metro area',
       icon: Truck,
       color: 'bg-amber-100 text-amber-700'
     }
   ];
 
-  // Updated service statistics without customer count
+  // Improved service statistics with more meaningful metrics
   const serviceStats = [
     { value: '25+', label: 'Cities Served' },
     { value: '3', label: 'States Covered' },
-    { value: '5+', label: 'Years Experience' },
     { value: '24h', label: 'Response Time' },
+    { value: '95%', label: 'Recycling Rate' },
   ];
 
   return (
@@ -54,11 +54,11 @@ const WhyChooseUs = () => {
       <div className="container-custom">
         <div className="text-center mb-12">
           <span className="text-brand-red font-semibold uppercase tracking-wider mb-2 block">Why Choose Us</span>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-brand-navy mb-6">The Uncle Sam Advantage</h2>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-brand-navy mb-6">The Uncle Sam Junk Removal Advantage</h2>
           <div className="w-20 h-1 bg-brand-red mx-auto mb-6"></div>
           <p className="text-lg max-w-2xl mx-auto text-gray-600">
             Our mission is to provide exceptional junk removal services with military precision, 
-            environmental responsibility, and a commitment to our community.
+            environmental responsibility, and an unwavering commitment to our Tri-State community.
           </p>
         </div>
         
@@ -98,31 +98,31 @@ const WhyChooseUs = () => {
         <div className="bg-brand-navy text-white rounded-2xl overflow-hidden">
           <div className="grid md:grid-cols-2">
             <div className="p-8 md:p-10">
-              <Badge className="bg-brand-red hover:bg-brand-red mb-4">Our Process</Badge>
-              <h3 className="text-2xl md:text-3xl font-bold mb-6">Simple, Fast & Efficient</h3>
+              <Badge className="bg-brand-red hover:bg-brand-red mb-4">Our Junk Removal Process</Badge>
+              <h3 className="text-2xl md:text-3xl font-bold mb-6">Simple, Fast & Efficient Junk Removal</h3>
               
               <div className="space-y-6">
                 <div className="flex items-start gap-4">
                   <div className="bg-white/10 rounded-full w-8 h-8 flex items-center justify-center text-white font-bold shrink-0 mt-1">1</div>
                   <div>
-                    <h4 className="font-bold text-xl mb-2">Contact Us</h4>
-                    <p className="text-white/80">Call or fill out our online form for a free quote</p>
+                    <h4 className="font-bold text-xl mb-2">Contact Our Junk Removal Team</h4>
+                    <p className="text-white/80">Call or fill out our online form for a free junk removal quote</p>
                   </div>
                 </div>
                 
                 <div className="flex items-start gap-4">
                   <div className="bg-white/10 rounded-full w-8 h-8 flex items-center justify-center text-white font-bold shrink-0 mt-1">2</div>
                   <div>
-                    <h4 className="font-bold text-xl mb-2">Get Your Quote</h4>
-                    <p className="text-white/80">Receive a transparent, no-obligation price</p>
+                    <h4 className="font-bold text-xl mb-2">Get Your Junk Removal Quote</h4>
+                    <p className="text-white/80">Receive a transparent, no-obligation price for your junk removal</p>
                   </div>
                 </div>
                 
                 <div className="flex items-start gap-4">
                   <div className="bg-brand-red rounded-full w-8 h-8 flex items-center justify-center text-white font-bold shrink-0 mt-1">3</div>
                   <div>
-                    <h4 className="font-bold text-xl mb-2">We Do The Work</h4>
-                    <p className="text-white/80">Our team handles everything from loading to disposal</p>
+                    <h4 className="font-bold text-xl mb-2">We Remove Your Junk</h4>
+                    <p className="text-white/80">Our team handles everything from loading to responsible junk disposal</p>
                   </div>
                 </div>
               </div>
@@ -131,7 +131,7 @@ const WhyChooseUs = () => {
                 asChild 
                 className="mt-8 bg-brand-red hover:bg-brand-red/90"
               >
-                <Link to="/quote">Get Started Today</Link>
+                <Link to="/quote">Schedule Your Junk Removal Today</Link>
               </Button>
             </div>
             
@@ -140,10 +140,10 @@ const WhyChooseUs = () => {
               <div className="absolute bottom-6 left-6 bg-white/90 backdrop-blur-sm p-4 rounded-lg max-w-[80%]">
                 <div className="flex items-center gap-2 mb-2">
                   <Award className="text-brand-red h-5 w-5" />
-                  <span className="font-bold text-brand-navy">Veteran Owned & Operated</span>
+                  <span className="font-bold text-brand-navy">Veteran Owned & Operated Junk Removal</span>
                 </div>
                 <p className="text-sm text-gray-700">
-                  Uncle Sam is proud to employ U.S. veterans
+                  Uncle Sam Junk Removal is proud to employ U.S. veterans
                 </p>
               </div>
             </div>
@@ -157,7 +157,7 @@ const WhyChooseUs = () => {
             size="lg" 
             className="bg-brand-navy hover:bg-brand-navy/90"
           >
-            <Link to="/about">Learn More About Us</Link>
+            <Link to="/about">Discover More About Our Junk Removal Services</Link>
           </Button>
         </div>
       </div>
