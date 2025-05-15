@@ -16,8 +16,8 @@ const NotFound = () => {
 
   return (
     <PageLayout>
-      <div className="min-h-[70vh] flex flex-col items-center justify-center">
-        <h1 className="text-6xl font-bold text-brand-navy mb-4">404</h1>
+      <div className="min-h-[70vh] flex flex-col items-center justify-center" aria-labelledby="not-found-heading">
+        <h1 id="not-found-heading" className="text-6xl font-bold text-brand-navy mb-4">404</h1>
         <p className="text-2xl text-gray-600 mb-8">Oops! This page has been cleaned out.</p>
         <p className="text-lg text-gray-500 max-w-md text-center mb-8">
           It looks like the page you're looking for has been removed... just like the junk we haul away!

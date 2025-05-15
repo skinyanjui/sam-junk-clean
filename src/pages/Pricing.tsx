@@ -73,10 +73,10 @@ const Pricing = () => {
       />
 
       {/* Hero Section */}
-      <section className="pt-20 pb-16 bg-brand-navy text-white">
+      <section className="pt-20 pb-16 bg-brand-navy text-white" aria-labelledby="pricing-hero-heading">
         <div className="container-custom">
           <div className="max-w-3xl mx-auto text-center">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">Simple, Honest Pricing – No Surprises</h1>
+            <h1 id="pricing-hero-heading" className="text-4xl md:text-5xl font-bold mb-6">Simple, Honest Pricing – No Surprises</h1>
             <p className="text-lg md:text-xl opacity-90 mb-8">
               We believe in transparent, upfront pricing. Our estimates are based on volume, 
               type of material, and accessibility. Below is a breakdown to help you plan ahead.
@@ -104,10 +104,10 @@ const Pricing = () => {
       </section>
 
       {/* Pricing Table Section */}
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-white" aria-labelledby="volume-pricing-heading">
         <div className="container-custom">
           <div className="max-w-4xl mx-auto">
-            <h2 className="section-title text-center mb-8">Volume-Based Pricing</h2>
+            <h2 id="volume-pricing-heading" className="section-title text-center mb-8">Volume-Based Pricing</h2>
             
             {/* Pricing Table */}
             <div className="overflow-x-auto rounded-lg border border-gray-200 shadow-sm mb-12">
@@ -143,8 +143,8 @@ const Pricing = () => {
           <div className="max-w-4xl mx-auto">
             <div className="grid md:grid-cols-2 gap-8">
               {/* Add-On Services */}
-              <div className="bg-white p-6 rounded-lg shadow-sm">
-                <h2 className="text-2xl font-bold text-brand-navy mb-6">Add-On Services</h2>
+              <div className="bg-white p-6 rounded-lg shadow-sm" aria-labelledby="addon-services-heading">
+                <h2 id="addon-services-heading" className="text-2xl font-bold text-brand-navy mb-6">Add-On Services</h2>
                 <Table>
                   <TableHeader>
                     <TableRow className="bg-brand-gray/50">
@@ -164,8 +164,8 @@ const Pricing = () => {
               </div>
               
               {/* What's Included */}
-              <div className="bg-white p-6 rounded-lg shadow-sm">
-                <h2 className="text-2xl font-bold text-brand-navy mb-6">What's Included</h2>
+              <div className="bg-white p-6 rounded-lg shadow-sm" aria-labelledby="whats-included-heading">
+                <h2 id="whats-included-heading" className="text-2xl font-bold text-brand-navy mb-6">What's Included</h2>
                 <ul className="space-y-4">
                   {includedServices.map((service, index) => (
                     <li key={index} className="flex items-start">
@@ -193,9 +193,9 @@ const Pricing = () => {
       </section>
 
       {/* Related Blog Posts */}
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-white" aria-labelledby="pricing-resources-heading">
         <div className="container-custom">
-          <h2 className="section-title text-center mb-8">Learn More About Our Pricing</h2>
+          <h2 id="pricing-resources-heading" className="section-title text-center mb-8">Learn More About Our Pricing</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="bg-white border rounded-lg overflow-hidden shadow-sm">
               <img src="https://images.unsplash.com/photo-1517022812141-23620dba5c23" className="w-full h-48 object-cover" alt="Pricing guide" />
@@ -226,10 +226,10 @@ const Pricing = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 bg-brand-navy">
+      <section className="py-16 bg-brand-navy" aria-labelledby="pricing-cta-heading">
         <div className="container-custom">
           <div className="max-w-3xl mx-auto text-center text-white">
-            <h2 className="text-3xl font-bold mb-4">Not sure what size you need?</h2>
+            <h2 id="pricing-cta-heading" className="text-3xl font-bold mb-4">Not sure what size you need?</h2>
             <p className="text-white/90 text-lg mb-8">
               Upload a photo or call (800) 555-1234 — we'll give you a fast, free estimate!
             </p>

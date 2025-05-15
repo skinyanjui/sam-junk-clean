@@ -4,21 +4,21 @@ import PageLayout from '@/components/PageLayout';
 const Privacy = () => {
   return (
     <PageLayout>
-      <section className="pt-24 pb-16">
+      <section className="pt-24 pb-16" aria-labelledby="privacy-heading">
         <div className="container-custom max-w-4xl">
-          <h1 className="text-4xl font-bold text-brand-navy mb-8">Privacy Policy</h1>
+          <h1 id="privacy-heading" className="text-4xl font-bold text-brand-navy mb-8">Privacy Policy</h1>
           
           <div className="space-y-6 text-gray-700">
             <p>
               Last updated: May 5, 2025
             </p>
             
-            <h2 className="text-2xl font-bold text-brand-navy mt-8 mb-4">Introduction</h2>
+            <h2 id="privacy-intro" className="text-2xl font-bold text-brand-navy mt-8 mb-4">Introduction</h2>
             <p>
               Uncle Sam Junk Removal ("we," "us," or "our") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website or use our services.
             </p>
             
-            <h2 className="text-2xl font-bold text-brand-navy mt-8 mb-4">Information We Collect</h2>
+            <h2 id="privacy-info-collected" className="text-2xl font-bold text-brand-navy mt-8 mb-4">Information We Collect</h2>
             <p>
               We may collect information about you in a variety of ways. The information we collect may include:
             </p>
@@ -28,7 +28,7 @@ const Privacy = () => {
               <li>Usage Data: Information about how you access and use our website and services.</li>
             </ul>
             
-            <h2 className="text-2xl font-bold text-brand-navy mt-8 mb-4">How We Use Your Information</h2>
+            <h2 id="privacy-info-usage" className="text-2xl font-bold text-brand-navy mt-8 mb-4">How We Use Your Information</h2>
             <p>
               We may use the information we collect about you for various purposes, including to:
             </p>

@@ -105,7 +105,7 @@ const Index = () => {
       />
       
       {isLoading ? (
-        <div className="space-y-8 py-4 px-4 md:py-8 md:px-6">
+        <div className="space-y-8 py-4 px-4 md:py-8 md:px-6" aria-label="Loading content">
           <div className="container-custom">
             {/* Hero skeleton */}
             <LoadingSkeleton variant="image" className="h-[60vh] w-full rounded-xl" />

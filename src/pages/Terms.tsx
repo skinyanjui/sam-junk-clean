@@ -4,21 +4,21 @@ import PageLayout from '@/components/PageLayout';
 const Terms = () => {
   return (
     <PageLayout>
-      <section className="pt-24 pb-16">
+      <section className="pt-24 pb-16" aria-labelledby="terms-heading">
         <div className="container-custom max-w-4xl">
-          <h1 className="text-4xl font-bold text-brand-navy mb-8">Terms of Service</h1>
+          <h1 id="terms-heading" className="text-4xl font-bold text-brand-navy mb-8">Terms of Service</h1>
           
           <div className="space-y-6 text-gray-700">
             <p>
               Last updated: May 5, 2025
             </p>
             
-            <h2 className="text-2xl font-bold text-brand-navy mt-8 mb-4">Introduction</h2>
+            <h2 id="terms-intro" className="text-2xl font-bold text-brand-navy mt-8 mb-4">Introduction</h2>
             <p>
               These Terms of Service ("Terms") govern your access to and use of the services provided by Uncle Sam Junk Removal ("we," "us," or "our"). By accessing or using our services, you agree to be bound by these Terms.
             </p>
             
-            <h2 className="text-2xl font-bold text-brand-navy mt-8 mb-4">Use of Services</h2>
+            <h2 id="terms-use" className="text-2xl font-bold text-brand-navy mt-8 mb-4">Use of Services</h2>
             <p>
               You agree to use our services only for lawful purposes and in accordance with these Terms. You agree not to use our services:
             </p>

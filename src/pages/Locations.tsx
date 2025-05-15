@@ -28,10 +28,10 @@ const Locations = () => {
         keywords="junk removal Evansville, junk removal Owensboro, junk removal Mt. Carmel, Tri-State area junk removal, Henderson junk removal, Princeton junk removal"
       />
 
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-white" aria-labelledby="locations-heading">
         <div className="container-custom">
           <div className="text-center mb-12">
-            <h1 className="text-4xl font-bold text-brand-navy mb-4">{t('locations.title')}</h1>
+            <h1 id="locations-heading" className="text-4xl font-bold text-brand-navy mb-4">{t('locations.title')}</h1>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
               {t('locations.subtitle')}
             </p>
@@ -48,7 +48,7 @@ const Locations = () => {
           <LocationsMap />
 
           {/* Service Area Cards */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8" aria-label="Service locations">
             {filteredLocations.map((location) => (
               <ServiceAreaCard key={location.id} location={location} />
             ))}

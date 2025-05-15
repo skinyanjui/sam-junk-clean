@@ -91,12 +91,12 @@ const FAQ = () => {
         keywords="junk removal FAQ, Tri-State junk removal questions, Uncle Sam Junk Removal services, junk removal pricing, hazardous waste disposal, furniture removal FAQ"
       />
 
-      <section className="py-16">
+      <section className="py-16" aria-labelledby="faq-heading">
         <div className="container-custom">
           <div className="max-w-3xl mx-auto">
             <div className="text-center mb-12">
               <HelpCircle size={48} className="mx-auto mb-4 text-brand-red" />
-              <h1 className="text-4xl font-bold text-brand-navy mb-4">Frequently Asked Questions</h1>
+              <h1 id="faq-heading" className="text-4xl font-bold text-brand-navy mb-4">Frequently Asked Questions</h1>
               <p className="text-lg text-gray-600">
                 Find answers to the most common questions about our junk removal services. 
                 Can't find what you're looking for? <Link to="/contact" className="text-brand-red hover:underline">Contact us</Link>.
@@ -123,8 +123,8 @@ const FAQ = () => {
             </div>
 
             {faqData.map((category, index) => (
-              <div key={index} className="mb-10">
-                <h2 className="text-2xl font-bold text-brand-navy mb-4">{category.category}</h2>
+              <div key={index} className="mb-10" aria-labelledby={`faq-category-${index}`}>
+                <h2 id={`faq-category-${index}`} className="text-2xl font-bold text-brand-navy mb-4">{category.category}</h2>
                 <Accordion type="single" collapsible className="bg-white rounded-lg shadow-sm">
                   {category.questions.map((item, qIndex) => (
                     <AccordionItem key={qIndex} value={`item-${index}-${qIndex}`}>
@@ -142,8 +142,8 @@ const FAQ = () => {
           </div>
           
           {/* Related resources section */}
-          <div className="mt-12 mb-16 max-w-3xl mx-auto">
-            <h2 className="text-2xl font-bold text-brand-navy mb-6 text-center">Related Resources</h2>
+          <div className="mt-12 mb-16 max-w-3xl mx-auto" aria-labelledby="related-resources-heading">
+            <h2 id="related-resources-heading" className="text-2xl font-bold text-brand-navy mb-6 text-center">Related Resources</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="bg-brand-gray p-6 rounded-lg">
                 <div className="flex items-center mb-3">
@@ -172,8 +172,8 @@ const FAQ = () => {
             </div>
           </div>
           
-          <div className="mt-16 bg-brand-navy text-white p-8 rounded-lg max-w-3xl mx-auto">
-            <h2 className="text-2xl font-bold mb-4 text-center">Still have questions?</h2>
+          <div className="mt-16 bg-brand-navy text-white p-8 rounded-lg max-w-3xl mx-auto" aria-labelledby="still-have-questions-heading">
+            <h2 id="still-have-questions-heading" className="text-2xl font-bold mb-4 text-center">Still have questions?</h2>
             <p className="text-center mb-6">
               Our team is here to help with any questions you may have about our junk removal services.
             </p>

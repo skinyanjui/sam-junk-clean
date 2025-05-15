@@ -43,9 +43,9 @@ const Careers = () => {
       <CareersCta />
 
       {/* Related Resources Section */}
-      <section className="py-16 bg-brand-gray">
+      <section className="py-16 bg-brand-gray" aria-labelledby="learn-more-heading">
         <div className="container-custom">
-          <h2 className="text-3xl font-bold text-center text-brand-navy mb-8">Learn More About Us</h2>
+          <h2 id="learn-more-heading" className="text-3xl font-bold text-center text-brand-navy mb-8">Learn More About Us</h2>
           <div className="grid md:grid-cols-3 gap-6">
             <div className="bg-white p-6 rounded-lg shadow-sm">
               <h3 className="text-xl font-bold text-brand-navy mb-3">Our Company Values</h3>

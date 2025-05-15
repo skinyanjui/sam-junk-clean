@@ -8,10 +8,10 @@ const About = () => {
   return (
     <PageLayout>
       {/* Hero Section */}
-      <section className="pt-10 pb-16 bg-brand-navy text-white">
+      <section className="pt-10 pb-16 bg-brand-navy text-white" aria-labelledby="about-heading">
         <div className="container-custom">
           <div className="max-w-3xl mx-auto text-center">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">About Uncle Sam Junk Removal</h1>
+            <h1 id="about-heading" className="text-4xl md:text-5xl font-bold mb-6">About Uncle Sam Junk Removal</h1>
             <p className="text-lg md:text-xl opacity-90">
               Proudly serving the Tri-State area with patriotic pride and professional service.
             </p>
@@ -20,11 +20,11 @@ const About = () => {
       </section>
 
       {/* Our Story Section */}
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-white" aria-labelledby="our-story-heading">
         <div className="container-custom">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="section-title">Our Story</h2>
+              <h2 id="our-story-heading" className="section-title">Our Story</h2>
               <p className="text-gray-700 mb-6">
                 Uncle Sam Junk Removal was founded in 2025 by Samuel Kinyanjui, a U.S. Marine Corps veteran 
                 with a passion for service and a vision to create a junk removal company that 
@@ -54,10 +54,10 @@ const About = () => {
       </section>
 
       {/* Our Mission Section */}
-      <section className="py-16 bg-brand-gray">
+      <section className="py-16 bg-brand-gray" aria-labelledby="our-mission-heading">
         <div className="container-custom">
           <div className="max-w-3xl mx-auto text-center">
-            <h2 className="section-title">Our Mission</h2>
+            <h2 id="our-mission-heading" className="section-title">Our Mission</h2>
             <p className="text-xl text-gray-700 mb-8">
               To provide our community with efficient, environmentally responsible junk removal 
               services that make their lives easier and their spaces cleaner. We strive to:
@@ -87,11 +87,11 @@ const About = () => {
       </section>
 
       {/* Why Choose Us Section */}
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-white" aria-labelledby="why-choose-us-heading">
         <div className="container-custom">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="section-title">Why Choose Uncle Sam?</h2>
+              <h2 id="why-choose-us-heading" className="section-title">Why Choose Uncle Sam?</h2>
               <div className="grid gap-4">
                 {[
                   'Veteran-owned and operated business',
@@ -131,10 +131,10 @@ const About = () => {
       </section>
 
       {/* Our Values Section */}
-      <section className="py-16 bg-brand-navy text-white">
+      <section className="py-16 bg-brand-navy text-white" aria-labelledby="our-values-heading">
         <div className="container-custom">
           <div className="max-w-3xl mx-auto text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">Our Core Values</h2>
+            <h2 id="our-values-heading" className="text-3xl md:text-4xl font-bold mb-6">Our Core Values</h2>
             <p className="text-lg opacity-90">
               At Uncle Sam Junk Removal, we operate by a set of core values that define who we are and how we do business.
             </p>
@@ -164,10 +164,10 @@ const About = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-white" aria-labelledby="cta-heading">
         <div className="container-custom">
           <div className="max-w-3xl mx-auto text-center">
-            <h2 className="section-title">Ready to Experience the Uncle Sam Difference?</h2>
+            <h2 id="cta-heading" className="section-title">Ready to Experience the Uncle Sam Difference?</h2>
             <p className="text-lg text-gray-700 mb-8">
               Contact us today for a free, no-obligation quote for all your junk removal needs.
             </p>
