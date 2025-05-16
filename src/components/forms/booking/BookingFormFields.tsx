@@ -37,7 +37,7 @@ const BookingFormFields = ({ timeSlots, serviceOptions, isLoading }: BookingForm
           id="name"
           label="Your Name"
           placeholder="Enter your full name"
-          register={register}
+          register={register('name')}
           error={errors.name?.message}
           required
         />
@@ -45,7 +45,7 @@ const BookingFormFields = ({ timeSlots, serviceOptions, isLoading }: BookingForm
           id="phone"
           label="Phone Number"
           placeholder="(555) 123-4567"
-          register={register}
+          register={register('phone')}
           error={errors.phone?.message}
           required
         />
@@ -55,7 +55,7 @@ const BookingFormFields = ({ timeSlots, serviceOptions, isLoading }: BookingForm
         id="email"
         label="Email Address"
         placeholder="your.email@example.com"
-        register={register}
+        register={register('email')}
         error={errors.email?.message}
         type="email"
         required

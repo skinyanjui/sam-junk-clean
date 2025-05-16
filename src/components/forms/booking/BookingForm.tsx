@@ -23,7 +23,7 @@ const BookingForm = () => {
   if (showSuccess || formSubmitted) {
     return (
       <BookingSuccess 
-        onReset={() => {
+        resetForm={() => {
           resetForm();
           setShowSuccess(false);
         }} 
