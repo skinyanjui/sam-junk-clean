@@ -26,7 +26,7 @@ export const DatePickerField = ({
   selectedDate,
   onSelect,
   error,
-  inputBorderClass = 'border-gray-600', // Darker default border
+  inputBorderClass = '', // Removed default border class to use global styling
   disabledDates
 }: DatePickerFieldProps) => {
   return (
