@@ -14,7 +14,7 @@ export interface QuoteFormData {
   zipCode?: string;
   jobType: string;
   description: string;
-  sameDay: boolean;
+  sameDay: boolean | string; // Updated type to handle both boolean and string
   contactPreference: string;
 }
 
@@ -90,7 +90,7 @@ export const useQuoteForm = (onFormSuccess?: () => void) => {
           zip_code: data.zipCode,
           job_type: data.jobType,
           description: data.description,
-          same_day: data.sameDay === 'on' ? true : Boolean(data.sameDay), // Convert 'on' string from checkbox to boolean
+          same_day: typeof data.sameDay === 'string' ? data.sameDay === 'on' : Boolean(data.sameDay), // Handle both string and boolean types
           contact_preference: data.contactPreference,
           image_url: imageUrl,
           status: 'pending', // Ensure status is set for tracking
