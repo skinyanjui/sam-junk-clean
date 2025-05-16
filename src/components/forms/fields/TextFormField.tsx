@@ -12,6 +12,8 @@ interface TextFormFieldProps {
   type?: string;
   inputBorderClass?: string;
   showValidation?: boolean;
+  disabled?: boolean;
+  autoComplete?: string;
 }
 
 export const TextFormField = ({ 
@@ -22,7 +24,9 @@ export const TextFormField = ({
   error,
   type = 'text',
   inputBorderClass = 'border-gray-600', // Darker default border
-  showValidation = true
+  showValidation = true,
+  disabled = false,
+  autoComplete
 }: TextFormFieldProps) => {
   return (
     <FormField id={id} label={label} error={error} showValidation={showValidation}>
@@ -31,6 +35,8 @@ export const TextFormField = ({
         type={type}
         placeholder={placeholder}
         className={`bg-white ${inputBorderClass} ${error ? 'border-red-500' : ''}`}
+        disabled={disabled}
+        autoComplete={autoComplete}
         {...register}
       />
     </FormField>

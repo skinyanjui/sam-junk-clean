@@ -51,6 +51,45 @@ export type Database = {
         }
         Relationships: []
       }
+      booking_requests: {
+        Row: {
+          created_at: string
+          date: string
+          email: string
+          id: string
+          name: string
+          notes: string | null
+          phone: string
+          service: string
+          status: string
+          time: string
+        }
+        Insert: {
+          created_at?: string
+          date: string
+          email: string
+          id?: string
+          name: string
+          notes?: string | null
+          phone: string
+          service: string
+          status?: string
+          time: string
+        }
+        Update: {
+          created_at?: string
+          date?: string
+          email?: string
+          id?: string
+          name?: string
+          notes?: string | null
+          phone?: string
+          service?: string
+          status?: string
+          time?: string
+        }
+        Relationships: []
+      }
       contact_submissions: {
         Row: {
           created_at: string
@@ -129,6 +168,45 @@ export type Database = {
         }
         Relationships: []
       }
+      locations: {
+        Row: {
+          contact_email: string | null
+          contact_phone: string | null
+          description: string | null
+          id: number
+          image_url: string | null
+          is_primary: boolean | null
+          name: string
+          primary_city: string
+          service_areas: string[] | null
+          service_radius: string | null
+        }
+        Insert: {
+          contact_email?: string | null
+          contact_phone?: string | null
+          description?: string | null
+          id?: number
+          image_url?: string | null
+          is_primary?: boolean | null
+          name: string
+          primary_city: string
+          service_areas?: string[] | null
+          service_radius?: string | null
+        }
+        Update: {
+          contact_email?: string | null
+          contact_phone?: string | null
+          description?: string | null
+          id?: number
+          image_url?: string | null
+          is_primary?: boolean | null
+          name?: string
+          primary_city?: string
+          service_areas?: string[] | null
+          service_radius?: string | null
+        }
+        Relationships: []
+      }
       quote_requests: {
         Row: {
           address: string
@@ -143,8 +221,10 @@ export type Database = {
           name: string
           phone: string
           same_day: boolean | null
+          service_date: string | null
           status: string
           updated_at: string
+          zip_code: string | null
         }
         Insert: {
           address: string
@@ -159,8 +239,10 @@ export type Database = {
           name: string
           phone: string
           same_day?: boolean | null
+          service_date?: string | null
           status?: string
           updated_at?: string
+          zip_code?: string | null
         }
         Update: {
           address?: string
@@ -175,8 +257,10 @@ export type Database = {
           name?: string
           phone?: string
           same_day?: boolean | null
+          service_date?: string | null
           status?: string
           updated_at?: string
+          zip_code?: string | null
         }
         Relationships: []
       }

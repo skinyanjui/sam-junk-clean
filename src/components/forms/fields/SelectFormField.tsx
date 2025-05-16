@@ -17,6 +17,9 @@ interface SelectFormFieldProps {
   onValueChange: (value: string) => void;
   error?: string;
   inputBorderClass?: string;
+  showValidation?: boolean;
+  disabled?: boolean;
+  value?: string;
 }
 
 export const SelectFormField = ({ 
@@ -26,12 +29,15 @@ export const SelectFormField = ({
   options,
   onValueChange,
   error,
-  inputBorderClass = 'border-gray-600' // Darker default border
+  inputBorderClass = 'border-gray-600', // Darker default border
+  showValidation = true,
+  disabled = false,
+  value
 }: SelectFormFieldProps) => {
   return (
-    <FormField id={id} label={label} error={error}>
-      <Select onValueChange={onValueChange}>
-        <SelectTrigger id={id} className={`bg-white ${inputBorderClass}`}>
+    <FormField id={id} label={label} error={error} showValidation={showValidation}>
+      <Select onValueChange={onValueChange} disabled={disabled} value={value}>
+        <SelectTrigger id={id} className={`bg-white ${inputBorderClass} ${error ? 'border-red-500' : ''}`}>
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>
         <SelectContent>
