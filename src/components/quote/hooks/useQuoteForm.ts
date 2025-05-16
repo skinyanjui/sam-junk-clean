@@ -78,6 +78,11 @@ export const useQuoteForm = (onFormSuccess?: () => void) => {
       // Create a random UUID for anonymous users
       const anonymousUserId = crypto.randomUUID();
       
+      // Convert sameDay value to boolean, handling both string and boolean types
+      const sameDayValue = typeof data.sameDay === 'string' 
+        ? data.sameDay === 'on' 
+        : Boolean(data.sameDay);
+
       // Insert quote request into Supabase
       const { error } = await supabase
         .from('quote_requests')
@@ -90,7 +95,7 @@ export const useQuoteForm = (onFormSuccess?: () => void) => {
           zip_code: data.zipCode,
           job_type: data.jobType,
           description: data.description,
-          same_day: typeof data.sameDay === 'string' ? data.sameDay === 'on' : Boolean(data.sameDay), // Handle both string and boolean types
+          same_day: sameDayValue,
           contact_preference: data.contactPreference,
           image_url: imageUrl,
           status: 'pending', // Ensure status is set for tracking
