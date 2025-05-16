@@ -7,14 +7,14 @@ export interface Blog {
   slug: string;
   excerpt: string;
   content: string;
-  image_url?: string;
+  image_url?: string | null;
   author: string;
   created_at: string;
   updated_at: string;
-  tags?: string[];
-  category?: string;
-  is_featured?: boolean;
-  is_pricing_resource?: boolean;
+  tags?: string[] | null;
+  category?: string | null;
+  is_featured?: boolean | null;
+  is_pricing_resource?: boolean | null;
 }
 
 export interface Category {
@@ -36,7 +36,7 @@ export interface Tag {
  * @param {number} pageSize - The number of posts per page.
  * @returns {Promise<{ data: Blog[]; total: number; }>} - An object containing the blog posts and the total count.
  */
-export const fetchBlogs = async (page: number = 1, pageSize: number = 10): Promise<{ data: Blog[]; total: number; }> => {
+export const fetchBlogs = async (page: number = 1, pageSize: number = 10): Promise<{ data: Blog[]; total: number }> => {
   const startIndex = (page - 1) * pageSize;
   let endIndex = startIndex + pageSize - 1;
 
