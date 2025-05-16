@@ -2,12 +2,13 @@
 import React from 'react';
 import { PhoneInput } from '@/components/ui/phone-input';
 import { FormField } from './FormField';
+import { UseFormRegisterReturn } from 'react-hook-form';
 
 interface PhoneFormFieldProps {
   id: string;
   label: string;
   placeholder: string;
-  register: any;
+  register: UseFormRegisterReturn;
   error?: string;
   inputBorderClass?: string;
   showValidation?: boolean;

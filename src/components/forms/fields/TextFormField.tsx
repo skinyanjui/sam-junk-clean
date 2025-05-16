@@ -2,12 +2,13 @@
 import React from 'react';
 import { Input } from '@/components/ui/input';
 import { FormField } from './FormField';
+import { UseFormRegisterReturn } from 'react-hook-form';
 
 interface TextFormFieldProps {
   id: string;
   label: string;
   placeholder: string;
-  register: any;
+  register: UseFormRegisterReturn;
   error?: string;
   type?: string;
   inputBorderClass?: string;
