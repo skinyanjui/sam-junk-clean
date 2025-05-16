@@ -39,7 +39,7 @@ const BookingFormFields = ({ timeSlots, serviceOptions, isLoading }: BookingForm
           placeholder="Enter your full name"
           register={register('name')}
           error={errors.name?.message}
-          required
+          showValidation={true}
         />
         <PhoneFormField
           id="phone"
@@ -47,7 +47,7 @@ const BookingFormFields = ({ timeSlots, serviceOptions, isLoading }: BookingForm
           placeholder="(555) 123-4567"
           register={register('phone')}
           error={errors.phone?.message}
-          required
+          showValidation={true}
         />
       </div>
 
@@ -58,7 +58,7 @@ const BookingFormFields = ({ timeSlots, serviceOptions, isLoading }: BookingForm
         register={register('email')}
         error={errors.email?.message}
         type="email"
-        required
+        showValidation={true}
       />
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
