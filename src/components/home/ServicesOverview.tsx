@@ -1,12 +1,32 @@
 
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import ServicesGrid from './ServicesGrid';
-import { servicesData } from './ServicesData';
 import { useResponsiveLayout } from '@/hooks/use-mobile';
+import { getHomePageServices } from '@/integrations/supabase/servicesService';
+import { ServiceItem } from './ServicesGrid';
 
 const ServicesOverview = () => {
   const { isMobile } = useResponsiveLayout();
+  const [services, setServices] = useState<ServiceItem[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  
+  useEffect(() => {
+    const loadServices = async () => {
+      setIsLoading(true);
+      try {
+        const data = await getHomePageServices();
+        setServices(data);
+      } catch (error) {
+        console.error("Error loading services for home page:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadServices();
+  }, []);
   
   return (
     <section 
@@ -31,7 +51,7 @@ const ServicesOverview = () => {
       </div>
       
       <div className="container-custom relative z-10">
-        <ServicesGrid services={servicesData} />
+        <ServicesGrid services={services} isLoading={isLoading} />
         <div className="text-center mt-8">
           <Button 
             asChild 

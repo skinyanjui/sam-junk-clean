@@ -1,5 +1,5 @@
 
-import { ServiceData } from './ServiceItem';
+import { ServiceData } from './servicesData';
 import ServiceItem from './ServiceItem';
 
 interface ServicesListProps {

@@ -305,6 +305,113 @@ export type Database = {
           },
         ]
       }
+      related_blogs: {
+        Row: {
+          blog_slug: string
+          blog_title: string
+          created_at: string
+          id: string
+          service_id: string
+        }
+        Insert: {
+          blog_slug: string
+          blog_title: string
+          created_at?: string
+          id?: string
+          service_id: string
+        }
+        Update: {
+          blog_slug?: string
+          blog_title?: string
+          created_at?: string
+          id?: string
+          service_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "fk_service"
+            columns: ["service_id"]
+            isOneToOne: false
+            referencedRelation: "services"
+            referencedColumns: ["service_id"]
+          },
+        ]
+      }
+      related_services: {
+        Row: {
+          created_at: string
+          id: string
+          related_service_id: string
+          service_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          related_service_id: string
+          service_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          related_service_id?: string
+          service_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "fk_related_service"
+            columns: ["related_service_id"]
+            isOneToOne: false
+            referencedRelation: "services"
+            referencedColumns: ["service_id"]
+          },
+          {
+            foreignKeyName: "fk_service"
+            columns: ["service_id"]
+            isOneToOne: false
+            referencedRelation: "services"
+            referencedColumns: ["service_id"]
+          },
+        ]
+      }
+      services: {
+        Row: {
+          created_at: string
+          description: string
+          icon: string
+          id: string
+          image: string
+          items: string[]
+          service_id: string
+          sort_order: number
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description: string
+          icon: string
+          id?: string
+          image: string
+          items: string[]
+          service_id: string
+          sort_order: number
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string
+          icon?: string
+          id?: string
+          image?: string
+          items?: string[]
+          service_id?: string
+          sort_order?: number
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

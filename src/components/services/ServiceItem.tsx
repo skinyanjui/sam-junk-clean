@@ -1,33 +1,13 @@
 
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { Check, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { ServiceData } from './servicesData';
 
-export interface RelatedBlog {
-  title: string;
-  slug: string;
-}
-
-export interface ServiceItemProps {
-  id: string;
-  title: string;
-  description: string;
-  items: string[];
-  image: string;
-  relatedBlogs: RelatedBlog[];
-  relatedServices: string[];
+export interface ServiceItemProps extends ServiceData {
   index: number;
   getServiceById: (id: string) => ServiceData | undefined;
-}
-
-export interface ServiceData {
-  id: string;
-  title: string;
-  description: string;
-  items: string[];
-  image: string;
-  relatedBlogs: RelatedBlog[];
-  relatedServices: string[];
 }
 
 const ServiceItem = ({ 
