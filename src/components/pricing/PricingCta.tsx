@@ -20,7 +20,7 @@ const PricingCta = () => {
         const data = await fetchSiteContent('pricing_cta');
         setContent({
           title: data.title || 'Not sure what size you need?',
-          description: data.description || 'Upload a photo or call — we'll give you a fast, free estimate!',
+          description: data.description || "Upload a photo or call — we'll give you a fast, free estimate!",
           phone: data.phone || '(800) 555-1234'
         });
       } catch (err) {
