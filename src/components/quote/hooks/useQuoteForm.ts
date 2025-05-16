@@ -90,7 +90,7 @@ export const useQuoteForm = (onFormSuccess?: () => void) => {
           zip_code: data.zipCode,
           job_type: data.jobType,
           description: data.description,
-          same_day: data.sameDay,
+          same_day: data.sameDay === 'on' ? true : Boolean(data.sameDay), // Convert 'on' string from checkbox to boolean
           contact_preference: data.contactPreference,
           image_url: imageUrl,
           status: 'pending', // Ensure status is set for tracking
