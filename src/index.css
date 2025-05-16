@@ -33,6 +33,7 @@
     --ring: 0 0% 20%;
 
     --radius: 0.5rem;
+    --border-width: 1px; /* Define global border width */
   }
 
   .dark {
@@ -68,7 +69,7 @@
 
 @layer base {
   * {
-    @apply border-border;
+    @apply border-border border-[length:var(--border-width)];
   }
 
   body {
