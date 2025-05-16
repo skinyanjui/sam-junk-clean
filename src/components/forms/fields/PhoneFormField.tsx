@@ -19,7 +19,7 @@ export const PhoneFormField = ({
   placeholder,
   register, 
   error,
-  inputBorderClass = '', // Removed default border class to use global styling
+  inputBorderClass = 'border-gray-600', // Darker default border
   showValidation = true
 }: PhoneFormFieldProps) => {
   return (
