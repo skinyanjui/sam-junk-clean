@@ -117,7 +117,7 @@ export const fetchFeaturedBlogs = async (limit: number = 3): Promise<Blog[]> => 
  * Fetches all blog posts for display in the blog page
  * @returns {Promise<Blog[]>} - An array of all blog posts
  */
-export const getAllBlogPosts = async (): Promise<Blog[]> => {
+export const fetchAllBlogPosts = async (): Promise<Blog[]> => {
   try {
     const { data, error } = await supabase
       .from('blogs')

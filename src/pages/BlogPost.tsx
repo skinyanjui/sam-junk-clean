@@ -1,16 +1,17 @@
+
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import PageLayout from '@/components/PageLayout';
 import SEO from '@/components/SEO';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Calendar, User, Bookmark, Share2 } from 'lucide-react';
-import { getBlogPostBySlug, Blog } from '@/integrations/supabase/blogService';
+import { getBlogPostBySlug, Blog as BlogType } from '@/integrations/supabase/blogService';
 import { Separator } from '@/components/ui/separator';
 import { LoadingSkeleton } from '@/components/ui/loading-skeleton';
 import { useToast } from '@/hooks/use-toast';
 
 // Convert Blog from blogService to the format expected by components
-const mapBlogToBlogPost = (blog: Blog) => {
+const mapBlogToBlogPost = (blog: BlogType) => {
   return {
     id: blog.id,
     title: blog.title,

@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { Calendar, Tag, Recycle, Search } from 'lucide-react';
 import { motion } from 'framer-motion';
@@ -5,21 +6,21 @@ import { motion } from 'framer-motion';
 import PageLayout from '@/components/PageLayout';
 import SEO from '@/components/SEO';
 import { relatedLinks } from '@/data/blogData';
-import { Blog } from '@/integrations/supabase/blogService';
+import { Blog as BlogType } from '@/integrations/supabase/blogService';
 import BlogHero from '@/components/blog/BlogHero';
 import FeaturedPosts from '@/components/blog/FeaturedPosts';
 import AllPosts from '@/components/blog/AllPosts';
 import RelatedResources from '@/components/blog/RelatedResources';
 import CategoriesSection from '@/components/blog/CategoriesSection';
 import BlogCta from '@/components/blog/BlogCta';
-import { getAllBlogPosts } from '@/integrations/supabase/blogService';
+import { fetchAllBlogPosts } from '@/integrations/supabase/blogService';
 import { useToast } from '@/hooks/use-toast';
 import BlogCategories from '@/components/blog/BlogCategories';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 
 // Convert Blog from blogService to the format expected by components
-const mapBlogToBlogPost = (blog: Blog) => {
+const mapBlogToBlogPost = (blog: BlogType) => {
   return {
     id: blog.id,
     title: blog.title,
@@ -45,7 +46,7 @@ const Blog = () => {
     const fetchBlogPosts = async () => {
       try {
         setIsLoading(true);
-        const posts = await getAllBlogPosts();
+        const posts = await fetchAllBlogPosts();
         setBlogPosts(posts.map(mapBlogToBlogPost));
       } catch (error) {
         console.error('Failed to fetch blog posts:', error);
