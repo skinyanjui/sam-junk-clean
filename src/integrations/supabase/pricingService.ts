@@ -23,6 +23,16 @@ export interface AddOnService {
   sort_order: number;
 }
 
+export interface IncludedService {
+  id: string;
+  service_name: string;
+  description: string | null;
+  icon: string;
+  sort_order: number;
+  section: string;
+  created_at: string;
+}
+
 // Extended interface for frontend display with additional UI properties
 export interface PricingTierDisplay extends PricingTier {
   features?: string[];
@@ -96,6 +106,31 @@ export async function fetchAddOnServices(): Promise<AddOnService[]> {
     return data || [];
   } catch (error) {
     console.error('Failed to fetch add-on services:', error);
+    return [];
+  }
+}
+
+/**
+ * Fetches all included services for a specific section
+ * @param section The section to fetch services for (default: 'pricing')
+ * @returns Array of included services sorted by sort_order
+ */
+export async function fetchIncludedServices(section: string = 'pricing'): Promise<IncludedService[]> {
+  try {
+    const { data, error } = await supabase
+      .from('included_services')
+      .select('*')
+      .eq('section', section)
+      .order('sort_order');
+    
+    if (error) {
+      console.error(`Error fetching included services for section ${section}:`, error);
+      return [];
+    }
+    
+    return data || [];
+  } catch (error) {
+    console.error(`Failed to fetch included services for section ${section}:`, error);
     return [];
   }
 }

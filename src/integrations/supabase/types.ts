@@ -51,6 +51,7 @@ export type Database = {
           excerpt: string
           id: string
           image_url: string | null
+          is_pricing_resource: boolean | null
           slug: string
           tags: string[] | null
           title: string
@@ -64,6 +65,7 @@ export type Database = {
           excerpt: string
           id?: string
           image_url?: string | null
+          is_pricing_resource?: boolean | null
           slug: string
           tags?: string[] | null
           title: string
@@ -77,6 +79,7 @@ export type Database = {
           excerpt?: string
           id?: string
           image_url?: string | null
+          is_pricing_resource?: boolean | null
           slug?: string
           tags?: string[] | null
           title?: string
@@ -344,6 +347,36 @@ export type Database = {
           sort_order?: number | null
           tags?: string[]
           title?: string
+        }
+        Relationships: []
+      }
+      included_services: {
+        Row: {
+          created_at: string
+          description: string | null
+          icon: string
+          id: string
+          section: string
+          service_name: string
+          sort_order: number
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          icon?: string
+          id?: string
+          section?: string
+          service_name: string
+          sort_order: number
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          icon?: string
+          id?: string
+          section?: string
+          service_name?: string
+          sort_order?: number
         }
         Relationships: []
       }

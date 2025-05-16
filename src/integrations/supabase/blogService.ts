@@ -1,158 +1,318 @@
-
 import { supabase } from './client';
-import { BlogPost } from '@/types/blog';
-import { blogPosts as mockBlogPosts } from '@/data/blogData';
 
-/**
- * Fetches all blog posts from the database
- * Falls back to mock data if database fetch fails
- */
-export async function getAllBlogPosts(): Promise<BlogPost[]> {
-  try {
-    const { data, error } = await supabase
-      .from('blogs')
-      .select('*')
-      .order('created_at', { ascending: false });
-    
-    if (error) throw error;
-    
-    // If we have data from Supabase, map and return it
-    if (data && data.length > 0) {
-      // Map to match the BlogPost interface
-      return data.map(post => ({
-        id: post.id,
-        title: post.title,
-        excerpt: post.excerpt,
-        category: post.category || '',
-        date: formatDate(post.created_at), // Convert created_at to date format
-        author: post.author,
-        imageUrl: post.image_url || '',
-        slug: post.slug,
-        readTime: estimateReadTime(post.content), // Estimate reading time based on content
-        tags: post.tags || []
-      })) as BlogPost[];
-    }
-    
-    // If no data from Supabase, return mock data
-    console.info('Using mock blog data as fallback');
-    return mockBlogPosts;
-  } catch (error) {
-    console.error('Error fetching blog posts:', error);
-    // Return mock blog posts as fallback
-    return mockBlogPosts;
-  }
+export interface Blog {
+  id: string;
+  title: string;
+  slug: string;
+  excerpt: string;
+  content: string;
+  image_url?: string;
+  author: string;
+  created_at: string;
+  updated_at: string;
+  tags?: string[];
+  category?: string;
+  is_featured?: boolean;
+}
+
+export interface Category {
+  id: string;
+  name: string;
+  slug: string;
+  description?: string;
+}
+
+export interface Tag {
+  id: string;
+  name: string;
+  slug: string;
 }
 
 /**
- * Fetches a single blog post by slug
- * Falls back to mock data if database fetch fails
+ * Fetches all blog posts with optional pagination.
+ * @param {number} page - The page number for pagination.
+ * @param {number} pageSize - The number of posts per page.
+ * @returns {Promise<{ data: Blog[]; total: number; }>} - An object containing the blog posts and the total count.
  */
-export async function getBlogPostBySlug(slug: string): Promise<BlogPost | null> {
+export const fetchBlogs = async (page: number = 1, pageSize: number = 10): Promise<{ data: Blog[]; total: number; }> => {
+  const startIndex = (page - 1) * pageSize;
+  let endIndex = startIndex + pageSize - 1;
+
+  try {
+    const { data, error, count } = await supabase
+      .from('blogs')
+      .select('*', { count: 'exact' })
+      .order('created_at', { ascending: false })
+      .range(startIndex, endIndex);
+
+    if (error) {
+      console.error('Error fetching blogs:', error);
+      throw error;
+    }
+
+    return {
+      data: data || [],
+      total: count || 0,
+    };
+  } catch (error) {
+    console.error('Failed to fetch blogs:', error);
+    return { data: [], total: 0 };
+  }
+};
+
+/**
+ * Fetches a single blog post by its slug.
+ * @param {string} slug - The slug of the blog post to fetch.
+ * @returns {Promise<Blog | null>} - The blog post or null if not found.
+ */
+export const fetchBlogBySlug = async (slug: string): Promise<Blog | null> => {
   try {
     const { data, error } = await supabase
       .from('blogs')
       .select('*')
       .eq('slug', slug)
       .single();
-    
-    if (error) throw error;
-    
-    // If we found the post in Supabase, map and return it
-    if (data) {
-      return {
-        id: data.id,
-        title: data.title,
-        excerpt: data.excerpt,
-        category: data.category || '',
-        date: formatDate(data.created_at), // Convert created_at to date format
-        author: data.author,
-        imageUrl: data.image_url || '',
-        slug: data.slug,
-        readTime: estimateReadTime(data.content), // Estimate reading time based on content
-        tags: data.tags || []
-      } as BlogPost;
+
+    if (error) {
+      console.error('Error fetching blog post:', error);
+      return null;
     }
-    
-    // If not found in database, look in mock data
-    console.info('Using mock blog data as fallback for slug:', slug);
-    const mockPost = mockBlogPosts.find(post => post.slug === slug);
-    return mockPost || null;
+
+    return data || null;
   } catch (error) {
-    console.error('Error fetching blog post:', error);
-    // Try to find the post in mock data
-    const mockPost = mockBlogPosts.find(post => post.slug === slug);
-    return mockPost || null;
+    console.error('Failed to fetch blog post:', error);
+    return null;
   }
-}
+};
 
 /**
- * Fetches blog posts by category
- * Falls back to mock data if database fetch fails
+ * Fetches featured blog posts.
+ * @param {number} limit - The maximum number of featured posts to return.
+ * @returns {Promise<Blog[]>} - An array of featured blog posts.
  */
-export async function getBlogPostsByCategory(category: string): Promise<BlogPost[]> {
+export const fetchFeaturedBlogs = async (limit: number = 3): Promise<Blog[]> => {
   try {
     const { data, error } = await supabase
       .from('blogs')
       .select('*')
-      .eq('category', category)
-      .order('created_at', { ascending: false });
+      .eq('is_featured', true)
+      .order('created_at', { ascending: false })
+      .limit(limit);
+
+    if (error) {
+      console.error('Error fetching featured blogs:', error);
+      throw error;
+    }
+
+    return data || [];
+  } catch (error) {
+    console.error('Failed to fetch featured blogs:', error);
+    return [];
+  }
+};
+
+/**
+ * Fetches all categories.
+ * @returns {Promise<Category[]>} - An array of categories.
+ */
+export const fetchCategories = async (): Promise<Category[]> => {
+  try {
+    const { data, error } = await supabase
+      .from('categories')
+      .select('*')
+      .order('name');
+
+    if (error) {
+      console.error('Error fetching categories:', error);
+      throw error;
+    }
+
+    return data || [];
+  } catch (error) {
+    console.error('Failed to fetch categories:', error);
+    return [];
+  }
+};
+
+/**
+ * Fetches a single category by its slug.
+ * @param {string} slug - The slug of the category to fetch.
+ * @returns {Promise<Category | null>} - The category or null if not found.
+ */
+export const fetchCategoryBySlug = async (slug: string): Promise<Category | null> => {
+  try {
+    const { data, error } = await supabase
+      .from('categories')
+      .select('*')
+      .eq('slug', slug)
+      .single();
+
+    if (error) {
+      console.error('Error fetching category:', error);
+      return null;
+    }
+
+    return data || null;
+  } catch (error) {
+    console.error('Failed to fetch category:', error);
+    return null;
+  }
+};
+
+/**
+ * Fetches all tags.
+ * @returns {Promise<Tag[]>} - An array of tags.
+ */
+export const fetchTags = async (): Promise<Tag[]> => {
+  try {
+    const { data, error } = await supabase
+      .from('tags')
+      .select('*')
+      .order('name');
+
+    if (error) {
+      console.error('Error fetching tags:', error);
+      throw error;
+    }
+
+    return data || [];
+  } catch (error) {
+    console.error('Failed to fetch tags:', error);
+    return [];
+  }
+};
+
+/**
+ * Fetches a single tag by its slug.
+ * @param {string} slug - The slug of the tag to fetch.
+ * @returns {Promise<Tag | null>} - The tag or null if not found.
+ */
+export const fetchTagBySlug = async (slug: string): Promise<Tag | null> => {
+  try {
+    const { data, error } = await supabase
+      .from('tags')
+      .select('*')
+      .eq('slug', slug)
+      .single();
+
+    if (error) {
+      console.error('Error fetching tag:', error);
+      return null;
+    }
+
+    return data || null;
+  } catch (error) {
+    console.error('Failed to fetch tag:', error);
+    return null;
+  }
+};
+
+/**
+ * Fetches blog posts by category slug with optional pagination.
+ * @param {string} categorySlug - The slug of the category to filter by.
+ * @param {number} page - The page number for pagination.
+ * @param {number} pageSize - The number of posts per page.
+ * @returns {Promise<{ data: Blog[]; total: number; }>} - An object containing the blog posts and the total count.
+ */
+export const fetchBlogsByCategory = async (categorySlug: string, page: number = 1, pageSize: number = 10): Promise<{ data: Blog[]; total: number; }> => {
+  const startIndex = (page - 1) * pageSize;
+  let endIndex = startIndex + pageSize - 1;
+
+  try {
+    const { data, error, count } = await supabase
+      .from('blogs')
+      .select('*, categories(slug)', { count: 'exact' })
+      .eq('categories.slug', categorySlug)
+      .order('created_at', { ascending: false })
+      .range(startIndex, endIndex);
+
+    if (error) {
+      console.error('Error fetching blogs by category:', error);
+      throw error;
+    }
+
+    return {
+      data: data || [],
+      total: count || 0,
+    };
+  } catch (error) {
+    console.error('Failed to fetch blogs by category:', error);
+    return { data: [], total: 0 };
+  }
+};
+
+/**
+ * Fetches blog posts by tag slug with optional pagination.
+ * @param {string} tagSlug - The slug of the tag to filter by.
+ * @param {number} page - The page number for pagination.
+ * @param {number} pageSize - The number of posts per page.
+ * @returns {Promise<{ data: Blog[]; total: number; }>} - An object containing the blog posts and the total count.
+ */
+export const fetchBlogsByTag = async (tagSlug: string, page: number = 1, pageSize: number = 10): Promise<{ data: Blog[]; total: number; }> => {
+  const startIndex = (page - 1) * pageSize;
+  let endIndex = startIndex + pageSize - 1;
+
+  try {
+    const { data, error, count } = await supabase
+      .from('blogs')
+      .select('*, tags(slug)', { count: 'exact' })
+      .contains('tags', [tagSlug])
+      .order('created_at', { ascending: false })
+      .range(startIndex, endIndex);
+
+    if (error) {
+      console.error('Error fetching blogs by tag:', error);
+      throw error;
+    }
+
+    return {
+      data: data || [],
+      total: count || 0,
+    };
+  } catch (error) {
+    console.error('Failed to fetch blogs by tag:', error);
+    return { data: [], total: 0 };
+  }
+};
+
+// Add to existing interfaces or export the new ones
+export interface Blog {
+  id: string;
+  title: string;
+  slug: string;
+  excerpt: string;
+  content: string;
+  image_url?: string;
+  author: string;
+  created_at: string;
+  updated_at: string;
+  tags?: string[];
+  category?: string;
+  is_pricing_resource?: boolean;
+}
+
+/**
+ * Fetches blog posts marked as pricing resources
+ * @param limit Maximum number of posts to return (default: 3)
+ * @returns Array of blog posts
+ */
+export const fetchPricingResources = async (limit: number = 3): Promise<Blog[]> => {
+  try {
+    const { data, error } = await supabase
+      .from('blogs')
+      .select('*')
+      .eq('is_pricing_resource', true)
+      .order('created_at', { ascending: false })
+      .limit(limit);
     
-    if (error) throw error;
-    
-    // If we have data from Supabase, map and return it
-    if (data && data.length > 0) {
-      return data.map(post => ({
-        id: post.id,
-        title: post.title,
-        excerpt: post.excerpt,
-        category: post.category || '',
-        date: formatDate(post.created_at), // Convert created_at to date format
-        author: post.author,
-        imageUrl: post.image_url || '',
-        slug: post.slug,
-        readTime: estimateReadTime(post.content), // Estimate reading time based on content
-        tags: post.tags || []
-      })) as BlogPost[];
+    if (error) {
+      console.error('Error fetching pricing resources:', error);
+      throw error;
     }
     
-    // If no data from Supabase, filter mock data
-    console.info('Using mock blog data as fallback for category:', category);
-    return mockBlogPosts.filter(post => post.category === category);
+    return data || [];
   } catch (error) {
-    console.error('Error fetching blog posts by category:', error);
-    // Return filtered mock blog posts as fallback
-    return mockBlogPosts.filter(post => post.category === category);
+    console.error('Failed to fetch pricing resources:', error);
+    return [];
   }
-}
-
-/**
- * Helper function to format ISO date strings to readable format
- * @param isoDate ISO date string from database
- * @returns formatted date string like "May 12, 2025"
- */
-function formatDate(isoDate: string): string {
-  try {
-    const date = new Date(isoDate);
-    return date.toLocaleDateString('en-US', { 
-      year: 'numeric', 
-      month: 'long', 
-      day: 'numeric' 
-    });
-  } catch (e) {
-    console.error('Error formatting date:', e);
-    return 'Unknown date';
-  }
-}
-
-/**
- * Estimates reading time based on content length
- * @param content The blog post content
- * @returns Reading time estimate string like "5 min read"
- */
-function estimateReadTime(content: string): string {
-  // Average reading speed is about 200-250 words per minute
-  const wordsPerMinute = 225;
-  const words = content.trim().split(/\s+/).length;
-  const minutes = Math.ceil(words / wordsPerMinute);
-  return `${minutes} min read`;
-}
+};
