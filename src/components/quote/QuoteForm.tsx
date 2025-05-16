@@ -22,6 +22,7 @@ interface QuoteFormData {
   phone: string;
   address: string;
   city: string;
+  zipCode?: string;
   jobType: string;
   description: string;
   sameDay: boolean;
@@ -72,7 +73,7 @@ const QuoteForm = ({ onFormSuccess }: QuoteFormProps) => {
       
       // Upload image if exists
       if (imageFile) {
-        const fileName = `quote_request_${Date.now()}_${imageFile.name}`;
+        const fileName = `quote_request_${Date.now()}_${imageFile.name.replace(/\s+/g, '_')}`;
         const { error: uploadError, data: uploadData } = await supabase.storage
           .from('public')
           .upload(fileName, imageFile);
@@ -98,6 +99,7 @@ const QuoteForm = ({ onFormSuccess }: QuoteFormProps) => {
           phone: data.phone,
           address: data.address,
           city: data.city,
+          zip_code: data.zipCode,
           job_type: data.jobType,
           description: data.description,
           same_day: data.sameDay,
@@ -108,9 +110,6 @@ const QuoteForm = ({ onFormSuccess }: QuoteFormProps) => {
       if (error) {
         throw error;
       }
-      
-      // Send notification to admin email (can be implemented with an edge function)
-      // This would be the place to add a webhook call to notify about new quote requests
       
       toast({
         title: "Quote Request Submitted!",

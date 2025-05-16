@@ -6,6 +6,7 @@ import { CalendarClock } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import { LoadingButton } from '@/components/ui/loading-button';
+import { supabase } from '@/integrations/supabase/client';
 
 // Import form field components
 import { TextFormField } from './fields/TextFormField';
@@ -56,10 +57,25 @@ const BookingForm = ({
     setIsSubmitting(true);
     
     try {
-      // Simulate API request
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      // Format the date to ISO string for database storage
+      const formattedDate = data.date.toISOString().split('T')[0];
       
-      console.log('Booking form submitted:', data);
+      // Insert booking data into Supabase
+      const { error } = await supabase
+        .from('booking_requests')
+        .insert({
+          name: data.name,
+          phone: data.phone,
+          email: data.email,
+          date: formattedDate,
+          time: data.time,
+          service: data.service,
+          status: 'pending'
+        });
+        
+      if (error) {
+        throw error;
+      }
       
       toast({
         title: "Booking Request Received!",
@@ -71,7 +87,7 @@ const BookingForm = ({
       if (onSuccess) {
         onSuccess();
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error submitting booking:', error);
       toast({
         title: "Submission Failed",
@@ -142,6 +158,7 @@ const BookingForm = ({
       </div>
     );
   }
+  
   
   return (
     <div className={cn(
