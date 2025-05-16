@@ -2,18 +2,10 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Skeleton } from '@/components/ui/skeleton';
-import { fetchPricingResources } from '@/integrations/supabase/blogService';
-
-interface BlogPost {
-  id: string;
-  title: string;
-  excerpt: string;
-  slug: string;
-  image_url: string;
-}
+import { fetchPricingResources, Blog } from '@/integrations/supabase/blogService';
 
 const PricingResources = () => {
-  const [resources, setResources] = useState<BlogPost[]>([]);
+  const [resources, setResources] = useState<Blog[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {

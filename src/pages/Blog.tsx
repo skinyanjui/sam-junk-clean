@@ -1,12 +1,11 @@
-
 import { useState, useEffect } from 'react';
-import { Calendar, Tag, Recycle, Search, Filter } from 'lucide-react';
+import { Calendar, Tag, Recycle, Search } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 import PageLayout from '@/components/PageLayout';
 import SEO from '@/components/SEO';
 import { relatedLinks } from '@/data/blogData';
-import { BlogPost } from '@/types/blog';
+import { Blog } from '@/integrations/supabase/blogService';
 import BlogHero from '@/components/blog/BlogHero';
 import FeaturedPosts from '@/components/blog/FeaturedPosts';
 import AllPosts from '@/components/blog/AllPosts';
@@ -19,9 +18,25 @@ import BlogCategories from '@/components/blog/BlogCategories';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 
+// Convert Blog from blogService to the format expected by components
+const mapBlogToBlogPost = (blog: Blog) => {
+  return {
+    id: blog.id,
+    title: blog.title,
+    slug: blog.slug,
+    excerpt: blog.excerpt,
+    category: blog.category || 'Uncategorized',
+    date: new Date(blog.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
+    author: blog.author,
+    imageUrl: blog.image_url || 'https://images.unsplash.com/photo-1493397212122-2b85dda8106b',
+    tags: blog.tags || [],
+    readTime: '5 min read' // Default read time
+  };
+};
+
 const Blog = () => {
   const [searchQuery, setSearchQuery] = useState('');
-  const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
+  const [blogPosts, setBlogPosts] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const { toast } = useToast();
@@ -31,7 +46,7 @@ const Blog = () => {
       try {
         setIsLoading(true);
         const posts = await getAllBlogPosts();
-        setBlogPosts(posts);
+        setBlogPosts(posts.map(mapBlogToBlogPost));
       } catch (error) {
         console.error('Failed to fetch blog posts:', error);
         toast({

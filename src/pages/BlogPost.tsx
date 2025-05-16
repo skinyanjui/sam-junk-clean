@@ -1,21 +1,35 @@
-
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import PageLayout from '@/components/PageLayout';
 import SEO from '@/components/SEO';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Calendar, User, Bookmark, Share2 } from 'lucide-react';
-import { BlogPost } from '@/types/blog';
-import { getBlogPostBySlug } from '@/integrations/supabase/blogService';
+import { getBlogPostBySlug, Blog } from '@/integrations/supabase/blogService';
 import { Separator } from '@/components/ui/separator';
 import { LoadingSkeleton } from '@/components/ui/loading-skeleton';
 import { useToast } from '@/hooks/use-toast';
 
+// Convert Blog from blogService to the format expected by components
+const mapBlogToBlogPost = (blog: Blog) => {
+  return {
+    id: blog.id,
+    title: blog.title,
+    slug: blog.slug,
+    excerpt: blog.excerpt,
+    category: blog.category || 'Uncategorized',
+    date: new Date(blog.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
+    author: blog.author,
+    imageUrl: blog.image_url || 'https://images.unsplash.com/photo-1493397212122-2b85dda8106b',
+    content: blog.content,
+    tags: blog.tags || []
+  };
+};
+
 const BlogPostPage = () => {
   const { slug } = useParams<{ slug: string }>();
-  const [post, setPost] = useState<BlogPost | null>(null);
+  const [post, setPost] = useState<any | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [relatedPosts, setRelatedPosts] = useState<BlogPost[]>([]);
+  const [relatedPosts, setRelatedPosts] = useState<any[]>([]);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -27,7 +41,7 @@ const BlogPostPage = () => {
         const fetchedPost = await getBlogPostBySlug(slug);
         
         if (fetchedPost) {
-          setPost(fetchedPost);
+          setPost(mapBlogToBlogPost(fetchedPost));
           // In a real application, we would also fetch related posts based on category
           // For now we'll just mock this functionality
         } else {
@@ -51,6 +65,8 @@ const BlogPostPage = () => {
 
     fetchBlogPost();
   }, [slug, toast]);
+
+  
 
   if (isLoading) {
     return (
@@ -118,6 +134,7 @@ const BlogPostPage = () => {
             </div>
           </header>
           
+          
           {/* Featured Image */}
           <div className="relative aspect-[16/9] overflow-hidden rounded-lg mb-10">
             <img 
@@ -151,7 +168,14 @@ const BlogPostPage = () => {
               <div className="mt-10 pt-6 border-t border-gray-200">
                 <h3 className="font-medium mb-3">Related Topics</h3>
                 <div className="flex flex-wrap gap-2">
-                  {['Junk Removal', 'Recycling', 'Home Improvement', 'Decluttering'].map((tag) => (
+                  {post.tags && post.tags.length > 0 ? post.tags.map((tag: string) => (
+                    <span 
+                      key={tag} 
+                      className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm"
+                    >
+                      {tag}
+                    </span>
+                  )) : ['Junk Removal', 'Recycling', 'Home Improvement', 'Decluttering'].map((tag) => (
                     <span 
                       key={tag} 
                       className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm"
@@ -176,6 +200,7 @@ const BlogPostPage = () => {
                 </button>
               </div>
             </div>
+            
             
             {/* Sidebar */}
             <aside className="lg:col-span-1" aria-labelledby="popular-articles-heading">
