@@ -14,7 +14,7 @@ export interface QuoteFormData {
   zipCode?: string;
   jobType: string;
   description: string;
-  sameDay: boolean | string; // Updated type to handle both boolean and string
+  sameDay: boolean | string; // Handle both boolean and string
   contactPreference: string;
 }
 
@@ -63,8 +63,19 @@ export const useQuoteForm = (onFormSuccess?: () => void) => {
       // Upload image if exists
       if (imageFile) {
         try {
-          // Use the enhanced upload service
+          // Use specific bucket name 'quote-images'
           imageUrl = await uploadFile('quote-images', imageFile);
+          
+          if (!imageUrl) {
+            console.error('Image upload returned null URL');
+            toast({
+              title: "Image Upload Failed",
+              description: "We couldn't upload your image, but we'll still submit your quote request.",
+              variant: "destructive"
+            });
+          } else {
+            console.log('Image uploaded successfully:', imageUrl);
+          }
         } catch (uploadError) {
           console.error('Image upload failed:', uploadError);
           toast({

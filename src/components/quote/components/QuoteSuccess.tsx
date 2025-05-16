@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { Check, RefreshCw } from 'lucide-react';
+import { Check, RefreshCw, Clock } from 'lucide-react';
 
 interface QuoteSuccessProps {
   onRestart?: () => void;
@@ -20,10 +20,24 @@ const QuoteSuccess = ({ onRestart }: QuoteSuccessProps) => {
         Thank you for submitting your quote request. Our team will review your details and contact you shortly with a free estimate.
       </p>
       
-      <div className="space-y-3">
-        <p className="text-sm text-gray-500">
-          What happens next? See our process timeline below.
-        </p>
+      <div className="space-y-4">
+        <div className="bg-gray-50 p-4 rounded-lg max-w-md mx-auto">
+          <h4 className="font-semibold text-gray-800 mb-2">What happens next?</h4>
+          <ol className="text-left text-sm space-y-3">
+            <li className="flex items-start">
+              <Clock className="h-4 w-4 text-brand-red mr-2 mt-0.5 flex-shrink-0" />
+              <span>
+                <span className="font-medium">Within 24 hours:</span> Our team will review your request and contact you via your preferred method.
+              </span>
+            </li>
+            <li className="flex items-start">
+              <Clock className="h-4 w-4 text-brand-red mr-2 mt-0.5 flex-shrink-0" />
+              <span>
+                <span className="font-medium">Same-day service:</span> If you requested same-day service, we'll prioritize your quote and contact you as soon as possible.
+              </span>
+            </li>
+          </ol>
+        </div>
         
         {onRestart && (
           <Button 
