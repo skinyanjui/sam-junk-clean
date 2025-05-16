@@ -1,4 +1,3 @@
-
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Star, Award, CircleCheck, Phone } from 'lucide-react';
@@ -6,6 +5,7 @@ import { useResponsiveLayout } from '@/hooks/use-mobile';
 import { useEffect, useState } from 'react';
 import BookingForm from '@/components/forms/BookingForm';
 import { useToast } from '@/hooks/use-toast';
+import { motion } from 'framer-motion';
 
 const HeroSection = () => {
   const { isMobile, orientation, isLandscapeMobile } = useResponsiveLayout();
@@ -68,11 +68,18 @@ const HeroSection = () => {
       <div className={`container-custom relative z-10 ${
         isMobile ? 'py-4' : 'py-8 md:py-0'
       } ${isLandscapeMobile ? 'py-12' : 'mt-0 md:mt-[-3rem]'}`}>
-        {/* Premium badge - desktop only */}
-        <div className="absolute top-0 right-10 md:right-20 transform -translate-y-1/2 hidden md:flex items-center gap-2 bg-white/10 backdrop-blur-md px-4 py-2 rounded-full text-white/90 text-sm border border-white/20 shadow-lg" aria-hidden="true">
-          <Star className="text-brand-yellow w-4 h-4" />
-          <span>Over 12,000+ happy customers</span>
-        </div>
+        {/* Premium badge - redesigned for better visibility and responsiveness */}
+        <motion.div 
+          initial={{ y: -20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.5, duration: 0.5 }}
+          className="absolute top-0 right-4 md:right-10 lg:right-16 transform md:-translate-y-1/2 hidden sm:flex items-center gap-2 bg-white/15 backdrop-blur-lg px-4 py-2 rounded-full text-white shadow-lg border border-white/30"
+        >
+          <div className="flex items-center gap-1.5">
+            <Star className="text-brand-yellow w-4 h-4 md:w-5 md:h-5" fill="currentColor" strokeWidth={1} />
+            <span className="text-xs md:text-sm font-medium">Over 12,000+ happy customers</span>
+          </div>
+        </motion.div>
 
         <div className="grid md:grid-cols-12 gap-4 md:gap-8 items-center">
           {/* Hero content */}
@@ -152,6 +159,19 @@ const HeroSection = () => {
             <BookingForm variant="hero" className="scale-95 transform origin-top" />
           </div>
         </div>
+        
+        {/* Mobile premium badge */}
+        <motion.div 
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.5, duration: 0.5 }}
+          className="sm:hidden flex justify-center mt-6"
+        >
+          <div className="flex items-center gap-2 bg-white/15 backdrop-blur-lg px-4 py-2 rounded-full text-white shadow-md border border-white/30">
+            <Star className="text-brand-yellow w-4 h-4" fill="currentColor" strokeWidth={1} />
+            <span className="text-xs font-medium">12,000+ satisfied customers</span>
+          </div>
+        </motion.div>
       </div>
     </section>
   );
