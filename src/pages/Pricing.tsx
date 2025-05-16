@@ -1,4 +1,5 @@
 
+import { useState, useEffect } from 'react';
 import PageLayout from '@/components/PageLayout';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -13,48 +14,35 @@ import {
 } from '@/components/ui/table';
 import TruckVisualizer from '@/components/pricing/TruckVisualizer';
 import SEO from '@/components/SEO';
+import { PricingTier, AddOnService, fetchPricingTiers, fetchAddOnServices } from '@/integrations/supabase/pricingService';
+import { Skeleton } from '@/components/ui/skeleton';
 
 const Pricing = () => {
-  const pricingTiers = [
-    {
-      size: 'Minimum Pickup',
-      price: '$75–$100',
-      description: 'Single item or small curbside haul',
-      fillLevel: '10%'
-    },
-    {
-      size: '¼ Truck Load',
-      price: '$100–$175',
-      description: 'Small furniture/appliances',
-      fillLevel: '25%'
-    },
-    {
-      size: '½ Truck Load',
-      price: '$175–$300',
-      description: 'Bedroom or small office cleanout',
-      fillLevel: '50%'
-    },
-    {
-      size: '¾ Truck Load',
-      price: '$300–$450',
-      description: 'Full apartment or garage cleanup',
-      fillLevel: '75%'
-    },
-    {
-      size: 'Full Truck Load',
-      price: '$450–$600+',
-      description: 'Large cleanouts, multiple rooms',
-      fillLevel: '100%'
-    }
-  ];
+  const [pricingTiers, setPricingTiers] = useState<PricingTier[]>([]);
+  const [addOnServices, setAddOnServices] = useState<AddOnService[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const addOnServices = [
-    { service: 'Mattress or Box Spring', fee: '+$25 each' },
-    { service: 'TV or Electronics', fee: '+$30–$50' },
-    { service: 'Appliance Removal', fee: '+$40–$75' },
-    { service: 'Light Demolition', fee: 'Custom quote' },
-    { service: 'Same-Day or After-Hours', fee: '+$50 premium' }
-  ];
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        const [tiersData, addOnsData] = await Promise.all([
+          fetchPricingTiers(),
+          fetchAddOnServices()
+        ]);
+        
+        setPricingTiers(tiersData);
+        setAddOnServices(addOnsData);
+      } catch (err) {
+        console.error('Error loading pricing data:', err);
+        setError('Failed to load pricing information. Please try again later.');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadData();
+  }, []);
 
   const includedServices = [
     'Hauling',
@@ -63,6 +51,53 @@ const Pricing = () => {
     'Donation drop-offs when applicable',
     'Disposal fees'
   ];
+
+  // Loading skeleton for pricing table
+  const PricingTableSkeleton = () => (
+    <div className="overflow-x-auto rounded-lg border border-gray-200 shadow-sm mb-12">
+      <Table>
+        <TableHeader>
+          <TableRow className="bg-brand-gray">
+            <TableHead className="font-bold"><Skeleton className="h-6 w-24" /></TableHead>
+            <TableHead className="font-bold"><Skeleton className="h-6 w-24" /></TableHead>
+            <TableHead className="font-bold"><Skeleton className="h-6 w-24" /></TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {[...Array(5)].map((_, i) => (
+            <TableRow key={i} className="hover:bg-brand-gray/30">
+              <TableCell><Skeleton className="h-4 w-24" /></TableCell>
+              <TableCell><Skeleton className="h-4 w-24" /></TableCell>
+              <TableCell><Skeleton className="h-4 w-48" /></TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </div>
+  );
+
+  // Loading skeleton for add-on services
+  const AddOnServicesSkeleton = () => (
+    <div className="bg-white p-6 rounded-lg shadow-sm" aria-labelledby="addon-services-heading">
+      <Skeleton className="h-6 w-48 mb-6" />
+      <Table>
+        <TableHeader>
+          <TableRow className="bg-brand-gray/50">
+            <TableHead className="font-bold"><Skeleton className="h-5 w-24" /></TableHead>
+            <TableHead className="font-bold"><Skeleton className="h-5 w-24" /></TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {[...Array(5)].map((_, i) => (
+            <TableRow key={i} className="hover:bg-brand-gray/30">
+              <TableCell><Skeleton className="h-4 w-32" /></TableCell>
+              <TableCell><Skeleton className="h-4 w-20" /></TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </div>
+  );
 
   return (
     <PageLayout>
@@ -110,29 +145,35 @@ const Pricing = () => {
             <h2 id="volume-pricing-heading" className="section-title text-center mb-8">Volume-Based Pricing</h2>
             
             {/* Pricing Table */}
-            <div className="overflow-x-auto rounded-lg border border-gray-200 shadow-sm mb-12">
-              <Table>
-                <TableHeader>
-                  <TableRow className="bg-brand-gray">
-                    <TableHead className="font-bold">Load Size</TableHead>
-                    <TableHead className="font-bold">Price Range</TableHead>
-                    <TableHead className="font-bold">Description</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {pricingTiers.map((tier) => (
-                    <TableRow key={tier.size} className="hover:bg-brand-gray/30">
-                      <TableCell className="font-medium">{tier.size}</TableCell>
-                      <TableCell className="font-semibold text-brand-navy">{tier.price}</TableCell>
-                      <TableCell>{tier.description}</TableCell>
+            {isLoading ? (
+              <PricingTableSkeleton />
+            ) : error ? (
+              <div className="text-center text-red-500 mb-12">{error}</div>
+            ) : (
+              <div className="overflow-x-auto rounded-lg border border-gray-200 shadow-sm mb-12">
+                <Table>
+                  <TableHeader>
+                    <TableRow className="bg-brand-gray">
+                      <TableHead className="font-bold">Load Size</TableHead>
+                      <TableHead className="font-bold">Price Range</TableHead>
+                      <TableHead className="font-bold">Description</TableHead>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </div>
+                  </TableHeader>
+                  <TableBody>
+                    {pricingTiers.map((tier) => (
+                      <TableRow key={tier.id} className="hover:bg-brand-gray/30">
+                        <TableCell className="font-medium">{tier.tier_name}</TableCell>
+                        <TableCell className="font-semibold text-brand-navy">{tier.price_display}</TableCell>
+                        <TableCell>{tier.description}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </div>
+            )}
             
             {/* Truck Visualization */}
-            <TruckVisualizer pricingTiers={pricingTiers} />
+            <TruckVisualizer pricingTiers={pricingTiers.length > 0 ? pricingTiers : undefined} />
           </div>
         </div>
       </section>
@@ -143,25 +184,29 @@ const Pricing = () => {
           <div className="max-w-4xl mx-auto">
             <div className="grid md:grid-cols-2 gap-8">
               {/* Add-On Services */}
-              <div className="bg-white p-6 rounded-lg shadow-sm" aria-labelledby="addon-services-heading">
-                <h2 id="addon-services-heading" className="text-2xl font-bold text-brand-navy mb-6">Add-On Services</h2>
-                <Table>
-                  <TableHeader>
-                    <TableRow className="bg-brand-gray/50">
-                      <TableHead className="font-bold">Service</TableHead>
-                      <TableHead className="font-bold">Add-on Fee</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {addOnServices.map((service, index) => (
-                      <TableRow key={index} className="hover:bg-brand-gray/30">
-                        <TableCell>{service.service}</TableCell>
-                        <TableCell className="font-semibold text-brand-navy">{service.fee}</TableCell>
+              {isLoading ? (
+                <AddOnServicesSkeleton />
+              ) : (
+                <div className="bg-white p-6 rounded-lg shadow-sm" aria-labelledby="addon-services-heading">
+                  <h2 id="addon-services-heading" className="text-2xl font-bold text-brand-navy mb-6">Add-On Services</h2>
+                  <Table>
+                    <TableHeader>
+                      <TableRow className="bg-brand-gray/50">
+                        <TableHead className="font-bold">Service</TableHead>
+                        <TableHead className="font-bold">Add-on Fee</TableHead>
                       </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </div>
+                    </TableHeader>
+                    <TableBody>
+                      {addOnServices.map((service) => (
+                        <TableRow key={service.id} className="hover:bg-brand-gray/30">
+                          <TableCell>{service.service_name}</TableCell>
+                          <TableCell className="font-semibold text-brand-navy">{service.fee_display}</TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </div>
+              )}
               
               {/* What's Included */}
               <div className="bg-white p-6 rounded-lg shadow-sm" aria-labelledby="whats-included-heading">

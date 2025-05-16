@@ -1,9 +1,10 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { uploadFile } from '@/integrations/supabase/storageService';
+import { PricingTier, AddOnService, fetchPricingTiers } from '@/integrations/supabase/pricingService';
 
 export interface QuoteFormData {
   name: string;
@@ -16,6 +17,8 @@ export interface QuoteFormData {
   description: string;
   sameDay: boolean | string; // Handle both boolean and string
   contactPreference: string;
+  pricingTierId?: string; // New field for selected pricing tier
+  addOnServiceIds?: string[]; // New field for selected add-on services
 }
 
 export const useQuoteForm = (onFormSuccess?: () => void) => {
@@ -23,10 +26,25 @@ export const useQuoteForm = (onFormSuccess?: () => void) => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [imageFile, setImageFile] = useState<File | null>(null);
+  const [pricingTiers, setPricingTiers] = useState<PricingTier[]>([]);
   const { toast } = useToast();
   
   const methods = useForm<QuoteFormData>();
   const { reset } = methods;
+
+  useEffect(() => {
+    // Load pricing tiers for form selection
+    const loadPricingTiers = async () => {
+      try {
+        const data = await fetchPricingTiers();
+        setPricingTiers(data);
+      } catch (err) {
+        console.error('Failed to load pricing tiers:', err);
+      }
+    };
+
+    loadPricingTiers();
+  }, []);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -94,6 +112,11 @@ export const useQuoteForm = (onFormSuccess?: () => void) => {
         ? data.sameDay === 'on' 
         : Boolean(data.sameDay);
 
+      // Prepare add-on services data if selected
+      const addOnServices = data.addOnServiceIds ? 
+        data.addOnServiceIds.map(id => ({ id })) : 
+        null;
+
       // Insert quote request into Supabase
       const { error } = await supabase
         .from('quote_requests')
@@ -110,7 +133,9 @@ export const useQuoteForm = (onFormSuccess?: () => void) => {
           contact_preference: data.contactPreference,
           image_url: imageUrl,
           status: 'pending', // Ensure status is set for tracking
-          user_id: anonymousUserId // Add user_id for RLS policies
+          user_id: anonymousUserId, // Add user_id for RLS policies
+          pricing_tier_id: data.pricingTierId || null,
+          add_on_services: addOnServices
         });
         
       if (error) {
@@ -160,6 +185,7 @@ export const useQuoteForm = (onFormSuccess?: () => void) => {
     isSubmitted,
     imagePreview,
     imageFile,
+    pricingTiers,
     handleImageChange,
     handleImageRemove,
     onSubmit,

@@ -1,42 +1,200 @@
 
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Check } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { useResponsiveLayout } from '@/hooks/use-mobile';
 import { Badge } from '@/components/ui/badge';
+import { PricingTier, fetchPricingTiers } from '@/integrations/supabase/pricingService';
+import { Skeleton } from '@/components/ui/skeleton';
 
 const PricingOverview = () => {
   const { isMobile, isLandscapeMobile } = useResponsiveLayout();
+  const [pricingTiers, setPricingTiers] = useState<PricingTier[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   
-  // Pricing tiers data
-  const pricingTiers = [
-    {
-      name: "Small Loads",
-      price: "$75-$175",
-      description: "Single items to 1/4 truck",
-      features: ["Furniture pieces", "Appliance removal", "Small cleanouts", "Quick, single-item pickups"],
-      popular: false,
-      ctaText: "See Details"
-    },
-    {
-      name: "Medium Loads",
-      price: "$175-$450",
-      description: "1/4 to 3/4 truck loads",
-      features: ["Room renovations", "Basement cleanouts", "Multi-item removal", "Office cleanups"],
-      popular: true,
-      ctaText: "See Details"
-    },
-    {
-      name: "Full Loads",
-      price: "$450-$600+",
-      description: "Complete truck loads",
-      features: ["Whole home cleanouts", "Large estate clearings", "Commercial projects", "Construction debris"],
-      popular: false,
-      ctaText: "See Details"
-    }
-  ];
+  useEffect(() => {
+    const loadPricingData = async () => {
+      try {
+        const data = await fetchPricingTiers();
+        
+        // For the overview, we'll combine the data into three tiers: small, medium, large
+        if (data.length >= 5) {
+          const smallTiers = data.slice(0, 2); // First 2 tiers
+          const mediumTiers = data.slice(2, 4); // Middle 2 tiers
+          const largeTiers = data.slice(4); // Remaining tiers
+          
+          const processedTiers = [
+            {
+              ...smallTiers[0],
+              tier_name: 'Small Loads',
+              description: `${smallTiers[0].tier_name} to ${smallTiers[1].tier_name}`,
+              price_display: `$${smallTiers[0].min_price}-$${smallTiers[1].max_price}`,
+              features: [
+                'Furniture pieces', 
+                'Appliance removal', 
+                'Small cleanouts', 
+                'Quick, single-item pickups'
+              ],
+              popular: false
+            },
+            {
+              ...mediumTiers[0],
+              tier_name: 'Medium Loads',
+              description: `${mediumTiers[0].tier_name} to ${mediumTiers[1].tier_name}`,
+              price_display: `$${mediumTiers[0].min_price}-$${mediumTiers[1].max_price}`,
+              features: [
+                'Room renovations', 
+                'Basement cleanouts', 
+                'Multi-item removal', 
+                'Office cleanups'
+              ],
+              popular: true
+            },
+            {
+              ...largeTiers[0],
+              tier_name: 'Full Loads',
+              description: largeTiers[0].tier_name,
+              features: [
+                'Whole home cleanouts', 
+                'Large estate clearings', 
+                'Commercial projects', 
+                'Construction debris'
+              ],
+              popular: false
+            }
+          ];
+          
+          setPricingTiers(processedTiers);
+        } else {
+          // Fallback if we don't have enough tiers
+          const defaultTiers = [
+            {
+              ...data[0],
+              tier_name: 'Small Loads',
+              description: data[0]?.tier_name || 'Single items to 1/4 truck',
+              price_display: data[0]?.price_display || '$75-$175',
+              features: ['Furniture pieces', 'Appliance removal', 'Small cleanouts', 'Quick, single-item pickups'],
+              popular: false
+            },
+            {
+              ...(data[1] || data[0]),
+              tier_name: 'Medium Loads',
+              description: data[1]?.tier_name || '1/4 to 3/4 truck loads', 
+              price_display: data[1]?.price_display || '$175-$450',
+              features: ['Room renovations', 'Basement cleanouts', 'Multi-item removal', 'Office cleanups'],
+              popular: true
+            },
+            {
+              ...(data[data.length - 1] || data[0]),
+              tier_name: 'Full Loads',
+              description: data[data.length - 1]?.tier_name || 'Complete truck loads',
+              price_display: data[data.length - 1]?.price_display || '$450-$600+',
+              features: ['Whole home cleanouts', 'Large estate clearings', 'Commercial projects', 'Construction debris'],
+              popular: false
+            }
+          ];
+          
+          setPricingTiers(defaultTiers);
+        }
+      } catch (err) {
+        console.error('Failed to load pricing data for overview:', err);
+        // Set some default data
+        setPricingTiers([
+          {
+            id: '1',
+            tier_name: 'Small Loads',
+            min_price: 75,
+            max_price: 175,
+            price_display: '$75-$175',
+            description: 'Single items to 1/4 truck',
+            fill_level: '25%',
+            fill_percentage: 25,
+            sort_order: 1,
+            features: ['Furniture pieces', 'Appliance removal', 'Small cleanouts', 'Quick, single-item pickups'],
+            popular: false
+          },
+          {
+            id: '2',
+            tier_name: 'Medium Loads',
+            min_price: 175,
+            max_price: 450,
+            price_display: '$175-$450',
+            description: '1/4 to 3/4 truck loads',
+            fill_level: '50%',
+            fill_percentage: 50,
+            sort_order: 2,
+            features: ['Room renovations', 'Basement cleanouts', 'Multi-item removal', 'Office cleanups'],
+            popular: true
+          },
+          {
+            id: '3',
+            tier_name: 'Full Loads',
+            min_price: 450,
+            max_price: 600,
+            price_display: '$450-$600+',
+            description: 'Complete truck loads',
+            fill_level: '100%',
+            fill_percentage: 100,
+            sort_order: 3,
+            features: ['Whole home cleanouts', 'Large estate clearings', 'Commercial projects', 'Construction debris'],
+            popular: false
+          }
+        ]);
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
+    loadPricingData();
+  }, []);
+
+  // Show loading skeletons while data is being fetched
+  if (isLoading) {
+    return (
+      <section className={`py-10 ${isMobile ? 'px-4 py-8' : isLandscapeMobile ? 'py-10' : 'py-12'} bg-gradient-to-b from-brand-gray to-white relative`}>
+        <div className="container-custom relative z-10">
+          <div className="text-center mb-6 md:mb-8">
+            <Skeleton className="h-4 w-40 mx-auto mb-1" />
+            <Skeleton className="h-8 w-64 mx-auto mb-3" />
+            <div className="w-20 h-1 bg-gray-200 mx-auto mb-3"></div>
+            <Skeleton className="h-4 w-full max-w-3xl mx-auto" />
+          </div>
+          
+          <div className={`grid ${isMobile ? 'grid-cols-1' : 'md:grid-cols-3'} gap-4 max-w-5xl mx-auto`}>
+            {[...Array(3)].map((_, i) => (
+              <Card key={i} className="h-full shadow-md">
+                <CardHeader className="text-center pb-3">
+                  <Skeleton className="h-5 w-32 mx-auto mb-1" />
+                  <Skeleton className="h-6 w-24 mx-auto mb-1" />
+                  <Skeleton className="h-4 w-48 mx-auto" />
+                </CardHeader>
+                <CardContent className="pb-3">
+                  <div className="space-y-2">
+                    {[...Array(4)].map((_, j) => (
+                      <div key={j} className="flex items-center">
+                        <div className="w-4 h-4 rounded-full bg-gray-200 mr-2" />
+                        <Skeleton className="h-4 w-full" />
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+                <CardFooter className="pt-1 pb-3">
+                  <Skeleton className="h-8 w-full" />
+                </CardFooter>
+              </Card>
+            ))}
+          </div>
+          
+          <div className="text-center mt-6">
+            <Skeleton className="h-4 w-48 mx-auto" />
+          </div>
+        </div>
+      </section>
+    );
+  }
+  
   return (
     <section className={`py-10 ${isMobile ? 'px-4 py-8' : isLandscapeMobile ? 'py-10' : 'py-12'} bg-gradient-to-b from-brand-gray to-white relative`}>
       {/* Subtle background pattern */}
@@ -71,8 +229,8 @@ const PricingOverview = () => {
                   {tier.popular && (
                     <Badge className="bg-brand-red mb-1 mx-auto">Most Common</Badge>
                   )}
-                  <h3 className="text-lg font-bold text-brand-navy mb-1">{tier.name}</h3>
-                  <p className="text-brand-red font-bold text-2xl md:text-2xl mb-1">{tier.price}</p>
+                  <h3 className="text-lg font-bold text-brand-navy mb-1">{tier.tier_name}</h3>
+                  <p className="text-brand-red font-bold text-2xl md:text-2xl mb-1">{tier.price_display}</p>
                   <p className="text-gray-600 text-sm">{tier.description}</p>
                 </CardHeader>
                 
@@ -97,7 +255,7 @@ const PricingOverview = () => {
                     }`}
                     size="sm"
                   >
-                    <Link to="/pricing">{tier.ctaText}</Link>
+                    <Link to="/pricing">See Details</Link>
                   </Button>
                 </CardFooter>
               </Card>

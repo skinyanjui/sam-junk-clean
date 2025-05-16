@@ -1,37 +1,70 @@
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-
-interface PriceItem {
-  service: string;
-  description: string;
-  startingPrice: string;
-}
-
-const pricingData: PriceItem[] = [
-  {
-    service: "Small Load",
-    description: "Ideal for single items or small cleanouts",
-    startingPrice: "$99"
-  },
-  {
-    service: "Medium Load",
-    description: "Perfect for room cleanouts or multiple items",
-    startingPrice: "$199"
-  },
-  {
-    service: "Large Load",
-    description: "Best for full garage or basement cleanouts",
-    startingPrice: "$299"
-  },
-  {
-    service: "Full Truck Load",
-    description: "Complete cleanouts for moving or renovation",
-    startingPrice: "$499"
-  }
-];
+import { PricingTier, fetchPricingTiers } from '@/integrations/supabase/pricingService';
+import { Skeleton } from '@/components/ui/skeleton';
 
 const PricingDisplay = () => {
+  const [pricingData, setPricingData] = useState<PricingTier[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const loadPricingData = async () => {
+      try {
+        const data = await fetchPricingTiers();
+        setPricingData(data);
+        setIsLoading(false);
+      } catch (err) {
+        console.error('Failed to load pricing data:', err);
+        setError('Unable to load pricing information. Please try again later.');
+        setIsLoading(false);
+      }
+    };
+
+    loadPricingData();
+  }, []);
+
+  // Show loading skeletons while data is being fetched
+  if (isLoading) {
+    return (
+      <div className="py-12 bg-gray-50">
+        <div className="container-custom">
+          <div className="text-center mb-10">
+            <Skeleton className="h-8 w-64 mx-auto mb-3" />
+            <Skeleton className="h-4 w-full max-w-2xl mx-auto" />
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[...Array(4)].map((_, index) => (
+              <Card key={index} className="border-2">
+                <CardHeader className="pb-3">
+                  <Skeleton className="h-6 w-32" />
+                </CardHeader>
+                <CardContent>
+                  <Skeleton className="h-4 w-full mb-2" />
+                  <Skeleton className="h-4 w-3/4 mb-4" />
+                  <Skeleton className="h-6 w-24" />
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Show error message if data couldn't be loaded
+  if (error) {
+    return (
+      <div className="py-12 bg-gray-50">
+        <div className="container-custom">
+          <div className="text-center text-red-500 font-semibold">{error}</div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="py-12 bg-gray-50">
       <div className="container-custom">
@@ -43,15 +76,15 @@ const PricingDisplay = () => {
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {pricingData.map((item, index) => (
-            <Card key={index} className="border-2 hover:border-brand-red transition-colors">
+          {pricingData.map((item) => (
+            <Card key={item.id} className="border-2 hover:border-brand-red transition-colors">
               <CardHeader className="pb-3">
-                <CardTitle className="text-xl font-bold text-brand-navy">{item.service}</CardTitle>
+                <CardTitle className="text-xl font-bold text-brand-navy">{item.tier_name}</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-gray-600 mb-4">{item.description}</p>
                 <p className="text-2xl font-bold text-brand-red">
-                  Starting at {item.startingPrice}
+                  Starting at {item.price_display.split('–')[0]}
                 </p>
               </CardContent>
             </Card>

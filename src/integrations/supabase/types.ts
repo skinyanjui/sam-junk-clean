@@ -9,6 +9,39 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      add_on_services: {
+        Row: {
+          created_at: string
+          description: string | null
+          fee_display: string
+          id: string
+          max_fee: number | null
+          min_fee: number
+          service_name: string
+          sort_order: number
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          fee_display: string
+          id?: string
+          max_fee?: number | null
+          min_fee: number
+          service_name: string
+          sort_order: number
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          fee_display?: string
+          id?: string
+          max_fee?: number | null
+          min_fee?: number
+          service_name?: string
+          sort_order?: number
+        }
+        Relationships: []
+      }
       blogs: {
         Row: {
           author: string
@@ -165,8 +198,48 @@ export type Database = {
         }
         Relationships: []
       }
+      pricing_tiers: {
+        Row: {
+          created_at: string
+          description: string
+          fill_level: string
+          fill_percentage: number
+          id: string
+          max_price: number
+          min_price: number
+          price_display: string
+          sort_order: number
+          tier_name: string
+        }
+        Insert: {
+          created_at?: string
+          description: string
+          fill_level: string
+          fill_percentage: number
+          id?: string
+          max_price: number
+          min_price: number
+          price_display: string
+          sort_order: number
+          tier_name: string
+        }
+        Update: {
+          created_at?: string
+          description?: string
+          fill_level?: string
+          fill_percentage?: number
+          id?: string
+          max_price?: number
+          min_price?: number
+          price_display?: string
+          sort_order?: number
+          tier_name?: string
+        }
+        Relationships: []
+      }
       quote_requests: {
         Row: {
+          add_on_services: Json | null
           address: string
           city: string
           contact_preference: string
@@ -178,12 +251,14 @@ export type Database = {
           job_type: string
           name: string
           phone: string
+          pricing_tier_id: string | null
           same_day: boolean | null
           status: string | null
           user_id: string
           zip_code: string | null
         }
         Insert: {
+          add_on_services?: Json | null
           address: string
           city: string
           contact_preference: string
@@ -195,12 +270,14 @@ export type Database = {
           job_type: string
           name: string
           phone: string
+          pricing_tier_id?: string | null
           same_day?: boolean | null
           status?: string | null
           user_id: string
           zip_code?: string | null
         }
         Update: {
+          add_on_services?: Json | null
           address?: string
           city?: string
           contact_preference?: string
@@ -212,12 +289,21 @@ export type Database = {
           job_type?: string
           name?: string
           phone?: string
+          pricing_tier_id?: string | null
           same_day?: boolean | null
           status?: string | null
           user_id?: string
           zip_code?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "quote_requests_pricing_tier_id_fkey"
+            columns: ["pricing_tier_id"]
+            isOneToOne: false
+            referencedRelation: "pricing_tiers"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {
