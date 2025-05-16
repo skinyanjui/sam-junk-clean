@@ -4,6 +4,7 @@ import { useForm, FormProvider } from 'react-hook-form';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { scrollToFirstError } from '@/utils/form-helpers';
+import { uploadFile } from '@/integrations/supabase/storageService';
 
 // Form components
 import ValidationSummary from './form/ValidationSummary';
@@ -73,21 +74,17 @@ const QuoteForm = ({ onFormSuccess }: QuoteFormProps) => {
       
       // Upload image if exists
       if (imageFile) {
-        const fileName = `quote_request_${Date.now()}_${imageFile.name.replace(/\s+/g, '_')}`;
-        const { error: uploadError, data: uploadData } = await supabase.storage
-          .from('public')
-          .upload(fileName, imageFile);
-          
-        if (uploadError) {
-          throw uploadError;
+        try {
+          // Use the enhanced upload service
+          imageUrl = await uploadFile('quote-images', imageFile);
+        } catch (uploadError) {
+          console.error('Image upload failed:', uploadError);
+          toast({
+            title: "Image Upload Failed",
+            description: "We couldn't upload your image, but we'll still submit your quote request.",
+            variant: "destructive"
+          });
         }
-        
-        // Get the public URL
-        const { data: { publicUrl } } = supabase.storage
-          .from('public')
-          .getPublicUrl(fileName);
-          
-        imageUrl = publicUrl;
       }
       
       // Insert quote request into Supabase
@@ -104,12 +101,15 @@ const QuoteForm = ({ onFormSuccess }: QuoteFormProps) => {
           description: data.description,
           same_day: data.sameDay,
           contact_preference: data.contactPreference,
-          image_url: imageUrl
+          image_url: imageUrl,
+          status: 'pending' // Ensure status is set for tracking
         });
         
       if (error) {
         throw error;
       }
+      
+      console.log('Quote request submitted successfully');
       
       toast({
         title: "Quote Request Submitted!",

@@ -60,22 +60,30 @@ const BookingForm = ({
       // Format the date to ISO string for database storage
       const formattedDate = data.date.toISOString().split('T')[0];
       
+      // Additional details for email notifications
+      const bookingDetails = {
+        name: data.name,
+        phone: data.phone,
+        email: data.email,
+        date: formattedDate,
+        time: data.time,
+        service: data.service,
+        status: 'pending',
+        notes: `Booking made on ${new Date().toLocaleString()}`
+      };
+      
+      console.log('Submitting booking request:', bookingDetails);
+      
       // Insert booking data into Supabase
       const { error } = await supabase
         .from('booking_requests')
-        .insert({
-          name: data.name,
-          phone: data.phone,
-          email: data.email,
-          date: formattedDate,
-          time: data.time,
-          service: data.service,
-          status: 'pending'
-        });
+        .insert(bookingDetails);
         
       if (error) {
         throw error;
       }
+      
+      console.log('Booking request saved successfully');
       
       toast({
         title: "Booking Request Received!",

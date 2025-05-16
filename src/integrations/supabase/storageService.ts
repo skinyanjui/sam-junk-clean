@@ -15,6 +15,8 @@ export async function createBucketIfNotExists(bucketName: string) {
       console.error(`Error creating bucket ${bucketName}:`, createError);
       throw createError;
     }
+    
+    console.log(`Storage bucket "${bucketName}" created successfully`);
   }
 }
 
@@ -29,8 +31,8 @@ export async function uploadFile(
     
     // Create a unique file name to avoid collisions
     const fileName = path 
-      ? `${path}/${Date.now()}_${file.name}`
-      : `${Date.now()}_${file.name}`;
+      ? `${path}/${Date.now()}_${file.name.replace(/\s+/g, '_')}`
+      : `${Date.now()}_${file.name.replace(/\s+/g, '_')}`;
     
     // Upload the file
     const { error: uploadError } = await supabase.storage
