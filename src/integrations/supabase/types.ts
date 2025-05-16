@@ -180,6 +180,7 @@ export type Database = {
           phone: string
           same_day: boolean | null
           status: string | null
+          user_id: string
           zip_code: string | null
         }
         Insert: {
@@ -196,6 +197,7 @@ export type Database = {
           phone: string
           same_day?: boolean | null
           status?: string | null
+          user_id: string
           zip_code?: string | null
         }
         Update: {
@@ -212,6 +214,7 @@ export type Database = {
           phone?: string
           same_day?: boolean | null
           status?: string | null
+          user_id?: string
           zip_code?: string | null
         }
         Relationships: []

@@ -75,6 +75,9 @@ export const useQuoteForm = (onFormSuccess?: () => void) => {
         }
       }
       
+      // Create a random UUID for anonymous users
+      const anonymousUserId = crypto.randomUUID();
+      
       // Insert quote request into Supabase
       const { error } = await supabase
         .from('quote_requests')
@@ -90,7 +93,8 @@ export const useQuoteForm = (onFormSuccess?: () => void) => {
           same_day: data.sameDay,
           contact_preference: data.contactPreference,
           image_url: imageUrl,
-          status: 'pending' // Ensure status is set for tracking
+          status: 'pending', // Ensure status is set for tracking
+          user_id: anonymousUserId // Add user_id for RLS policies
         });
         
       if (error) {
@@ -107,7 +111,7 @@ export const useQuoteForm = (onFormSuccess?: () => void) => {
       reset();
       setImagePreview(null);
       setImageFile(null);
-      setIsSubmitted(false);
+      setIsSubmitted(true);
       
       // Call success callback if provided
       if (onFormSuccess) {
