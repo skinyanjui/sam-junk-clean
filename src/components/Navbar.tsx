@@ -6,16 +6,46 @@ import DesktopNav from './navbar/DesktopNav';
 import MobileNav from './navbar/MobileNav';
 import MobileToggle from './navbar/MobileToggle';
 import MobileCta from './navbar/MobileCta';
-import { navStructure } from './navbar/navData';
+import { getNavigationStructure } from '@/integrations/supabase/navigationService';
 import { useResponsiveLayout } from '@/hooks/use-mobile';
 import { motion, AnimatePresence } from 'framer-motion';
+
+interface NavItem {
+  name: string;
+  path: string;
+  hasDropdown: boolean;
+  dropdownItems?: {
+    name: string;
+    path: string;
+  }[];
+}
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const [navStructure, setNavStructure] = useState<NavItem[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const location = useLocation();
   const { isMobile, isLandscapeMobile } = useResponsiveLayout();
+
+  // Load navigation data from database
+  useEffect(() => {
+    const loadNavStructure = async () => {
+      setIsLoading(true);
+      try {
+        const navigationData = await getNavigationStructure();
+        setNavStructure(navigationData);
+      } catch (error) {
+        console.error('Error loading navigation structure:', error);
+        // If there's an error, use an empty array or a default fallback
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    
+    loadNavStructure();
+  }, []);
 
   // Handle scroll effect
   useEffect(() => {
@@ -51,7 +81,7 @@ const Navbar = () => {
       >
         <div className="container-custom flex items-center justify-between">
           <NavLogo />
-          <DesktopNav navStructure={navStructure} currentPath={location.pathname} />
+          <DesktopNav navStructure={navStructure} currentPath={location.pathname} isLoading={isLoading} />
           <MobileToggle isOpen={isOpen} toggleMenu={toggleMenu} />
         </div>
 
@@ -63,6 +93,7 @@ const Navbar = () => {
               isOpen={isOpen}
               openDropdown={openDropdown}
               setOpenDropdown={setOpenDropdown}
+              isLoading={isLoading}
             />
           )}
         </AnimatePresence>

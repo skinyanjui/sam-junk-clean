@@ -1,10 +1,11 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
+import { fetchBookingTimeSlots, fetchJobTypes } from '@/integrations/supabase/bookingService';
 
 // Form schema for validation
 const bookingSchema = z.object({
@@ -21,6 +22,9 @@ export type BookingFormValues = z.infer<typeof bookingSchema>;
 export const useBookingForm = (onSuccess?: () => void) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [timeSlots, setTimeSlots] = useState<string[]>([]);
+  const [serviceOptions, setServiceOptions] = useState<string[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const { toast } = useToast();
   
   const form = useForm<BookingFormValues>({
@@ -33,6 +37,42 @@ export const useBookingForm = (onSuccess?: () => void) => {
     },
     mode: 'onChange' // Enable validation on change
   });
+
+  useEffect(() => {
+    const loadFormOptions = async () => {
+      setIsLoading(true);
+      try {
+        // Load time slots
+        const timeSlotData = await fetchBookingTimeSlots();
+        setTimeSlots(timeSlotData.map(slot => slot.time_slot));
+        
+        // Load job types for service options
+        const jobTypesData = await fetchJobTypes();
+        setServiceOptions(jobTypesData.map(job => job.name));
+      } catch (error) {
+        console.error('Error loading form options:', error);
+        // Fallback to default values if API fails
+        setTimeSlots([
+          '7:00 AM', '8:00 AM', '9:00 AM', '10:00 AM', '11:00 AM', 
+          '12:00 PM', '1:00 PM', '2:00 PM', '3:00 PM', '4:00 PM', '5:00 PM'
+        ]);
+        setServiceOptions([
+          'Residential Junk Removal',
+          'Commercial Cleanouts',
+          'Furniture Removal',
+          'Appliance Disposal',
+          'Construction Debris',
+          'Estate Cleanouts',
+          'Garage Cleanouts',
+          'Yard Debris Removal'
+        ]);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    
+    loadFormOptions();
+  }, []);
 
   const onSubmit = async (data: BookingFormValues) => {
     setIsSubmitting(true);
@@ -98,24 +138,9 @@ export const useBookingForm = (onSuccess?: () => void) => {
     isSubmitting,
     formSubmitted,
     onSubmit: form.handleSubmit(onSubmit),
-    resetForm
+    resetForm,
+    timeSlots,
+    serviceOptions,
+    isLoading
   };
 };
-
-// Available time slots from 7am to 5pm with 1-hour blocks
-export const timeSlots = [
-  '7:00 AM', '8:00 AM', '9:00 AM', '10:00 AM', '11:00 AM', 
-  '12:00 PM', '1:00 PM', '2:00 PM', '3:00 PM', '4:00 PM', '5:00 PM'
-];
-
-// Available services
-export const serviceOptions = [
-  'Residential Junk Removal',
-  'Commercial Cleanouts',
-  'Furniture Removal',
-  'Appliance Disposal',
-  'Construction Debris',
-  'Estate Cleanouts',
-  'Garage Cleanouts',
-  'Yard Debris Removal'
-];

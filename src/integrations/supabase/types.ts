@@ -123,6 +123,30 @@ export type Database = {
         }
         Relationships: []
       }
+      booking_time_slots: {
+        Row: {
+          created_at: string
+          id: string
+          is_available: boolean
+          sort_order: number
+          time_slot: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          is_available?: boolean
+          sort_order: number
+          time_slot: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          is_available?: boolean
+          sort_order?: number
+          time_slot?: string
+        }
+        Relationships: []
+      }
       company_benefits: {
         Row: {
           color_class: string
@@ -150,6 +174,33 @@ export type Database = {
           id?: string
           sort_order?: number | null
           title?: string
+        }
+        Relationships: []
+      }
+      company_info: {
+        Row: {
+          created_at: string
+          id: string
+          key: string
+          section: string
+          updated_at: string
+          value: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          key: string
+          section: string
+          updated_at?: string
+          value: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          key?: string
+          section?: string
+          updated_at?: string
+          value?: string
         }
         Relationships: []
       }
@@ -343,6 +394,74 @@ export type Database = {
           status?: string | null
         }
         Relationships: []
+      }
+      job_types: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          is_active: boolean
+          name: string
+          sort_order: number
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_active?: boolean
+          name: string
+          sort_order: number
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_active?: boolean
+          name?: string
+          sort_order?: number
+        }
+        Relationships: []
+      }
+      navigation_items: {
+        Row: {
+          created_at: string
+          has_dropdown: boolean
+          id: string
+          is_active: boolean
+          name: string
+          parent_id: string | null
+          path: string
+          sort_order: number
+        }
+        Insert: {
+          created_at?: string
+          has_dropdown?: boolean
+          id?: string
+          is_active?: boolean
+          name: string
+          parent_id?: string | null
+          path: string
+          sort_order: number
+        }
+        Update: {
+          created_at?: string
+          has_dropdown?: boolean
+          id?: string
+          is_active?: boolean
+          name?: string
+          parent_id?: string | null
+          path?: string
+          sort_order?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "navigation_items_parent_id_fkey"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "navigation_items"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       pricing_tiers: {
         Row: {
@@ -591,6 +710,33 @@ export type Database = {
           service_areas?: string[]
           service_radius?: string
           sort_order?: number | null
+        }
+        Relationships: []
+      }
+      service_zip_codes: {
+        Row: {
+          city: string
+          created_at: string
+          id: string
+          is_serviced: boolean
+          state: string
+          zip_code: string
+        }
+        Insert: {
+          city: string
+          created_at?: string
+          id?: string
+          is_serviced?: boolean
+          state: string
+          zip_code: string
+        }
+        Update: {
+          city?: string
+          created_at?: string
+          id?: string
+          is_serviced?: boolean
+          state?: string
+          zip_code?: string
         }
         Relationships: []
       }

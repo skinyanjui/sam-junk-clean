@@ -1,23 +1,109 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Facebook, Instagram, Twitter, Linkedin, Phone, Mail, MapPin, ChevronDown, ChevronUp } from 'lucide-react';
+import { Facebook, Instagram, Twitter, Linkedin, Phone, Mail, MapPin, ChevronDown, ChevronUp, Loader2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { LanguageSwitcher } from './LanguageSwitcher';
+import { getSocialLinks, getCompanyContactDetails, getBusinessHours } from '@/integrations/supabase/companyInfoService';
+import { useLocationData } from '@/hooks/use-location-data';
 
 const Footer = () => {
   const { t } = useTranslation();
+  const { locations, isLoading: isLoadingLocations } = useLocationData();
   const [mobileOpen, setMobileOpen] = useState<Record<string, boolean>>({
     company: false,
     serviceAreas: false,
     contact: false
   });
+
+  const [contactInfo, setContactInfo] = useState({
+    phone: '(812) 610-1657',
+    email: 'info@unclesamjunkremoval.com',
+    hours: 'Mon-Sat: 7AM-7PM'
+  });
+
+  const [socialLinks, setSocialLinks] = useState({
+    facebook: 'https://facebook.com/unclesamjunkremoval',
+    instagram: 'https://instagram.com/unclesamjunkremoval', 
+    twitter: 'https://twitter.com/unclesamjunk',
+    linkedin: 'https://linkedin.com/company/unclesamjunkremoval'
+  });
+
+  const [businessHours, setBusinessHours] = useState({
+    weekday: 'Monday - Saturday: 7:00 AM - 7:00 PM',
+    weekend: 'Sunday: Closed'
+  });
+
+  const [isLoading, setIsLoading] = useState(true);
   
-  const serviceAreas = [
-    { state: 'Indiana', cities: ['Evansville', 'Newburgh', 'Princeton', 'Boonville', 'Vincennes'] },
-    { state: 'Kentucky', cities: ['Henderson', 'Owensboro', 'Madisonville'] },
-    { state: 'Illinois', cities: ['Mt. Carmel', 'Carmi', 'Fairfield', 'Grayville'] }
-  ];
+  // Group locations by state
+  const serviceAreasByState = locations.reduce((acc: Record<string, string[]>, location) => {
+    if (!location.serviceAreas) return acc;
+    
+    // Extract state from the first service area or use a default
+    const state = location.name;
+    
+    if (!acc[state]) {
+      acc[state] = [];
+    }
+    
+    // Add unique cities to the array
+    location.serviceAreas.forEach(area => {
+      if (!acc[state].includes(area)) {
+        acc[state].push(area);
+      }
+    });
+    
+    return acc;
+  }, {});
+
+  const serviceAreas = Object.entries(serviceAreasByState).map(([state, cities]) => ({
+    state,
+    cities
+  }));
+
+  useEffect(() => {
+    const fetchFooterData = async () => {
+      setIsLoading(true);
+      try {
+        const [contactDetails, socialData, hoursData] = await Promise.all([
+          getCompanyContactDetails(),
+          getSocialLinks(),
+          getBusinessHours()
+        ]);
+        
+        if (contactDetails) {
+          setContactInfo({
+            phone: contactDetails.phone || '(812) 610-1657',
+            email: contactDetails.email || 'info@unclesamjunkremoval.com',
+            hours: 'Mon-Sat: 7AM-7PM'
+          });
+        }
+        
+        if (socialData) {
+          setSocialLinks({
+            facebook: socialData.facebook || 'https://facebook.com/unclesamjunkremoval',
+            instagram: socialData.instagram || 'https://instagram.com/unclesamjunkremoval',
+            twitter: socialData.twitter || 'https://twitter.com/unclesamjunk',
+            linkedin: socialData.linkedin || 'https://linkedin.com/company/unclesamjunkremoval'
+          });
+        }
+        
+        if (hoursData) {
+          setBusinessHours({
+            weekday: hoursData.weekday || 'Monday - Saturday: 7:00 AM - 7:00 PM',
+            weekend: hoursData.weekend || 'Sunday: Closed'
+          });
+        }
+      } catch (error) {
+        console.error('Error fetching footer data:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    
+    fetchFooterData();
+  }, []);
 
   const currentYear = new Date().getFullYear();
 
@@ -41,16 +127,16 @@ const Footer = () => {
               className="h-16 md:h-20 mb-4"
             />
             <div className="flex space-x-3 mt-3">
-              <a href="https://facebook.com/unclesamjunkremoval" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="bg-white/10 p-2 rounded-full">
+              <a href={socialLinks.facebook} target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="bg-white/10 p-2 rounded-full">
                 <Facebook size={18} />
               </a>
-              <a href="https://instagram.com/unclesamjunkremoval" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="bg-white/10 p-2 rounded-full">
+              <a href={socialLinks.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="bg-white/10 p-2 rounded-full">
                 <Instagram size={18} />
               </a>
-              <a href="https://twitter.com/unclesamjunk" target="_blank" rel="noopener noreferrer" aria-label="Twitter" className="bg-white/10 p-2 rounded-full">
+              <a href={socialLinks.twitter} target="_blank" rel="noopener noreferrer" aria-label="Twitter" className="bg-white/10 p-2 rounded-full">
                 <Twitter size={18} />
               </a>
-              <a href="https://linkedin.com/company/unclesamjunkremoval" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="bg-white/10 p-2 rounded-full">
+              <a href={socialLinks.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="bg-white/10 p-2 rounded-full">
                 <Linkedin size={18} />
               </a>
             </div>
@@ -109,30 +195,39 @@ const Footer = () => {
               </button>
             </h3>
             <div className={`${mobileOpen.serviceAreas ? 'block' : 'hidden md:block'} mt-3 text-sm`}>
-              {serviceAreas.map(area => (
-                <div key={area.state} className="mb-3">
-                  <h4 className="text-white font-medium mb-1.5">{area.state}</h4>
-                  <div className="flex flex-wrap gap-x-3 gap-y-1 text-xs">
-                    {area.cities.slice(0, 3).map(city => (
-                      <Link 
-                        key={city} 
-                        to={`/locations#${area.state.toLowerCase()}`}
-                        className="text-gray-300"
-                      >
-                        {city}
-                      </Link>
-                    ))}
-                    {area.cities.length > 3 && (
-                      <Link 
-                        to={`/locations#${area.state.toLowerCase()}`}
-                        className="text-gray-300"
-                      >
-                        +{area.cities.length - 3}
-                      </Link>
-                    )}
-                  </div>
+              {isLoadingLocations ? (
+                <div className="flex justify-center md:justify-start items-center">
+                  <Loader2 size={16} className="animate-spin mr-2 text-gray-400" />
+                  <span className="text-gray-400">Loading service areas...</span>
                 </div>
-              ))}
+              ) : serviceAreas.length > 0 ? (
+                serviceAreas.map(area => (
+                  <div key={area.state} className="mb-3">
+                    <h4 className="text-white font-medium mb-1.5">{area.state}</h4>
+                    <div className="flex flex-wrap gap-x-3 gap-y-1 text-xs">
+                      {area.cities.slice(0, 3).map(city => (
+                        <Link 
+                          key={city} 
+                          to={`/locations#${area.state.toLowerCase()}`}
+                          className="text-gray-300"
+                        >
+                          {city}
+                        </Link>
+                      ))}
+                      {area.cities.length > 3 && (
+                        <Link 
+                          to={`/locations#${area.state.toLowerCase()}`}
+                          className="text-gray-300"
+                        >
+                          +{area.cities.length - 3}
+                        </Link>
+                      )}
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <p className="text-gray-400">No service areas found</p>
+              )}
             </div>
           </div>
 
@@ -148,20 +243,31 @@ const Footer = () => {
               </button>
             </h3>
             <div className={`${mobileOpen.contact ? 'block' : 'hidden md:block'} mt-3`}>
-              <ul className="space-y-2 text-sm">
-                <li className="flex items-center justify-center md:justify-start">
-                  <Phone size={16} className="mr-2 text-brand-red" />
-                  <a href="tel:+18126101657" className="text-gray-300">(812) 610-1657</a>
-                </li>
-                <li className="flex items-center justify-center md:justify-start">
-                  <Mail size={16} className="mr-2 text-brand-red" />
-                  <a href="mailto:info@unclesamjunkremoval.com" className="text-gray-300">info@unclesamjunkremoval.com</a>
-                </li>
-                <li className="flex items-center justify-center md:justify-start">
-                  <MapPin size={16} className="mr-2 text-brand-red" />
-                  <span className="text-gray-300">{t('footer.hours')}</span>
-                </li>
-              </ul>
+              {isLoading ? (
+                <div className="flex justify-center md:justify-start items-center">
+                  <Loader2 size={16} className="animate-spin mr-2 text-gray-400" />
+                  <span className="text-gray-400">Loading contact info...</span>
+                </div>
+              ) : (
+                <ul className="space-y-2 text-sm">
+                  <li className="flex items-center justify-center md:justify-start">
+                    <Phone size={16} className="mr-2 text-brand-red" />
+                    <a href={`tel:${contactInfo.phone}`} className="text-gray-300">{contactInfo.phone}</a>
+                  </li>
+                  <li className="flex items-center justify-center md:justify-start">
+                    <Mail size={16} className="mr-2 text-brand-red" />
+                    <a href={`mailto:${contactInfo.email}`} className="text-gray-300">{contactInfo.email}</a>
+                  </li>
+                  <li className="flex items-center justify-center md:justify-start">
+                    <MapPin size={16} className="mr-2 text-brand-red" />
+                    <span className="text-gray-300">{businessHours.weekday}</span>
+                  </li>
+                  <li className="flex items-start justify-center md:justify-start">
+                    <div className="w-6"></div>
+                    <span className="text-gray-300">{businessHours.weekend}</span>
+                  </li>
+                </ul>
+              )}
               <div className="flex flex-col md:flex-row items-center justify-center md:justify-start gap-2 mt-4">
                 <Link to="/quote" className="inline-block bg-brand-red text-white py-1.5 px-4 rounded-lg">
                   {t('common.getQuote')}

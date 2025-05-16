@@ -1,10 +1,11 @@
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'sonner';
 import { MapPin, Search, Loader2 } from 'lucide-react';
+import { checkZipCodeServiceStatus, fetchServicedZipCodes } from '@/integrations/supabase/zipCodeService';
 
 const ZipCodeLookup = () => {
   const { t } = useTranslation();
@@ -12,25 +13,32 @@ const ZipCodeLookup = () => {
   const [isChecking, setIsChecking] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
   const [isServiced, setIsServiced] = useState<boolean | null>(null);
+  const [isLoadingZipCodes, setIsLoadingZipCodes] = useState(true);
+  const [servicedZipCodes, setServicedZipCodes] = useState<string[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
   
-  // Zip codes we service (this would typically come from an API or database)
-  const servicedZipCodes = [
-    // Indiana
-    '47711', '47712', '47713', '47714', '47715', '47720', '47725', '47630', 
-    '47610', '47601', '47620', '47633', '47638', 
-    // Kentucky
-    '42301', '42302', '42303', '42304', '42366', '42320', '42330', '42347',
-    // Illinois
-    '62863', '62821', '62837', '62842', '62835', '62822'
-  ];
+  useEffect(() => {
+    const loadZipCodes = async () => {
+      setIsLoadingZipCodes(true);
+      try {
+        const zipCodesData = await fetchServicedZipCodes();
+        setServicedZipCodes(zipCodesData.map(item => item.zip_code));
+      } catch (error) {
+        console.error('Failed to load ZIP codes:', error);
+      } finally {
+        setIsLoadingZipCodes(false);
+      }
+    };
+    
+    loadZipCodes();
+  }, []);
   
   const validateZipCode = (zip: string) => {
     const zipRegex = /^\d{5}$/;
     return zipRegex.test(zip);
   };
   
-  const handleCheck = () => {
+  const handleCheck = async () => {
     if (!validateZipCode(zipCode)) {
       toast.error("Please enter a valid 5-digit ZIP code");
       inputRef.current?.focus();
@@ -40,8 +48,21 @@ const ZipCodeLookup = () => {
     setIsChecking(true);
     setHasSearched(false);
     
-    // Simulate API call with timeout
-    setTimeout(() => {
+    try {
+      // Try to get the service status from the database
+      const serviceStatus = await checkZipCodeServiceStatus(zipCode);
+      setIsServiced(serviceStatus);
+      setHasSearched(true);
+      
+      if (serviceStatus) {
+        toast.success("Great news! We service your area. Get a free quote today!");
+      } else {
+        toast.info("We don't currently service this ZIP code. Please call us to check if we can make an exception.");
+      }
+    } catch (error) {
+      console.error('Error checking ZIP code:', error);
+      
+      // Fallback to local array if the API call fails
       const serviceStatus = servicedZipCodes.includes(zipCode);
       setIsServiced(serviceStatus);
       setHasSearched(true);
@@ -51,9 +72,9 @@ const ZipCodeLookup = () => {
       } else {
         toast.info("We don't currently service this ZIP code. Please call us to check if we can make an exception.");
       }
-      
+    } finally {
       setIsChecking(false);
-    }, 1000);
+    }
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -91,17 +112,21 @@ const ZipCodeLookup = () => {
                 onKeyDown={(e) => e.key === 'Enter' && handleCheck()}
                 aria-label="Enter ZIP code"
                 inputMode="numeric"
+                disabled={isLoadingZipCodes}
               />
               {hasSearched && (
                 <div className={`absolute right-2 top-1/2 -translate-y-1/2 h-5 w-5 rounded-full flex items-center justify-center ${isServiced ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-600'}`}>
                   {isServiced ? '✓' : '✕'}
                 </div>
               )}
+              {isLoadingZipCodes && (
+                <Loader2 className="absolute right-2 top-1/2 -translate-y-1/2 h-4 w-4 animate-spin text-gray-400" />
+              )}
             </div>
             <Button 
               className="bg-brand-navy hover:bg-opacity-90 focus:ring-2 focus:ring-brand-navy/50 focus:ring-offset-2"
               onClick={handleCheck}
-              disabled={isChecking || zipCode.length !== 5}
+              disabled={isChecking || zipCode.length !== 5 || isLoadingZipCodes}
               aria-label="Check service availability"
             >
               {isChecking ? (

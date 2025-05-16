@@ -1,7 +1,9 @@
 
-import { Phone } from 'lucide-react';
+import { Phone, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import NavItem from './NavItem';
+import { useEffect, useState } from 'react';
+import { getCompanyContactDetails } from '@/integrations/supabase/companyInfoService';
 
 interface DesktopNavProps {
   navStructure: Array<{
@@ -14,28 +16,66 @@ interface DesktopNavProps {
     }>;
   }>;
   currentPath: string;
+  isLoading: boolean;
 }
 
-const DesktopNav = ({ navStructure, currentPath }: DesktopNavProps) => {
+const DesktopNav = ({ navStructure, currentPath, isLoading }: DesktopNavProps) => {
+  const [phoneNumber, setPhoneNumber] = useState('(812) 610-1657');
+  const [isLoadingContact, setIsLoadingContact] = useState(true);
+  
+  useEffect(() => {
+    const loadContactInfo = async () => {
+      setIsLoadingContact(true);
+      try {
+        const contactInfo = await getCompanyContactDetails();
+        if (contactInfo && contactInfo.phone) {
+          setPhoneNumber(contactInfo.phone);
+        }
+      } catch (error) {
+        console.error('Error loading contact info:', error);
+      } finally {
+        setIsLoadingContact(false);
+      }
+    };
+    
+    loadContactInfo();
+  }, []);
+
   return (
     <nav className="hidden md:flex items-center space-x-1 lg:space-x-2" aria-label="Main Navigation">
-      {navStructure.map((item) => (
-        <NavItem 
-          key={item.path} 
-          item={item} 
-          isActive={currentPath === item.path}
-        />
-      ))}
+      {isLoading ? (
+        <div className="flex items-center space-x-2 text-gray-600">
+          <Loader2 size={16} className="animate-spin" />
+          <span>Loading menu...</span>
+        </div>
+      ) : (
+        navStructure.map((item) => (
+          <NavItem 
+            key={item.path} 
+            item={item} 
+            isActive={currentPath === item.path}
+          />
+        ))
+      )}
       <Button 
         asChild
         variant="outline"
         size="sm"
         className="ml-3 lg:ml-4 bg-white border-gray-700 text-brand-red hover:bg-brand-red hover:text-white transition-colors duration-300 flex items-center gap-1 rounded-md text-sm shadow-sm"
-        aria-label="Call us at (812) 610-1657"
+        aria-label={`Call us at ${phoneNumber}`}
       >
-        <a href="tel:+18126101657" className="flex items-center px-2 py-1">
-          <Phone size={14} className="mr-1" strokeWidth={2.5} aria-hidden="true" />
-          <span className="font-medium">(812) 610-1657</span>
+        <a href={`tel:${phoneNumber}`} className="flex items-center px-2 py-1">
+          {isLoadingContact ? (
+            <>
+              <Loader2 size={14} className="mr-1 animate-spin" aria-hidden="true" />
+              <span className="font-medium">Loading...</span>
+            </>
+          ) : (
+            <>
+              <Phone size={14} className="mr-1" strokeWidth={2.5} aria-hidden="true" />
+              <span className="font-medium">{phoneNumber}</span>
+            </>
+          )}
         </a>
       </Button>
     </nav>
