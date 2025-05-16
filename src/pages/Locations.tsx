@@ -21,7 +21,7 @@ const Locations = () => {
   const { 
     searchTerm, 
     filteredLocationsCount,
-    handleSearchChange, 
+    setSearchTerm,
     clearSearch,
     setLocations: setSearchLocations
   } = useLocationSearch();
@@ -180,7 +180,7 @@ const Locations = () => {
           {/* Search Box */}
           <ServiceAreaSearch 
             searchTerm={searchTerm} 
-            setSearchTerm={handleSearchChange} 
+            setSearchTerm={setSearchTerm} 
             filteredLocationsCount={filteredLocationsCount}
           />
 

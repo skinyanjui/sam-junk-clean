@@ -25,7 +25,7 @@ export const fetchFaqs = async (categorySlug?: string): Promise<Faq[]> => {
       .from('faqs')
       .select(`
         *,
-        category:category_id(id, name, slug, sort_order)
+        category:category_id(id, name, slug, sort_order, created_at)
       `)
       .order('sort_order', { ascending: true });
     
