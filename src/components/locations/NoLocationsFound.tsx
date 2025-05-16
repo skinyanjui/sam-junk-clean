@@ -4,11 +4,11 @@ import { Button } from '@/components/ui/button';
 import { useTranslation } from 'react-i18next';
 
 interface NoLocationsFoundProps {
-  searchTerm: string;
-  clearSearch: () => void;
+  searchQuery: string;
+  onClearSearch: () => void;
 }
 
-const NoLocationsFound = ({ searchTerm, clearSearch }: NoLocationsFoundProps) => {
+const NoLocationsFound = ({ searchQuery, onClearSearch }: NoLocationsFoundProps) => {
   const { t } = useTranslation();
   
   return (
@@ -16,9 +16,9 @@ const NoLocationsFound = ({ searchTerm, clearSearch }: NoLocationsFoundProps) =>
       <MapPin size={48} className="mx-auto mb-4 text-gray-400" />
       <h3 className="text-xl font-bold text-brand-navy mb-2">{t('locations.noAreasFound')}</h3>
       <p className="text-gray-600 mb-4">
-        {t('locations.noAreasMessage', { searchTerm })}
+        {t('locations.noAreasMessage', { searchTerm: searchQuery })}
       </p>
-      <Button onClick={clearSearch} className="border border-gray-300">{t('locations.clearSearch')}</Button>
+      <Button onClick={onClearSearch} className="border border-gray-300">{t('locations.clearSearch')}</Button>
     </div>
   );
 };
