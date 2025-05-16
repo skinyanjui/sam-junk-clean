@@ -1,5 +1,6 @@
 
 import { supabase } from './client';
+import React from 'react'; // Add React import
 import type { ServiceData, RelatedBlog } from '@/components/services/servicesData';
 
 // Fetch all services
