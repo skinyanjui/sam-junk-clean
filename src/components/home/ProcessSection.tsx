@@ -1,37 +1,58 @@
 
+import { useEffect, useState } from 'react';
 import { Badge } from "@/components/ui/badge";
 import { useResponsiveLayout } from '@/hooks/use-mobile';
+import { ProcessStep, fetchProcessSteps } from '@/integrations/supabase/processStepsService';
+import { Skeleton } from '@/components/ui/skeleton';
 
 const ProcessSection = () => {
   const { isMobile, orientation } = useResponsiveLayout();
   const isLandscape = orientation === 'landscape';
+  const [steps, setSteps] = useState<ProcessStep[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   
-  const steps = [
-    {
-      number: "01",
-      title: "Book Online or Call",
-      description: "Schedule your free, no-obligation estimate via our form or direct call.",
-      color: "bg-brand-red"
-    },
-    {
-      number: "02",
-      title: "Get an Upfront Price",
-      description: "Our team provides a transparent quote based on your specific needs.",
-      color: "bg-brand-navy"
-    },
-    {
-      number: "03",
-      title: "Schedule Removal",
-      description: "Pick a time that works for you - same day options available!",
-      color: "bg-brand-blue"
-    },
-    {
-      number: "04",
-      title: "Enjoy Your Space",
-      description: "We handle the heavy lifting and responsibly dispose of everything.",
-      color: "bg-green-600"
-    }
-  ];
+  useEffect(() => {
+    const loadSteps = async () => {
+      setIsLoading(true);
+      try {
+        const data = await fetchProcessSteps();
+        setSteps(data);
+      } catch (error) {
+        console.error('Error loading process steps:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadSteps();
+  }, []);
+
+  // Loading skeleton
+  if (isLoading) {
+    return (
+      <section className={`py-10 ${isMobile ? 'px-4 py-8' : 'py-12'}`}>
+        <div className="container-custom">
+          <div className="text-center mb-8">
+            <Skeleton className="h-6 w-32 mx-auto mb-3" />
+            <Skeleton className="h-10 w-64 mx-auto mb-3" />
+            <Skeleton className="h-4 w-full max-w-2xl mx-auto" />
+          </div>
+
+          <div className={`grid ${isMobile && isLandscape ? 'grid-cols-2 gap-4' : isMobile ? 'grid-cols-1 gap-4' : 'grid-cols-2 md:grid-cols-4 gap-5'} mt-8`}>
+            {[1, 2, 3, 4].map((_, index) => (
+              <div key={index} className="relative">
+                <Skeleton className="w-12 h-12 rounded-full mb-3" />
+                <Skeleton className="h-6 w-36 mb-2" />
+                <Skeleton className="h-4 w-full mb-1" />
+                <Skeleton className="h-4 w-full mb-1" />
+                <Skeleton className="h-4 w-2/3" />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className={`py-10 ${isMobile ? 'px-4 py-8' : 'py-12'}`}>
@@ -48,9 +69,9 @@ const ProcessSection = () => {
 
         <div className={`grid ${isMobile && isLandscape ? 'grid-cols-2 gap-4' : isMobile ? 'grid-cols-1 gap-4' : 'grid-cols-2 md:grid-cols-4 gap-5'} mt-8`}>
           {steps.map((step, index) => (
-            <div key={step.number} className="relative">
+            <div key={step.id} className="relative">
               {/* Number indicator */}
-              <div className={`${step.color} text-white w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold mb-3 shadow-lg`}>
+              <div className={`${step.color_class} text-white w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold mb-3 shadow-lg`}>
                 {step.number}
               </div>
               

@@ -123,6 +123,60 @@ export type Database = {
         }
         Relationships: []
       }
+      company_benefits: {
+        Row: {
+          color_class: string
+          created_at: string
+          description: string
+          icon: string
+          id: string
+          sort_order: number | null
+          title: string
+        }
+        Insert: {
+          color_class: string
+          created_at?: string
+          description: string
+          icon: string
+          id?: string
+          sort_order?: number | null
+          title: string
+        }
+        Update: {
+          color_class?: string
+          created_at?: string
+          description?: string
+          icon?: string
+          id?: string
+          sort_order?: number | null
+          title?: string
+        }
+        Relationships: []
+      }
+      company_stats: {
+        Row: {
+          created_at: string
+          id: string
+          label: string
+          sort_order: number | null
+          value: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          label: string
+          sort_order?: number | null
+          value: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          label?: string
+          sort_order?: number | null
+          value?: string
+        }
+        Relationships: []
+      }
       contact_submissions: {
         Row: {
           created_at: string
@@ -147,6 +201,98 @@ export type Database = {
           message?: string
           name?: string
           phone?: string | null
+        }
+        Relationships: []
+      }
+      faq_categories: {
+        Row: {
+          created_at: string
+          id: string
+          name: string
+          slug: string
+          sort_order: number | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          name: string
+          slug: string
+          sort_order?: number | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          name?: string
+          slug?: string
+          sort_order?: number | null
+        }
+        Relationships: []
+      }
+      faqs: {
+        Row: {
+          answer: string
+          category_id: string | null
+          created_at: string
+          id: string
+          question: string
+          sort_order: number | null
+        }
+        Insert: {
+          answer: string
+          category_id?: string | null
+          created_at?: string
+          id?: string
+          question: string
+          sort_order?: number | null
+        }
+        Update: {
+          answer?: string
+          category_id?: string | null
+          created_at?: string
+          id?: string
+          question?: string
+          sort_order?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "faqs_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "faq_categories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      featured_projects: {
+        Row: {
+          created_at: string
+          description: string
+          id: string
+          image_url: string
+          location: string
+          sort_order: number | null
+          tags: string[]
+          title: string
+        }
+        Insert: {
+          created_at?: string
+          description: string
+          id?: string
+          image_url: string
+          location: string
+          sort_order?: number | null
+          tags: string[]
+          title: string
+        }
+        Update: {
+          created_at?: string
+          description?: string
+          id?: string
+          image_url?: string
+          location?: string
+          sort_order?: number | null
+          tags?: string[]
+          title?: string
         }
         Relationships: []
       }
@@ -234,6 +380,36 @@ export type Database = {
           price_display?: string
           sort_order?: number
           tier_name?: string
+        }
+        Relationships: []
+      }
+      process_steps: {
+        Row: {
+          color_class: string
+          created_at: string
+          description: string
+          id: string
+          number: string
+          sort_order: number | null
+          title: string
+        }
+        Insert: {
+          color_class: string
+          created_at?: string
+          description: string
+          id?: string
+          number: string
+          sort_order?: number | null
+          title: string
+        }
+        Update: {
+          color_class?: string
+          created_at?: string
+          description?: string
+          id?: string
+          number?: string
+          sort_order?: number | null
+          title?: string
         }
         Relationships: []
       }
@@ -373,6 +549,51 @@ export type Database = {
           },
         ]
       }
+      service_locations: {
+        Row: {
+          contact_email: string
+          contact_phone: string
+          created_at: string
+          description: string
+          id: string
+          image_url: string
+          is_primary: boolean
+          name: string
+          primary_city: string
+          service_areas: string[]
+          service_radius: string
+          sort_order: number | null
+        }
+        Insert: {
+          contact_email: string
+          contact_phone: string
+          created_at?: string
+          description: string
+          id?: string
+          image_url: string
+          is_primary?: boolean
+          name: string
+          primary_city: string
+          service_areas: string[]
+          service_radius: string
+          sort_order?: number | null
+        }
+        Update: {
+          contact_email?: string
+          contact_phone?: string
+          created_at?: string
+          description?: string
+          id?: string
+          image_url?: string
+          is_primary?: boolean
+          name?: string
+          primary_city?: string
+          service_areas?: string[]
+          service_radius?: string
+          sort_order?: number | null
+        }
+        Relationships: []
+      }
       services: {
         Row: {
           created_at: string
@@ -409,6 +630,63 @@ export type Database = {
           sort_order?: number
           title?: string
           updated_at?: string
+        }
+        Relationships: []
+      }
+      site_content: {
+        Row: {
+          content: string
+          created_at: string
+          id: string
+          key: string
+          section: string
+          updated_at: string
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          id?: string
+          key: string
+          section: string
+          updated_at?: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          id?: string
+          key?: string
+          section?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      testimonials: {
+        Row: {
+          created_at: string
+          id: string
+          location: string
+          name: string
+          quote: string
+          rating: number
+          sort_order: number | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          location: string
+          name: string
+          quote: string
+          rating: number
+          sort_order?: number | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          location?: string
+          name?: string
+          quote?: string
+          rating?: number
+          sort_order?: number | null
         }
         Relationships: []
       }

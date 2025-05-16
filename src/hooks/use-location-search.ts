@@ -1,61 +1,50 @@
 
-import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { LocationData } from '@/types/locations';
-import { serviceLocations } from '@/data/serviceLocations';
 
-type UseLocationSearchProps = {
-  initialSearchTerm?: string;
-};
+export const useLocationSearch = () => {
+  const [searchTerm, setSearchTerm] = useState<string>('');
+  const [locations, setLocations] = useState<LocationData[]>([]);
+  const [filteredLocations, setFilteredLocations] = useState<LocationData[]>([]);
+  const [filteredLocationsCount, setFilteredLocationsCount] = useState<number>(0);
 
-export const useLocationSearch = ({ initialSearchTerm = '' }: UseLocationSearchProps = {}) => {
-  const [searchTerm, setSearchTerm] = useState<string>(initialSearchTerm);
-  const [loading, setLoading] = useState<boolean>(false);
-
-  // Memoize the filtered locations to avoid unnecessary recalculations
-  const filteredLocations = useMemo(() => {
+  // Filter locations whenever searchTerm changes
+  useEffect(() => {
     if (!searchTerm.trim()) {
-      return serviceLocations;
+      setFilteredLocations(locations);
+      setFilteredLocationsCount(locations.length);
+      return;
     }
 
-    const normalizedSearchTerm = searchTerm.toLowerCase().trim();
-    
-    return serviceLocations.filter(
-      location => 
-        location.name.toLowerCase().includes(normalizedSearchTerm) || 
-        location.primaryCity.toLowerCase().includes(normalizedSearchTerm) ||
+    const lowercasedSearch = searchTerm.toLowerCase();
+    const filtered = locations.filter(location => {
+      return (
+        location.name.toLowerCase().includes(lowercasedSearch) ||
+        location.primaryCity.toLowerCase().includes(lowercasedSearch) ||
         (location.serviceAreas && location.serviceAreas.some(area => 
-          area.toLowerCase().includes(normalizedSearchTerm)
+          area.toLowerCase().includes(lowercasedSearch)
         ))
-    );
-  }, [searchTerm]);
+      );
+    });
 
-  // Handle search input change
-  const handleSearchChange = useCallback((term: string) => {
-    setSearchTerm(term);
+    setFilteredLocations(filtered);
+    setFilteredLocationsCount(filtered.length);
+  }, [searchTerm, locations]);
+
+  const handleSearchChange = useCallback((value: string) => {
+    setSearchTerm(value);
   }, []);
 
-  // Clear search term
   const clearSearch = useCallback(() => {
     setSearchTerm('');
   }, []);
 
-  // Simulate search loading (can be removed or modified if not needed)
-  useEffect(() => {
-    if (searchTerm) {
-      setLoading(true);
-      const timer = setTimeout(() => {
-        setLoading(false);
-      }, 300);
-      return () => clearTimeout(timer);
-    }
-  }, [searchTerm]);
-
   return {
     searchTerm,
+    setSearchTerm: handleSearchChange,
     filteredLocations,
-    filteredLocationsCount: filteredLocations.length,
-    loading,
-    handleSearchChange,
-    clearSearch
+    filteredLocationsCount,
+    clearSearch,
+    setLocations, // Expose this function to update locations from parent
   };
 };

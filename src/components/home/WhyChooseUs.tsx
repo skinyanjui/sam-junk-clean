@@ -1,49 +1,89 @@
 
+import { useState, useEffect } from 'react';
 import { Check, Award, Users, Truck, Calendar, Shield, Leaf, Star } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { useResponsiveLayout } from '@/hooks/use-mobile';
+import { CompanyBenefit, CompanyStat, fetchCompanyBenefits, fetchCompanyStats } from '@/integrations/supabase/companyService';
+import { Skeleton } from '@/components/ui/skeleton';
 
 const WhyChooseUs = () => {
   const { isMobile, isLandscapeMobile } = useResponsiveLayout();
-  
-  // Enhanced benefits with descriptive copy for better SEO
-  const benefits = [
-    { 
-      title: 'Military Precision',
-      description: 'Veteran-owned business bringing discipline and excellence to every job',
-      icon: Shield,
-      color: 'bg-brand-blue/10 text-brand-blue'
-    },
-    { 
-      title: 'Rapid Response',
-      description: 'Same-day service available - we know you want your space back ASAP',
-      icon: Calendar,
-      color: 'bg-brand-red/10 text-brand-red'
-    },
-    { 
-      title: 'Eco-Conscious',
-      description: 'We recycle or donate up to 95% of what we collect to minimize landfill impact',
-      icon: Leaf,
-      color: 'bg-green-100 text-green-700'
-    },
-    { 
-      title: 'Local & Reliable',
-      description: 'Extensive coverage throughout IN, KY, and IL with local expertise',
-      icon: Truck,
-      color: 'bg-amber-100 text-amber-700'
-    }
-  ];
+  const [benefits, setBenefits] = useState<CompanyBenefit[]>([]);
+  const [stats, setStats] = useState<CompanyStat[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  // Improved service statistics with more meaningful metrics
-  const serviceStats = [
-    { value: '25+', label: 'Cities Served' },
-    { value: '3', label: 'States Covered' },
-    { value: '24h', label: 'Response Time' },
-    { value: '95%', label: 'Recycling Rate' },
-  ];
+  useEffect(() => {
+    const loadData = async () => {
+      setIsLoading(true);
+      try {
+        const [benefitsData, statsData] = await Promise.all([
+          fetchCompanyBenefits(),
+          fetchCompanyStats()
+        ]);
+        setBenefits(benefitsData);
+        setStats(statsData);
+      } catch (error) {
+        console.error('Error loading company data:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadData();
+  }, []);
+
+  // Helper function to get the right icon component based on string name
+  const getIconComponent = (iconName: string) => {
+    const iconMap: Record<string, React.ReactNode> = {
+      'Shield': <Shield className="h-6 w-6" />,
+      'Calendar': <Calendar className="h-6 w-6" />,
+      'Leaf': <Leaf className="h-6 w-6" />,
+      'Truck': <Truck className="h-6 w-6" />,
+      'Award': <Award className="h-6 w-6" />,
+      'Users': <Users className="h-6 w-6" />,
+      'Star': <Star className="h-6 w-6" />,
+    };
+
+    return iconMap[iconName] || <Shield className="h-6 w-6" />;
+  };
+
+  // Loading skeleton
+  if (isLoading) {
+    return (
+      <section className={`py-16 ${isMobile ? 'px-4 py-12' : isLandscapeMobile ? 'py-16' : 'py-20'} bg-gradient-to-b from-white to-brand-gray/40`}>
+        <div className="container-custom">
+          <div className="text-center mb-12">
+            <Skeleton className="h-4 w-36 mx-auto mb-2" />
+            <Skeleton className="h-10 w-64 mx-auto mb-4" />
+            <Skeleton className="h-1 w-20 mx-auto mb-6" />
+            <Skeleton className="h-4 w-full max-w-2xl mx-auto" />
+          </div>
+          
+          <div className={`grid ${isMobile ? 'grid-cols-1 sm:grid-cols-2 gap-4' : 'md:grid-cols-4 gap-6'} mb-12`}>
+            {[1, 2, 3, 4].map((index) => (
+              <Card key={index} className="border-0 shadow-lg">
+                <CardContent className={`p-6 ${isMobile ? 'py-4' : ''}`}>
+                  <Skeleton className="w-12 h-12 rounded-full mb-4" />
+                  <Skeleton className="h-6 w-36 mb-2" />
+                  <Skeleton className="h-4 w-full mb-1" />
+                  <Skeleton className="h-4 w-full" />
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+          
+          <Skeleton className="w-full h-40 rounded-2xl mb-12" />
+          
+          <div className="text-center">
+            <Skeleton className="h-10 w-40 mx-auto" />
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className={`py-16 ${isMobile ? 'px-4 py-12' : isLandscapeMobile ? 'py-16' : 'py-20'} bg-gradient-to-b from-white to-brand-gray/40`}>
@@ -62,11 +102,11 @@ const WhyChooseUs = () => {
         
         {/* Benefits Grid */}
         <div className={`grid ${isMobile ? 'grid-cols-1 sm:grid-cols-2 gap-4' : 'md:grid-cols-4 gap-6'} mb-12`}>
-          {benefits.map((benefit, index) => (
-            <Card key={index} className="border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+          {benefits.map((benefit) => (
+            <Card key={benefit.id} className="border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
               <CardContent className={`p-6 ${isMobile ? 'py-4' : ''}`}>
-                <div className={`w-12 h-12 rounded-full ${benefit.color} flex items-center justify-center mb-4`}>
-                  <benefit.icon className="h-6 w-6" />
+                <div className={`w-12 h-12 rounded-full ${benefit.color_class} flex items-center justify-center mb-4`}>
+                  {getIconComponent(benefit.icon)}
                 </div>
                 <h3 className="text-xl font-bold text-brand-navy mb-2">{benefit.title}</h3>
                 <p className="text-gray-600">{benefit.description}</p>
@@ -78,11 +118,11 @@ const WhyChooseUs = () => {
         {/* Stats Section */}
         <div className="bg-white rounded-2xl shadow-xl overflow-hidden mb-12">
           <div className={`grid ${isMobile ? 'grid-cols-2' : 'md:grid-cols-4'}`}>
-            {serviceStats.map((stat, index) => (
+            {stats.map((stat, index) => (
               <div 
-                key={index} 
+                key={stat.id} 
                 className={`p-6 ${isMobile ? 'py-4' : 'md:p-8'} text-center ${
-                  index < serviceStats.length - 1 ? 'border-r border-gray-100' : ''
+                  index < stats.length - 1 ? 'border-r border-gray-100' : ''
                 }`}
               >
                 <p className={`${isMobile ? 'text-3xl' : 'text-4xl md:text-5xl'} font-bold text-brand-navy mb-2`}>

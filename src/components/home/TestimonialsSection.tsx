@@ -1,4 +1,5 @@
 
+import { useState, useEffect } from 'react';
 import { Star, MapPin, Quote } from 'lucide-react';
 import { useResponsiveLayout } from '@/hooks/use-mobile';
 import {
@@ -9,55 +10,70 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { Card } from '@/components/ui/card';
-
-type Testimonial = {
-  name: string;
-  location: string;
-  quote: string;
-  rating: number;
-};
+import { Testimonial, fetchTestimonials } from '@/integrations/supabase/testimonialsService';
+import { Skeleton } from '@/components/ui/skeleton';
 
 const TestimonialsSection = () => {
   const { isMobile, isLandscapeMobile } = useResponsiveLayout();
+  const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   
-  const testimonials = [
-    {
-      name: 'Sarah Johnson',
-      location: 'Evansville, IN',
-      quote: 'Uncle Sam\'s team cleared out my mom\'s entire basement in just hours. They were respectful, efficient and even swept up afterward!',
-      rating: 5
-    },
-    {
-      name: 'Mike Reynolds',
-      location: 'Henderson, KY',
-      quote: 'After our office remodel, they handled all our old furniture and fixtures. The crew was professional and recycled everything possible.',
-      rating: 5
-    },
-    {
-      name: 'Jennifer Williams',
-      location: 'Newburgh, IN',
-      quote: 'Called at 9am, they were at my house by 2pm the same day! No hidden fees, just straightforward service at a fair price.',
-      rating: 5
-    },
-    {
-      name: 'Robert Douglas',
-      location: 'Owensboro, KY',
-      quote: 'As a property manager, I\'ve worked with many junk removal services. Uncle Sam\'s is by far the most reliable and thorough.',
-      rating: 5
-    },
-    {
-      name: 'Amanda Carter',
-      location: 'Boonville, IN',
-      quote: 'When my father passed, they handled the estate cleanout with remarkable compassion and care. Can\'t recommend them enough.',
-      rating: 5
-    }
-  ];
+  useEffect(() => {
+    const loadTestimonials = async () => {
+      setIsLoading(true);
+      try {
+        const data = await fetchTestimonials();
+        setTestimonials(data);
+      } catch (error) {
+        console.error('Error loading testimonials:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadTestimonials();
+  }, []);
   
   const renderStars = (rating: number) => {
     return Array(rating).fill(0).map((_, i) => (
       <Star key={i} size={16} fill="#FFD700" color="#FFD700" />
     ));
   };
+
+  // Loading skeleton
+  if (isLoading) {
+    return (
+      <section className={`py-16 ${isMobile ? 'px-4 py-12' : 'py-20'} bg-white relative overflow-hidden`}>
+        <div className="container-custom text-center mb-10 relative z-10">
+          <Skeleton className="h-6 w-40 mx-auto mb-2" />
+          <Skeleton className="h-10 w-64 mx-auto mb-4" />
+          <Skeleton className="h-1 w-20 mx-auto mb-6" />
+          <Skeleton className="h-5 w-full max-w-3xl mx-auto" />
+        </div>
+        
+        <div className="container-custom">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {[1, 2, 3].map(i => (
+              <Card key={i} className="p-6 h-[280px]">
+                <Skeleton className="h-4 w-24 mb-4" />
+                <Skeleton className="h-4 w-full mb-2" />
+                <Skeleton className="h-4 w-full mb-2" />
+                <Skeleton className="h-4 w-full mb-2" />
+                <Skeleton className="h-4 w-3/4 mb-6" />
+                <div className="flex items-center mt-auto pt-4 border-t">
+                  <Skeleton className="h-10 w-10 rounded-full mr-3" />
+                  <div>
+                    <Skeleton className="h-4 w-28 mb-1" />
+                    <Skeleton className="h-3 w-20" />
+                  </div>
+                </div>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className={`py-16 ${isMobile ? 'px-4 py-12' : 'py-20'} bg-white relative overflow-hidden`}>
@@ -87,7 +103,7 @@ const TestimonialsSection = () => {
           <CarouselContent className="-ml-4">
             {testimonials.map((testimonial, index) => (
               <CarouselItem 
-                key={index} 
+                key={testimonial.id} 
                 className={`pl-4 ${isMobile ? 'basis-full' : isLandscapeMobile ? 'basis-1/2' : 'basis-1/3'} min-h-[280px]`}
               >
                 <Card className="bg-white border border-gray-100 p-6 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 h-full flex flex-col">

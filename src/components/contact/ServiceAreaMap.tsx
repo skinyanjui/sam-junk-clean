@@ -1,11 +1,65 @@
 
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { serviceLocations } from '@/data/serviceLocations';
 import { MapPin, ArrowUpRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { fetchServiceLocations } from '@/integrations/supabase/serviceLocationsService';
+import { LocationData } from '@/types/locations';
+import { Skeleton } from '@/components/ui/skeleton';
 
 const ServiceAreaMap = () => {
   const { t } = useTranslation();
+  const [serviceLocations, setServiceLocations] = useState<LocationData[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  
+  useEffect(() => {
+    const loadServiceLocations = async () => {
+      setIsLoading(true);
+      try {
+        const data = await fetchServiceLocations();
+        setServiceLocations(data);
+      } catch (error) {
+        console.error('Error loading service locations:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadServiceLocations();
+  }, []);
+  
+  // Loading skeleton
+  if (isLoading) {
+    return (
+      <section className="py-20 bg-brand-gray">
+        <div className="container-custom">
+          <div className="max-w-5xl mx-auto">
+            <div className="text-center mb-8">
+              <Skeleton className="h-14 w-14 rounded-full mx-auto mb-4" />
+              <Skeleton className="h-8 w-64 mx-auto mb-3" />
+              <Skeleton className="h-4 w-full max-w-2xl mx-auto" />
+            </div>
+            
+            <div className="rounded-xl overflow-hidden shadow-xl bg-white border border-gray-200">
+              <div className="p-4 bg-white border-b border-gray-200">
+                <div className="flex flex-wrap gap-4 justify-center">
+                  {[1, 2, 3].map((index) => (
+                    <Skeleton key={index} className="h-10 w-32 rounded-full" />
+                  ))}
+                </div>
+              </div>
+              
+              <Skeleton className="h-[500px] w-full" />
+              
+              <div className="p-4 bg-white border-t border-gray-200">
+                <Skeleton className="h-5 w-64 mx-auto" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
   
   return (
     <section className="py-20 bg-brand-gray">
@@ -24,9 +78,9 @@ const ServiceAreaMap = () => {
           <div className="rounded-xl overflow-hidden shadow-xl bg-white border border-gray-200">
             <div className="p-4 bg-white border-b border-gray-200">
               <div className="flex flex-wrap gap-4 justify-center">
-                {Object.entries(serviceLocations).map(([index, location]) => (
+                {serviceLocations.map((location) => (
                   <div 
-                    key={index} 
+                    key={location.id} 
                     className={`px-3 py-1.5 rounded-full text-sm font-medium flex items-center ${
                       location.isPrimary 
                         ? 'bg-brand-red/10 text-brand-red' 

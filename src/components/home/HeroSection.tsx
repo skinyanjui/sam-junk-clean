@@ -1,20 +1,35 @@
+
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { CircleCheck, Phone } from 'lucide-react';
 import { useResponsiveLayout } from '@/hooks/use-mobile';
-import { useEffect, useState } from 'react';
 import BookingForm from '@/components/forms/BookingForm';
 import { useToast } from '@/hooks/use-toast';
 import { motion } from 'framer-motion';
+import { fetchSiteContent } from '@/integrations/supabase/siteContentService';
+import { Skeleton } from '@/components/ui/skeleton';
+
 const HeroSection = () => {
-  const {
-    isMobile,
-    orientation,
-    isLandscapeMobile
-  } = useResponsiveLayout();
-  const {
-    toast
-  } = useToast();
+  const { isMobile, orientation, isLandscapeMobile } = useResponsiveLayout();
+  const { toast } = useToast();
+  const [heroContent, setHeroContent] = useState<Record<string, string>>({});
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const loadHeroContent = async () => {
+      try {
+        const content = await fetchSiteContent('hero');
+        setHeroContent(content);
+      } catch (error) {
+        console.error('Error loading hero content:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadHeroContent();
+  }, []);
 
   // Handle viewport height for mobile devices
   const [viewportHeight, setViewportHeight] = useState("100vh");
@@ -39,6 +54,7 @@ const HeroSection = () => {
       window.removeEventListener('orientationchange', updateViewportHeight);
     };
   }, [isMobile, orientation]);
+  
   const handleCallClick = () => {
     toast({
       title: "Calling...",
@@ -46,12 +62,61 @@ const HeroSection = () => {
       duration: 3000
     });
   };
-  return <section className="relative flex items-center overflow-hidden bg-brand-navy" style={{
-    height: isLandscapeMobile ? "auto" : isMobile ? "auto" : viewportHeight,
-    minHeight: isLandscapeMobile ? "90vh" : isMobile ? "auto" : "100vh",
-    paddingTop: isMobile ? "2rem" : "0",
-    paddingBottom: isMobile ? "2rem" : "0"
-  }} aria-label="Main junk removal services">
+
+  // Loading skeleton
+  if (isLoading) {
+    return (
+      <section className="relative flex items-center overflow-hidden bg-brand-navy" style={{
+        height: isLandscapeMobile ? "auto" : isMobile ? "auto" : viewportHeight,
+        minHeight: isLandscapeMobile ? "90vh" : isMobile ? "auto" : "100vh",
+        paddingTop: isMobile ? "2rem" : "0",
+        paddingBottom: isMobile ? "2rem" : "0"
+      }}>
+        <div className="container-custom relative z-10">
+          <div className="grid md:grid-cols-12 gap-4 md:gap-8 items-center">
+            {/* Hero content loading skeleton */}
+            <div className="md:col-span-7 lg:col-span-7 text-white">
+              <Skeleton className="h-16 w-full mb-2 md:mb-6" />
+              <Skeleton className="h-8 w-4/5 mb-3 md:mb-8" />
+              
+              <div className="flex flex-col space-y-2 md:space-y-3 mb-3 md:mb-8">
+                <Skeleton className="h-6 w-64" />
+                <Skeleton className="h-6 w-72" />
+                <Skeleton className="h-6 w-80" />
+              </div>
+              
+              <div className="flex flex-col sm:flex-row gap-4 mb-6">
+                <Skeleton className="h-12 w-48" />
+                <Skeleton className="h-12 w-48" />
+              </div>
+            </div>
+
+            {/* Form skeleton */}
+            <div className="hidden md:block md:col-span-5 lg:col-span-5">
+              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-5 border border-white/10 shadow-xl">
+                <Skeleton className="h-72 w-full" />
+              </div>
+            </div>
+          </div>
+          
+          {/* Mobile booking form skeleton */}
+          <div className="mt-4 md:hidden">
+            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/10 shadow-lg">
+              <Skeleton className="h-64 w-full" />
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  return (
+    <section className="relative flex items-center overflow-hidden bg-brand-navy" style={{
+      height: isLandscapeMobile ? "auto" : isMobile ? "auto" : viewportHeight,
+      minHeight: isLandscapeMobile ? "90vh" : isMobile ? "auto" : "100vh",
+      paddingTop: isMobile ? "2rem" : "0",
+      paddingBottom: isMobile ? "2rem" : "0"
+    }} aria-label="Main junk removal services">
       {/* Background elements */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-gradient-to-b from-brand-navy to-brand-navy/90"></div>
@@ -65,28 +130,32 @@ const HeroSection = () => {
           {/* Hero content */}
           <div className="md:col-span-7 lg:col-span-7 text-white">
             <h1 className={`${isMobile ? 'text-3xl' : 'text-4xl'} ${isLandscapeMobile ? 'text-3xl' : 'sm:text-5xl md:text-6xl lg:text-7xl'} font-extrabold mb-2 md:mb-6 leading-tight tracking-tight`}>
-              Reclaim Your Space <span className="text-brand-red animate-[pulse_3s_ease-in-out_infinite]">TODAY</span> <br className={isLandscapeMobile || isMobile ? 'hidden' : 'inline'} />
-              with Uncle Sam!
+              {heroContent.heading || 'Reclaim Your Space TODAY with Uncle Sam!'}
             </h1>
             
             <p className={`${isMobile ? 'text-base mb-3' : isLandscapeMobile ? 'text-base mb-4' : 'text-lg sm:text-xl md:text-2xl mb-6 md:mb-8'} opacity-90 leading-relaxed max-w-2xl`}>
-              Expert junk removal across the Tri-State area. 
-              Veteran-owned, eco-friendly, and available when you need us!
+              {heroContent.subheading || 'Expert junk removal across the Tri-State area. Veteran-owned, eco-friendly, and available when you need us!'}
             </p>
             
             {/* Value proposition points */}
             <ul className={`flex flex-col space-y-2 md:space-y-3 ${isMobile ? 'mb-3' : isLandscapeMobile ? 'mb-4' : 'mb-6 md:mb-8'} list-none pl-0`} aria-label="Our service advantages">
               <li className="flex items-center gap-2">
                 <CircleCheck className="text-brand-red h-4 w-4 sm:h-5 sm:w-5 flex-shrink-0" aria-hidden="true" />
-                <span className={`text-white/80 ${isMobile || isLandscapeMobile ? 'text-sm' : ''}`}>Fast response times with same-day service</span>
+                <span className={`text-white/80 ${isMobile || isLandscapeMobile ? 'text-sm' : ''}`}>
+                  {heroContent.value_prop_1 || 'Fast response times with same-day service'}
+                </span>
               </li>
               <li className="flex items-center gap-2">
                 <CircleCheck className="text-brand-red h-4 w-4 sm:h-5 sm:w-5 flex-shrink-0" aria-hidden="true" />
-                <span className={`text-white/80 ${isMobile || isLandscapeMobile ? 'text-sm' : ''}`}>Veteran-owned, licensed & fully insured</span>
+                <span className={`text-white/80 ${isMobile || isLandscapeMobile ? 'text-sm' : ''}`}>
+                  {heroContent.value_prop_2 || 'Veteran-owned, licensed & fully insured'}
+                </span>
               </li>
               <li className="flex items-center gap-2">
                 <CircleCheck className="text-brand-red h-4 w-4 sm:h-5 sm:w-5 flex-shrink-0" aria-hidden="true" />
-                <span className={`text-white/80 ${isMobile || isLandscapeMobile ? 'text-sm' : ''}`}>95% recycling rate - we're committed to the environment</span>
+                <span className={`text-white/80 ${isMobile || isLandscapeMobile ? 'text-sm' : ''}`}>
+                  {heroContent.value_prop_3 || '95% recycling rate - we\'re committed to the environment'}
+                </span>
               </li>
             </ul>
             
@@ -118,6 +187,8 @@ const HeroSection = () => {
           </div>
         </div>
       </div>
-    </section>;
+    </section>
+  );
 };
+
 export default HeroSection;

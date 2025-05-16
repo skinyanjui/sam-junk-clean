@@ -1,36 +1,70 @@
 
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
 import { useResponsiveLayout } from '@/hooks/use-mobile';
+import { FeaturedProject, fetchFeaturedProjects } from '@/integrations/supabase/featuredProjectsService';
+import { Skeleton } from '@/components/ui/skeleton';
 
 const FeaturedProjects = () => {
   const { isMobile, orientation } = useResponsiveLayout();
   const isLandscape = orientation === 'landscape';
+  const [projects, setProjects] = useState<FeaturedProject[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   
-  const projects = [
-    {
-      title: "Estate Clearance",
-      location: "Henderson, KY",
-      description: "Complete removal of furniture, appliances, and household items from a 3-bedroom home in just 4 hours.",
-      image: "https://images.unsplash.com/photo-1603796846097-bee99e4a601f?auto=format&fit=crop&q=80",
-      tags: ["Residential", "Estate Cleanout"]
-    },
-    {
-      title: "Office Renovation",
-      location: "Evansville, IN",
-      description: "Removed 2 tons of construction debris, old furniture, and equipment from a commercial office space renovation.",
-      image: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&q=80",
-      tags: ["Commercial", "Construction Debris"]
-    },
-    {
-      title: "Garage Transformation",
-      location: "Newburgh, IN",
-      description: "Cleared out a two-car garage filled with decades of accumulated items in a single afternoon.",
-      image: "https://images.unsplash.com/photo-1584438875946-25aa27a1645e?auto=format&fit=crop&q=80",
-      tags: ["Residential", "Garage Cleanout"]
-    }
-  ];
+  useEffect(() => {
+    const loadProjects = async () => {
+      setIsLoading(true);
+      try {
+        const data = await fetchFeaturedProjects();
+        setProjects(data);
+      } catch (error) {
+        console.error('Error loading featured projects:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadProjects();
+  }, []);
+  
+  // Loading skeleton
+  if (isLoading) {
+    return (
+      <section className={`py-10 ${isMobile ? 'px-4 py-8' : 'py-12'} bg-gradient-to-b from-white to-brand-gray/20`}>
+        <div className="container-custom">
+          <div className="text-center mb-8">
+            <Skeleton className="h-4 w-32 mx-auto mb-2" />
+            <Skeleton className="h-10 w-64 mx-auto mb-3" />
+            <Skeleton className="h-4 w-full max-w-3xl mx-auto" />
+          </div>
+
+          <div className={`grid ${isMobile && isLandscape ? 'grid-cols-2 gap-4' : isMobile ? 'grid-cols-1 gap-6' : 'md:grid-cols-3 gap-6'} mt-8`}>
+            {[1, 2, 3].map((_, index) => (
+              <div key={index} className="bg-white rounded-xl shadow-md overflow-hidden border border-gray-400">
+                <div className="h-48">
+                  <Skeleton className="w-full h-full" />
+                </div>
+                <div className="p-4">
+                  <Skeleton className="h-3 w-24 mb-1" />
+                  <Skeleton className="h-6 w-48 mb-2" />
+                  <Skeleton className="h-4 w-full mb-1" />
+                  <Skeleton className="h-4 w-full mb-1" />
+                  <Skeleton className="h-4 w-3/4 mb-3" />
+                  <Skeleton className="h-5 w-48" />
+                </div>
+              </div>
+            ))}
+          </div>
+          
+          <div className="text-center mt-8">
+            <Skeleton className="h-10 w-40 mx-auto" />
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className={`py-10 ${isMobile ? 'px-4 py-8' : 'py-12'} bg-gradient-to-b from-white to-brand-gray/20`}>
@@ -46,11 +80,11 @@ const FeaturedProjects = () => {
         </div>
 
         <div className={`grid ${isMobile && isLandscape ? 'grid-cols-2 gap-4' : isMobile ? 'grid-cols-1 gap-6' : 'md:grid-cols-3 gap-6'} mt-8`}>
-          {projects.map((project, index) => (
-            <div key={index} className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 border border-gray-400">
+          {projects.map((project) => (
+            <div key={project.id} className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 border border-gray-400">
               <div className="relative h-48 overflow-hidden">
                 <img 
-                  src={project.image} 
+                  src={project.image_url} 
                   alt={project.title} 
                   className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
                 />

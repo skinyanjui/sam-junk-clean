@@ -1,4 +1,5 @@
 
+import { useState, useEffect } from 'react';
 import PageLayout from '@/components/PageLayout';
 import SEO from '@/components/SEO';
 import { useTranslation } from 'react-i18next';
@@ -9,16 +10,47 @@ import NoLocationsFound from '@/components/locations/NoLocationsFound';
 import ZipCodeLookup from '@/components/locations/ZipCodeLookup';
 import LocationsCta from '@/components/locations/LocationsCta';
 import { useLocationSearch } from '@/hooks/use-location-search';
+import { fetchServiceLocations } from '@/integrations/supabase/serviceLocationsService';
+import { LocationData } from '@/types/locations';
+import { Skeleton } from '@/components/ui/skeleton';
 
 const Locations = () => {
   const { t } = useTranslation();
+  const [locations, setLocations] = useState<LocationData[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const { 
     searchTerm, 
-    filteredLocations, 
     filteredLocationsCount,
     handleSearchChange, 
-    clearSearch 
+    clearSearch,
+    setLocations: setSearchLocations
   } = useLocationSearch();
+
+  useEffect(() => {
+    const loadLocations = async () => {
+      setIsLoading(true);
+      try {
+        const data = await fetchServiceLocations();
+        setLocations(data);
+        setSearchLocations(data); // Update the search hook with the loaded data
+      } catch (error) {
+        console.error('Error loading service locations:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadLocations();
+  }, [setSearchLocations]);
+
+  const filteredLocations = locations.filter(location => 
+    !searchTerm || 
+    location.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    location.primaryCity.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    location.serviceAreas.some(area => 
+      area.toLowerCase().includes(searchTerm.toLowerCase())
+    )
+  );
 
   // Create location-specific schema markup
   const locationSchemaData = {
@@ -81,6 +113,48 @@ const Locations = () => {
       ]
     }
   };
+
+  // Loading skeleton
+  if (isLoading) {
+    return (
+      <PageLayout>
+        <SEO 
+          title="Junk Removal Service Areas | Tri-State Area"
+          description="Uncle Sam Junk Removal serves Evansville, Henderson, Owensboro, Newburgh, and the entire Tri-State area. Find reliable junk removal services near you."
+          keywords="junk removal Evansville, junk removal Owensboro, junk removal Mt. Carmel, Tri-State area junk removal, Henderson junk removal, Princeton junk removal, Newburgh junk removal"
+          structuredData={locationSchemaData}
+        />
+
+        <section className="py-16 bg-white" aria-labelledby="locations-heading">
+          <div className="container-custom">
+            <div className="text-center mb-12">
+              <Skeleton className="h-10 w-64 mx-auto mb-4" />
+              <Skeleton className="h-5 w-full max-w-2xl mx-auto mb-4" />
+              <Skeleton className="h-4 w-full max-w-xl mx-auto" />
+            </div>
+
+            {/* Search Box Skeleton */}
+            <div className="mb-10">
+              <Skeleton className="h-12 w-full max-w-xl mx-auto" />
+            </div>
+
+            {/* Map Section Skeleton */}
+            <Skeleton className="h-[400px] w-full mb-10" />
+
+            {/* Service Area Cards Skeleton */}
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {[1, 2, 3].map((index) => (
+                <Skeleton key={index} className="h-[300px] rounded-xl" />
+              ))}
+            </div>
+          </div>
+        </section>
+        
+        <ZipCodeLookup />
+        <LocationsCta />
+      </PageLayout>
+    );
+  }
 
   return (
     <PageLayout>
