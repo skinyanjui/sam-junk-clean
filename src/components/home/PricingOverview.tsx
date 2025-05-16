@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Check } from 'lucide-react';
@@ -17,7 +18,7 @@ const PricingOverview = () => {
     const loadPricingData = async () => {
       try {
         const data = await fetchPricingTiers();
-        // Use the new preparation function to get display-ready pricing tiers
+        // Use the preparation function to get display-ready pricing tiers
         const processedTiers = preparePricingTiersForOverview(data);
         setPricingTiers(processedTiers);
       } catch (err) {

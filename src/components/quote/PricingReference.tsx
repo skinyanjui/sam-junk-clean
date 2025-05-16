@@ -75,7 +75,7 @@ const PricingReference = () => {
         {midTiers.length > 0 && (
           <div className="flex justify-between text-sm">
             <span>{midTiers[0].tier_name} to {midTiers[1].tier_name}</span>
-            <span className="font-semibold">{midTiers[0].min_price}–${midTiers[1].max_price}</span>
+            <span className="font-semibold">${midTiers[0].min_price}–${midTiers[1].max_price}</span>
           </div>
         )}
 
