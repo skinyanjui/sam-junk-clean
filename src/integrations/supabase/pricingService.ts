@@ -23,6 +23,12 @@ export interface AddOnService {
   sort_order: number;
 }
 
+// Extended interface for frontend display with additional UI properties
+export interface PricingTierDisplay extends PricingTier {
+  features?: string[];
+  popular?: boolean;
+}
+
 /**
  * Fetches all pricing tiers from the database
  * @returns Array of pricing tiers sorted by sort_order
@@ -92,6 +98,62 @@ export async function fetchAddOnServices(): Promise<AddOnService[]> {
     console.error('Failed to fetch add-on services:', error);
     return [];
   }
+}
+
+/**
+ * Prepares pricing tiers for display in the overview component
+ * @returns Array of pricing tiers with display properties
+ */
+export function preparePricingTiersForOverview(tiers: PricingTier[]): PricingTierDisplay[] {
+  if (tiers.length < 3) return [];
+  
+  // Group the tiers into small, medium, and large categories
+  const smallTiers = tiers.filter(t => t.fill_percentage <= 25);
+  const mediumTiers = tiers.filter(t => t.fill_percentage > 25 && t.fill_percentage < 75);
+  const largeTiers = tiers.filter(t => t.fill_percentage >= 75);
+  
+  return [
+    {
+      ...smallTiers[0],
+      tier_name: 'Small Loads',
+      description: smallTiers.length > 1 
+        ? `${smallTiers[0].tier_name} to ${smallTiers[smallTiers.length-1].tier_name}` 
+        : smallTiers[0].description,
+      features: [
+        'Furniture pieces', 
+        'Appliance removal', 
+        'Small cleanouts', 
+        'Quick, single-item pickups'
+      ],
+      popular: false
+    },
+    {
+      ...(mediumTiers[0] || tiers[Math.floor(tiers.length / 2)]),
+      tier_name: 'Medium Loads',
+      description: mediumTiers.length > 1 
+        ? `${mediumTiers[0].tier_name} to ${mediumTiers[mediumTiers.length-1].tier_name}` 
+        : (mediumTiers[0]?.description || '1/4 to 3/4 truck loads'),
+      features: [
+        'Room renovations', 
+        'Basement cleanouts', 
+        'Multi-item removal', 
+        'Office cleanups'
+      ],
+      popular: true
+    },
+    {
+      ...(largeTiers[0] || tiers[tiers.length - 1]),
+      tier_name: 'Full Loads',
+      description: largeTiers[0]?.tier_name || 'Complete truck loads',
+      features: [
+        'Whole home cleanouts', 
+        'Large estate clearings', 
+        'Commercial projects', 
+        'Construction debris'
+      ],
+      popular: false
+    }
+  ];
 }
 
 /**

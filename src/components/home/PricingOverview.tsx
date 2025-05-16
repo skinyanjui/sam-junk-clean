@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Check } from 'lucide-react';
@@ -6,98 +5,21 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { useResponsiveLayout } from '@/hooks/use-mobile';
 import { Badge } from '@/components/ui/badge';
-import { PricingTier, fetchPricingTiers } from '@/integrations/supabase/pricingService';
+import { PricingTier, PricingTierDisplay, fetchPricingTiers, preparePricingTiersForOverview } from '@/integrations/supabase/pricingService';
 import { Skeleton } from '@/components/ui/skeleton';
 
 const PricingOverview = () => {
   const { isMobile, isLandscapeMobile } = useResponsiveLayout();
-  const [pricingTiers, setPricingTiers] = useState<PricingTier[]>([]);
+  const [pricingTiers, setPricingTiers] = useState<PricingTierDisplay[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   
   useEffect(() => {
     const loadPricingData = async () => {
       try {
         const data = await fetchPricingTiers();
-        
-        // For the overview, we'll combine the data into three tiers: small, medium, large
-        if (data.length >= 5) {
-          const smallTiers = data.slice(0, 2); // First 2 tiers
-          const mediumTiers = data.slice(2, 4); // Middle 2 tiers
-          const largeTiers = data.slice(4); // Remaining tiers
-          
-          const processedTiers = [
-            {
-              ...smallTiers[0],
-              tier_name: 'Small Loads',
-              description: `${smallTiers[0].tier_name} to ${smallTiers[1].tier_name}`,
-              price_display: `$${smallTiers[0].min_price}-$${smallTiers[1].max_price}`,
-              features: [
-                'Furniture pieces', 
-                'Appliance removal', 
-                'Small cleanouts', 
-                'Quick, single-item pickups'
-              ],
-              popular: false
-            },
-            {
-              ...mediumTiers[0],
-              tier_name: 'Medium Loads',
-              description: `${mediumTiers[0].tier_name} to ${mediumTiers[1].tier_name}`,
-              price_display: `$${mediumTiers[0].min_price}-$${mediumTiers[1].max_price}`,
-              features: [
-                'Room renovations', 
-                'Basement cleanouts', 
-                'Multi-item removal', 
-                'Office cleanups'
-              ],
-              popular: true
-            },
-            {
-              ...largeTiers[0],
-              tier_name: 'Full Loads',
-              description: largeTiers[0].tier_name,
-              features: [
-                'Whole home cleanouts', 
-                'Large estate clearings', 
-                'Commercial projects', 
-                'Construction debris'
-              ],
-              popular: false
-            }
-          ];
-          
-          setPricingTiers(processedTiers);
-        } else {
-          // Fallback if we don't have enough tiers
-          const defaultTiers = [
-            {
-              ...data[0],
-              tier_name: 'Small Loads',
-              description: data[0]?.tier_name || 'Single items to 1/4 truck',
-              price_display: data[0]?.price_display || '$75-$175',
-              features: ['Furniture pieces', 'Appliance removal', 'Small cleanouts', 'Quick, single-item pickups'],
-              popular: false
-            },
-            {
-              ...(data[1] || data[0]),
-              tier_name: 'Medium Loads',
-              description: data[1]?.tier_name || '1/4 to 3/4 truck loads', 
-              price_display: data[1]?.price_display || '$175-$450',
-              features: ['Room renovations', 'Basement cleanouts', 'Multi-item removal', 'Office cleanups'],
-              popular: true
-            },
-            {
-              ...(data[data.length - 1] || data[0]),
-              tier_name: 'Full Loads',
-              description: data[data.length - 1]?.tier_name || 'Complete truck loads',
-              price_display: data[data.length - 1]?.price_display || '$450-$600+',
-              features: ['Whole home cleanouts', 'Large estate clearings', 'Commercial projects', 'Construction debris'],
-              popular: false
-            }
-          ];
-          
-          setPricingTiers(defaultTiers);
-        }
+        // Use the new preparation function to get display-ready pricing tiers
+        const processedTiers = preparePricingTiersForOverview(data);
+        setPricingTiers(processedTiers);
       } catch (err) {
         console.error('Failed to load pricing data for overview:', err);
         // Set some default data
@@ -236,7 +158,7 @@ const PricingOverview = () => {
                 
                 <CardContent className={`pb-3 ${isMobile ? 'px-3' : ''}`}>
                   <ul className="space-y-1">
-                    {tier.features.map((feature, i) => (
+                    {tier.features?.map((feature, i) => (
                       <li key={i} className="flex items-center text-sm">
                         <Check size={14} className="text-brand-red mr-1 flex-shrink-0" />
                         <span className="text-gray-700">{feature}</span>
