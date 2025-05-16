@@ -105,7 +105,7 @@ const HeroSection = () => {
 
           {/* Booking form column */}
           <div className="hidden md:block md:col-span-5 lg:col-span-5">
-            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-5 border border-white/10 shadow-xl px-[10px] py-[10px]">
+            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-5 border border-white/10 shadow-xl py-[10px] mx-[20px] px-[5px]">
               <BookingForm variant="hero" className="max-w-md mx-auto" />
             </div>
           </div>
