@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -120,15 +119,7 @@ export default {
 			fontFamily: {
 				'montserrat': ['Montserrat', 'sans-serif'],
 				'opensans': ['Open Sans', 'sans-serif'],
-			},
-			borderWidth: {
-				DEFAULT: '1px', // Set default border width to 1px
-				'0': '0',
-				'1': '1px', 
-				'2': '2px',
-				'4': '4px',
-				'8': '8px',
-			},
+			}
 		}
 	},
 	plugins: [require("tailwindcss-animate")],

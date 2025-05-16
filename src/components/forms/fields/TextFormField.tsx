@@ -21,7 +21,7 @@ export const TextFormField = ({
   register, 
   error,
   type = 'text',
-  inputBorderClass = '', // Removed default border class to use global styling
+  inputBorderClass = 'border-gray-600', // Darker default border
   showValidation = true
 }: TextFormFieldProps) => {
   return (
