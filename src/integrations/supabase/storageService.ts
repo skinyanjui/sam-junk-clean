@@ -1,56 +1,66 @@
 
 import { supabase } from './client';
 
-export async function createBucketIfNotExists(bucketName: string) {
-  // Check if the bucket exists
-  const { data: bucketExists, error: checkError } = await supabase.storage.getBucket(bucketName);
-  
-  if (!bucketExists && checkError) {
-    // Create the bucket if it doesn't exist
-    const { error: createError } = await supabase.storage.createBucket(bucketName, {
-      public: true  // Make bucket publicly accessible
-    });
-    
-    if (createError) {
-      console.error(`Error creating bucket ${bucketName}:`, createError);
-      throw createError;
-    }
-    
-    console.log(`Storage bucket "${bucketName}" created successfully`);
-  }
-}
-
+/**
+ * Upload a file to Supabase storage
+ * @param folder The folder path within the bucket (e.g., 'avatars', 'products')
+ * @param file The file to upload
+ * @param options Optional upload options
+ * @returns URL of the uploaded file or null if upload failed
+ */
 export async function uploadFile(
-  bucketName: string, 
-  file: File, 
-  path?: string
-): Promise<string> {
+  folder: string,
+  file: File,
+  options?: { bucketName?: string }
+): Promise<string | null> {
   try {
-    // Ensure the bucket exists
-    await createBucketIfNotExists(bucketName);
-    
-    // Create a unique file name to avoid collisions
-    const fileName = path 
-      ? `${path}/${Date.now()}_${file.name.replace(/\s+/g, '_')}`
-      : `${Date.now()}_${file.name.replace(/\s+/g, '_')}`;
+    const bucketName = options?.bucketName || 'public';
+    const fileExt = file.name.split('.').pop();
+    const fileName = `${Date.now()}-${Math.random().toString(36).substring(2)}.${fileExt}`;
+    const filePath = `${folder}/${fileName}`;
     
     // Upload the file
     const { error: uploadError } = await supabase.storage
       .from(bucketName)
-      .upload(fileName, file);
+      .upload(filePath, file);
       
     if (uploadError) {
-      throw uploadError;
+      console.error('Error uploading file:', uploadError);
+      return null;
     }
     
     // Get the public URL
-    const { data: { publicUrl } } = supabase.storage
+    const { data } = supabase.storage
       .from(bucketName)
-      .getPublicUrl(fileName);
+      .getPublicUrl(filePath);
       
-    return publicUrl;
+    return data?.publicUrl || null;
   } catch (error) {
-    console.error('Error uploading file:', error);
-    throw error;
+    console.error('File upload failed:', error);
+    return null;
+  }
+}
+
+/**
+ * Delete a file from Supabase storage
+ * @param path The path to the file (including folder)
+ * @param options Optional delete options
+ * @returns true if deletion was successful, false otherwise
+ */
+export async function deleteFile(
+  path: string,
+  options?: { bucketName?: string }
+): Promise<boolean> {
+  try {
+    const bucketName = options?.bucketName || 'public';
+    
+    const { error } = await supabase.storage
+      .from(bucketName)
+      .remove([path]);
+      
+    return !error;
+  } catch (error) {
+    console.error('File deletion failed:', error);
+    return false;
   }
 }

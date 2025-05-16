@@ -4,6 +4,7 @@ import PageLayout from '@/components/PageLayout';
 import QuoteHero from '@/components/quote/QuoteHero';
 import QuoteForm from '@/components/quote/QuoteForm';
 import ProcessSteps from '@/components/quote/ProcessSteps';
+import PricingDisplay from '@/components/quote/PricingDisplay';
 import SEO from '@/components/SEO';
 import { useTranslation } from 'react-i18next';
 
@@ -87,6 +88,9 @@ const Quote = () => {
           </div>
         </div>
       </section>
+
+      {/* Pricing Display Section */}
+      <PricingDisplay />
 
       {/* What to Expect Section */}
       <section id="process-steps" className={formSubmitted ? 'scroll-mt-24' : ''}>

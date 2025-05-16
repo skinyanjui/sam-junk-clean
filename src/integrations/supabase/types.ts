@@ -9,7 +9,213 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      blogs: {
+        Row: {
+          author: string
+          category: string | null
+          content: string
+          created_at: string
+          excerpt: string
+          id: string
+          image_url: string | null
+          slug: string
+          tags: string[] | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          author: string
+          category?: string | null
+          content: string
+          created_at?: string
+          excerpt: string
+          id?: string
+          image_url?: string | null
+          slug: string
+          tags?: string[] | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          author?: string
+          category?: string | null
+          content?: string
+          created_at?: string
+          excerpt?: string
+          id?: string
+          image_url?: string | null
+          slug?: string
+          tags?: string[] | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      booking_requests: {
+        Row: {
+          created_at: string
+          date: string
+          email: string
+          id: string
+          name: string
+          notes: string | null
+          phone: string
+          service: string
+          status: string
+          time: string
+        }
+        Insert: {
+          created_at?: string
+          date: string
+          email: string
+          id?: string
+          name: string
+          notes?: string | null
+          phone: string
+          service: string
+          status?: string
+          time: string
+        }
+        Update: {
+          created_at?: string
+          date?: string
+          email?: string
+          id?: string
+          name?: string
+          notes?: string | null
+          phone?: string
+          service?: string
+          status?: string
+          time?: string
+        }
+        Relationships: []
+      }
+      contact_submissions: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          message: string
+          name: string
+          phone: string | null
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          message: string
+          name: string
+          phone?: string | null
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          message?: string
+          name?: string
+          phone?: string | null
+        }
+        Relationships: []
+      }
+      job_applications: {
+        Row: {
+          additional_info: string | null
+          availability: Json
+          created_at: string
+          education: Json
+          employment_history: Json
+          id: string
+          legal_requirements: Json
+          personal_info: Json
+          position_id: string
+          position_title: string
+          resume_info: Json
+          skills: Json
+          status: string | null
+        }
+        Insert: {
+          additional_info?: string | null
+          availability: Json
+          created_at?: string
+          education: Json
+          employment_history: Json
+          id?: string
+          legal_requirements: Json
+          personal_info: Json
+          position_id: string
+          position_title: string
+          resume_info: Json
+          skills: Json
+          status?: string | null
+        }
+        Update: {
+          additional_info?: string | null
+          availability?: Json
+          created_at?: string
+          education?: Json
+          employment_history?: Json
+          id?: string
+          legal_requirements?: Json
+          personal_info?: Json
+          position_id?: string
+          position_title?: string
+          resume_info?: Json
+          skills?: Json
+          status?: string | null
+        }
+        Relationships: []
+      }
+      quote_requests: {
+        Row: {
+          address: string
+          city: string
+          contact_preference: string
+          created_at: string
+          description: string
+          email: string
+          id: string
+          image_url: string | null
+          job_type: string
+          name: string
+          phone: string
+          same_day: boolean | null
+          status: string | null
+          zip_code: string | null
+        }
+        Insert: {
+          address: string
+          city: string
+          contact_preference: string
+          created_at?: string
+          description: string
+          email: string
+          id?: string
+          image_url?: string | null
+          job_type: string
+          name: string
+          phone: string
+          same_day?: boolean | null
+          status?: string | null
+          zip_code?: string | null
+        }
+        Update: {
+          address?: string
+          city?: string
+          contact_preference?: string
+          created_at?: string
+          description?: string
+          email?: string
+          id?: string
+          image_url?: string | null
+          job_type?: string
+          name?: string
+          phone?: string
+          same_day?: boolean | null
+          status?: string | null
+          zip_code?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
