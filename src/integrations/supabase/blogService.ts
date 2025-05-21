@@ -57,11 +57,11 @@ export const fetchBlogs = async (page = 1, pageSize = 10): Promise<BlogResponse>
     // Transform the data to ensure author is always a string
     const transformedData = data ? data.map(blog => ({
       ...blog,
-      is_featured: blog.is_featured || null,
-      is_pricing_resource: blog.is_pricing_resource || null,
-      category: blog.category || null,
-      tags: blog.tags || null,
-      image_url: blog.image_url || null,
+      is_featured: blog.is_featured ?? null,
+      is_pricing_resource: blog.is_pricing_resource ?? null,
+      category: blog.category ?? null,
+      tags: blog.tags ?? null,
+      image_url: blog.image_url ?? null,
       author: "Sam K" // Always use "Sam K" as the author
     })) : [];
 
@@ -94,11 +94,11 @@ export const fetchBlogBySlug = async (slug: string): Promise<Blog | null> => {
     // Transform the author to always be "Sam K"
     return {
       ...data,
-      is_featured: data.is_featured || null,
-      is_pricing_resource: data.is_pricing_resource || null,
-      category: data.category || null,
-      tags: data.tags || null,
-      image_url: data.image_url || null,
+      is_featured: data.is_featured ?? null,
+      is_pricing_resource: data.is_pricing_resource ?? null,
+      category: data.category ?? null,
+      tags: data.tags ?? null,
+      image_url: data.image_url ?? null,
       author: "Sam K"
     } as Blog;
   } catch (error) {
@@ -127,11 +127,11 @@ export const fetchFeaturedBlogs = async (limit = 3): Promise<Blog[]> => {
     // Transform the data to ensure author is always "Sam K"
     const blogsList = data ? data.map(blog => ({
       ...blog,
-      is_featured: blog.is_featured || null,
-      is_pricing_resource: blog.is_pricing_resource || null,
-      category: blog.category || null,
-      tags: blog.tags || null,
-      image_url: blog.image_url || null,
+      is_featured: blog.is_featured ?? null,
+      is_pricing_resource: blog.is_pricing_resource ?? null,
+      category: blog.category ?? null,
+      tags: blog.tags ?? null,
+      image_url: blog.image_url ?? null,
       author: "Sam K"
     })) : [];
     
@@ -160,11 +160,11 @@ export const fetchAllBlogPosts = async (): Promise<Blog[]> => {
     // Transform the data to ensure author is always "Sam K"
     const blogsList = data ? data.map(blog => ({
       ...blog,
-      is_featured: blog.is_featured || null,
-      is_pricing_resource: blog.is_pricing_resource || null,
-      category: blog.category || null,
-      tags: blog.tags || null,
-      image_url: blog.image_url || null,
+      is_featured: blog.is_featured ?? null,
+      is_pricing_resource: blog.is_pricing_resource ?? null,
+      category: blog.category ?? null,
+      tags: blog.tags ?? null,
+      image_url: blog.image_url ?? null,
       author: "Sam K"
     })) : [];
     
@@ -194,11 +194,11 @@ export const getBlogPostBySlug = async (slug: string): Promise<Blog | null> => {
     // Transform the author to always be "Sam K"
     return {
       ...data,
-      is_featured: data.is_featured || null,
-      is_pricing_resource: data.is_pricing_resource || null,
-      category: data.category || null,
-      tags: data.tags || null,
-      image_url: data.image_url || null,
+      is_featured: data.is_featured ?? null,
+      is_pricing_resource: data.is_pricing_resource ?? null,
+      category: data.category ?? null,
+      tags: data.tags ?? null,
+      image_url: data.image_url ?? null,
       author: "Sam K"
     } as Blog;
   } catch (error) {
@@ -227,11 +227,11 @@ export const fetchPricingResources = async (limit = 3): Promise<Blog[]> => {
     // Transform the data to ensure author is always "Sam K"
     const blogsList = data ? data.map(blog => ({
       ...blog,
-      is_featured: blog.is_featured || null,
-      is_pricing_resource: blog.is_pricing_resource || null,
-      category: blog.category || null,
-      tags: blog.tags || null,
-      image_url: blog.image_url || null,
+      is_featured: blog.is_featured ?? null,
+      is_pricing_resource: blog.is_pricing_resource ?? null,
+      category: blog.category ?? null,
+      tags: blog.tags ?? null,
+      image_url: blog.image_url ?? null,
       author: "Sam K"
     })) : [];
     
