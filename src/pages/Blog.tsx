@@ -9,6 +9,7 @@ import { relatedLinks } from '@/data/blogData';
 import { fetchAllBlogPosts } from '@/integrations/supabase/blogService';
 import { mapBlogToBlogPost } from '@/integrations/supabase/services/blogUtils';
 import { useToast } from '@/hooks/use-toast';
+import { useBlogFilters } from '@/hooks/use-blog-filters';
 
 // Import components
 import BlogHero from '@/components/blog/BlogHero';
@@ -22,11 +23,19 @@ import BlogListHeader from '@/components/blog/BlogListHeader';
 import BlogLoading from '@/components/blog/BlogLoading';
 
 const Blog = () => {
-  const [searchQuery, setSearchQuery] = useState('');
   const [blogPosts, setBlogPosts] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const { toast } = useToast();
+  
+  // Use our custom hook for filtering logic
+  const {
+    searchQuery,
+    setSearchQuery,
+    activeCategory,
+    setActiveCategory,
+    filteredPosts,
+    categories
+  } = useBlogFilters({ posts: blogPosts });
 
   useEffect(() => {
     const fetchBlogPosts = async () => {
@@ -48,21 +57,6 @@ const Blog = () => {
 
     fetchBlogPosts();
   }, [toast]);
-
-  // Filter posts based on search query and category
-  const filteredPosts = blogPosts.filter(post => {
-    const matchesSearch = post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                          post.excerpt.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                          post.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                          (post.tags && post.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase())));
-    
-    const matchesCategory = activeCategory ? post.category === activeCategory : true;
-    
-    return matchesSearch && matchesCategory;
-  });
-
-  // Group posts by category
-  const categories = [...new Set(blogPosts.map(post => post.category))];
 
   // Add icon to related links
   const linksWithIcons = relatedLinks.map(link => {

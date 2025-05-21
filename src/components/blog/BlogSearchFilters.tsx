@@ -19,6 +19,7 @@ const BlogSearchFilters = ({ searchQuery, setSearchQuery }: BlogSearchFiltersPro
           className="pl-10 pr-4 py-2 border-gray-300 focus:border-brand-red"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
+          aria-label="Search blog articles"
         />
       </div>
       {searchQuery && (
@@ -26,6 +27,7 @@ const BlogSearchFilters = ({ searchQuery, setSearchQuery }: BlogSearchFiltersPro
           variant="outline" 
           onClick={() => setSearchQuery('')}
           className="text-sm"
+          aria-label="Clear search"
         >
           Clear
         </Button>

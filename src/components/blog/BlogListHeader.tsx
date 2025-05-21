@@ -9,6 +9,19 @@ interface BlogListHeaderProps {
 }
 
 const BlogListHeader = ({ searchQuery, setSearchQuery, activeCategory }: BlogListHeaderProps) => {
+  // Determine the heading text based on filters
+  const getHeadingText = () => {
+    if (searchQuery && activeCategory) {
+      return `"${searchQuery}" in ${activeCategory}`;
+    } else if (searchQuery) {
+      return `Search: "${searchQuery}"`;
+    } else if (activeCategory) {
+      return activeCategory;
+    } else {
+      return 'All Articles';
+    }
+  };
+
   return (
     <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
       <motion.h2 
@@ -18,7 +31,7 @@ const BlogListHeader = ({ searchQuery, setSearchQuery, activeCategory }: BlogLis
         id="articles-heading" 
         className="text-3xl font-bold text-brand-navy mb-4 md:mb-0"
       >
-        {searchQuery || activeCategory ? 'Search Results' : 'All Articles'}
+        {getHeadingText()}
       </motion.h2>
       
       <BlogSearchFilters searchQuery={searchQuery} setSearchQuery={setSearchQuery} />

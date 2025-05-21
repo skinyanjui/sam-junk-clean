@@ -9,13 +9,16 @@ interface BlogCategoriesProps {
 
 const BlogCategories = ({ categories, activeCategory, onSelectCategory }: BlogCategoriesProps) => {
   return (
-    <div className="flex flex-wrap gap-2 mb-6">
+    <div className="flex flex-wrap gap-2 mb-6" role="tablist" aria-label="Blog categories">
       <Button
         variant={activeCategory === null ? "default" : "outline"}
         onClick={() => onSelectCategory(null)}
         className={`${
           activeCategory === null ? 'bg-brand-red text-white' : 'bg-white'
         } rounded-full`}
+        role="tab"
+        aria-selected={activeCategory === null}
+        aria-controls="all-posts"
       >
         All
       </Button>
@@ -28,6 +31,9 @@ const BlogCategories = ({ categories, activeCategory, onSelectCategory }: BlogCa
           className={`${
             activeCategory === category ? 'bg-brand-red text-white' : 'bg-white'
           } rounded-full`}
+          role="tab"
+          aria-selected={activeCategory === category}
+          aria-controls={`category-${category.toLowerCase().replace(/\s+/g, '-')}`}
         >
           {category}
         </Button>
