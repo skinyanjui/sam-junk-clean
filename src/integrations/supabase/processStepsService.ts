@@ -28,7 +28,7 @@ export const fetchProcessSteps = async (): Promise<ProcessStep[]> => {
         id: '2',
         number: '2',
         title: 'Get a Quote',
-        description: 'We'll provide a detailed estimate based on your needs.',
+        description: 'We\'ll provide a detailed estimate based on your needs.',
         color_class: 'bg-brand-red text-white',
         sort_order: 2,
         created_at: new Date().toISOString()

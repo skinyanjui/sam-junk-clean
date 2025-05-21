@@ -34,7 +34,7 @@ export const fetchServices = async (): Promise<ServiceData[]> => {
       {
         id: '3',
         title: 'Appliance Removal',
-        description: 'We safely remove and dispose of old appliances, ensuring they're properly recycled or disposed of according to regulations.',
+        description: 'We safely remove and dispose of old appliances, ensuring they\'re properly recycled or disposed of according to regulations.',
         items: ['Refrigerators', 'Washing Machines', 'Dryers', 'Dishwashers', 'Ovens'],
         image: '/placeholder.svg',
         relatedBlogs: [
