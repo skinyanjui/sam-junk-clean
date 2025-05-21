@@ -115,10 +115,12 @@ export const fetchFeaturedBlogs = async (limit = 3): Promise<Blog[]> => {
     }
 
     // Transform the data to ensure author is always "Sam K"
-    return (data || []).map(blog => ({
+    const blogsList: Blog[] = (data || []).map(blog => ({
       ...blog,
       author: "Sam K"
-    })) as Blog[];
+    }));
+    
+    return blogsList;
   } catch (error) {
     console.error('Failed to fetch featured blogs:', error);
     return [];
@@ -141,10 +143,12 @@ export const fetchAllBlogPosts = async (): Promise<Blog[]> => {
     }
     
     // Transform the data to ensure author is always "Sam K"
-    return (data || []).map(blog => ({
+    const blogsList: Blog[] = (data || []).map(blog => ({
       ...blog,
       author: "Sam K"
-    })) as Blog[];
+    }));
+    
+    return blogsList;
   } catch (error) {
     console.error('Failed to fetch all blog posts:', error);
     return [];
@@ -196,10 +200,12 @@ export const fetchPricingResources = async (limit = 3): Promise<Blog[]> => {
     }
     
     // Transform the data to ensure author is always "Sam K"
-    return (data || []).map(blog => ({
+    const blogsList: Blog[] = (data || []).map(blog => ({
       ...blog,
       author: "Sam K"
-    })) as Blog[];
+    }));
+    
+    return blogsList;
   } catch (error) {
     console.error('Failed to fetch pricing resources:', error);
     return [];
