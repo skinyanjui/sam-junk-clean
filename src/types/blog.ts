@@ -10,6 +10,6 @@ export type BlogPost = {
   slug: string;
   readTime?: string; // Optional reading time
   tags?: string[]; // Optional array of tags for categorization and SEO
-  isFeatured?: boolean; // Added to match Blog interface
-  isPricingResource?: boolean; // Added to match Blog interface
+  isFeatured?: boolean; // Optional featured flag
+  isPricingResource?: boolean; // Optional pricing resource flag
 };
