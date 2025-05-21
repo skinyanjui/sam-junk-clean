@@ -9,82 +9,46 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      add_on_services: {
-        Row: {
-          created_at: string
-          description: string | null
-          fee_display: string
-          id: string
-          max_fee: number | null
-          min_fee: number
-          service_name: string
-          sort_order: number
-        }
-        Insert: {
-          created_at?: string
-          description?: string | null
-          fee_display: string
-          id?: string
-          max_fee?: number | null
-          min_fee: number
-          service_name: string
-          sort_order: number
-        }
-        Update: {
-          created_at?: string
-          description?: string | null
-          fee_display?: string
-          id?: string
-          max_fee?: number | null
-          min_fee?: number
-          service_name?: string
-          sort_order?: number
-        }
-        Relationships: []
-      }
       blogs: {
         Row: {
           author: string
-          category: string | null
+          category: string
           content: string
           created_at: string
+          date: string
           excerpt: string
           id: string
-          image_url: string | null
+          image_url: string
           is_featured: boolean | null
-          is_pricing_resource: boolean | null
           slug: string
-          tags: string[] | null
           title: string
           updated_at: string
         }
         Insert: {
           author: string
-          category?: string | null
+          category: string
           content: string
           created_at?: string
+          date: string
           excerpt: string
           id?: string
-          image_url?: string | null
+          image_url: string
           is_featured?: boolean | null
-          is_pricing_resource?: boolean | null
           slug: string
-          tags?: string[] | null
           title: string
           updated_at?: string
         }
         Update: {
           author?: string
-          category?: string | null
+          category?: string
           content?: string
           created_at?: string
+          date?: string
           excerpt?: string
           id?: string
-          image_url?: string | null
+          image_url?: string
           is_featured?: boolean | null
-          is_pricing_resource?: boolean | null
           slug?: string
-          tags?: string[] | null
           title?: string
           updated_at?: string
         }
@@ -129,111 +93,6 @@ export type Database = {
         }
         Relationships: []
       }
-      booking_time_slots: {
-        Row: {
-          created_at: string
-          id: string
-          is_available: boolean
-          sort_order: number
-          time_slot: string
-        }
-        Insert: {
-          created_at?: string
-          id?: string
-          is_available?: boolean
-          sort_order: number
-          time_slot: string
-        }
-        Update: {
-          created_at?: string
-          id?: string
-          is_available?: boolean
-          sort_order?: number
-          time_slot?: string
-        }
-        Relationships: []
-      }
-      company_benefits: {
-        Row: {
-          color_class: string
-          created_at: string
-          description: string
-          icon: string
-          id: string
-          sort_order: number | null
-          title: string
-        }
-        Insert: {
-          color_class: string
-          created_at?: string
-          description: string
-          icon: string
-          id?: string
-          sort_order?: number | null
-          title: string
-        }
-        Update: {
-          color_class?: string
-          created_at?: string
-          description?: string
-          icon?: string
-          id?: string
-          sort_order?: number | null
-          title?: string
-        }
-        Relationships: []
-      }
-      company_info: {
-        Row: {
-          created_at: string
-          id: string
-          key: string
-          section: string
-          updated_at: string
-          value: string
-        }
-        Insert: {
-          created_at?: string
-          id?: string
-          key: string
-          section: string
-          updated_at?: string
-          value: string
-        }
-        Update: {
-          created_at?: string
-          id?: string
-          key?: string
-          section?: string
-          updated_at?: string
-          value?: string
-        }
-        Relationships: []
-      }
-      company_stats: {
-        Row: {
-          created_at: string
-          id: string
-          label: string
-          sort_order: number | null
-          value: string
-        }
-        Insert: {
-          created_at?: string
-          id?: string
-          label: string
-          sort_order?: number | null
-          value: string
-        }
-        Update: {
-          created_at?: string
-          id?: string
-          label?: string
-          sort_order?: number | null
-          value?: string
-        }
-        Relationships: []
-      }
       contact_submissions: {
         Row: {
           created_at: string
@@ -261,614 +120,150 @@ export type Database = {
         }
         Relationships: []
       }
-      faq_categories: {
-        Row: {
-          created_at: string
-          id: string
-          name: string
-          slug: string
-          sort_order: number | null
-        }
-        Insert: {
-          created_at?: string
-          id?: string
-          name: string
-          slug: string
-          sort_order?: number | null
-        }
-        Update: {
-          created_at?: string
-          id?: string
-          name?: string
-          slug?: string
-          sort_order?: number | null
-        }
-        Relationships: []
-      }
-      faqs: {
-        Row: {
-          answer: string
-          category_id: string | null
-          created_at: string
-          id: string
-          question: string
-          sort_order: number | null
-        }
-        Insert: {
-          answer: string
-          category_id?: string | null
-          created_at?: string
-          id?: string
-          question: string
-          sort_order?: number | null
-        }
-        Update: {
-          answer?: string
-          category_id?: string | null
-          created_at?: string
-          id?: string
-          question?: string
-          sort_order?: number | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "faqs_category_id_fkey"
-            columns: ["category_id"]
-            isOneToOne: false
-            referencedRelation: "faq_categories"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      featured_projects: {
-        Row: {
-          created_at: string
-          description: string
-          id: string
-          image_url: string
-          location: string
-          sort_order: number | null
-          tags: string[]
-          title: string
-        }
-        Insert: {
-          created_at?: string
-          description: string
-          id?: string
-          image_url: string
-          location: string
-          sort_order?: number | null
-          tags: string[]
-          title: string
-        }
-        Update: {
-          created_at?: string
-          description?: string
-          id?: string
-          image_url?: string
-          location?: string
-          sort_order?: number | null
-          tags?: string[]
-          title?: string
-        }
-        Relationships: []
-      }
-      included_services: {
-        Row: {
-          created_at: string
-          description: string | null
-          icon: string
-          id: string
-          section: string
-          service_name: string
-          sort_order: number
-        }
-        Insert: {
-          created_at?: string
-          description?: string | null
-          icon?: string
-          id?: string
-          section?: string
-          service_name: string
-          sort_order: number
-        }
-        Update: {
-          created_at?: string
-          description?: string | null
-          icon?: string
-          id?: string
-          section?: string
-          service_name?: string
-          sort_order?: number
-        }
-        Relationships: []
-      }
       job_applications: {
         Row: {
           additional_info: string | null
           availability: Json
           created_at: string
-          education: Json
-          employment_history: Json
+          education: Json | null
+          employment_history: Json | null
           id: string
           legal_requirements: Json
           personal_info: Json
           position_id: string
           position_title: string
           resume_info: Json
-          skills: Json
-          status: string | null
+          skills: Json | null
+          status: string
+          updated_at: string
         }
         Insert: {
           additional_info?: string | null
           availability: Json
           created_at?: string
-          education: Json
-          employment_history: Json
+          education?: Json | null
+          employment_history?: Json | null
           id?: string
           legal_requirements: Json
           personal_info: Json
           position_id: string
           position_title: string
           resume_info: Json
-          skills: Json
-          status?: string | null
+          skills?: Json | null
+          status?: string
+          updated_at?: string
         }
         Update: {
           additional_info?: string | null
           availability?: Json
           created_at?: string
-          education?: Json
-          employment_history?: Json
+          education?: Json | null
+          employment_history?: Json | null
           id?: string
           legal_requirements?: Json
           personal_info?: Json
           position_id?: string
           position_title?: string
           resume_info?: Json
-          skills?: Json
-          status?: string | null
+          skills?: Json | null
+          status?: string
+          updated_at?: string
         }
         Relationships: []
       }
-      job_types: {
+      locations: {
         Row: {
-          created_at: string
+          contact_email: string | null
+          contact_phone: string | null
           description: string | null
-          id: string
-          is_active: boolean
+          id: number
+          image_url: string | null
+          is_primary: boolean | null
           name: string
-          sort_order: number
+          primary_city: string
+          service_areas: string[] | null
+          service_radius: string | null
         }
         Insert: {
-          created_at?: string
+          contact_email?: string | null
+          contact_phone?: string | null
           description?: string | null
-          id?: string
-          is_active?: boolean
+          id?: number
+          image_url?: string | null
+          is_primary?: boolean | null
           name: string
-          sort_order: number
+          primary_city: string
+          service_areas?: string[] | null
+          service_radius?: string | null
         }
         Update: {
-          created_at?: string
+          contact_email?: string | null
+          contact_phone?: string | null
           description?: string | null
-          id?: string
-          is_active?: boolean
+          id?: number
+          image_url?: string | null
+          is_primary?: boolean | null
           name?: string
-          sort_order?: number
-        }
-        Relationships: []
-      }
-      navigation_items: {
-        Row: {
-          created_at: string
-          has_dropdown: boolean
-          id: string
-          is_active: boolean
-          name: string
-          parent_id: string | null
-          path: string
-          sort_order: number
-        }
-        Insert: {
-          created_at?: string
-          has_dropdown?: boolean
-          id?: string
-          is_active?: boolean
-          name: string
-          parent_id?: string | null
-          path: string
-          sort_order: number
-        }
-        Update: {
-          created_at?: string
-          has_dropdown?: boolean
-          id?: string
-          is_active?: boolean
-          name?: string
-          parent_id?: string | null
-          path?: string
-          sort_order?: number
-        }
-        Relationships: [
-          {
-            foreignKeyName: "navigation_items_parent_id_fkey"
-            columns: ["parent_id"]
-            isOneToOne: false
-            referencedRelation: "navigation_items"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      pricing_tiers: {
-        Row: {
-          created_at: string
-          description: string
-          fill_level: string
-          fill_percentage: number
-          id: string
-          max_price: number
-          min_price: number
-          price_display: string
-          sort_order: number
-          tier_name: string
-        }
-        Insert: {
-          created_at?: string
-          description: string
-          fill_level: string
-          fill_percentage: number
-          id?: string
-          max_price: number
-          min_price: number
-          price_display: string
-          sort_order: number
-          tier_name: string
-        }
-        Update: {
-          created_at?: string
-          description?: string
-          fill_level?: string
-          fill_percentage?: number
-          id?: string
-          max_price?: number
-          min_price?: number
-          price_display?: string
-          sort_order?: number
-          tier_name?: string
-        }
-        Relationships: []
-      }
-      process_steps: {
-        Row: {
-          color_class: string
-          created_at: string
-          description: string
-          id: string
-          number: string
-          sort_order: number | null
-          title: string
-        }
-        Insert: {
-          color_class: string
-          created_at?: string
-          description: string
-          id?: string
-          number: string
-          sort_order?: number | null
-          title: string
-        }
-        Update: {
-          color_class?: string
-          created_at?: string
-          description?: string
-          id?: string
-          number?: string
-          sort_order?: number | null
-          title?: string
+          primary_city?: string
+          service_areas?: string[] | null
+          service_radius?: string | null
         }
         Relationships: []
       }
       quote_requests: {
         Row: {
-          add_on_services: Json | null
           address: string
           city: string
-          contact_preference: string
+          contact_preference: string | null
           created_at: string
-          description: string
+          description: string | null
           email: string
           id: string
           image_url: string | null
           job_type: string
           name: string
           phone: string
-          pricing_tier_id: string | null
           same_day: boolean | null
-          status: string | null
-          user_id: string
+          service_date: string | null
+          status: string
+          updated_at: string
           zip_code: string | null
         }
         Insert: {
-          add_on_services?: Json | null
           address: string
           city: string
-          contact_preference: string
+          contact_preference?: string | null
           created_at?: string
-          description: string
+          description?: string | null
           email: string
           id?: string
           image_url?: string | null
           job_type: string
           name: string
           phone: string
-          pricing_tier_id?: string | null
           same_day?: boolean | null
-          status?: string | null
-          user_id: string
+          service_date?: string | null
+          status?: string
+          updated_at?: string
           zip_code?: string | null
         }
         Update: {
-          add_on_services?: Json | null
           address?: string
           city?: string
-          contact_preference?: string
+          contact_preference?: string | null
           created_at?: string
-          description?: string
+          description?: string | null
           email?: string
           id?: string
           image_url?: string | null
           job_type?: string
           name?: string
           phone?: string
-          pricing_tier_id?: string | null
           same_day?: boolean | null
-          status?: string | null
-          user_id?: string
+          service_date?: string | null
+          status?: string
+          updated_at?: string
           zip_code?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "quote_requests_pricing_tier_id_fkey"
-            columns: ["pricing_tier_id"]
-            isOneToOne: false
-            referencedRelation: "pricing_tiers"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      related_blogs: {
-        Row: {
-          blog_slug: string
-          blog_title: string
-          created_at: string
-          id: string
-          service_id: string
-        }
-        Insert: {
-          blog_slug: string
-          blog_title: string
-          created_at?: string
-          id?: string
-          service_id: string
-        }
-        Update: {
-          blog_slug?: string
-          blog_title?: string
-          created_at?: string
-          id?: string
-          service_id?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "fk_service"
-            columns: ["service_id"]
-            isOneToOne: false
-            referencedRelation: "services"
-            referencedColumns: ["service_id"]
-          },
-        ]
-      }
-      related_services: {
-        Row: {
-          created_at: string
-          id: string
-          related_service_id: string
-          service_id: string
-        }
-        Insert: {
-          created_at?: string
-          id?: string
-          related_service_id: string
-          service_id: string
-        }
-        Update: {
-          created_at?: string
-          id?: string
-          related_service_id?: string
-          service_id?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "fk_related_service"
-            columns: ["related_service_id"]
-            isOneToOne: false
-            referencedRelation: "services"
-            referencedColumns: ["service_id"]
-          },
-          {
-            foreignKeyName: "fk_service"
-            columns: ["service_id"]
-            isOneToOne: false
-            referencedRelation: "services"
-            referencedColumns: ["service_id"]
-          },
-        ]
-      }
-      service_locations: {
-        Row: {
-          contact_email: string
-          contact_phone: string
-          created_at: string
-          description: string
-          id: string
-          image_url: string
-          is_primary: boolean
-          name: string
-          primary_city: string
-          service_areas: string[]
-          service_radius: string
-          sort_order: number | null
-        }
-        Insert: {
-          contact_email: string
-          contact_phone: string
-          created_at?: string
-          description: string
-          id?: string
-          image_url: string
-          is_primary?: boolean
-          name: string
-          primary_city: string
-          service_areas: string[]
-          service_radius: string
-          sort_order?: number | null
-        }
-        Update: {
-          contact_email?: string
-          contact_phone?: string
-          created_at?: string
-          description?: string
-          id?: string
-          image_url?: string
-          is_primary?: boolean
-          name?: string
-          primary_city?: string
-          service_areas?: string[]
-          service_radius?: string
-          sort_order?: number | null
-        }
-        Relationships: []
-      }
-      service_zip_codes: {
-        Row: {
-          city: string
-          created_at: string
-          id: string
-          is_serviced: boolean
-          state: string
-          zip_code: string
-        }
-        Insert: {
-          city: string
-          created_at?: string
-          id?: string
-          is_serviced?: boolean
-          state: string
-          zip_code: string
-        }
-        Update: {
-          city?: string
-          created_at?: string
-          id?: string
-          is_serviced?: boolean
-          state?: string
-          zip_code?: string
-        }
-        Relationships: []
-      }
-      services: {
-        Row: {
-          created_at: string
-          description: string
-          icon: string
-          id: string
-          image: string
-          items: string[]
-          service_id: string
-          sort_order: number
-          title: string
-          updated_at: string
-        }
-        Insert: {
-          created_at?: string
-          description: string
-          icon: string
-          id?: string
-          image: string
-          items: string[]
-          service_id: string
-          sort_order: number
-          title: string
-          updated_at?: string
-        }
-        Update: {
-          created_at?: string
-          description?: string
-          icon?: string
-          id?: string
-          image?: string
-          items?: string[]
-          service_id?: string
-          sort_order?: number
-          title?: string
-          updated_at?: string
-        }
-        Relationships: []
-      }
-      site_content: {
-        Row: {
-          content: string
-          created_at: string
-          id: string
-          key: string
-          section: string
-          updated_at: string
-        }
-        Insert: {
-          content: string
-          created_at?: string
-          id?: string
-          key: string
-          section: string
-          updated_at?: string
-        }
-        Update: {
-          content?: string
-          created_at?: string
-          id?: string
-          key?: string
-          section?: string
-          updated_at?: string
-        }
-        Relationships: []
-      }
-      testimonials: {
-        Row: {
-          created_at: string
-          id: string
-          location: string
-          name: string
-          quote: string
-          rating: number
-          sort_order: number | null
-        }
-        Insert: {
-          created_at?: string
-          id?: string
-          location: string
-          name: string
-          quote: string
-          rating: number
-          sort_order?: number | null
-        }
-        Update: {
-          created_at?: string
-          id?: string
-          location?: string
-          name?: string
-          quote?: string
-          rating?: number
-          sort_order?: number | null
         }
         Relationships: []
       }
