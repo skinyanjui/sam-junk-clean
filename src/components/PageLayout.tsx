@@ -45,12 +45,12 @@ const PageLayout = ({
   const getSectionSpacing = () => {
     switch (spacing) {
       case 'compact':
-        return 'space-y-4 md:space-y-6'; // Reduced from space-y-6 md:space-y-10
+        return 'space-y-4 md:space-y-6'; 
       case 'spacious':
-        return 'space-y-12 md:space-y-16'; // Reduced from space-y-16 md:space-y-24
+        return 'space-y-12 md:space-y-16';
       case 'default':
       default:
-        return 'space-y-8 md:space-y-12'; // Reduced from space-y-12 md:space-y-16
+        return 'space-y-8 md:space-y-12';
     }
   };
   
@@ -63,7 +63,7 @@ const PageLayout = ({
       <main className={`flex-grow w-full ${getSectionSpacing()}`}>
         {showBreadcrumb && (
           <>
-            <div className={`${breadcrumbClassName} ${isMobile && isLandscape ? 'py-1' : ''}`}>
+            <div className={`${breadcrumbClassName} ${isMobile && isLandscape ? 'py-1' : ''} flex items-center`}>
               <Breadcrumb />
             </div>
             <Divider padding="none" />

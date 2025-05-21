@@ -39,7 +39,7 @@ const WhyWorkWithUs = () => {
       
       <div className="container-custom relative z-10">
         <motion.div 
-          className="text-center mb-10 md:mb-14"
+          className="text-center mb-10 md:mb-14 flex flex-col items-center"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.1 }}
@@ -47,7 +47,7 @@ const WhyWorkWithUs = () => {
         >
           <span className="inline-block px-3 py-1 rounded-full bg-brand-navy/10 text-brand-navy font-medium text-sm mb-3">Join Our Team</span>
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-brand-navy mb-4">Why Work With Us</h2>
-          <p className="text-base md:text-lg text-gray-600 max-w-2xl mx-auto">
+          <p className="text-base md:text-lg text-gray-600 max-w-2xl">
             Join a team that values hard work, camaraderie, and customer satisfaction. 
             We're not just employees - we're a family on a mission to help our community.
           </p>
@@ -61,12 +61,12 @@ const WhyWorkWithUs = () => {
           viewport={{ once: true, amount: 0.1 }}
         >
           <motion.div 
-            className="relative group" 
+            className="relative group flex flex-col" 
             variants={itemVariants}
           >
             <div className="absolute inset-0 bg-gradient-to-br from-brand-navy/5 to-brand-navy/0 rounded-lg transform group-hover:scale-[1.03] transition-all duration-300 ease-out"></div>
-            <div className="relative p-6 md:p-8 bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 h-full border border-gray-100 group-hover:-translate-y-1">
-              <div className="bg-brand-navy/10 w-16 h-16 rounded-xl flex items-center justify-center mx-auto mb-5 transition-transform group-hover:scale-110 duration-300">
+            <div className="relative p-6 md:p-8 bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 h-full border border-gray-100 group-hover:-translate-y-1 flex flex-col items-center">
+              <div className="bg-brand-navy/10 w-16 h-16 rounded-xl flex items-center justify-center mb-5 transition-transform group-hover:scale-110 duration-300">
                 <Users size={isMobile ? 24 : 32} className="text-brand-navy" />
               </div>
               <h3 className="text-lg md:text-xl font-bold text-brand-navy mb-3 text-center">Supportive Team</h3>
@@ -77,12 +77,12 @@ const WhyWorkWithUs = () => {
           </motion.div>
 
           <motion.div 
-            className="relative group" 
+            className="relative group flex flex-col" 
             variants={itemVariants}
           >
             <div className="absolute inset-0 bg-gradient-to-br from-brand-navy/5 to-brand-navy/0 rounded-lg transform group-hover:scale-[1.03] transition-all duration-300 ease-out"></div>
-            <div className="relative p-6 md:p-8 bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 h-full border border-gray-100 group-hover:-translate-y-1">
-              <div className="bg-brand-navy/10 w-16 h-16 rounded-xl flex items-center justify-center mx-auto mb-5 transition-transform group-hover:scale-110 duration-300">
+            <div className="relative p-6 md:p-8 bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 h-full border border-gray-100 group-hover:-translate-y-1 flex flex-col items-center">
+              <div className="bg-brand-navy/10 w-16 h-16 rounded-xl flex items-center justify-center mb-5 transition-transform group-hover:scale-110 duration-300">
                 <Award size={isMobile ? 24 : 32} className="text-brand-navy" />
               </div>
               <h3 className="text-lg md:text-xl font-bold text-brand-navy mb-3 text-center">Growth Opportunities</h3>
@@ -93,12 +93,12 @@ const WhyWorkWithUs = () => {
           </motion.div>
 
           <motion.div 
-            className="relative group" 
+            className="relative group flex flex-col" 
             variants={itemVariants}
           >
             <div className="absolute inset-0 bg-gradient-to-br from-brand-navy/5 to-brand-navy/0 rounded-lg transform group-hover:scale-[1.03] transition-all duration-300 ease-out"></div>
-            <div className="relative p-6 md:p-8 bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 h-full border border-gray-100 group-hover:-translate-y-1">
-              <div className="bg-brand-navy/10 w-16 h-16 rounded-xl flex items-center justify-center mx-auto mb-5 transition-transform group-hover:scale-110 duration-300">
+            <div className="relative p-6 md:p-8 bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 h-full border border-gray-100 group-hover:-translate-y-1 flex flex-col items-center">
+              <div className="bg-brand-navy/10 w-16 h-16 rounded-xl flex items-center justify-center mb-5 transition-transform group-hover:scale-110 duration-300">
                 <Shield size={isMobile ? 24 : 32} className="text-brand-navy" />
               </div>
               <h3 className="text-lg md:text-xl font-bold text-brand-navy mb-3 text-center">Veteran Supportive</h3>

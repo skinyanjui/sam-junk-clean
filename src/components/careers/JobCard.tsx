@@ -21,10 +21,10 @@ interface JobCardProps {
 
 const JobCard = ({ job, onApply }: JobCardProps) => {
   return (
-    <Card className="overflow-hidden hover:shadow-md transition-shadow">
+    <Card className="overflow-hidden hover:shadow-md transition-shadow flex flex-col">
       <CardHeader>
         <div className="flex justify-between items-start">
-          <div>
+          <div className="flex flex-col">
             <CardTitle className="text-2xl text-brand-navy">{job.title}</CardTitle>
             <CardDescription className="text-lg">
               {job.type} • {job.location}
@@ -33,7 +33,7 @@ const JobCard = ({ job, onApply }: JobCardProps) => {
           <Briefcase size={24} className="text-brand-red" />
         </div>
       </CardHeader>
-      <CardContent>
+      <CardContent className="flex-grow">
         <Tabs defaultValue="description" className="w-full">
           <TabsList className="grid w-full grid-cols-3">
             <TabsTrigger value="description">Description</TabsTrigger>
@@ -59,7 +59,7 @@ const JobCard = ({ job, onApply }: JobCardProps) => {
           </TabsContent>
         </Tabs>
       </CardContent>
-      <CardFooter>
+      <CardFooter className="flex justify-end">
         <Button 
           className="w-full md:w-auto bg-brand-red hover:bg-opacity-90"
           onClick={() => onApply(job.id)}

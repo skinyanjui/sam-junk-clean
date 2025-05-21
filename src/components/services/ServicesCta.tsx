@@ -12,7 +12,7 @@ const ServicesCta = () => {
   return (
     <section className={`py-12 ${isMobile ? 'px-4' : 'py-16'} bg-brand-gray`}>
       <div className="container-custom">
-        <div className="bg-brand-navy text-white p-6 md:p-12 rounded-xl shadow-lg text-center border border-gray-600">
+        <div className="bg-brand-navy text-white p-6 md:p-12 rounded-xl shadow-lg text-center border border-gray-600 flex flex-col items-center">
           <h2 className="text-2xl md:text-3xl font-bold mb-3 md:mb-4">Need a Service Not Listed?</h2>
           <p className="text-white/90 text-base md:text-lg max-w-2xl mx-auto mb-6 md:mb-8">
             We handle many other types of junk removal situations. Contact us to discuss your specific needs and get a customized solution.

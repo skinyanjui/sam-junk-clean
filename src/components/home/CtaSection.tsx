@@ -65,7 +65,7 @@ const CtaSection = () => {
             </div>
             
             {/* Content section */}
-            <div className="w-full md:w-3/5 lg:w-2/3 p-8 md:p-10 lg:p-16 text-white">
+            <div className="w-full md:w-3/5 lg:w-2/3 p-8 md:p-10 lg:p-16 text-white flex flex-col">
               <div className="max-w-2xl space-y-6">
                 <motion.div 
                   initial={{ opacity: 0, y: 10 }}
