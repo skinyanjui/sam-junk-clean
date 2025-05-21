@@ -57,8 +57,8 @@ export const fetchBlogs = async (page = 1, pageSize = 10): Promise<BlogResponse>
     // Transform the data to ensure author is always a string and properly handle potentially missing fields
     const transformedData = data ? data.map(blog => ({
       ...blog,
-      is_featured: blog.is_featured === undefined ? null : blog.is_featured,
-      is_pricing_resource: blog.is_pricing_resource === undefined ? null : blog.is_pricing_resource,
+      is_featured: blog.is_featured !== undefined ? blog.is_featured : null,
+      is_pricing_resource: blog.is_pricing_resource !== undefined ? blog.is_pricing_resource : null,
       category: blog.category || null,
       tags: blog.tags || null,
       image_url: blog.image_url || null,
@@ -94,8 +94,8 @@ export const fetchBlogBySlug = async (slug: string): Promise<Blog | null> => {
     // Transform the author to always be "Sam K" and handle potentially missing fields
     return {
       ...data,
-      is_featured: data.is_featured === undefined ? null : data.is_featured,
-      is_pricing_resource: data.is_pricing_resource === undefined ? null : data.is_pricing_resource,
+      is_featured: data.is_featured !== undefined ? data.is_featured : null,
+      is_pricing_resource: data.is_pricing_resource !== undefined ? data.is_pricing_resource : null,
       category: data.category || null,
       tags: data.tags || null,
       image_url: data.image_url || null,
@@ -127,8 +127,8 @@ export const fetchFeaturedBlogs = async (limit = 3): Promise<Blog[]> => {
     // Transform the data to ensure author is always "Sam K" and handle potentially missing fields
     const blogsList = data ? data.map(blog => ({
       ...blog,
-      is_featured: blog.is_featured === undefined ? null : blog.is_featured,
-      is_pricing_resource: blog.is_pricing_resource === undefined ? null : blog.is_pricing_resource,
+      is_featured: blog.is_featured !== undefined ? blog.is_featured : null,
+      is_pricing_resource: blog.is_pricing_resource !== undefined ? blog.is_pricing_resource : null,
       category: blog.category || null,
       tags: blog.tags || null,
       image_url: blog.image_url || null,
@@ -160,8 +160,8 @@ export const fetchAllBlogPosts = async (): Promise<Blog[]> => {
     // Transform the data to ensure author is always "Sam K" and handle potentially missing fields
     const blogsList = data ? data.map(blog => ({
       ...blog,
-      is_featured: blog.is_featured === undefined ? null : blog.is_featured,
-      is_pricing_resource: blog.is_pricing_resource === undefined ? null : blog.is_pricing_resource,
+      is_featured: blog.is_featured !== undefined ? blog.is_featured : null,
+      is_pricing_resource: blog.is_pricing_resource !== undefined ? blog.is_pricing_resource : null,
       category: blog.category || null,
       tags: blog.tags || null,
       image_url: blog.image_url || null,
@@ -194,8 +194,8 @@ export const getBlogPostBySlug = async (slug: string): Promise<Blog | null> => {
     // Transform the author to always be "Sam K" and handle potentially missing fields
     return {
       ...data,
-      is_featured: data.is_featured === undefined ? null : data.is_featured,
-      is_pricing_resource: data.is_pricing_resource === undefined ? null : data.is_pricing_resource,
+      is_featured: data.is_featured !== undefined ? data.is_featured : null,
+      is_pricing_resource: data.is_pricing_resource !== undefined ? data.is_pricing_resource : null,
       category: data.category || null,
       tags: data.tags || null,
       image_url: data.image_url || null,
@@ -227,8 +227,8 @@ export const fetchPricingResources = async (limit = 3): Promise<Blog[]> => {
     // Transform the data to ensure author is always "Sam K" and handle potentially missing fields
     const blogsList = data ? data.map(blog => ({
       ...blog,
-      is_featured: blog.is_featured === undefined ? null : blog.is_featured,
-      is_pricing_resource: blog.is_pricing_resource === undefined ? null : blog.is_pricing_resource,
+      is_featured: blog.is_featured !== undefined ? blog.is_featured : null,
+      is_pricing_resource: blog.is_pricing_resource !== undefined ? blog.is_pricing_resource : null,
       category: blog.category || null,
       tags: blog.tags || null,
       image_url: blog.image_url || null,
