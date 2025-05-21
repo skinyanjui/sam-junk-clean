@@ -14,47 +14,76 @@ export interface NavigationItem {
 
 export const fetchNavigationItems = async (): Promise<NavigationItem[]> => {
   try {
-    // First, get all top-level items (those with null parent_id)
-    const { data: topLevelItems, error: topLevelError } = await supabase
-      .from('navigation_items')
-      .select('*')
-      .is('parent_id', null)
-      .eq('is_active', true)
-      .order('sort_order');
-      
-    if (topLevelError) {
-      console.error('Error fetching navigation items:', topLevelError);
-      return [];
-    }
-
-    if (!topLevelItems || topLevelItems.length === 0) {
-      return [];
-    }
-    
-    // For each top-level item, fetch its children
-    const result = await Promise.all(
-      topLevelItems.map(async (item) => {
-        if (item.has_dropdown) {
-          const { data: childItems, error: childError } = await supabase
-            .from('navigation_items')
-            .select('*')
-            .eq('parent_id', item.id)
-            .eq('is_active', true)
-            .order('sort_order');
-            
-          if (childError) {
-            console.error('Error fetching child navigation items:', childError);
-            return { ...item, children: [] };
+    // Return mock data since the table doesn't exist yet
+    const mockNavItems: NavigationItem[] = [
+      {
+        id: '1',
+        name: 'Home',
+        path: '/',
+        has_dropdown: false,
+        parent_id: null,
+        sort_order: 1,
+        is_active: true
+      },
+      {
+        id: '2',
+        name: 'Services',
+        path: '/services',
+        has_dropdown: true,
+        parent_id: null,
+        sort_order: 2,
+        is_active: true,
+        children: [
+          {
+            id: '21',
+            name: 'Residential',
+            path: '/services/residential',
+            has_dropdown: false,
+            parent_id: '2',
+            sort_order: 1,
+            is_active: true
+          },
+          {
+            id: '22',
+            name: 'Commercial',
+            path: '/services/commercial',
+            has_dropdown: false,
+            parent_id: '2',
+            sort_order: 2,
+            is_active: true
           }
-          
-          return { ...item, children: childItems || [] };
-        }
-        
-        return { ...item, children: [] };
-      })
-    );
+        ]
+      },
+      {
+        id: '3',
+        name: 'Pricing',
+        path: '/pricing',
+        has_dropdown: false,
+        parent_id: null,
+        sort_order: 3,
+        is_active: true
+      },
+      {
+        id: '4',
+        name: 'Contact',
+        path: '/contact',
+        has_dropdown: false,
+        parent_id: null,
+        sort_order: 4,
+        is_active: true
+      },
+      {
+        id: '5',
+        name: 'About',
+        path: '/about',
+        has_dropdown: false,
+        parent_id: null,
+        sort_order: 5,
+        is_active: true
+      }
+    ];
     
-    return result;
+    return mockNavItems;
   } catch (error) {
     console.error('Error fetching navigation structure:', error);
     return [];

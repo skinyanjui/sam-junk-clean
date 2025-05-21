@@ -14,17 +14,41 @@ export interface FeaturedProject {
 
 export const fetchFeaturedProjects = async (): Promise<FeaturedProject[]> => {
   try {
-    const { data, error } = await supabase
-      .from('featured_projects')
-      .select('*')
-      .order('sort_order', { ascending: true });
+    // Return mock data since the table doesn't exist yet
+    const mockProjects: FeaturedProject[] = [
+      {
+        id: '1',
+        title: 'Estate Cleanout',
+        location: 'Evansville, IN',
+        description: 'Complete cleanout of a 3,000 sq ft home after an estate sale. Removed furniture, appliances, and household items.',
+        image_url: '/placeholder.svg',
+        tags: ['Estate', 'Residential', 'Furniture'],
+        sort_order: 1,
+        created_at: new Date().toISOString()
+      },
+      {
+        id: '2',
+        title: 'Office Renovation Debris',
+        location: 'Newburgh, IN',
+        description: 'Removed construction debris and old office furniture during a commercial office renovation.',
+        image_url: '/placeholder.svg',
+        tags: ['Commercial', 'Construction', 'Office'],
+        sort_order: 2,
+        created_at: new Date().toISOString()
+      },
+      {
+        id: '3',
+        title: 'Yard Waste Removal',
+        location: 'Henderson, KY',
+        description: 'Cleared multiple fallen trees and landscaping debris after a storm.',
+        image_url: '/placeholder.svg',
+        tags: ['Yard Waste', 'Residential', 'Storm Cleanup'],
+        sort_order: 3,
+        created_at: new Date().toISOString()
+      }
+    ];
     
-    if (error) {
-      console.error('Error fetching featured projects:', error);
-      throw error;
-    }
-    
-    return data || [];
+    return mockProjects;
   } catch (error) {
     console.error('Failed to fetch featured projects:', error);
     return [];

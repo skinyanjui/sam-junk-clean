@@ -21,27 +21,60 @@ export interface Faq {
 
 export const fetchFaqs = async (categorySlug?: string): Promise<Faq[]> => {
   try {
-    // Use type assertion for now until database schema is updated
-    let query = supabase
-      .from('faqs')
-      .select(`
-        *,
-        category:category_id(id, name, slug, sort_order, created_at)
-      `)
-      .order('sort_order', { ascending: true }) as any;
+    // Return mock data since the table doesn't exist yet
+    const mockFaqs: Faq[] = [
+      {
+        id: '1',
+        question: 'How much does junk removal cost?',
+        answer: 'Our pricing is based on the volume of items you need removed. We offer free on-site estimates before any work begins.',
+        category_id: '1',
+        sort_order: 1,
+        created_at: new Date().toISOString(),
+        category: {
+          id: '1',
+          name: 'Pricing',
+          slug: 'pricing',
+          sort_order: 1,
+          created_at: new Date().toISOString()
+        }
+      },
+      {
+        id: '2',
+        question: 'What items can you remove?',
+        answer: 'We remove almost everything including furniture, appliances, electronics, yard waste, construction debris, and more. Call us for specific items.',
+        category_id: '2',
+        sort_order: 1,
+        created_at: new Date().toISOString(),
+        category: {
+          id: '2',
+          name: 'Services',
+          slug: 'services',
+          sort_order: 2,
+          created_at: new Date().toISOString()
+        }
+      },
+      {
+        id: '3',
+        question: 'How quickly can you come out?',
+        answer: 'We offer same-day and next-day service in most areas. Contact us for availability in your location.',
+        category_id: '3',
+        sort_order: 1,
+        created_at: new Date().toISOString(),
+        category: {
+          id: '3',
+          name: 'Scheduling',
+          slug: 'scheduling',
+          sort_order: 3,
+          created_at: new Date().toISOString()
+        }
+      }
+    ];
     
     if (categorySlug) {
-      query = query.eq('category.slug', categorySlug);
+      return mockFaqs.filter(faq => faq.category?.slug === categorySlug);
     }
     
-    const { data, error } = await query;
-    
-    if (error) {
-      console.error('Error fetching FAQs:', error);
-      throw error;
-    }
-    
-    return data as Faq[] || [];
+    return mockFaqs;
   } catch (error) {
     console.error('Failed to fetch FAQs:', error);
     return [];
@@ -50,18 +83,32 @@ export const fetchFaqs = async (categorySlug?: string): Promise<Faq[]> => {
 
 export const fetchFaqCategories = async (): Promise<FaqCategory[]> => {
   try {
-    // Use type assertion for now until database schema is updated
-    const { data, error } = await supabase
-      .from('faq_categories')
-      .select('*')
-      .order('sort_order', { ascending: true }) as any;
+    // Return mock data since the table doesn't exist yet
+    const mockCategories: FaqCategory[] = [
+      {
+        id: '1',
+        name: 'Pricing',
+        slug: 'pricing',
+        sort_order: 1,
+        created_at: new Date().toISOString()
+      },
+      {
+        id: '2',
+        name: 'Services',
+        slug: 'services',
+        sort_order: 2,
+        created_at: new Date().toISOString()
+      },
+      {
+        id: '3',
+        name: 'Scheduling',
+        slug: 'scheduling',
+        sort_order: 3,
+        created_at: new Date().toISOString()
+      }
+    ];
     
-    if (error) {
-      console.error('Error fetching FAQ categories:', error);
-      throw error;
-    }
-    
-    return data as FaqCategory[] || [];
+    return mockCategories;
   } catch (error) {
     console.error('Failed to fetch FAQ categories:', error);
     return [];
