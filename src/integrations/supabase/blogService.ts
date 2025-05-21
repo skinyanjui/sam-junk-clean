@@ -7,14 +7,14 @@ export interface Blog {
   slug: string;
   excerpt: string;
   content: string;
-  image_url?: string | null;
+  image_url: string | null;
   author: string;
   created_at: string;
   updated_at: string;
-  tags?: string[] | null;
-  category?: string | null;
-  is_featured?: boolean | null;
-  is_pricing_resource?: boolean | null;
+  tags: string[] | null;
+  category: string | null;
+  is_featured: boolean | null;
+  is_pricing_resource: boolean | null;
 }
 
 export interface Category {
@@ -36,9 +36,9 @@ export interface Tag {
  * @param {number} pageSize - The number of posts per page.
  * @returns {Promise<{ data: Blog[]; total: number; }>} - An object containing the blog posts and the total count.
  */
-export const fetchBlogs = async (page: number = 1, pageSize: number = 10): Promise<{ data: Blog[]; total: number }> => {
+export const fetchBlogs = async (page = 1, pageSize = 10): Promise<{ data: Blog[]; total: number }> => {
   const startIndex = (page - 1) * pageSize;
-  let endIndex = startIndex + pageSize - 1;
+  const endIndex = startIndex + pageSize - 1;
 
   try {
     const { data, error, count } = await supabase
@@ -53,7 +53,7 @@ export const fetchBlogs = async (page: number = 1, pageSize: number = 10): Promi
     }
 
     return {
-      data: data || [],
+      data: data as Blog[] || [],
       total: count || 0,
     };
   } catch (error) {
@@ -80,7 +80,7 @@ export const fetchBlogBySlug = async (slug: string): Promise<Blog | null> => {
       return null;
     }
 
-    return data || null;
+    return data as Blog || null;
   } catch (error) {
     console.error('Failed to fetch blog post:', error);
     return null;
@@ -92,7 +92,7 @@ export const fetchBlogBySlug = async (slug: string): Promise<Blog | null> => {
  * @param {number} limit - The maximum number of featured posts to return.
  * @returns {Promise<Blog[]>} - An array of featured blog posts.
  */
-export const fetchFeaturedBlogs = async (limit: number = 3): Promise<Blog[]> => {
+export const fetchFeaturedBlogs = async (limit = 3): Promise<Blog[]> => {
   try {
     const { data, error } = await supabase
       .from('blogs')
@@ -106,7 +106,7 @@ export const fetchFeaturedBlogs = async (limit: number = 3): Promise<Blog[]> => 
       throw error;
     }
 
-    return data || [];
+    return data as Blog[] || [];
   } catch (error) {
     console.error('Failed to fetch featured blogs:', error);
     return [];
@@ -129,7 +129,7 @@ export const fetchAllBlogPosts = async (): Promise<Blog[]> => {
       throw error;
     }
     
-    return data || [];
+    return data as Blog[] || [];
   } catch (error) {
     console.error('Failed to fetch all blog posts:', error);
     return [];
@@ -154,7 +154,7 @@ export const getBlogPostBySlug = async (slug: string): Promise<Blog | null> => {
       return null;
     }
     
-    return data;
+    return data as Blog;
   } catch (error) {
     console.error('Failed to fetch blog post by slug:', error);
     return null;
@@ -166,7 +166,7 @@ export const getBlogPostBySlug = async (slug: string): Promise<Blog | null> => {
  * @param limit Maximum number of posts to return (default: 3)
  * @returns Array of blog posts
  */
-export const fetchPricingResources = async (limit: number = 3): Promise<Blog[]> => {
+export const fetchPricingResources = async (limit = 3): Promise<Blog[]> => {
   try {
     const { data, error } = await supabase
       .from('blogs')
@@ -180,7 +180,7 @@ export const fetchPricingResources = async (limit: number = 3): Promise<Blog[]> 
       throw error;
     }
     
-    return data || [];
+    return data as Blog[] || [];
   } catch (error) {
     console.error('Failed to fetch pricing resources:', error);
     return [];
