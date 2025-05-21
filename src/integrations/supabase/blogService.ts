@@ -43,6 +43,7 @@ export const fetchBlogs = async (page = 1, pageSize = 10): Promise<BlogResponse>
   const endIndex = startIndex + pageSize - 1;
 
   try {
+    // Explicit type assertion for the Supabase query response
     const { data, error, count } = await supabase
       .from('blogs')
       .select('*', { count: 'exact' })
@@ -54,12 +55,14 @@ export const fetchBlogs = async (page = 1, pageSize = 10): Promise<BlogResponse>
       throw error;
     }
 
+    // Type assertion for data
     return {
       data: (data || []) as Blog[],
       total: count || 0,
     };
   } catch (error) {
     console.error('Failed to fetch blogs:', error);
+    // Return an empty response rather than a recursive call
     return { data: [] as Blog[], total: 0 };
   }
 };
