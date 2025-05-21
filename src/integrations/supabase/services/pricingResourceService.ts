@@ -37,42 +37,45 @@ export const fetchPricingResources = async (limit = 3): Promise<Blog[]> => {
           title: 'How to Estimate Your Junk Removal Costs',
           excerpt: 'Learn how to accurately estimate the cost of your junk removal project before you call.',
           category: 'Pricing',
-          date: new Date().toISOString().split('T')[0],
+          created_at: new Date().toISOString(),
           author: 'Sam Johnson',
-          imageUrl: '/placeholder.svg',
+          image_url: '/placeholder.svg',
           slug: 'estimate-junk-removal-costs',
-          readTime: '5 min read',
+          content: 'Full content goes here',
+          updated_at: new Date().toISOString(),
           tags: ['Pricing', 'Cost Estimation', 'Junk Removal'],
-          isFeatured: false,
-          isPricingResource: true
+          is_featured: false,
+          is_pricing_resource: true
         },
         {
           id: '2',
           title: 'Understanding Junk Removal Pricing Factors',
           excerpt: 'Discover the key factors that influence the cost of junk removal services.',
           category: 'Pricing',
-          date: new Date().toISOString().split('T')[0],
+          created_at: new Date().toISOString(),
           author: 'Emma Wilson',
-          imageUrl: '/placeholder.svg',
+          image_url: '/placeholder.svg',
           slug: 'junk-removal-pricing-factors',
-          readTime: '4 min read',
+          content: 'Full content goes here',
+          updated_at: new Date().toISOString(),
           tags: ['Pricing', 'Cost Factors', 'Services'],
-          isFeatured: false,
-          isPricingResource: true
+          is_featured: false,
+          is_pricing_resource: true
         },
         {
           id: '3',
           title: 'Comparing Junk Removal Pricing Options',
           excerpt: 'A comprehensive comparison of different pricing models for junk removal services.',
           category: 'Pricing',
-          date: new Date().toISOString().split('T')[0],
+          created_at: new Date().toISOString(),
           author: 'Michael Davis',
-          imageUrl: '/placeholder.svg',
+          image_url: '/placeholder.svg',
           slug: 'comparing-pricing-options',
-          readTime: '6 min read',
+          content: 'Full content goes here',
+          updated_at: new Date().toISOString(),
           tags: ['Pricing', 'Comparison', 'Value'],
-          isFeatured: false,
-          isPricingResource: true
+          is_featured: false,
+          is_pricing_resource: true
         }
       ];
 

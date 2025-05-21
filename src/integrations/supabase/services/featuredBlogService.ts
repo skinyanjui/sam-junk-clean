@@ -48,39 +48,42 @@ export const fetchFeaturedBlogs = async (limit = 3): Promise<Blog[]> => {
           title: '5 Tips for Effective Junk Removal',
           excerpt: 'Learn how to prepare your home for a successful junk removal service.',
           category: 'Tips & Advice',
-          date: new Date().toISOString().split('T')[0],
+          created_at: new Date().toISOString(),
           author: 'Sam Johnson',
-          imageUrl: '/placeholder.svg',
+          image_url: '/placeholder.svg',
           slug: '5-tips-for-effective-junk-removal',
-          readTime: '4 min read',
+          content: 'Full content goes here',
+          updated_at: new Date().toISOString(),
           tags: ['Junk Removal', 'Home Organization', 'Tips'],
-          isFeatured: true
+          is_featured: true
         },
         {
           id: '2',
           title: 'Eco-Friendly Junk Disposal Methods',
           excerpt: 'Discover how professional junk removal services help protect the environment.',
           category: 'Sustainability',
-          date: new Date().toISOString().split('T')[0],
+          created_at: new Date().toISOString(),
           author: 'Emma Wilson',
-          imageUrl: '/placeholder.svg',
+          image_url: '/placeholder.svg',
           slug: 'eco-friendly-junk-disposal',
-          readTime: '5 min read',
+          content: 'Full content goes here',
+          updated_at: new Date().toISOString(),
           tags: ['Sustainability', 'Recycling', 'Environment'],
-          isFeatured: true
+          is_featured: true
         },
         {
           id: '3',
           title: 'When to Schedule a Home Cleanout',
           excerpt: 'The best times to schedule a complete home cleanout service.',
           category: 'Services',
-          date: new Date().toISOString().split('T')[0],
+          created_at: new Date().toISOString(),
           author: 'Michael Davis',
-          imageUrl: '/placeholder.svg',
+          image_url: '/placeholder.svg',
           slug: 'when-to-schedule-cleanout',
-          readTime: '3 min read',
+          content: 'Full content goes here',
+          updated_at: new Date().toISOString(),
           tags: ['Home Cleanout', 'Services', 'Planning'],
-          isFeatured: true
+          is_featured: true
         }
       ];
 
