@@ -1,39 +1,25 @@
 
 import { useState, useEffect } from 'react';
-import { Calendar, Tag, Recycle, Search } from 'lucide-react';
+import { Calendar, Tag, Recycle } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 import PageLayout from '@/components/PageLayout';
 import SEO from '@/components/SEO';
 import { relatedLinks } from '@/data/blogData';
-import { Blog as BlogType } from '@/integrations/supabase/blogService';
+import { fetchAllBlogPosts } from '@/integrations/supabase/blogService';
+import { mapBlogToBlogPost } from '@/integrations/supabase/services/blogUtils';
+import { useToast } from '@/hooks/use-toast';
+
+// Import components
 import BlogHero from '@/components/blog/BlogHero';
 import FeaturedPosts from '@/components/blog/FeaturedPosts';
 import AllPosts from '@/components/blog/AllPosts';
 import RelatedResources from '@/components/blog/RelatedResources';
 import CategoriesSection from '@/components/blog/CategoriesSection';
 import BlogCta from '@/components/blog/BlogCta';
-import { fetchAllBlogPosts } from '@/integrations/supabase/blogService';
-import { useToast } from '@/hooks/use-toast';
 import BlogCategories from '@/components/blog/BlogCategories';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-
-// Convert Blog from blogService to the format expected by components
-const mapBlogToBlogPost = (blog: BlogType) => {
-  return {
-    id: blog.id,
-    title: blog.title,
-    slug: blog.slug,
-    excerpt: blog.excerpt,
-    category: blog.category || 'Uncategorized',
-    date: new Date(blog.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
-    author: blog.author,
-    imageUrl: blog.image_url || 'https://images.unsplash.com/photo-1493397212122-2b85dda8106b',
-    tags: blog.tags || [],
-    readTime: '5 min read' // Default read time
-  };
-};
+import BlogListHeader from '@/components/blog/BlogListHeader';
+import BlogLoading from '@/components/blog/BlogLoading';
 
 const Blog = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -136,50 +122,18 @@ const Blog = () => {
       <BlogHero searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
       
       {isLoading ? (
-        <div className="py-16 container-custom text-center">
-          <div className="w-10 h-10 border-4 border-brand-red border-t-transparent rounded-full animate-spin mx-auto"></div>
-          <p className="mt-4 text-gray-600">Loading blog posts...</p>
-        </div>
+        <BlogLoading />
       ) : (
         <>
           <FeaturedPosts posts={blogPosts} />
           
           <section className="py-16 bg-gray-50" aria-labelledby="articles-heading">
             <div className="container-custom">
-              <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
-                <motion.h2 
-                  initial={{ opacity: 0, y: -20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5 }}
-                  id="articles-heading" 
-                  className="text-3xl font-bold text-brand-navy mb-4 md:mb-0"
-                >
-                  {searchQuery || activeCategory ? 'Search Results' : 'All Articles'}
-                </motion.h2>
-                
-                {/* Search and filter controls */}
-                <div className="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
-                  <div className="relative flex-grow max-w-md">
-                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
-                    <Input
-                      type="text"
-                      placeholder="Search articles..."
-                      className="pl-10 pr-4 py-2 border-gray-300 focus:border-brand-red"
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                    />
-                  </div>
-                  {searchQuery && (
-                    <Button 
-                      variant="outline" 
-                      onClick={() => setSearchQuery('')}
-                      className="text-sm"
-                    >
-                      Clear
-                    </Button>
-                  )}
-                </div>
-              </div>
+              <BlogListHeader 
+                searchQuery={searchQuery} 
+                setSearchQuery={setSearchQuery} 
+                activeCategory={activeCategory}
+              />
               
               {/* Categories filter */}
               <div className="mb-8">
