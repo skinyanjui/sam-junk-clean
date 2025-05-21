@@ -16,7 +16,7 @@ const PhoneInput = React.forwardRef<HTMLInputElement, PhoneInputProps>(
       if (value !== undefined && value !== inputValue) {
         setInputValue(value as string);
       }
-    }, [value]);
+    }, [value, inputValue]);
 
     const formatPhoneNumber = (value: string): string => {
       if (!value) return value;
@@ -38,7 +38,15 @@ const PhoneInput = React.forwardRef<HTMLInputElement, PhoneInputProps>(
       setInputValue(formattedValue);
       
       if (onChange) {
-        onChange(e);
+        // Create a new event with the formatted value
+        const newEvent = {
+          ...e,
+          target: {
+            ...e.target,
+            value: formattedValue,
+          },
+        } as ChangeEvent<HTMLInputElement>;
+        onChange(newEvent);
       }
       
       if (onValueChange) {
@@ -56,6 +64,7 @@ const PhoneInput = React.forwardRef<HTMLInputElement, PhoneInputProps>(
         onChange={handleChange}
         ref={ref}
         inputMode="tel"
+        placeholder="(812) 610-1657"
         autoComplete="tel"
         {...props}
       />

@@ -20,27 +20,9 @@ interface DesktopNavProps {
 }
 
 const DesktopNav = ({ navStructure, currentPath, isLoading }: DesktopNavProps) => {
-  const [phoneNumber, setPhoneNumber] = useState('(812) 610-1657');
-  const [isLoadingContact, setIsLoadingContact] = useState(true);
+  // Use the fixed phone number directly
+  const phoneNumber = '(812) 610-1657';
   
-  useEffect(() => {
-    const loadContactInfo = async () => {
-      setIsLoadingContact(true);
-      try {
-        const contactInfo = await getCompanyContactDetails();
-        if (contactInfo && contactInfo.phone) {
-          setPhoneNumber(contactInfo.phone);
-        }
-      } catch (error) {
-        console.error('Error loading contact info:', error);
-      } finally {
-        setIsLoadingContact(false);
-      }
-    };
-    
-    loadContactInfo();
-  }, []);
-
   return (
     <nav className="hidden md:flex items-center space-x-1 lg:space-x-2" aria-label="Main Navigation">
       {isLoading ? (
@@ -64,18 +46,9 @@ const DesktopNav = ({ navStructure, currentPath, isLoading }: DesktopNavProps) =
         className="ml-3 lg:ml-4 bg-white border-gray-700 text-brand-red hover:bg-brand-red hover:text-white transition-colors duration-300 flex items-center gap-1 rounded-md text-sm shadow-sm"
         aria-label={`Call us at ${phoneNumber}`}
       >
-        <a href={`tel:${phoneNumber}`} className="flex items-center px-2 py-1">
-          {isLoadingContact ? (
-            <>
-              <Loader2 size={14} className="mr-1 animate-spin" aria-hidden="true" />
-              <span className="font-medium">Loading...</span>
-            </>
-          ) : (
-            <>
-              <Phone size={14} className="mr-1" strokeWidth={2.5} aria-hidden="true" />
-              <span className="font-medium">{phoneNumber}</span>
-            </>
-          )}
+        <a href="tel:+18126101657" className="flex items-center px-2 py-1">
+          <Phone size={14} className="mr-1" strokeWidth={2.5} aria-hidden="true" />
+          <span className="font-medium">{phoneNumber}</span>
         </a>
       </Button>
     </nav>

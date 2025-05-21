@@ -32,11 +32,8 @@ export interface Tag {
 
 /**
  * Fetches all blog posts with optional pagination.
- * @param {number} page - The page number for pagination.
- * @param {number} pageSize - The number of posts per page.
- * @returns {Promise<{ data: Blog[]; total: number; }>} - An object containing the blog posts and the total count.
  */
-export const fetchBlogs = async (page = 1, pageSize = 10): Promise<{ data: Blog[]; total: number }> => {
+export const fetchBlogs = async (page = 1, pageSize = 10) => {
   const startIndex = (page - 1) * pageSize;
   const endIndex = startIndex + pageSize - 1;
 
@@ -53,19 +50,17 @@ export const fetchBlogs = async (page = 1, pageSize = 10): Promise<{ data: Blog[
     }
 
     return {
-      data: data as Blog[] || [],
+      data: (data || []) as Blog[],
       total: count || 0,
     };
   } catch (error) {
     console.error('Failed to fetch blogs:', error);
-    return { data: [], total: 0 };
+    return { data: [] as Blog[], total: 0 };
   }
 };
 
 /**
  * Fetches a single blog post by its slug.
- * @param {string} slug - The slug of the blog post to fetch.
- * @returns {Promise<Blog | null>} - The blog post or null if not found.
  */
 export const fetchBlogBySlug = async (slug: string): Promise<Blog | null> => {
   try {
@@ -80,7 +75,7 @@ export const fetchBlogBySlug = async (slug: string): Promise<Blog | null> => {
       return null;
     }
 
-    return data as Blog || null;
+    return data as Blog;
   } catch (error) {
     console.error('Failed to fetch blog post:', error);
     return null;
@@ -89,8 +84,6 @@ export const fetchBlogBySlug = async (slug: string): Promise<Blog | null> => {
 
 /**
  * Fetches featured blog posts.
- * @param {number} limit - The maximum number of featured posts to return.
- * @returns {Promise<Blog[]>} - An array of featured blog posts.
  */
 export const fetchFeaturedBlogs = async (limit = 3): Promise<Blog[]> => {
   try {
@@ -106,7 +99,7 @@ export const fetchFeaturedBlogs = async (limit = 3): Promise<Blog[]> => {
       throw error;
     }
 
-    return data as Blog[] || [];
+    return (data || []) as Blog[];
   } catch (error) {
     console.error('Failed to fetch featured blogs:', error);
     return [];
@@ -115,7 +108,6 @@ export const fetchFeaturedBlogs = async (limit = 3): Promise<Blog[]> => {
 
 /**
  * Fetches all blog posts for display in the blog page
- * @returns {Promise<Blog[]>} - An array of all blog posts
  */
 export const fetchAllBlogPosts = async (): Promise<Blog[]> => {
   try {
@@ -129,7 +121,7 @@ export const fetchAllBlogPosts = async (): Promise<Blog[]> => {
       throw error;
     }
     
-    return data as Blog[] || [];
+    return (data || []) as Blog[];
   } catch (error) {
     console.error('Failed to fetch all blog posts:', error);
     return [];
@@ -138,8 +130,6 @@ export const fetchAllBlogPosts = async (): Promise<Blog[]> => {
 
 /**
  * Fetches a single blog post by slug for the blog post page
- * @param {string} slug - The slug of the post to fetch
- * @returns {Promise<Blog | null>} - The blog post or null if not found
  */
 export const getBlogPostBySlug = async (slug: string): Promise<Blog | null> => {
   try {
@@ -163,8 +153,6 @@ export const getBlogPostBySlug = async (slug: string): Promise<Blog | null> => {
 
 /**
  * Fetches blog posts marked as pricing resources
- * @param limit Maximum number of posts to return (default: 3)
- * @returns Array of blog posts
  */
 export const fetchPricingResources = async (limit = 3): Promise<Blog[]> => {
   try {
@@ -180,7 +168,7 @@ export const fetchPricingResources = async (limit = 3): Promise<Blog[]> => {
       throw error;
     }
     
-    return data as Blog[] || [];
+    return (data || []) as Blog[];
   } catch (error) {
     console.error('Failed to fetch pricing resources:', error);
     return [];

@@ -16,7 +16,7 @@ const MobileToggle = ({ isOpen, toggleMenu }: MobileToggleProps) => {
       <a 
         href="tel:+18126101657" 
         className="mr-3 text-brand-red text-sm font-medium hover:text-brand-navy transition-colors duration-300 border border-brand-red/30 rounded-md px-2 py-0.5"
-        aria-label="Call us"
+        aria-label="Call us at 812-610-1657"
       >
         (812) 610-1657
       </a>

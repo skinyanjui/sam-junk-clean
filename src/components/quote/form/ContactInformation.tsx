@@ -2,6 +2,7 @@
 import { useFormContext } from 'react-hook-form';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { PhoneFormField } from '@/components/forms/fields/PhoneFormField';
 
 interface ContactInformationProps {
   errors: Record<string, any>;
@@ -55,15 +56,14 @@ const ContactInformation = ({ errors }: ContactInformationProps) => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="space-y-2">
           <Label htmlFor="phone">Phone Number <span className="text-brand-red">*</span></Label>
-          <Input
+          <PhoneFormField
             id="phone"
-            placeholder="(123) 456-7890"
-            {...register("phone", { required: "Phone number is required" })}
-            className={errors.phone ? "border-red-500" : ""}
+            label=""
+            placeholder="(812) 610-1657"
+            register={register("phone", { required: "Phone number is required" })}
+            error={errors.phone?.message}
+            inputBorderClass={errors.phone ? "border-red-500" : ""}
           />
-          {errors.phone && (
-            <p className="text-red-500 text-sm">{errors.phone.message}</p>
-          )}
         </div>
         
         <div className="space-y-2">

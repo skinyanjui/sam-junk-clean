@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Facebook, Instagram, Twitter, Linkedin, Phone, Mail, MapPin, ChevronDown, ChevronUp, Loader2 } from 'lucide-react';
@@ -16,6 +15,7 @@ const Footer = () => {
     contact: false
   });
 
+  // Set the fixed phone number directly instead of loading from API
   const [contactInfo, setContactInfo] = useState({
     phone: '(812) 610-1657',
     email: 'info@unclesamjunkremoval.com',
@@ -66,20 +66,12 @@ const Footer = () => {
     const fetchFooterData = async () => {
       setIsLoading(true);
       try {
-        const [contactDetails, socialData, hoursData] = await Promise.all([
-          getCompanyContactDetails(),
+        const [socialData, hoursData] = await Promise.all([
           getSocialLinks(),
           getBusinessHours()
         ]);
         
-        if (contactDetails) {
-          setContactInfo({
-            phone: contactDetails.phone || '(812) 610-1657',
-            email: contactDetails.email || 'info@unclesamjunkremoval.com',
-            hours: 'Mon-Sat: 7AM-7PM'
-          });
-        }
-        
+        // Keep the phone number fixed, only update other fields
         if (socialData) {
           setSocialLinks({
             facebook: socialData.facebook || 'https://facebook.com/unclesamjunkremoval',
@@ -116,10 +108,12 @@ const Footer = () => {
   };
 
   return (
+    // ... keep existing code (footer structure)
     <footer className="bg-brand-navy text-white pt-12 pb-6">
       <div className="container-custom">
+        {/* ... keep existing code (top part of footer) */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
-          {/* Company Info - Simplified */}
+          {/* ... keep existing code (first columns) */}
           <div className="flex flex-col items-center md:items-start">
             <img 
               src="/lovable-uploads/92c7287f-ec89-4c0f-9ad4-a2ed585a70a3.png" 
@@ -141,8 +135,6 @@ const Footer = () => {
               </a>
             </div>
           </div>
-
-          {/* Links - Compacted */}
           <div className="text-center md:text-left">
             <h3 
               className="text-lg font-bold mb-4 flex items-center justify-center md:justify-start"
@@ -182,8 +174,6 @@ const Footer = () => {
               </div>
             </div>
           </div>
-
-          {/* Service Areas - Compacted */}
           <div className="text-center md:text-left">
             <h3 
               className="text-lg font-bold mb-4 flex items-center justify-center md:justify-start"
@@ -230,7 +220,7 @@ const Footer = () => {
               )}
             </div>
           </div>
-
+          
           {/* Contact Info - Compacted */}
           <div className="text-center md:text-left">
             <h3 
@@ -252,7 +242,7 @@ const Footer = () => {
                 <ul className="space-y-2 text-sm">
                   <li className="flex items-center justify-center md:justify-start">
                     <Phone size={16} className="mr-2 text-brand-red" />
-                    <a href={`tel:${contactInfo.phone}`} className="text-gray-300">{contactInfo.phone}</a>
+                    <a href="tel:+18126101657" className="text-gray-300">(812) 610-1657</a>
                   </li>
                   <li className="flex items-center justify-center md:justify-start">
                     <Mail size={16} className="mr-2 text-brand-red" />

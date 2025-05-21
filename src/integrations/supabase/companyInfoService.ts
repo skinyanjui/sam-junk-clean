@@ -42,7 +42,8 @@ export const getCompanyContactDetails = async () => {
     if (error) {
       console.error('Error fetching company contact details:', error);
       return {
-        phone: '(800) 555-1234',
+        // Always return the correct phone number regardless of DB value
+        phone: '(812) 610-1657',
         email: 'info@example.com',
         address: '123 Main St',
         city: 'Anytown',
@@ -53,15 +54,25 @@ export const getCompanyContactDetails = async () => {
     
     // Convert array to object with key-value pairs
     const contactInfo = data.reduce((acc: Record<string, string>, item) => {
-      acc[item.key] = item.value;
+      // Ensure phone number is always the correct one
+      if (item.key === 'phone') {
+        acc[item.key] = '(812) 610-1657';
+      } else {
+        acc[item.key] = item.value;
+      }
       return acc;
     }, {});
+    
+    // Ensure phone number is set even if not in database
+    if (!contactInfo.phone) {
+      contactInfo.phone = '(812) 610-1657';
+    }
     
     return contactInfo;
   } catch (error) {
     console.error('Error fetching company contact details:', error);
     return {
-      phone: '(800) 555-1234',
+      phone: '(812) 610-1657',
       email: 'info@example.com',
       address: '123 Main St',
       city: 'Anytown',
