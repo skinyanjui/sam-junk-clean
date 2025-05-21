@@ -2,7 +2,6 @@
 // Export all blog-related services from this main file
 // to maintain backward compatibility
 
-import { Blog, BlogResponse, Category, Tag } from './types/blog';
 import { 
   fetchBlogs, 
   fetchBlogBySlug, 
@@ -12,12 +11,11 @@ import {
 import { fetchFeaturedBlogs } from './services/featuredBlogService';
 import { fetchPricingResources } from './services/pricingResourceService';
 
-// Re-export interfaces and functions to maintain the same API
+// Re-export types using 'export type' syntax for isolatedModules compatibility
+export type { Blog, BlogResponse, Category, Tag } from './types/blog';
+
+// Re-export functions to maintain the same API
 export {
-  Blog,
-  BlogResponse,
-  Category,
-  Tag,
   fetchBlogs,
   fetchBlogBySlug,
   fetchFeaturedBlogs,
