@@ -321,6 +321,7 @@ export type Database = {
           primary_city: string
           service_areas: string[] | null
           service_radius: string | null
+          user_id: string | null
         }
         Insert: {
           contact_email?: string | null
@@ -333,6 +334,7 @@ export type Database = {
           primary_city: string
           service_areas?: string[] | null
           service_radius?: string | null
+          user_id?: string | null
         }
         Update: {
           contact_email?: string | null
@@ -345,6 +347,7 @@ export type Database = {
           primary_city?: string
           service_areas?: string[] | null
           service_radius?: string | null
+          user_id?: string | null
         }
         Relationships: []
       }

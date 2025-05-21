@@ -6,64 +6,67 @@ import type { ServiceData, RelatedBlog } from '@/components/services/servicesDat
 // Fetch all services
 export const fetchServices = async (): Promise<ServiceData[]> => {
   try {
-    // Get all services
-    const { data: servicesData, error: servicesError } = await supabase
-      .from('services')
-      .select('*')
-      .order('sort_order');
+    // Return mock data since the table doesn't exist in the current database
+    const mockServices: ServiceData[] = [
+      {
+        id: '1',
+        title: 'Residential Junk Removal',
+        description: 'We help homeowners clear out unwanted items from their properties, including furniture, appliances, and general household junk.',
+        items: ['Furniture', 'Appliances', 'Electronics', 'Yard Waste', 'Construction Debris'],
+        image: '/placeholder.svg',
+        relatedBlogs: [
+          { title: 'How to Prepare for Junk Removal', slug: 'prepare-for-junk-removal' },
+          { title: 'Top 5 Items People Remove From Their Homes', slug: 'top-5-removal-items' }
+        ],
+        relatedServices: ['2', '3']
+      },
+      {
+        id: '2',
+        title: 'Commercial Junk Removal',
+        description: 'Our commercial services help businesses maintain clean, safe, and efficient workspaces by removing office furniture, equipment, and renovation debris.',
+        items: ['Office Furniture', 'Electronic Waste', 'Office Equipment', 'Renovation Debris', 'Commercial Appliances'],
+        image: '/placeholder.svg',
+        relatedBlogs: [
+          { title: 'Keeping Your Business Clean and Organized', slug: 'business-organization' }
+        ],
+        relatedServices: ['1', '4']
+      },
+      {
+        id: '3',
+        title: 'Appliance Removal',
+        description: 'We safely remove and dispose of old appliances, ensuring they're properly recycled or disposed of according to regulations.',
+        items: ['Refrigerators', 'Washing Machines', 'Dryers', 'Dishwashers', 'Ovens'],
+        image: '/placeholder.svg',
+        relatedBlogs: [
+          { title: 'Appliance Disposal Guide', slug: 'appliance-disposal-guide' }
+        ],
+        relatedServices: ['1', '5']
+      },
+      {
+        id: '4',
+        title: 'Construction Debris Removal',
+        description: 'After construction or renovation projects, we help clear out debris and leftover materials to leave your space clean and ready to use.',
+        items: ['Drywall', 'Wood', 'Concrete', 'Flooring Materials', 'Fixtures'],
+        image: '/placeholder.svg',
+        relatedBlogs: [
+          { title: 'Post-Renovation Cleanup Tips', slug: 'post-renovation-cleanup' }
+        ],
+        relatedServices: ['2', '5']
+      },
+      {
+        id: '5',
+        title: 'Estate Cleanout',
+        description: 'We provide compassionate and efficient estate cleanout services to help families during difficult transitions.',
+        items: ['Furniture', 'Personal Items', 'Household Goods', 'Clothing', 'Books and Media'],
+        image: '/placeholder.svg',
+        relatedBlogs: [
+          { title: 'Estate Cleanout: What to Keep and What to Remove', slug: 'estate-cleanout-guide' }
+        ],
+        relatedServices: ['1', '3']
+      }
+    ];
 
-    if (servicesError) {
-      console.error('Error fetching services:', servicesError);
-      return [];
-    }
-
-    // Get related services for all services
-    const { data: relatedServicesData, error: relatedServicesError } = await supabase
-      .from('related_services')
-      .select('*');
-
-    if (relatedServicesError) {
-      console.error('Error fetching related services:', relatedServicesError);
-      return [];
-    }
-
-    // Get related blogs for all services
-    const { data: relatedBlogsData, error: relatedBlogsError } = await supabase
-      .from('related_blogs')
-      .select('*');
-
-    if (relatedBlogsError) {
-      console.error('Error fetching related blogs:', relatedBlogsError);
-      return [];
-    }
-
-    // Transform the data to match our ServiceData type
-    const transformedServices = servicesData.map((service): ServiceData => {
-      // Get related services IDs for this service
-      const relatedServiceIds = relatedServicesData
-        .filter(relation => relation.service_id === service.service_id)
-        .map(relation => relation.related_service_id);
-
-      // Get related blogs for this service
-      const relatedBlogs: RelatedBlog[] = relatedBlogsData
-        .filter(blog => blog.service_id === service.service_id)
-        .map(blog => ({
-          title: blog.blog_title,
-          slug: blog.blog_slug,
-        }));
-
-      return {
-        id: service.service_id,
-        title: service.title,
-        description: service.description,
-        items: service.items,
-        image: service.image,
-        relatedBlogs: relatedBlogs,
-        relatedServices: relatedServiceIds,
-      };
-    });
-
-    return transformedServices;
+    return mockServices;
   } catch (error) {
     console.error('Error in fetchServices:', error);
     return [];
@@ -73,54 +76,15 @@ export const fetchServices = async (): Promise<ServiceData[]> => {
 // Fetch a single service by ID
 export const fetchServiceById = async (serviceId: string): Promise<ServiceData | null> => {
   try {
-    const { data: service, error } = await supabase
-      .from('services')
-      .select('*')
-      .eq('service_id', serviceId)
-      .single();
-
-    if (error) {
-      console.error('Error fetching service by ID:', error);
+    // Find the service in our mock data
+    const mockServices = await fetchServices();
+    const service = mockServices.find(s => s.id === serviceId);
+    
+    if (!service) {
       return null;
     }
 
-    // Get related services for this service
-    const { data: relatedServices, error: relatedServicesError } = await supabase
-      .from('related_services')
-      .select('*')
-      .eq('service_id', serviceId);
-
-    if (relatedServicesError) {
-      console.error('Error fetching related services:', relatedServicesError);
-      return null;
-    }
-
-    // Get related blogs for this service
-    const { data: relatedBlogs, error: relatedBlogsError } = await supabase
-      .from('related_blogs')
-      .select('*')
-      .eq('service_id', serviceId);
-
-    if (relatedBlogsError) {
-      console.error('Error fetching related blogs:', relatedBlogsError);
-      return null;
-    }
-
-    // Transform to ServiceData type
-    const transformedService: ServiceData = {
-      id: service.service_id,
-      title: service.title,
-      description: service.description,
-      items: service.items,
-      image: service.image,
-      relatedBlogs: relatedBlogs.map(blog => ({
-        title: blog.blog_title,
-        slug: blog.blog_slug,
-      })),
-      relatedServices: relatedServices.map(rel => rel.related_service_id),
-    };
-
-    return transformedService;
+    return service;
   } catch (error) {
     console.error('Error in fetchServiceById:', error);
     return null;
@@ -130,16 +94,9 @@ export const fetchServiceById = async (serviceId: string): Promise<ServiceData |
 // Transform service data for the home page service cards
 export const getHomePageServices = async () => {
   try {
-    const { data: services, error } = await supabase
-      .from('services')
-      .select('*')
-      .order('sort_order');
-
-    if (error) {
-      console.error('Error fetching services for home page:', error);
-      return [];
-    }
-
+    // Get our mock services
+    const mockServices = await fetchServices();
+    
     // Import the necessary icons from lucide-react
     const { Home, Building, Refrigerator, Hammer, HeartHandshake, Truck } = await import('lucide-react');
     
@@ -153,9 +110,12 @@ export const getHomePageServices = async () => {
       'Truck': Truck
     };
     
-    return services.map(service => ({
+    // Map an icon to each service
+    const iconNames = ['Home', 'Building', 'Refrigerator', 'Hammer', 'HeartHandshake'];
+    
+    return mockServices.slice(0, 5).map((service, index) => ({
       title: service.title,
-      icon: React.createElement(iconMap[service.icon], { className: "h-8 w-8 text-brand-red mb-2" }),
+      icon: React.createElement(iconMap[iconNames[index]], { className: "h-8 w-8 text-brand-red mb-2" }),
       description: service.description,
       image: service.image,
       alt: `${service.title} service showing ${service.description.toLowerCase()}`
