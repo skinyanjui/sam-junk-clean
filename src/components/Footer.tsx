@@ -108,12 +108,9 @@ const Footer = () => {
   };
 
   return (
-    // ... keep existing code (footer structure)
     <footer className="bg-brand-navy text-white pt-12 pb-6">
       <div className="container-custom">
-        {/* ... keep existing code (top part of footer) */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
-          {/* ... keep existing code (first columns) */}
           <div className="flex flex-col items-center md:items-start">
             <img 
               src="/lovable-uploads/92c7287f-ec89-4c0f-9ad4-a2ed585a70a3.png" 

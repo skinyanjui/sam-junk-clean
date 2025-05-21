@@ -10,9 +10,10 @@ export interface CompanyInfo {
 
 export const fetchCompanyInfo = async (section?: string): Promise<CompanyInfo[]> => {
   try {
+    // Create a type-safe query using a raw query for now until the types are updated
     let query = supabase
       .from('company_info')
-      .select('*');
+      .select('*') as any;
       
     if (section) {
       query = query.eq('section', section);
@@ -34,10 +35,11 @@ export const fetchCompanyInfo = async (section?: string): Promise<CompanyInfo[]>
 
 export const getCompanyContactDetails = async () => {
   try {
+    // Using type assertion to work around typing issues until type generation is updated
     const { data, error } = await supabase
       .from('company_info')
       .select('*')
-      .eq('section', 'contact');
+      .eq('section', 'contact') as any;
       
     if (error) {
       console.error('Error fetching company contact details:', error);
@@ -53,7 +55,7 @@ export const getCompanyContactDetails = async () => {
     }
     
     // Convert array to object with key-value pairs
-    const contactInfo = data.reduce((acc: Record<string, string>, item) => {
+    const contactInfo = data.reduce((acc: Record<string, string>, item: CompanyInfo) => {
       // Ensure phone number is always the correct one
       if (item.key === 'phone') {
         acc[item.key] = '(812) 610-1657';
@@ -84,10 +86,11 @@ export const getCompanyContactDetails = async () => {
 
 export const getSocialLinks = async () => {
   try {
+    // Using type assertion to work around typing issues until type generation is updated
     const { data, error } = await supabase
       .from('company_info')
       .select('*')
-      .eq('section', 'social');
+      .eq('section', 'social') as any;
       
     if (error) {
       console.error('Error fetching social links:', error);
@@ -95,7 +98,7 @@ export const getSocialLinks = async () => {
     }
     
     // Convert array to object with key-value pairs
-    const socialLinks = data.reduce((acc: Record<string, string>, item) => {
+    const socialLinks = data.reduce((acc: Record<string, string>, item: CompanyInfo) => {
       acc[item.key] = item.value;
       return acc;
     }, {});
@@ -109,10 +112,11 @@ export const getSocialLinks = async () => {
 
 export const getBusinessHours = async () => {
   try {
+    // Using type assertion to work around typing issues until type generation is updated
     const { data, error } = await supabase
       .from('company_info')
       .select('*')
-      .eq('section', 'hours');
+      .eq('section', 'hours') as any;
       
     if (error) {
       console.error('Error fetching business hours:', error);
@@ -123,7 +127,7 @@ export const getBusinessHours = async () => {
     }
     
     // Convert array to object with key-value pairs
-    const hoursInfo = data.reduce((acc: Record<string, string>, item) => {
+    const hoursInfo = data.reduce((acc: Record<string, string>, item: CompanyInfo) => {
       acc[item.key.replace('hours_', '')] = item.value;
       return acc;
     }, {});

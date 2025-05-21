@@ -150,6 +150,30 @@ export type Database = {
         }
         Relationships: []
       }
+      company_info: {
+        Row: {
+          created_at: string
+          id: string
+          key: string
+          section: string
+          value: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          key: string
+          section: string
+          value: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          key?: string
+          section?: string
+          value?: string
+        }
+        Relationships: []
+      }
       contact_submissions: {
         Row: {
           created_at: string

@@ -2,8 +2,6 @@
 import { Phone, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import NavItem from './NavItem';
-import { useEffect, useState } from 'react';
-import { getCompanyContactDetails } from '@/integrations/supabase/companyInfoService';
 
 interface DesktopNavProps {
   navStructure: Array<{
