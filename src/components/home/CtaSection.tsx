@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
-import { Phone, ArrowRight, ArrowUpRight } from 'lucide-react';
+import { Phone, ArrowRight, ArrowUpRight, Clock } from 'lucide-react';
 import { useResponsiveLayout } from '@/hooks/use-mobile';
 import { PHONE_NUMBER, getPhoneLink } from '@/utils/contact-info';
 
@@ -21,15 +21,15 @@ const CtaSection = () => {
 
   return (
     <motion.section 
-      className="py-16 px-4 md:py-20 lg:py-24 bg-gradient-to-b from-brand-gray to-white"
+      className="py-10 px-4 md:py-14 lg:py-16 bg-gradient-to-b from-brand-gray to-white"
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       viewport={{ once: true, amount: 0.1 }}
       transition={{ duration: 0.6 }}
     >
-      <div className="container-custom max-w-6xl">
+      <div className="container-custom max-w-5xl">
         <motion.div 
-          className="relative overflow-hidden rounded-3xl shadow-2xl transform hover:scale-[1.01] duration-500 transition-all"
+          className="relative overflow-hidden rounded-xl shadow-xl transform hover:scale-[1.01] duration-500 transition-all border border-brand-navy/10"
           whileInView={{ y: 0 }}
           initial={{ y: 40 }}
           viewport={{ once: true }}
@@ -65,21 +65,21 @@ const CtaSection = () => {
             </div>
             
             {/* Content section */}
-            <div className="w-full md:w-3/5 lg:w-2/3 p-8 md:p-10 lg:p-16 text-white flex flex-col">
-              <div className="max-w-2xl space-y-6">
+            <div className="w-full md:w-3/5 lg:w-2/3 p-6 md:p-8 text-white flex flex-col">
+              <div className="max-w-2xl space-y-4">
                 <motion.div 
                   initial={{ opacity: 0, y: 10 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.4 }}
-                  className="inline-flex items-center px-3 py-1 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 mb-6 text-sm"
+                  className="inline-flex items-center px-3 py-1 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 mb-4 text-sm"
                 >
-                  <span className="animate-pulse mr-2 h-2 w-2 rounded-full bg-brand-red"></span>
-                  Ready for a clean start?
+                  <Clock className="h-3 w-3 mr-2 text-brand-red" />
+                  <span className="text-xs">LIMITED TIME OFFER - Same Day Service Available</span>
                 </motion.div>
                 
                 <motion.h2 
-                  className={`${isMobile ? 'text-2xl' : isTablet ? 'text-3xl' : 'text-4xl'} font-bold tracking-tight`}
+                  className={`${isMobile ? 'text-xl' : isTablet ? 'text-2xl' : 'text-3xl'} font-bold tracking-tight`}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
@@ -92,7 +92,7 @@ const CtaSection = () => {
                 </motion.h2>
                 
                 <motion.p 
-                  className={`text-white/80 ${isMobile ? 'text-base' : 'text-lg'} max-w-xl leading-relaxed`}
+                  className={`text-white/80 ${isMobile ? 'text-sm' : 'text-base'} max-w-xl leading-relaxed`}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
@@ -102,7 +102,7 @@ const CtaSection = () => {
                 </motion.p>
 
                 <motion.div 
-                  className="flex flex-col sm:flex-row gap-4 pt-4"
+                  className="flex flex-col sm:flex-row gap-3 pt-2"
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
@@ -111,23 +111,32 @@ const CtaSection = () => {
                   <Button 
                     asChild 
                     size={isMobile ? "default" : "lg"}
-                    className="bg-brand-red hover:bg-brand-red/90 border-2 border-transparent hover:border-brand-red/20 text-white font-bold tracking-wide shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group"
+                    className="bg-brand-red hover:bg-brand-red/90 border border-brand-red/20 text-white font-bold tracking-wide shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group"
                   >
                     <Link to="/quote" className="flex items-center">
                       Get a Free Quote
-                      <ArrowUpRight size={18} className="ml-2 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+                      <ArrowUpRight size={16} className="ml-2 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
                     </Link>
                   </Button>
                   <Button 
                     variant="outline" 
                     size={isMobile ? "default" : "lg"}
-                    className="border-2 border-white/60 text-white bg-white/5 backdrop-blur-sm hover:bg-white hover:text-brand-navy font-bold tracking-wide transition-all duration-300 hover:-translate-y-1"
+                    className="border border-white/60 text-white bg-white/5 backdrop-blur-sm hover:bg-white hover:text-brand-navy font-bold tracking-wide transition-all duration-300 hover:-translate-y-1"
                     onClick={handleCallClick}
                   >
-                    <Phone size={18} className="mr-2" />
+                    <Phone size={16} className="mr-2" />
                     <a href={getPhoneLink()}>{PHONE_NUMBER}</a>
                   </Button>
                 </motion.div>
+                
+                <div className="flex items-center justify-start pt-2">
+                  <div className="flex -space-x-2">
+                    {[1, 2, 3].map(i => (
+                      <div key={i} className="w-6 h-6 rounded-full bg-gray-200 border border-white"></div>
+                    ))}
+                  </div>
+                  <div className="ml-2 text-xs text-white/80">Join 200+ satisfied customers this month</div>
+                </div>
               </div>
             </div>
           </div>

@@ -1,3 +1,4 @@
+
 import { ReactNode, useState, useEffect } from 'react';
 import ServiceCard from './ServiceCard';
 import { LoadingSkeleton } from '@/components/ui/loading-skeleton';
@@ -40,15 +41,15 @@ const ServicesGrid = ({ services, isLoading = false }: ServicesGridProps) => {
     return (
       <div className="relative">
         {/* Desktop loading skeleton */}
-        <div className="hidden sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {Array.from({ length: 6 }).map((_, index) => (
-            <LoadingSkeleton key={index} variant="card" />
+        <div className="hidden sm:grid sm:grid-cols-3 lg:grid-cols-4 gap-4">
+          {Array.from({ length: 8 }).map((_, index) => (
+            <LoadingSkeleton key={index} variant="card" className="h-52" />
           ))}
         </div>
         
         {/* Mobile loading skeleton */}
         <div className="sm:hidden">
-          <LoadingSkeleton variant="card" />
+          <LoadingSkeleton variant="card" className="h-64" />
         </div>
       </div>
     );
@@ -56,7 +57,7 @@ const ServicesGrid = ({ services, isLoading = false }: ServicesGridProps) => {
   
   // For desktop view - standard grid
   const renderDesktopGrid = () => (
-    <div className="hidden sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+    <div className="hidden sm:grid sm:grid-cols-3 lg:grid-cols-4 gap-4">
       {services.map((service, index) => (
         <ServiceCard 
           key={index}
@@ -78,7 +79,7 @@ const ServicesGrid = ({ services, isLoading = false }: ServicesGridProps) => {
       <Carousel className="w-full" opts={{ loop: true }}>
         <CarouselContent>
           {services.map((service, index) => (
-            <CarouselItem key={index} className="pl-2 md:basis-1/2 lg:basis-1/3">
+            <CarouselItem key={index} className="pl-2">
               <ServiceCard 
                 title={service.title}
                 icon={service.icon}
@@ -92,8 +93,8 @@ const ServicesGrid = ({ services, isLoading = false }: ServicesGridProps) => {
           ))}
         </CarouselContent>
         <div className="flex justify-center mt-4 gap-2">
-          <CarouselPrevious className="static transform-none mx-1" aria-label="Previous service" />
-          <CarouselNext className="static transform-none mx-1" aria-label="Next service" />
+          <CarouselPrevious className="static transform-none mx-1 h-8 w-8" aria-label="Previous service" />
+          <CarouselNext className="static transform-none mx-1 h-8 w-8" aria-label="Next service" />
         </div>
       </Carousel>
     </div>
