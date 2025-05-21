@@ -51,6 +51,7 @@ export type Database = {
           excerpt: string
           id: string
           image_url: string | null
+          is_featured: boolean | null
           is_pricing_resource: boolean | null
           slug: string
           tags: string[] | null
@@ -65,6 +66,7 @@ export type Database = {
           excerpt: string
           id?: string
           image_url?: string | null
+          is_featured?: boolean | null
           is_pricing_resource?: boolean | null
           slug: string
           tags?: string[] | null
@@ -79,6 +81,7 @@ export type Database = {
           excerpt?: string
           id?: string
           image_url?: string | null
+          is_featured?: boolean | null
           is_pricing_resource?: boolean | null
           slug?: string
           tags?: string[] | null
