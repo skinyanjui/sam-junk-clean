@@ -4,86 +4,73 @@ import { Blog } from '../types/blog';
 import { transformBlogData } from './blogUtils';
 
 /**
- * Fetches featured blog posts with improved error handling and performance
+ * Fetches featured blog posts with improved performance
  */
 export const fetchFeaturedBlogs = async (limit = 3): Promise<Blog[]> => {
   try {
-    // Check if the is_featured column exists, if not, just fetch recent blogs
+    // Check if the is_featured column exists
     try {
-      // Use a simple query to avoid deep type instantiation issues
+      // Use a simple query to check table structure
       const { data, error } = await supabase
         .from('blogs')
         .select('*')
+        .eq('is_featured', true)
         .limit(limit);
-
+      
       if (error) {
         throw error;
       }
-
-      // Filter for featured blogs in memory if we have data
-      const featuredBlogs = data ? data
-        .filter(blog => blog.is_featured === true)
-        .map(transformBlogData)
-        .filter(Boolean) : [];
       
-      if (featuredBlogs.length > 0) {
-        return featuredBlogs as Blog[];
-      }
-      
-      // If no featured blogs, just return the most recent ones
-      const recentBlogs = data ? data
-        .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
-        .slice(0, limit)
-        .map(transformBlogData)
-        .filter(Boolean) : [];
-        
-      return recentBlogs as Blog[];
+      return data ? data.map(transformBlogData).filter(Boolean) : [];
     } catch (innerError) {
       console.warn('Falling back to mock featured blogs due to error:', innerError);
       
-      // Return mock featured blogs data
+      // Return mock featured blog data
       const mockFeaturedBlogs: Blog[] = [
         {
           id: '1',
-          title: '5 Tips for Effective Junk Removal',
-          excerpt: 'Learn how to prepare your home for a successful junk removal service.',
-          category: 'Tips & Advice',
+          title: 'How to Prepare Your Home for Junk Removal',
+          excerpt: 'Learn the most effective way to prepare your home before our team arrives for junk removal.',
+          category: 'Tips & Tricks',
           created_at: new Date().toISOString(),
           author: 'Sam Johnson',
           image_url: '/placeholder.svg',
-          slug: '5-tips-for-effective-junk-removal',
+          slug: 'prepare-home-for-junk-removal',
           content: 'Full content goes here',
           updated_at: new Date().toISOString(),
-          tags: ['Junk Removal', 'Home Organization', 'Tips'],
-          is_featured: true
+          tags: ['Home', 'Preparation', 'Junk Removal'],
+          is_featured: true,
+          is_pricing_resource: false
         },
         {
           id: '2',
-          title: 'Eco-Friendly Junk Disposal Methods',
-          excerpt: 'Discover how professional junk removal services help protect the environment.',
-          category: 'Sustainability',
+          title: '5 Benefits of Professional Junk Removal',
+          excerpt: 'Discover the advantages of hiring professional junk removal services versus doing it yourself.',
+          category: 'Services',
           created_at: new Date().toISOString(),
           author: 'Emma Wilson',
           image_url: '/placeholder.svg',
-          slug: 'eco-friendly-junk-disposal',
+          slug: 'benefits-of-professional-junk-removal',
           content: 'Full content goes here',
           updated_at: new Date().toISOString(),
-          tags: ['Sustainability', 'Recycling', 'Environment'],
-          is_featured: true
+          tags: ['Benefits', 'Professional Services', 'Junk Removal'],
+          is_featured: true,
+          is_pricing_resource: false
         },
         {
           id: '3',
-          title: 'When to Schedule a Home Cleanout',
-          excerpt: 'The best times to schedule a complete home cleanout service.',
-          category: 'Services',
+          title: 'Environmental Impact of Proper Waste Disposal',
+          excerpt: 'Learn how proper junk removal contributes to environmental conservation and sustainability.',
+          category: 'Environment',
           created_at: new Date().toISOString(),
           author: 'Michael Davis',
           image_url: '/placeholder.svg',
-          slug: 'when-to-schedule-cleanout',
+          slug: 'environmental-impact-of-waste-disposal',
           content: 'Full content goes here',
           updated_at: new Date().toISOString(),
-          tags: ['Home Cleanout', 'Services', 'Planning'],
-          is_featured: true
+          tags: ['Environment', 'Sustainability', 'Waste Management'],
+          is_featured: true,
+          is_pricing_resource: false
         }
       ];
 
