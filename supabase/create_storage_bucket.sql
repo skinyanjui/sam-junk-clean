@@ -1,14 +1,31 @@
 
--- This can be run manually if needed to create a public storage bucket
+-- Create a storage bucket for quote images if it doesn't exist
 INSERT INTO storage.buckets (id, name, public)
-VALUES ('public', 'public', true)
-ON CONFLICT (id) DO NOTHING;
+SELECT 'quote-images', 'quote-images', true
+WHERE NOT EXISTS (
+    SELECT 1 FROM storage.buckets WHERE id = 'quote-images'
+);
 
--- Set bucket public policy
-INSERT INTO storage.policies (name, definition, bucket_id)
-VALUES (
-  'Public Policy',
-  '{"version":"1.0","statements":[{"effect":"allow","principal":"*","action":"*","resource":"*"}]}',
-  'public'
-)
-ON CONFLICT (name, bucket_id) DO NOTHING;
+-- Allow public read access to files
+CREATE POLICY "Public Access for Quote Images" 
+ON storage.objects
+FOR SELECT
+USING (bucket_id = 'quote-images');
+
+-- Allow authenticated uploads
+CREATE POLICY "Allow Anyone to Upload Quote Images"
+ON storage.objects
+FOR INSERT
+WITH CHECK (bucket_id = 'quote-images');
+
+-- Allow owners to update their own files
+CREATE POLICY "Allow Anyone to Update Own Quote Images"
+ON storage.objects
+FOR UPDATE
+USING (bucket_id = 'quote-images');
+
+-- Allow owners to delete their own files
+CREATE POLICY "Allow Anyone to Delete Own Quote Images"
+ON storage.objects
+FOR DELETE
+USING (bucket_id = 'quote-images');

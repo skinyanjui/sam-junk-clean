@@ -2,65 +2,86 @@
 import { supabase } from './client';
 
 /**
- * Upload a file to Supabase storage
- * @param folder The folder path within the bucket (e.g., 'avatars', 'products')
- * @param file The file to upload
- * @param options Optional upload options
- * @returns URL of the uploaded file or null if upload failed
+ * Uploads a file to Supabase Storage
+ * 
+ * @param bucketName The storage bucket name (e.g., 'avatars', 'quote-images')
+ * @param file The file object to upload
+ * @returns A promise that resolves to the file URL or null if upload fails
  */
-export async function uploadFile(
-  folder: string,
-  file: File,
-  options?: { bucketName?: string }
-): Promise<string | null> {
+export async function uploadFile(bucketName: string, file: File): Promise<string | null> {
   try {
-    const bucketName = options?.bucketName || 'public';
-    const fileExt = file.name.split('.').pop();
-    const fileName = `${Date.now()}-${Math.random().toString(36).substring(2)}.${fileExt}`;
-    const filePath = `${folder}/${fileName}`;
+    // Create a unique file path using timestamp and original file name
+    const timestamp = new Date().getTime();
+    const cleanFileName = file.name.replace(/[^a-zA-Z0-9-.]/g, '_');
+    const filePath = `${timestamp}-${cleanFileName}`;
     
-    // Upload the file
-    const { error: uploadError } = await supabase.storage
+    // Upload the file to Supabase Storage
+    const { data, error } = await supabase.storage
       .from(bucketName)
-      .upload(filePath, file);
-      
-    if (uploadError) {
-      console.error('Error uploading file:', uploadError);
+      .upload(filePath, file, {
+        cacheControl: '3600',
+        upsert: false
+      });
+    
+    if (error || !data) {
+      console.error('Error uploading file:', error);
       return null;
     }
     
-    // Get the public URL
-    const { data } = supabase.storage
+    // Generate a public URL for the uploaded file
+    const { data: { publicUrl } } = supabase.storage
       .from(bucketName)
-      .getPublicUrl(filePath);
-      
-    return data?.publicUrl || null;
+      .getPublicUrl(data.path);
+    
+    return publicUrl;
   } catch (error) {
-    console.error('File upload failed:', error);
+    console.error('Storage upload error:', error);
     return null;
   }
 }
 
 /**
- * Delete a file from Supabase storage
- * @param path The path to the file (including folder)
- * @param options Optional delete options
- * @returns true if deletion was successful, false otherwise
+ * Create a storage bucket if it doesn't exist
+ * Note: This requires admin privileges and should be run server-side or during setup
+ * 
+ * @param bucketName The name of the bucket to create
+ * @param isPublic Whether the bucket should be publicly accessible
  */
-export async function deleteFile(
-  path: string,
-  options?: { bucketName?: string }
-): Promise<boolean> {
+export async function createStorageBucket(bucketName: string, isPublic: boolean = false): Promise<void> {
   try {
-    const bucketName = options?.bucketName || 'public';
+    const { error } = await supabase.storage.createBucket(bucketName, {
+      public: isPublic
+    });
     
+    if (error) {
+      console.error(`Error creating bucket '${bucketName}':`, error);
+    }
+  } catch (error) {
+    console.error(`Failed to create bucket '${bucketName}':`, error);
+  }
+}
+
+/**
+ * Delete a file from Supabase Storage
+ * 
+ * @param bucketName The storage bucket name
+ * @param filePath The path to the file within the bucket
+ * @returns A promise that resolves to true if deletion was successful
+ */
+export async function deleteFile(bucketName: string, filePath: string): Promise<boolean> {
+  try {
     const { error } = await supabase.storage
       .from(bucketName)
-      .remove([path]);
-      
-    return !error;
+      .remove([filePath]);
+    
+    if (error) {
+      console.error('Error deleting file:', error);
+      return false;
+    }
+    
+    return true;
   } catch (error) {
-    console.error('File deletion failed:', error);
+    console.error('Storage delete error:', error);
     return false;
   }
 }

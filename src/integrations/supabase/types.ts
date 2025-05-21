@@ -9,6 +9,39 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      add_on_services: {
+        Row: {
+          created_at: string
+          description: string | null
+          fee_display: string
+          id: string
+          max_fee: number | null
+          min_fee: number
+          service_name: string
+          sort_order: number
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          fee_display: string
+          id?: string
+          max_fee?: number | null
+          min_fee: number
+          service_name: string
+          sort_order?: number
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          fee_display?: string
+          id?: string
+          max_fee?: number | null
+          min_fee?: number
+          service_name?: string
+          sort_order?: number
+        }
+        Relationships: []
+      }
       blogs: {
         Row: {
           author: string
@@ -93,6 +126,30 @@ export type Database = {
         }
         Relationships: []
       }
+      booking_time_slots: {
+        Row: {
+          created_at: string
+          id: string
+          is_available: boolean
+          sort_order: number
+          time_slot: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          is_available?: boolean
+          sort_order?: number
+          time_slot: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          is_available?: boolean
+          sort_order?: number
+          time_slot?: string
+        }
+        Relationships: []
+      }
       contact_submissions: {
         Row: {
           created_at: string
@@ -117,6 +174,36 @@ export type Database = {
           message?: string
           name?: string
           phone?: string | null
+        }
+        Relationships: []
+      }
+      included_services: {
+        Row: {
+          created_at: string
+          description: string | null
+          icon: string
+          id: string
+          section: string
+          service_name: string
+          sort_order: number
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          icon: string
+          id?: string
+          section?: string
+          service_name: string
+          sort_order?: number
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          icon?: string
+          id?: string
+          section?: string
+          service_name?: string
+          sort_order?: number
         }
         Relationships: []
       }
@@ -171,6 +258,33 @@ export type Database = {
         }
         Relationships: []
       }
+      job_types: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          is_active: boolean
+          name: string
+          sort_order: number
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_active?: boolean
+          name: string
+          sort_order?: number
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_active?: boolean
+          name?: string
+          sort_order?: number
+        }
+        Relationships: []
+      }
       locations: {
         Row: {
           contact_email: string | null
@@ -210,8 +324,48 @@ export type Database = {
         }
         Relationships: []
       }
+      pricing_tiers: {
+        Row: {
+          created_at: string
+          description: string
+          fill_level: string
+          fill_percentage: number
+          id: string
+          max_price: number
+          min_price: number
+          price_display: string
+          sort_order: number
+          tier_name: string
+        }
+        Insert: {
+          created_at?: string
+          description: string
+          fill_level: string
+          fill_percentage: number
+          id?: string
+          max_price: number
+          min_price: number
+          price_display: string
+          sort_order?: number
+          tier_name: string
+        }
+        Update: {
+          created_at?: string
+          description?: string
+          fill_level?: string
+          fill_percentage?: number
+          id?: string
+          max_price?: number
+          min_price?: number
+          price_display?: string
+          sort_order?: number
+          tier_name?: string
+        }
+        Relationships: []
+      }
       quote_requests: {
         Row: {
+          add_on_services: Json | null
           address: string
           city: string
           contact_preference: string | null
@@ -223,6 +377,7 @@ export type Database = {
           job_type: string
           name: string
           phone: string
+          pricing_tier_id: string | null
           same_day: boolean | null
           service_date: string | null
           status: string
@@ -230,6 +385,7 @@ export type Database = {
           zip_code: string | null
         }
         Insert: {
+          add_on_services?: Json | null
           address: string
           city: string
           contact_preference?: string | null
@@ -241,6 +397,7 @@ export type Database = {
           job_type: string
           name: string
           phone: string
+          pricing_tier_id?: string | null
           same_day?: boolean | null
           service_date?: string | null
           status?: string
@@ -248,6 +405,7 @@ export type Database = {
           zip_code?: string | null
         }
         Update: {
+          add_on_services?: Json | null
           address?: string
           city?: string
           contact_preference?: string | null
@@ -259,13 +417,22 @@ export type Database = {
           job_type?: string
           name?: string
           phone?: string
+          pricing_tier_id?: string | null
           same_day?: boolean | null
           service_date?: string | null
           status?: string
           updated_at?: string
           zip_code?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "quote_requests_pricing_tier_id_fkey"
+            columns: ["pricing_tier_id"]
+            isOneToOne: false
+            referencedRelation: "pricing_tiers"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {

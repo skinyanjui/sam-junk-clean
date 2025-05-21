@@ -7,7 +7,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { PricingTier } from '@/integrations/supabase/pricingService';
 import { useEffect, useState } from 'react';
-import { supabase } from '@/integrations/supabase/client';
+import { fetchPricingTiers } from '@/integrations/supabase/pricingService';
 import { fetchJobTypes, JobType } from '@/integrations/supabase/bookingService';
 import { Loader2 } from 'lucide-react';
 
@@ -29,12 +29,7 @@ const ServiceInformation = ({ errors, pricingTiers = [] }: ServiceInformationPro
       if (pricingTiers.length === 0) {
         try {
           setIsLoadingTiers(true);
-          const { data, error } = await supabase
-            .from('pricing_tiers')
-            .select('*')
-            .order('sort_order');
-            
-          if (error) throw error;
+          const data = await fetchPricingTiers();
           setLoadedPricingTiers(data || []);
         } catch (err) {
           console.error('Failed to load pricing tiers:', err);
