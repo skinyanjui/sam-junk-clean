@@ -43,7 +43,6 @@ export const fetchBlogs = async (page = 1, pageSize = 10): Promise<BlogResponse>
   const endIndex = startIndex + pageSize - 1;
 
   try {
-    // Explicit type assertion for the Supabase query response
     const { data, error, count } = await supabase
       .from('blogs')
       .select('*', { count: 'exact' })
@@ -55,15 +54,19 @@ export const fetchBlogs = async (page = 1, pageSize = 10): Promise<BlogResponse>
       throw error;
     }
 
-    // Type assertion for data
+    // Transform the data to ensure author is always a string
+    const transformedData = (data || []).map(blog => ({
+      ...blog,
+      author: "Sam K" // Always use "Sam K" as the author regardless of the UUID stored
+    }));
+
     return {
-      data: (data || []) as Blog[],
+      data: transformedData as Blog[],
       total: count || 0,
     };
   } catch (error) {
     console.error('Failed to fetch blogs:', error);
-    // Return an empty response rather than a recursive call
-    return { data: [] as Blog[], total: 0 };
+    return { data: [], total: 0 };
   }
 };
 
@@ -83,7 +86,11 @@ export const fetchBlogBySlug = async (slug: string): Promise<Blog | null> => {
       return null;
     }
 
-    return data as Blog;
+    // Transform the author to always be "Sam K"
+    return {
+      ...data,
+      author: "Sam K"
+    } as Blog;
   } catch (error) {
     console.error('Failed to fetch blog post:', error);
     return null;
@@ -107,7 +114,11 @@ export const fetchFeaturedBlogs = async (limit = 3): Promise<Blog[]> => {
       throw error;
     }
 
-    return (data || []) as Blog[];
+    // Transform the data to ensure author is always "Sam K"
+    return (data || []).map(blog => ({
+      ...blog,
+      author: "Sam K"
+    })) as Blog[];
   } catch (error) {
     console.error('Failed to fetch featured blogs:', error);
     return [];
@@ -129,7 +140,11 @@ export const fetchAllBlogPosts = async (): Promise<Blog[]> => {
       throw error;
     }
     
-    return (data || []) as Blog[];
+    // Transform the data to ensure author is always "Sam K"
+    return (data || []).map(blog => ({
+      ...blog,
+      author: "Sam K"
+    })) as Blog[];
   } catch (error) {
     console.error('Failed to fetch all blog posts:', error);
     return [];
@@ -152,7 +167,11 @@ export const getBlogPostBySlug = async (slug: string): Promise<Blog | null> => {
       return null;
     }
     
-    return data as Blog;
+    // Transform the author to always be "Sam K"
+    return {
+      ...data,
+      author: "Sam K"
+    } as Blog;
   } catch (error) {
     console.error('Failed to fetch blog post by slug:', error);
     return null;
@@ -176,7 +195,11 @@ export const fetchPricingResources = async (limit = 3): Promise<Blog[]> => {
       throw error;
     }
     
-    return (data || []) as Blog[];
+    // Transform the data to ensure author is always "Sam K"
+    return (data || []).map(blog => ({
+      ...blog,
+      author: "Sam K"
+    })) as Blog[];
   } catch (error) {
     console.error('Failed to fetch pricing resources:', error);
     return [];
