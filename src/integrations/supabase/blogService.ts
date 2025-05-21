@@ -30,10 +30,15 @@ export interface Tag {
   slug: string;
 }
 
+interface BlogResponse {
+  data: Blog[];
+  total: number;
+}
+
 /**
  * Fetches all blog posts with optional pagination.
  */
-export const fetchBlogs = async (page = 1, pageSize = 10) => {
+export const fetchBlogs = async (page = 1, pageSize = 10): Promise<BlogResponse> => {
   const startIndex = (page - 1) * pageSize;
   const endIndex = startIndex + pageSize - 1;
 
