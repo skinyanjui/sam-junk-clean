@@ -2,6 +2,7 @@
 import { Menu, X } from 'lucide-react';
 import { useResponsiveLayout } from '@/hooks/use-mobile';
 import { motion } from 'framer-motion';
+import { PHONE_NUMBER, getPhoneLink } from '@/utils/contact-info';
 
 interface MobileToggleProps {
   isOpen: boolean;
@@ -14,11 +15,11 @@ const MobileToggle = ({ isOpen, toggleMenu }: MobileToggleProps) => {
   return (
     <div className="flex items-center md:hidden">
       <a 
-        href="tel:+18126101657" 
+        href={getPhoneLink()} 
         className="mr-3 text-brand-red text-sm font-medium hover:text-brand-navy transition-colors duration-300 border border-brand-red/30 rounded-md px-2 py-0.5"
-        aria-label="Call us at 812-610-1657"
+        aria-label={`Call us at ${PHONE_NUMBER}`}
       >
-        (812) 610-1657
+        {PHONE_NUMBER}
       </a>
       <motion.button
         whileTap={{ scale: 0.95 }}

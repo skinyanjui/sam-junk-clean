@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import Divider from '@/components/ui/divider';
 import { useResponsiveLayout } from '@/hooks/use-mobile';
+import { Phone } from 'lucide-react';
+import { PHONE_NUMBER, getPhoneLink } from '@/utils/contact-info';
 
 const ServicesCta = () => {
   const { isMobile } = useResponsiveLayout();
@@ -29,7 +31,10 @@ const ServicesCta = () => {
               size="lg"
               className="border-white text-white bg-white/10 hover:bg-white hover:text-brand-navy font-bold tracking-wide border-2 transition-all duration-300 hover:scale-[1.02]"
             >
-              <Link to="/pricing">View Pricing</Link>
+              <a href={getPhoneLink()} className="flex items-center">
+                <Phone size={18} className="mr-2" />
+                Call {PHONE_NUMBER}
+              </a>
             </Button>
           </div>
         </div>

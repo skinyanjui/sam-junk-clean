@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { Phone, ArrowRight } from 'lucide-react';
 import { useResponsiveLayout } from '@/hooks/use-mobile';
+import { PHONE_NUMBER, getPhoneLink } from '@/utils/contact-info';
 
 const CtaSection = () => {
   const { toast } = useToast();
@@ -51,7 +52,7 @@ const CtaSection = () => {
                       onClick={handleCallClick}
                     >
                       <Phone size={16} className="mr-2" />
-                      <a href="tel:+18126101657">Call Now</a>
+                      <a href={getPhoneLink()}>{PHONE_NUMBER}</a>
                     </Button>
                   </div>
                 )}
@@ -77,7 +78,7 @@ const CtaSection = () => {
                     onClick={handleCallClick}
                   >
                     <Phone size={18} className="mr-2" />
-                    <a href="tel:+18126101657">Call Now</a>
+                    <a href={getPhoneLink()}>{PHONE_NUMBER}</a>
                   </Button>
                 </div>
               )}

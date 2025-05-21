@@ -21,13 +21,14 @@ export interface Faq {
 
 export const fetchFaqs = async (categorySlug?: string): Promise<Faq[]> => {
   try {
+    // Use type assertion for now until database schema is updated
     let query = supabase
       .from('faqs')
       .select(`
         *,
         category:category_id(id, name, slug, sort_order, created_at)
       `)
-      .order('sort_order', { ascending: true });
+      .order('sort_order', { ascending: true }) as any;
     
     if (categorySlug) {
       query = query.eq('category.slug', categorySlug);
@@ -40,7 +41,7 @@ export const fetchFaqs = async (categorySlug?: string): Promise<Faq[]> => {
       throw error;
     }
     
-    return data || [];
+    return data as Faq[] || [];
   } catch (error) {
     console.error('Failed to fetch FAQs:', error);
     return [];
@@ -49,17 +50,18 @@ export const fetchFaqs = async (categorySlug?: string): Promise<Faq[]> => {
 
 export const fetchFaqCategories = async (): Promise<FaqCategory[]> => {
   try {
+    // Use type assertion for now until database schema is updated
     const { data, error } = await supabase
       .from('faq_categories')
       .select('*')
-      .order('sort_order', { ascending: true });
+      .order('sort_order', { ascending: true }) as any;
     
     if (error) {
       console.error('Error fetching FAQ categories:', error);
       throw error;
     }
     
-    return data || [];
+    return data as FaqCategory[] || [];
   } catch (error) {
     console.error('Failed to fetch FAQ categories:', error);
     return [];

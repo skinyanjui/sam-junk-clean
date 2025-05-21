@@ -2,10 +2,10 @@
 import { useState, useEffect } from 'react';
 import { Phone, Mail, MapPin, Clock } from 'lucide-react';
 import { getCompanyContactDetails, getSocialLinks, getBusinessHours } from '@/integrations/supabase/companyInfoService';
+import { PHONE_NUMBER, getPhoneLink } from '@/utils/contact-info';
 
 const ContactInformation = () => {
   const [contactInfo, setContactInfo] = useState({
-    phone: '(812) 610-1657',
     email: 'info@unclesamjunkremoval.com',
     address: '123 Main St',
     city: 'Bloomington',
@@ -35,10 +35,7 @@ const ContactInformation = () => {
           getBusinessHours()
         ]);
 
-        // Always use this specific phone number
         setContactInfo(prevState => ({
-          ...prevState,
-          phone: '(812) 610-1657',
           email: contactData.email || prevState.email,
           address: contactData.address || prevState.address,
           city: contactData.city || prevState.city,
@@ -79,11 +76,11 @@ const ContactInformation = () => {
             <h3 className="text-xl font-semibold text-brand-navy mb-1">Phone</h3>
             <p className="text-gray-700">
               <a 
-                href="tel:+18126101657" 
+                href={getPhoneLink()} 
                 className="hover:text-brand-red transition-colors text-lg"
-                aria-label="Call us at 812-610-1657"
+                aria-label={`Call us at ${PHONE_NUMBER}`}
               >
-                {contactInfo.phone}
+                {PHONE_NUMBER}
               </a>
             </p>
           </div>

@@ -6,12 +6,17 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
 import { LocationData } from '@/types/locations';
+import { PHONE_NUMBER, getPhoneLink, formatPhoneNumber } from '@/utils/contact-info';
 
 interface ServiceAreaCardProps {
   location: LocationData;
 }
 
 const ServiceAreaCard = ({ location }: ServiceAreaCardProps) => {
+  // Use the location's phone if available, otherwise use default
+  const phoneNumber = location.contactPhone || PHONE_NUMBER;
+  const formattedPhone = formatPhoneNumber(phoneNumber);
+  
   return (
     <Card key={location.id} className="overflow-hidden hover:shadow-md transition-shadow">
       <div className="h-48 overflow-hidden">
@@ -59,11 +64,22 @@ const ServiceAreaCard = ({ location }: ServiceAreaCardProps) => {
             </p>
             <p className="flex items-center gap-2 mb-2">
               <Phone size={18} className="text-brand-red" />
-              {location.contactPhone}
+              <a 
+                href={getPhoneLink(phoneNumber)}
+                className="hover:text-brand-red transition-colors"
+                aria-label={`Call ${formattedPhone}`}
+              >
+                {formattedPhone}
+              </a>
             </p>
             <p className="flex items-center gap-2">
               <Mail size={18} className="text-brand-red" />
-              {location.contactEmail}
+              <a 
+                href={`mailto:${location.contactEmail}`}
+                className="hover:text-brand-red transition-colors"
+              >
+                {location.contactEmail}
+              </a>
             </p>
           </TabsContent>
           <TabsContent value="about" className="pt-4">
@@ -71,9 +87,19 @@ const ServiceAreaCard = ({ location }: ServiceAreaCardProps) => {
           </TabsContent>
         </Tabs>
       </CardContent>
-      <CardFooter>
+      <CardFooter className="flex flex-col sm:flex-row gap-2">
         <Button asChild className="w-full bg-brand-red hover:bg-opacity-90">
           <Link to="/quote">Get a Quote</Link>
+        </Button>
+        <Button 
+          asChild 
+          variant="outline" 
+          className="w-full border-brand-red text-brand-red hover:bg-brand-red hover:text-white"
+        >
+          <a href={getPhoneLink(phoneNumber)} className="flex items-center justify-center">
+            <Phone size={16} className="mr-2" />
+            Call Now
+          </a>
         </Button>
       </CardFooter>
     </Card>

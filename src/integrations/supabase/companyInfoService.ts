@@ -1,5 +1,6 @@
 
 import { supabase } from './client';
+import { PHONE_NUMBER } from '@/utils/contact-info';
 
 export interface CompanyInfo {
   id: string;
@@ -26,7 +27,7 @@ export const fetchCompanyInfo = async (section?: string): Promise<CompanyInfo[]>
       throw error;
     }
     
-    return data || [];
+    return data as CompanyInfo[] || [];
   } catch (error) {
     console.error('Error fetching company info:', error);
     return [];
@@ -45,7 +46,7 @@ export const getCompanyContactDetails = async () => {
       console.error('Error fetching company contact details:', error);
       return {
         // Always return the correct phone number regardless of DB value
-        phone: '(812) 610-1657',
+        phone: PHONE_NUMBER,
         email: 'info@example.com',
         address: '123 Main St',
         city: 'Anytown',
@@ -58,7 +59,7 @@ export const getCompanyContactDetails = async () => {
     const contactInfo = data.reduce((acc: Record<string, string>, item: CompanyInfo) => {
       // Ensure phone number is always the correct one
       if (item.key === 'phone') {
-        acc[item.key] = '(812) 610-1657';
+        acc[item.key] = PHONE_NUMBER;
       } else {
         acc[item.key] = item.value;
       }
@@ -67,14 +68,14 @@ export const getCompanyContactDetails = async () => {
     
     // Ensure phone number is set even if not in database
     if (!contactInfo.phone) {
-      contactInfo.phone = '(812) 610-1657';
+      contactInfo.phone = PHONE_NUMBER;
     }
     
     return contactInfo;
   } catch (error) {
     console.error('Error fetching company contact details:', error);
     return {
-      phone: '(812) 610-1657',
+      phone: PHONE_NUMBER,
       email: 'info@example.com',
       address: '123 Main St',
       city: 'Anytown',
