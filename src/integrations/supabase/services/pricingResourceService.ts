@@ -4,10 +4,11 @@ import { Blog } from '../types/blog';
 import { transformBlogData } from './blogUtils';
 
 /**
- * Fetches blog posts marked as pricing resources
+ * Fetches blog posts marked as pricing resources with improved performance
  */
 export const fetchPricingResources = async (limit = 3): Promise<Blog[]> => {
   try {
+    // Use the index we created for better performance
     const { data, error } = await supabase
       .from('blogs')
       .select('*')
@@ -21,7 +22,7 @@ export const fetchPricingResources = async (limit = 3): Promise<Blog[]> => {
     }
     
     // Transform the data to ensure consistent structure
-    const blogsList = data ? data.map(transformBlogData) : [];
+    const blogsList = data ? data.map(transformBlogData).filter(Boolean) : [];
     
     return blogsList as Blog[];
   } catch (error) {

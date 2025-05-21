@@ -6,10 +6,12 @@ import {
   fetchBlogs, 
   fetchBlogBySlug, 
   fetchAllBlogPosts, 
-  getBlogPostBySlug 
+  getBlogPostBySlug,
+  clearBlogCache 
 } from './services/blogCore';
 import { fetchFeaturedBlogs } from './services/featuredBlogService';
 import { fetchPricingResources } from './services/pricingResourceService';
+import { transformBlogData, mapBlogToBlogPost } from './services/blogUtils';
 
 // Re-export types using 'export type' syntax for isolatedModules compatibility
 export type { Blog, BlogResponse, Category, Tag } from './types/blog';
@@ -21,5 +23,8 @@ export {
   fetchFeaturedBlogs,
   fetchAllBlogPosts,
   getBlogPostBySlug,
-  fetchPricingResources
+  fetchPricingResources,
+  transformBlogData,
+  mapBlogToBlogPost,
+  clearBlogCache
 };

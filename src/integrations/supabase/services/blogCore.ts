@@ -3,12 +3,30 @@ import { supabase } from '../client';
 import { Blog, BlogResponse } from '../types/blog';
 import { transformBlogData } from './blogUtils';
 
+// Simple in-memory cache for blog data
+const blogCache = new Map<string, {
+  data: any;
+  timestamp: number;
+}>();
+
+// Cache expiration time (5 minutes)
+const CACHE_TTL = 5 * 60 * 1000;
+
 /**
- * Fetches all blog posts with optional pagination.
+ * Fetches all blog posts with optional pagination and improved caching
  */
 export const fetchBlogs = async (page = 1, pageSize = 10): Promise<BlogResponse> => {
   const startIndex = (page - 1) * pageSize;
   const endIndex = startIndex + pageSize - 1;
+
+  // Generate cache key based on params
+  const cacheKey = `blogs_${page}_${pageSize}`;
+  const cachedData = blogCache.get(cacheKey);
+  
+  // Return cached data if it exists and is not expired
+  if (cachedData && (Date.now() - cachedData.timestamp < CACHE_TTL)) {
+    return cachedData.data;
+  }
 
   try {
     const { data, error, count } = await supabase
@@ -23,12 +41,20 @@ export const fetchBlogs = async (page = 1, pageSize = 10): Promise<BlogResponse>
     }
 
     // Transform the data to ensure consistent structure
-    const transformedData = data ? data.map(transformBlogData) : [];
+    const transformedData = data ? data.map(transformBlogData).filter(Boolean) : [];
 
-    return {
+    const response = {
       data: transformedData as Blog[],
       total: count || 0,
     };
+
+    // Update cache
+    blogCache.set(cacheKey, {
+      data: response,
+      timestamp: Date.now()
+    });
+
+    return response;
   } catch (error) {
     console.error('Failed to fetch blogs:', error);
     return { data: [], total: 0 };
@@ -36,23 +62,47 @@ export const fetchBlogs = async (page = 1, pageSize = 10): Promise<BlogResponse>
 };
 
 /**
- * Fetches a single blog post by its slug.
+ * Fetches a single blog post by its slug with improved caching
  */
 export const fetchBlogBySlug = async (slug: string): Promise<Blog | null> => {
+  if (!slug) return null;
+  
+  // Generate cache key based on slug
+  const cacheKey = `blog_${slug}`;
+  const cachedData = blogCache.get(cacheKey);
+  
+  // Return cached data if it exists and is not expired
+  if (cachedData && (Date.now() - cachedData.timestamp < CACHE_TTL)) {
+    return cachedData.data;
+  }
+
   try {
+    // Use the index we created for better performance
     const { data, error } = await supabase
       .from('blogs')
       .select('*')
       .eq('slug', slug)
-      .single();
+      .maybeSingle(); // Better than .single() as it won't throw on no rows
 
     if (error) {
       console.error('Error fetching blog post:', error);
       return null;
     }
 
+    if (!data) {
+      return null;
+    }
+
     // Transform the data to ensure consistent structure
-    return transformBlogData(data);
+    const transformedData = transformBlogData(data);
+
+    // Update cache
+    blogCache.set(cacheKey, {
+      data: transformedData,
+      timestamp: Date.now()
+    });
+
+    return transformedData;
   } catch (error) {
     console.error('Failed to fetch blog post:', error);
     return null;
@@ -60,9 +110,17 @@ export const fetchBlogBySlug = async (slug: string): Promise<Blog | null> => {
 };
 
 /**
- * Fetches all blog posts for display in the blog page
+ * Fetches all blog posts for display in the blog page with proper caching
  */
 export const fetchAllBlogPosts = async (): Promise<Blog[]> => {
+  const cacheKey = 'all_blog_posts';
+  const cachedData = blogCache.get(cacheKey);
+  
+  // Return cached data if it exists and is not expired
+  if (cachedData && (Date.now() - cachedData.timestamp < CACHE_TTL)) {
+    return cachedData.data;
+  }
+  
   try {
     const { data, error } = await supabase
       .from('blogs')
@@ -75,7 +133,13 @@ export const fetchAllBlogPosts = async (): Promise<Blog[]> => {
     }
     
     // Transform the data to ensure consistent structure
-    const blogsList = data ? data.map(transformBlogData) : [];
+    const blogsList = data ? data.map(transformBlogData).filter(Boolean) : [];
+    
+    // Update cache
+    blogCache.set(cacheKey, {
+      data: blogsList,
+      timestamp: Date.now()
+    });
     
     return blogsList as Blog[];
   } catch (error) {
@@ -85,8 +149,15 @@ export const fetchAllBlogPosts = async (): Promise<Blog[]> => {
 };
 
 /**
- * Fetches a single blog post by slug for the blog post page
+ * Fetches a single blog post by slug for the blog post page (alias for fetchBlogBySlug)
  */
 export const getBlogPostBySlug = async (slug: string): Promise<Blog | null> => {
   return fetchBlogBySlug(slug);
+};
+
+/**
+ * Clear the blog cache when needed (e.g., after updates)
+ */
+export const clearBlogCache = (): void => {
+  blogCache.clear();
 };
