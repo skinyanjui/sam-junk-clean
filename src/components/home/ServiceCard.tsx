@@ -44,7 +44,7 @@ const ServiceCard = ({
       onBlur={onBlur}
     >
       {/* Image container with improved accessibility */}
-      <div className="relative h-28 overflow-hidden">
+      <div className="relative h-24 overflow-hidden">
         {image ? (
           <img 
             src={image} 
@@ -69,9 +69,9 @@ const ServiceCard = ({
         
         {/* Title overlay with gradient - improved contrast for accessibility */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent flex items-end">
-          <div className="p-3 w-full">
+          <div className="p-2 w-full">
             <div className="flex justify-between items-center">
-              <h3 className="text-sm font-bold text-white">{title}</h3>
+              <h3 className="text-xs font-bold text-white">{title}</h3>
               <div className="flex items-center text-xs text-white/90">
                 <Star className="h-3 w-3 fill-brand-yellow text-brand-yellow mr-1" />
                 <span>5.0</span>
@@ -82,17 +82,17 @@ const ServiceCard = ({
       </div>
       
       {/* Content */}
-      <div className="p-3 flex flex-col flex-grow">
-        <div className="flex items-center mb-2">
+      <div className="p-2 flex flex-col flex-grow">
+        <div className="flex items-center mb-1">
           <div 
-            className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-brand-red/10 text-brand-red transition-transform duration-300 group-hover:scale-110"
+            className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-brand-red/10 text-brand-red transition-transform duration-300 group-hover:scale-110"
             aria-hidden="true"
           >
             {icon}
           </div>
           <CheckCircle className="h-3 w-3 ml-auto text-green-600" />
         </div>
-        <p className="text-gray-600 text-xs mb-3 leading-relaxed flex-grow line-clamp-2">{description}</p>
+        <p className="text-gray-600 text-xs mb-2 leading-relaxed flex-grow line-clamp-2">{description}</p>
         <Link 
           to={`/services#${titleSlug}`}
           className="inline-flex items-center text-xs text-brand-red font-medium hover:underline group-hover:translate-x-1 transition-transform duration-300 mt-auto focus:outline-none focus:ring-2 focus:ring-brand-red/50 focus:ring-offset-2 rounded-sm"

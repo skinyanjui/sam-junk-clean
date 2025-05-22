@@ -1,5 +1,5 @@
 
-import { Home, Building, Refrigerator, Hammer, HeartHandshake, Truck } from 'lucide-react';
+import { Home, Building, Refrigerator, Hammer, HeartHandshake, Truck, Sofa, Smartphone } from 'lucide-react';
 import { ServiceItem } from './ServicesGrid';
 
 export const servicesData: ServiceItem[] = [
@@ -16,6 +16,20 @@ export const servicesData: ServiceItem[] = [
     description: 'Office cleanouts, retail space, and business junk removal',
     image: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=500',
     alt: 'Commercial junk removal with workers clearing out an office space'
+  },
+  {
+    title: 'Furniture Removal',
+    icon: <Sofa className="h-8 w-8 text-brand-red mb-2" />,
+    description: 'Couches, tables, beds, and other household furniture disposal',
+    image: 'https://images.unsplash.com/photo-1594026112284-02bb6f3352fe?auto=format&fit=crop&w=500',
+    alt: 'Furniture removal service with workers carrying a couch'
+  },
+  {
+    title: 'Electronic Waste',
+    icon: <Smartphone className="h-8 w-8 text-brand-red mb-2" />,
+    description: 'TVs, computers, monitors, and other electronic disposal',
+    image: 'https://images.unsplash.com/photo-1550009158-9ebf69173e03?auto=format&fit=crop&w=500',
+    alt: 'Electronic waste removal with old computers and devices'
   },
   {
     title: 'Appliance Removal',

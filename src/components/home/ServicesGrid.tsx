@@ -41,8 +41,8 @@ const ServicesGrid = ({ services, isLoading = false }: ServicesGridProps) => {
     return (
       <div className="relative">
         {/* Desktop loading skeleton */}
-        <div className="hidden sm:grid sm:grid-cols-4 lg:grid-cols-5 gap-3">
-          {Array.from({ length: 10 }).map((_, index) => (
+        <div className="hidden sm:grid sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-3">
+          {Array.from({ length: 8 }).map((_, index) => (
             <LoadingSkeleton key={index} variant="card" className="h-44" />
           ))}
         </div>
@@ -57,7 +57,7 @@ const ServicesGrid = ({ services, isLoading = false }: ServicesGridProps) => {
   
   // For desktop view - standard grid
   const renderDesktopGrid = () => (
-    <div className="hidden sm:grid sm:grid-cols-4 lg:grid-cols-5 gap-3">
+    <div className="hidden sm:grid sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-3">
       {services.map((service, index) => (
         <ServiceCard 
           key={index}
