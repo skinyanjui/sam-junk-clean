@@ -19,12 +19,14 @@ const buttonVariants = cva(
           "bg-secondary text-secondary-foreground hover:bg-secondary/80 shadow-sm hover:scale-[1.02]",
         ghost: "bg-transparent hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
+        pricing: "w-full bg-brand-red text-white hover:bg-brand-red/90 shadow-md hover:shadow-lg hover:scale-[1.03]"
       },
       size: {
         default: "h-8 px-4 py-2",
         sm: "h-7 rounded-md px-3 text-xs",
         lg: "h-9 rounded-md px-5 text-base",
         icon: "h-8 w-8",
+        xl: "h-11 rounded-md px-6 text-base"
       },
     },
     defaultVariants: {

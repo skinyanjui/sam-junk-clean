@@ -10,6 +10,10 @@ export interface ServiceData {
   description: string;
   items: string[];
   image: string;
+  popularity?: 'high' | 'medium' | 'low';
+  priceRange?: string;
+  timeEstimate?: string;
+  benefits?: string[];
   relatedBlogs: RelatedBlog[];
   relatedServices: string[];
 }

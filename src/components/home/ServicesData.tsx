@@ -1,17 +1,20 @@
 
-import { Home, Building, Refrigerator, Hammer, HeartHandshake, Truck, Sofa, Smartphone } from 'lucide-react';
+import { 
+  Home, Building, Sofa, Smartphone, Refrigerator, Hammer, HeartHandshake, Truck,
+  Bed, HotTub, Warehouse, Dumbbell, Leaf, Construction, Recycle, Gift
+} from 'lucide-react';
 import { ServiceItem } from './ServicesGrid';
 
 export const servicesData: ServiceItem[] = [
   {
-    title: 'Residential',
+    title: 'Residential Junk Removal',
     icon: <Home className="h-8 w-8 text-brand-red mb-2" />,
     description: 'Home cleanouts, garage junk, and household item removal',
     image: 'https://images.unsplash.com/photo-1603796846097-bee99e4a601f?auto=format&fit=crop&w=500',
     alt: 'Residential junk removal service showing workers clearing out a home'
   },
   {
-    title: 'Commercial',
+    title: 'Commercial Junk Removal',
     icon: <Building className="h-8 w-8 text-brand-red mb-2" />,
     description: 'Office cleanouts, retail space, and business junk removal',
     image: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=500',
@@ -25,18 +28,25 @@ export const servicesData: ServiceItem[] = [
     alt: 'Furniture removal service with workers carrying a couch'
   },
   {
-    title: 'Electronic Waste',
-    icon: <Smartphone className="h-8 w-8 text-brand-red mb-2" />,
-    description: 'TVs, computers, monitors, and other electronic disposal',
-    image: 'https://images.unsplash.com/photo-1550009158-9ebf69173e03?auto=format&fit=crop&w=500',
-    alt: 'Electronic waste removal with old computers and devices'
-  },
-  {
     title: 'Appliance Removal',
     icon: <Refrigerator className="h-8 w-8 text-brand-red mb-2" />,
     description: 'Fridges, washers, dryers, and other large appliances',
     image: 'https://images.unsplash.com/photo-1584438875946-25aa27a1645e?auto=format&fit=crop&w=500',
     alt: 'Appliance removal service with refrigerator being hauled away'
+  },
+  {
+    title: 'Mattress Removal',
+    icon: <Bed className="h-8 w-8 text-brand-red mb-2" />,
+    description: 'Quick and eco-friendly disposal of all mattress sizes',
+    image: 'https://images.unsplash.com/photo-1631049552240-59c37f38802b?auto=format&fit=crop&w=500',
+    alt: 'Mattress removal service'
+  },
+  {
+    title: 'Gym Equipment Removal',
+    icon: <Dumbbell className="h-8 w-8 text-brand-red mb-2" />,
+    description: 'Treadmills, weights, machines, and workout equipment',
+    image: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=500',
+    alt: 'Gym equipment removal service'
   },
   {
     title: 'Light Demolition',
@@ -46,17 +56,10 @@ export const servicesData: ServiceItem[] = [
     alt: 'Light demolition service showing shed or deck removal'
   },
   {
-    title: 'Estate Cleanouts',
-    icon: <HeartHandshake className="h-8 w-8 text-brand-red mb-2" />,
-    description: 'Complete property clearance and junk removal',
-    image: 'https://images.unsplash.com/photo-1606170033648-5d55a3edf314?auto=format&fit=crop&w=500',
-    alt: 'Estate cleanout service showing property being cleared of items'
-  },
-  {
-    title: 'Curbside Pickups',
-    icon: <Truck className="h-8 w-8 text-brand-red mb-2" />,
-    description: 'Quick and easy removal of items from your curb',
-    image: 'https://images.unsplash.com/photo-1610641818989-c2051b5e2cfd?auto=format&fit=crop&w=500',
-    alt: 'Curbside junk pickup service with truck collecting items'
+    title: 'Construction Debris',
+    icon: <Construction className="h-8 w-8 text-brand-red mb-2" />,
+    description: 'Cleanup of renovation waste and construction materials',
+    image: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=500',
+    alt: 'Construction debris removal'
   }
 ];

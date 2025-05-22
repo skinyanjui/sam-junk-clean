@@ -11,6 +11,8 @@ interface ServiceCardProps {
   icon: ReactNode;
   description: string;
   image?: string;
+  priceRange?: string;
+  popularity?: 'high' | 'medium' | 'low';
   isActive?: boolean;
   onFocus?: () => void;
   onBlur?: () => void;
@@ -21,14 +23,16 @@ const ServiceCard = ({
   icon, 
   description, 
   image,
+  priceRange,
+  popularity,
   isActive = false,
   onFocus,
   onBlur
 }: ServiceCardProps) => {
   const { t } = useTranslation();
   
-  // Determine if this is a "popular" service based on title
-  const isPopular = title.includes('Residential') || title.includes('Commercial') || title.includes('Furniture');
+  // Determine if this is a "popular" service based on popularity or title
+  const isPopular = popularity === 'high' || title.includes('Residential') || title.includes('Commercial') || title.includes('Furniture');
   
   const titleSlug = title.toLowerCase().replace(/\s+/g, '-');
   
@@ -93,6 +97,14 @@ const ServiceCard = ({
           <CheckCircle className="h-3 w-3 ml-auto text-green-600" />
         </div>
         <p className="text-gray-600 text-xs mb-2 leading-relaxed flex-grow line-clamp-2">{description}</p>
+        
+        {/* Price range if available */}
+        {priceRange && (
+          <p className="text-xs text-brand-navy font-medium mb-1.5">
+            From {priceRange}
+          </p>
+        )}
+        
         <Link 
           to={`/services#${titleSlug}`}
           className="inline-flex items-center text-xs text-brand-red font-medium hover:underline group-hover:translate-x-1 transition-transform duration-300 mt-auto focus:outline-none focus:ring-2 focus:ring-brand-red/50 focus:ring-offset-2 rounded-sm"

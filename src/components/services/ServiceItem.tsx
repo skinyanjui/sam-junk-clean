@@ -1,8 +1,9 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Check, ArrowRight } from 'lucide-react';
+import { Check, ArrowRight, Star, Clock, DollarSign, BadgeCheck } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 import { ServiceData } from './servicesData';
 
 export interface ServiceItemProps extends ServiceData {
@@ -16,6 +17,10 @@ const ServiceItem = ({
   description, 
   items, 
   image, 
+  popularity,
+  priceRange,
+  timeEstimate,
+  benefits,
   relatedBlogs, 
   relatedServices,
   index,
@@ -30,9 +35,43 @@ const ServiceItem = ({
       }`}
     >
       <div className={`${index % 2 === 1 ? 'md:order-2' : ''}`}>
-        <h2 className="text-3xl font-bold text-brand-navy mb-4">{title}</h2>
-        <p className="text-gray-700 mb-6">{description}</p>
-        <ul className="space-y-3 mb-8">
+        <div className="flex items-center mb-2">
+          <h2 className="text-3xl font-bold text-brand-navy">{title}</h2>
+          {popularity === 'high' && (
+            <Badge className="ml-3 bg-brand-red text-white">Popular</Badge>
+          )}
+        </div>
+        
+        <p className="text-gray-700 mb-4">{description}</p>
+        
+        {/* Service details grid */}
+        <div className="grid grid-cols-2 gap-3 mb-5">
+          {priceRange && (
+            <div className="flex items-center text-sm">
+              <DollarSign size={16} className="text-brand-red mr-1.5" />
+              <span><strong>Price:</strong> {priceRange}</span>
+            </div>
+          )}
+          
+          {timeEstimate && (
+            <div className="flex items-center text-sm">
+              <Clock size={16} className="text-brand-red mr-1.5" />
+              <span><strong>Time:</strong> {timeEstimate}</span>
+            </div>
+          )}
+          
+          {popularity && (
+            <div className="flex items-center text-sm">
+              <Star size={16} className="text-brand-yellow fill-brand-yellow mr-1.5" />
+              <span>
+                <strong>Demand:</strong> {popularity === 'high' ? 'High' : popularity === 'medium' ? 'Medium' : 'Low'}
+              </span>
+            </div>
+          )}
+        </div>
+        
+        <h3 className="text-lg font-semibold text-brand-navy mb-3">What We Take</h3>
+        <ul className="space-y-2 mb-6">
           {items.map((item, i) => (
             <li key={i} className="flex items-start">
               <Check className="text-brand-red mr-3 mt-1 flex-shrink-0" />
@@ -40,6 +79,21 @@ const ServiceItem = ({
             </li>
           ))}
         </ul>
+        
+        {benefits && benefits.length > 0 && (
+          <div className="mb-6">
+            <h3 className="text-lg font-semibold text-brand-navy mb-3">Benefits</h3>
+            <ul className="space-y-2">
+              {benefits.map((benefit, i) => (
+                <li key={i} className="flex items-start">
+                  <BadgeCheck className="text-green-600 mr-3 mt-1 flex-shrink-0" />
+                  <span>{benefit}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+        
         <div className="flex flex-col sm:flex-row gap-3 mb-6">
           <Button 
             asChild 

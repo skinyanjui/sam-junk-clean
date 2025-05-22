@@ -16,6 +16,8 @@ export interface ServiceItem {
   description: string;
   image?: string;
   alt?: string;
+  priceRange?: string;
+  popularity?: 'high' | 'medium' | 'low';
 }
 
 interface ServicesGridProps {
@@ -41,7 +43,7 @@ const ServicesGrid = ({ services, isLoading = false }: ServicesGridProps) => {
     return (
       <div className="relative">
         {/* Desktop loading skeleton */}
-        <div className="hidden sm:grid sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-3">
+        <div className="hidden sm:grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
           {Array.from({ length: 8 }).map((_, index) => (
             <LoadingSkeleton key={index} variant="card" className="h-44" />
           ))}
@@ -57,7 +59,7 @@ const ServicesGrid = ({ services, isLoading = false }: ServicesGridProps) => {
   
   // For desktop view - standard grid
   const renderDesktopGrid = () => (
-    <div className="hidden sm:grid sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-3">
+    <div className="hidden sm:grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
       {services.map((service, index) => (
         <ServiceCard 
           key={index}
@@ -65,6 +67,8 @@ const ServicesGrid = ({ services, isLoading = false }: ServicesGridProps) => {
           icon={service.icon}
           description={service.description}
           image={service.image}
+          priceRange={service.priceRange}
+          popularity={service.popularity}
           isActive={activeIndex === index}
           onFocus={() => setActiveIndex(index)}
           onBlur={() => setActiveIndex(null)}
@@ -85,6 +89,8 @@ const ServicesGrid = ({ services, isLoading = false }: ServicesGridProps) => {
                 icon={service.icon}
                 description={service.description}
                 image={service.image}
+                priceRange={service.priceRange}
+                popularity={service.popularity}
                 isActive={activeIndex === index}
                 onFocus={() => setActiveIndex(index)}
                 onBlur={() => setActiveIndex(null)}
