@@ -3,9 +3,10 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
-import { Phone, ArrowRight, ArrowUpRight, Clock } from 'lucide-react';
+import { Phone, ArrowUpRight, Clock, Shield, Check } from 'lucide-react';
 import { useResponsiveLayout } from '@/hooks/use-mobile';
 import { PHONE_NUMBER, getPhoneLink } from '@/utils/contact-info';
+import { Badge } from '@/components/ui/badge';
 
 const CtaSection = () => {
   const { toast } = useToast();
@@ -21,17 +22,17 @@ const CtaSection = () => {
 
   return (
     <motion.section 
-      className="py-10 px-4 md:py-14 lg:py-16 bg-gradient-to-b from-brand-gray to-white"
+      className="py-8 px-4 md:py-10 lg:py-12 bg-gradient-to-b from-brand-gray to-white"
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       viewport={{ once: true, amount: 0.1 }}
       transition={{ duration: 0.6 }}
     >
-      <div className="container-custom max-w-5xl">
+      <div className="container-custom max-w-4xl">
         <motion.div 
-          className="relative overflow-hidden rounded-xl shadow-xl transform hover:scale-[1.01] duration-500 transition-all border border-brand-navy/10"
+          className="relative overflow-hidden rounded-lg shadow-xl transform duration-500 transition-all border border-brand-navy/10"
           whileInView={{ y: 0 }}
-          initial={{ y: 40 }}
+          initial={{ y: 30 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
@@ -41,7 +42,7 @@ const CtaSection = () => {
           </div>
           
           {/* Content container */}
-          <div className="relative flex flex-col md:flex-row bg-gradient-to-r from-brand-navy via-brand-navy/90 to-brand-navy/80 z-10 overflow-hidden">
+          <div className="relative flex flex-col md:flex-row bg-gradient-to-r from-brand-navy via-brand-navy/95 to-brand-navy/90 z-10 overflow-hidden">
             {/* Animated background elements */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
               <div className="absolute -top-32 -right-32 w-64 h-64 rounded-full bg-white opacity-5 blur-3xl"></div>
@@ -49,7 +50,7 @@ const CtaSection = () => {
             </div>
           
             {/* Left image section - visible on md+ screens */}
-            <div className="hidden md:block md:w-2/5 lg:w-1/3 relative overflow-hidden">
+            <div className="hidden md:block md:w-2/5 relative overflow-hidden">
               <motion.div 
                 className="absolute inset-0 bg-cover bg-center" 
                 style={{ 
@@ -65,62 +66,70 @@ const CtaSection = () => {
             </div>
             
             {/* Content section */}
-            <div className="w-full md:w-3/5 lg:w-2/3 p-6 md:p-8 text-white flex flex-col">
-              <div className="max-w-2xl space-y-4">
+            <div className="w-full md:w-3/5 p-5 md:p-6 text-white flex flex-col">
+              <div className="space-y-3">
                 <motion.div 
                   initial={{ opacity: 0, y: 10 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.4 }}
-                  className="inline-flex items-center px-3 py-1 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 mb-4 text-sm"
+                  className="inline-flex items-center px-3 py-1 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 mb-3 text-sm"
                 >
                   <Clock className="h-3 w-3 mr-2 text-brand-red" />
-                  <span className="text-xs">LIMITED TIME OFFER - Same Day Service Available</span>
+                  <span className="text-xs uppercase font-medium tracking-wide">Same Day Service Available</span>
                 </motion.div>
                 
                 <motion.h2 
-                  className={`${isMobile ? 'text-xl' : isTablet ? 'text-2xl' : 'text-3xl'} font-bold tracking-tight`}
-                  initial={{ opacity: 0, y: 20 }}
+                  className={`${isMobile ? 'text-xl' : 'text-xl md:text-2xl'} font-bold tracking-tight`}
+                  initial={{ opacity: 0, y: 15 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: 0.1 }}
                 >
-                  Ready to Clear the Clutter <span className="relative inline-block">
-                    <span className="relative z-10">Today?</span>
-                    <span className="absolute bottom-1 left-0 right-0 h-3 bg-brand-red/30 z-0"></span>
-                  </span>
+                  Get A Free Quote In <span className="text-brand-red">Minutes!</span>
                 </motion.h2>
                 
-                <motion.p 
-                  className={`text-white/80 ${isMobile ? 'text-sm' : 'text-base'} max-w-xl leading-relaxed`}
-                  initial={{ opacity: 0, y: 20 }}
+                <motion.div 
+                  className="space-y-2"
+                  initial={{ opacity: 0, y: 15 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: 0.2 }}
                 >
-                  Contact us for a free, no-obligation quote. Our team of junk removal specialists will handle all your needs with professionalism and care.
-                </motion.p>
+                  <div className="flex items-start">
+                    <Check className="h-4 w-4 text-green-400 mr-2 mt-0.5" />
+                    <p className="text-white/90 text-sm">Fast, no-obligation quotes</p>
+                  </div>
+                  <div className="flex items-start">
+                    <Check className="h-4 w-4 text-green-400 mr-2 mt-0.5" />
+                    <p className="text-white/90 text-sm">Professional, uniformed team</p>
+                  </div>
+                  <div className="flex items-start">
+                    <Check className="h-4 w-4 text-green-400 mr-2 mt-0.5" />
+                    <p className="text-white/90 text-sm">Upfront pricing - no hidden fees</p>
+                  </div>
+                </motion.div>
 
                 <motion.div 
-                  className="flex flex-col sm:flex-row gap-3 pt-2"
-                  initial={{ opacity: 0, y: 20 }}
+                  className="flex flex-col sm:flex-row gap-3 pt-3"
+                  initial={{ opacity: 0, y: 15 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: 0.3 }}
                 >
                   <Button 
                     asChild 
-                    size={isMobile ? "default" : "lg"}
-                    className="bg-brand-red hover:bg-brand-red/90 border border-brand-red/20 text-white font-bold tracking-wide shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group"
+                    size={isMobile ? "default" : "default"}
+                    className="bg-brand-red hover:bg-brand-red/90 border border-brand-red/20 text-white font-bold tracking-wide shadow-lg transition-all duration-300 hover:-translate-y-1 group"
                   >
-                    <Link to="/quote" className="flex items-center">
-                      Get a Free Quote
-                      <ArrowUpRight size={16} className="ml-2 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+                    <Link to="/quote" className="flex items-center justify-center">
+                      Get Your Free Quote Now
+                      <ArrowUpRight size={16} className="ml-1.5 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
                     </Link>
                   </Button>
                   <Button 
                     variant="outline" 
-                    size={isMobile ? "default" : "lg"}
+                    size={isMobile ? "default" : "default"}
                     className="border border-white/60 text-white bg-white/5 backdrop-blur-sm hover:bg-white hover:text-brand-navy font-bold tracking-wide transition-all duration-300 hover:-translate-y-1"
                     onClick={handleCallClick}
                   >
@@ -129,13 +138,15 @@ const CtaSection = () => {
                   </Button>
                 </motion.div>
                 
-                <div className="flex items-center justify-start pt-2">
-                  <div className="flex -space-x-2">
-                    {[1, 2, 3].map(i => (
-                      <div key={i} className="w-6 h-6 rounded-full bg-gray-200 border border-white"></div>
-                    ))}
-                  </div>
-                  <div className="ml-2 text-xs text-white/80">Join 200+ satisfied customers this month</div>
+                <div className="flex items-center justify-start pt-3">
+                  <Badge className="bg-green-100 text-green-800 border-0">
+                    <Shield className="h-3 w-3 mr-1 fill-green-800" />
+                    Satisfaction Guaranteed
+                  </Badge>
+                  <Badge className="bg-blue-100 text-blue-800 border-0 ml-2">
+                    <Clock className="h-3 w-3 mr-1" />
+                    24hr Response
+                  </Badge>
                 </div>
               </div>
             </div>

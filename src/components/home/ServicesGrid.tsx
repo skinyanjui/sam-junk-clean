@@ -41,15 +41,15 @@ const ServicesGrid = ({ services, isLoading = false }: ServicesGridProps) => {
     return (
       <div className="relative">
         {/* Desktop loading skeleton */}
-        <div className="hidden sm:grid sm:grid-cols-3 lg:grid-cols-4 gap-4">
-          {Array.from({ length: 8 }).map((_, index) => (
-            <LoadingSkeleton key={index} variant="card" className="h-52" />
+        <div className="hidden sm:grid sm:grid-cols-4 lg:grid-cols-5 gap-3">
+          {Array.from({ length: 10 }).map((_, index) => (
+            <LoadingSkeleton key={index} variant="card" className="h-44" />
           ))}
         </div>
         
         {/* Mobile loading skeleton */}
         <div className="sm:hidden">
-          <LoadingSkeleton variant="card" className="h-64" />
+          <LoadingSkeleton variant="card" className="h-52" />
         </div>
       </div>
     );
@@ -57,7 +57,7 @@ const ServicesGrid = ({ services, isLoading = false }: ServicesGridProps) => {
   
   // For desktop view - standard grid
   const renderDesktopGrid = () => (
-    <div className="hidden sm:grid sm:grid-cols-3 lg:grid-cols-4 gap-4">
+    <div className="hidden sm:grid sm:grid-cols-4 lg:grid-cols-5 gap-3">
       {services.map((service, index) => (
         <ServiceCard 
           key={index}
@@ -93,8 +93,8 @@ const ServicesGrid = ({ services, isLoading = false }: ServicesGridProps) => {
           ))}
         </CarouselContent>
         <div className="flex justify-center mt-4 gap-2">
-          <CarouselPrevious className="static transform-none mx-1 h-8 w-8" aria-label="Previous service" />
-          <CarouselNext className="static transform-none mx-1 h-8 w-8" aria-label="Next service" />
+          <CarouselPrevious className="static transform-none mx-1 h-7 w-7" aria-label="Previous service" />
+          <CarouselNext className="static transform-none mx-1 h-7 w-7" aria-label="Next service" />
         </div>
       </Carousel>
     </div>

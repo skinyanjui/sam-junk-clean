@@ -1,6 +1,6 @@
 
 import { Link } from 'react-router-dom';
-import { ArrowRight, Star } from 'lucide-react';
+import { ArrowRight, Star, CheckCircle } from 'lucide-react';
 import { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { cn } from '@/lib/utils';
@@ -30,6 +30,8 @@ const ServiceCard = ({
   // Determine if this is a "popular" service based on title
   const isPopular = title.includes('Residential') || title.includes('Commercial') || title.includes('Furniture');
   
+  const titleSlug = title.toLowerCase().replace(/\s+/g, '-');
+  
   return (
     <div 
       className={cn(
@@ -42,7 +44,7 @@ const ServiceCard = ({
       onBlur={onBlur}
     >
       {/* Image container with improved accessibility */}
-      <div className="relative h-36 overflow-hidden">
+      <div className="relative h-28 overflow-hidden">
         {image ? (
           <img 
             src={image} 
@@ -81,17 +83,18 @@ const ServiceCard = ({
       
       {/* Content */}
       <div className="p-3 flex flex-col flex-grow">
-        <div className="mb-3 flex justify-start">
+        <div className="flex items-center mb-2">
           <div 
-            className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-brand-red/10 text-brand-red transition-transform duration-300 group-hover:scale-110"
+            className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-brand-red/10 text-brand-red transition-transform duration-300 group-hover:scale-110"
             aria-hidden="true"
           >
             {icon}
           </div>
+          <CheckCircle className="h-3 w-3 ml-auto text-green-600" />
         </div>
         <p className="text-gray-600 text-xs mb-3 leading-relaxed flex-grow line-clamp-2">{description}</p>
         <Link 
-          to={`/services#${title.toLowerCase().replace(/\s+/g, '-')}`}
+          to={`/services#${titleSlug}`}
           className="inline-flex items-center text-xs text-brand-red font-medium hover:underline group-hover:translate-x-1 transition-transform duration-300 mt-auto focus:outline-none focus:ring-2 focus:ring-brand-red/50 focus:ring-offset-2 rounded-sm"
           aria-label={`Learn more about ${title}`}
         >

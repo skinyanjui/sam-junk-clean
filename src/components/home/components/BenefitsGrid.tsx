@@ -16,14 +16,14 @@ const BenefitsGrid = ({ benefits, isVisible }: BenefitsGridProps) => {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1
+        staggerChildren: 0.08
       }
     }
   };
 
   return (
     <motion.div 
-      className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 lg:gap-5 mb-12"
+      className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 mb-8"
       variants={containerVariants}
       initial="hidden"
       animate={isVisible ? "visible" : "hidden"}
