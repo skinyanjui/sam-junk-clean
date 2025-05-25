@@ -161,6 +161,7 @@ const LocationSEO = ({
         serviceName={`Junk Removal Services in ${locationName}`}
         description={generateDescription()}
         serviceType="Junk Removal"
+        provider="Uncle Sam Junk Removal"
         areaServed={allServiceAreas}
         category="Waste Management"
       />
