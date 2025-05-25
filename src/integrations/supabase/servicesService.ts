@@ -1,11 +1,6 @@
 
 import { supabase } from './client';
-import React from 'react';
 import type { ServiceData, RelatedBlog } from '@/components/services/servicesData';
-import { 
-  Home, Building, Sofa, Smartphone, Refrigerator, Hammer, HeartHandshake, Truck,
-  Bed, HotTub, Warehouse, Dumbbell, Leaf, Construction, Recycle, Gift
-} from 'lucide-react';
 
 // Fetch all services
 export const fetchServices = async (): Promise<ServiceData[]> => {
@@ -138,6 +133,21 @@ export const fetchServices = async (): Promise<ServiceData[]> => {
       },
       {
         id: '9',
+        title: 'Electronics Removal',
+        description: 'We safely dispose of electronic devices and components, ensuring they are recycled properly and data is securely handled.',
+        items: ['TVs & monitors', 'Computers & laptops', 'Printers & scanners', 'Audio equipment', 'Gaming consoles'],
+        image: '/placeholder.svg',
+        popularity: 'medium',
+        priceRange: '$50 - $200',
+        timeEstimate: '30 min - 1 hour',
+        benefits: ['Data security assured', 'Proper e-waste recycling', 'Component recovery'],
+        relatedBlogs: [
+          { title: 'Electronic Waste Disposal Guide', slug: 'electronic-waste-disposal' }
+        ],
+        relatedServices: ['11', '13']
+      },
+      {
+        id: '10',
         title: 'Yard Waste Removal',
         description: 'We help clear your yard of debris, branches, leaves, and other organic waste, leaving your outdoor space clean and tidy.',
         items: ['Tree branches & limbs', 'Leaves & garden waste', 'Grass clippings', 'Bushes & shrub removal', 'Soil & dirt removal'],
@@ -149,10 +159,10 @@ export const fetchServices = async (): Promise<ServiceData[]> => {
         relatedBlogs: [
           { title: 'Seasonal Yard Cleanup Guide', slug: 'seasonal-yard-cleanup' }
         ],
-        relatedServices: ['10', '12']
+        relatedServices: ['7', '12']
       },
       {
-        id: '10',
+        id: '11',
         title: 'Light Demolition',
         description: 'After construction or renovation projects, we help clear out debris and leftover materials to leave your space clean and ready to use.',
         items: ['Deck & patio removal', 'Shed & playset demolition', 'Fence teardown', 'Kitchen & bathroom demolition', 'Drywall removal'],
@@ -168,7 +178,7 @@ export const fetchServices = async (): Promise<ServiceData[]> => {
         relatedServices: ['12', '7', '6']
       },
       {
-        id: '11',
+        id: '12',
         title: 'Scrap Removal',
         description: 'We collect and properly dispose of scrap metal, appliances, and other recyclable materials from your home or business.',
         items: ['Metal scrap', 'Appliances', 'Electronics', 'Automotive parts', 'Plumbing fixtures'],
@@ -180,10 +190,10 @@ export const fetchServices = async (): Promise<ServiceData[]> => {
         relatedBlogs: [
           { title: 'Scrap Metal Recycling Guide', slug: 'scrap-metal-recycling' }
         ],
-        relatedServices: ['4', '8', '12']
+        relatedServices: ['4', '8', '9']
       },
       {
-        id: '12',
+        id: '13',
         title: 'Construction Debris Removal',
         description: 'We handle the cleanup of construction and renovation sites, removing debris, materials, and waste for a clean workspace.',
         items: ['Wood & lumber scraps', 'Drywall & plaster', 'Concrete & brick', 'Tile & flooring', 'Packaging materials'],
@@ -195,10 +205,10 @@ export const fetchServices = async (): Promise<ServiceData[]> => {
         relatedBlogs: [
           { title: 'Managing Construction Waste Efficiently', slug: 'construction-waste-management' }
         ],
-        relatedServices: ['2', '10', '9']
+        relatedServices: ['2', '11', '10']
       },
       {
-        id: '13',
+        id: '14',
         title: 'Donation Pick Up',
         description: 'We collect and transport your gently used items to local charities, helping your unwanted possessions find new homes.',
         items: ['Furniture', 'Clothing & textiles', 'Books & media', 'Kitchen items', 'Small appliances'],
@@ -239,6 +249,19 @@ export const fetchServiceById = async (serviceId: string): Promise<ServiceData |
   }
 };
 
+// Get icon name based on service title
+const getIconName = (serviceTitle: string): string => {
+  if (serviceTitle.includes('Residential')) return 'Home';
+  if (serviceTitle.includes('Commercial')) return 'Building';
+  if (serviceTitle.includes('Furniture')) return 'Sofa';
+  if (serviceTitle.includes('Appliance')) return 'Refrigerator';
+  if (serviceTitle.includes('Mattress')) return 'Bed';
+  if (serviceTitle.includes('Gym')) return 'Dumbbell';
+  if (serviceTitle.includes('Demolition')) return 'Hammer';
+  if (serviceTitle.includes('Construction')) return 'Construction';
+  return 'Home'; // default icon
+};
+
 // Transform service data for the home page service cards
 export const getHomePageServices = async () => {
   try {
@@ -247,39 +270,19 @@ export const getHomePageServices = async () => {
     
     // Select the 8 most important services to display on the homepage
     // Typically high popularity services and most common services
-    const homePageServiceIds = ['1', '2', '3', '4', '5', '8', '10', '12'];
+    const homePageServiceIds = ['1', '2', '3', '4', '5', '8', '11', '13'];
     const homePageServices = mockServices.filter(service => homePageServiceIds.includes(service.id));
     
-    // Map icons to each service
-    return homePageServices.map(service => {
-      // Determine which icon to use based on the service title
-      let icon;
-      if (service.title.includes('Residential')) {
-        icon = <Home className="h-6 w-6 text-brand-red mb-1" />;
-      } else if (service.title.includes('Commercial')) {
-        icon = <Building className="h-6 w-6 text-brand-red mb-1" />;
-      } else if (service.title.includes('Furniture')) {
-        icon = <Sofa className="h-6 w-6 text-brand-red mb-1" />;
-      } else if (service.title.includes('Appliance')) {
-        icon = <Refrigerator className="h-6 w-6 text-brand-red mb-1" />;
-      } else if (service.title.includes('Mattress')) {
-        icon = <Bed className="h-6 w-6 text-brand-red mb-1" />;
-      } else if (service.title.includes('Gym')) {
-        icon = <Dumbbell className="h-6 w-6 text-brand-red mb-1" />;
-      } else if (service.title.includes('Demolition')) {
-        icon = <Hammer className="h-6 w-6 text-brand-red mb-1" />;
-      } else if (service.title.includes('Construction')) {
-        icon = <Construction className="h-6 w-6 text-brand-red mb-1" />;
-      }
-
-      return {
-        title: service.title,
-        icon: icon,
-        description: service.description,
-        image: service.image,
-        alt: `${service.title} service showing ${service.description.toLowerCase()}`
-      };
-    });
+    // Map services to the format expected by the home page
+    return homePageServices.map(service => ({
+      title: service.title,
+      iconName: getIconName(service.title),
+      description: service.description,
+      image: service.image,
+      alt: `${service.title} service showing ${service.description.toLowerCase()}`,
+      priceRange: service.priceRange,
+      popularity: service.popularity
+    }));
   } catch (error) {
     console.error('Error in getHomePageServices:', error);
     return [];

@@ -6,18 +6,58 @@ import ServicesGrid from './ServicesGrid';
 import { useResponsiveLayout } from '@/hooks/use-mobile';
 import { getHomePageServices } from '@/integrations/supabase/servicesService';
 import { ServiceItem } from './ServicesGrid';
+import { 
+  Home, Building, Sofa, Refrigerator, Hammer, 
+  Bed, Dumbbell, Construction
+} from 'lucide-react';
 
 const ServicesOverview = () => {
   const { isMobile } = useResponsiveLayout();
   const [services, setServices] = useState<ServiceItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   
+  // Icon mapping function
+  const getIconComponent = (iconName: string) => {
+    const iconProps = { className: "h-8 w-8 text-brand-red mb-2" };
+    
+    switch (iconName) {
+      case 'Home':
+        return <Home {...iconProps} />;
+      case 'Building':
+        return <Building {...iconProps} />;
+      case 'Sofa':
+        return <Sofa {...iconProps} />;
+      case 'Refrigerator':
+        return <Refrigerator {...iconProps} />;
+      case 'Bed':
+        return <Bed {...iconProps} />;
+      case 'Dumbbell':
+        return <Dumbbell {...iconProps} />;
+      case 'Hammer':
+        return <Hammer {...iconProps} />;
+      case 'Construction':
+        return <Construction {...iconProps} />;
+      default:
+        return <Home {...iconProps} />;
+    }
+  };
+  
   useEffect(() => {
     const loadServices = async () => {
       setIsLoading(true);
       try {
         const data = await getHomePageServices();
-        setServices(data);
+        // Transform the data to include proper icon components
+        const transformedServices: ServiceItem[] = data.map(service => ({
+          title: service.title,
+          icon: getIconComponent(service.iconName),
+          description: service.description,
+          image: service.image,
+          alt: service.alt,
+          priceRange: service.priceRange,
+          popularity: service.popularity
+        }));
+        setServices(transformedServices);
       } catch (error) {
         console.error("Error loading services for home page:", error);
       } finally {
