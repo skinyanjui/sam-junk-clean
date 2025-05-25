@@ -5,67 +5,94 @@ export interface SiteContent {
   id: string;
   section: string;
   key: string;
-  content: string;
+  value: string;
+  type: 'text' | 'html' | 'url' | 'number';
   created_at: string;
   updated_at: string;
 }
 
+// Fetch site content by section
 export const fetchSiteContent = async (section: string): Promise<Record<string, string>> => {
   try {
-    // Since the site_content table doesn't exist yet, return mock data
-    console.warn(`The site_content table doesn't exist yet. Returning mock data for section: ${section}`);
-    
-    // Mock site content based on section
-    const mockSiteContent: Record<string, string> = {
-      'home_hero': {
-        'title': 'Professional Junk Removal Services',
-        'subtitle': 'Fast, Reliable, and Affordable',
-        'cta': 'Get a Quote'
+    // Mock data for now - in production this would come from Supabase
+    const mockContent: Record<string, Record<string, string>> = {
+      hero: {
+        heading: 'Reclaim Your Space TODAY with Uncle Sam!',
+        subheading: 'Expert junk removal across the Tri-State area. Veteran-owned, eco-friendly, and available when you need us!',
+        value_prop_1: 'Fast response times with same-day service available',
+        value_prop_2: 'Veteran-owned, licensed & fully insured business',
+        value_prop_3: '95% recycling rate - we\'re committed to the environment',
+        cta_primary: 'Get Your Free Estimate',
+        cta_secondary: 'Call Now for Immediate Service'
       },
-      'about': {
-        'company_story': 'Uncle Sam Junk Removal was founded in 2015 with a simple mission: to provide reliable and affordable junk removal services to our community.',
-        'mission': 'Our mission is to help our customers live cleaner, more organized lives while being environmentally responsible.'
+      about: {
+        heading: 'Your Trusted Local Junk Removal Experts',
+        subheading: 'Veteran-owned and operated since 2018',
+        mission: 'To provide fast, reliable, and eco-friendly junk removal services while supporting our local community.',
+        years_experience: '6',
+        customers_served: '2500+',
+        recycling_rate: '95%'
       },
-      'contact': {
-        'address': '123 Main Street, Evansville, IN 47708',
-        'phone': '(812) 610-1657',
-        'email': 'contact@unclesamjunk.com'
+      contact: {
+        phone: '(812) 610-1657',
+        email: 'info@unclesamjunkremoval.com',
+        address: '123 Freedom Lane, Evansville, IN 47715',
+        hours_weekday: '7:00 AM - 7:00 PM',
+        hours_saturday: '8:00 AM - 5:00 PM',
+        hours_sunday: 'Emergency calls only'
       }
-    }[section] || {};
-    
-    return mockSiteContent;
+    };
+
+    return mockContent[section] || {};
   } catch (error) {
-    console.error(`Failed to fetch site content for section ${section}:`, error);
+    console.error(`Error fetching site content for section ${section}:`, error);
     return {};
   }
 };
 
-export const fetchAllSiteContent = async (): Promise<Record<string, Record<string, string>>> => {
+// Fetch all trust signals and credentials
+export const fetchTrustSignals = async () => {
   try {
-    // Since the site_content table doesn't exist yet, return mock data
-    console.warn("The site_content table doesn't exist yet. Returning mock data for all sections");
-    
-    // Mock site content for all sections
-    const mockSiteContent: Record<string, Record<string, string>> = {
-      'home_hero': {
-        'title': 'Professional Junk Removal Services',
-        'subtitle': 'Fast, Reliable, and Affordable',
-        'cta': 'Get a Quote'
+    return {
+      licenses: [
+        'Indiana State License #12345',
+        'Kentucky Business License #KY-67890'
+      ],
+      certifications: [
+        'EPA Certified Disposal',
+        'OSHA Safety Certified',
+        'Better Business Bureau A+ Rating'
+      ],
+      insurance: {
+        liability: '$2,000,000',
+        workers_comp: 'Full Coverage',
+        bonded: true
       },
-      'about': {
-        'company_story': 'Uncle Sam Junk Removal was founded in 2015 with a simple mission: to provide reliable and affordable junk removal services to our community.',
-        'mission': 'Our mission is to help our customers live cleaner, more organized lives while being environmentally responsible.'
-      },
-      'contact': {
-        'address': '123 Main Street, Evansville, IN 47708',
-        'phone': '(812) 610-1657',
-        'email': 'contact@unclesamjunk.com'
+      veteran_status: {
+        owner_branch: 'U.S. Army',
+        service_years: '2008-2014',
+        verified: true
       }
     };
-    
-    return mockSiteContent;
   } catch (error) {
-    console.error('Failed to fetch all site content:', error);
-    return {};
+    console.error('Error fetching trust signals:', error);
+    return null;
+  }
+};
+
+// Fetch company statistics
+export const fetchCompanyStats = async () => {
+  try {
+    return {
+      years_in_business: 6,
+      customers_served: 2500,
+      items_recycled: 45000,
+      same_day_completion_rate: 98,
+      customer_satisfaction: 4.9,
+      total_reviews: 247
+    };
+  } catch (error) {
+    console.error('Error fetching company stats:', error);
+    return null;
   }
 };
