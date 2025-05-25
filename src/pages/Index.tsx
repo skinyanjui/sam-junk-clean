@@ -8,6 +8,7 @@ import TestimonialsSection from '@/components/home/TestimonialsSection';
 import WhyChooseUs from '@/components/home/WhyChooseUs';
 import TrustSignals from '@/components/home/TrustSignals';
 import SEO from '@/components/SEO';
+import LocalBusinessSchema from '@/components/SEO/LocalBusinessSchema';
 import { useTranslation } from 'react-i18next';
 import { LoadingSkeleton } from '@/components/ui/loading-skeleton';
 import SectionSeparator from '@/components/ui/section-separator';
@@ -34,142 +35,35 @@ const Index = () => {
     { lang: 'es', url: 'https://unclesamjunkremoval.com/?lang=es' }
   ];
 
-  // Enhanced structured data for homepage
-  const homeStructuredData = {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    "name": "Professional Junk Removal Services | Uncle Sam Junk Removal",
-    "description": "Fast, reliable junk removal services across the Tri-State area. Residential & commercial cleanouts, furniture & appliance removal. Veteran-owned, eco-friendly, same-day service available.",
-    "url": "https://unclesamjunkremoval.com",
-    "breadcrumb": {
-      "@type": "BreadcrumbList",
-      "itemListElement": [
-        {
-          "@type": "ListItem",
-          "position": 1,
-          "name": "Home",
-          "item": "https://unclesamjunkremoval.com"
-        }
-      ]
-    },
-    "mainEntity": {
-      "@type": "LocalBusiness",
-      "name": "Uncle Sam Junk Removal",
-      "url": "https://unclesamjunkremoval.com",
-      "logo": "https://unclesamjunkremoval.com/logo.png",
-      "image": "https://unclesamjunkremoval.com/hero-image.jpg",
-      "telephone": "+18126101657",
-      "email": "info@unclesamjunkremoval.com",
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "123 Freedom Lane",
-        "addressLocality": "Evansville",
-        "addressRegion": "IN",
-        "postalCode": "47715",
-        "addressCountry": "US"
-      },
-      "geo": {
-        "@type": "GeoCoordinates",
-        "latitude": 37.9748,
-        "longitude": -87.5558
-      },
-      "areaServed": [
-        {
-          "@type": "City",
-          "name": "Evansville",
-          "sameAs": "https://en.wikipedia.org/wiki/Evansville,_Indiana"
-        },
-        {
-          "@type": "City",
-          "name": "Henderson",
-          "sameAs": "https://en.wikipedia.org/wiki/Henderson,_Kentucky"
-        },
-        {
-          "@type": "City",
-          "name": "Owensboro",
-          "sameAs": "https://en.wikipedia.org/wiki/Owensboro,_Kentucky"
-        },
-        {
-          "@type": "City",
-          "name": "Newburgh",
-          "sameAs": "https://en.wikipedia.org/wiki/Newburgh,_Indiana"
-        }
-      ],
-      "sameAs": [
-        "https://facebook.com/unclesamjunkremoval",
-        "https://twitter.com/unclesamjunk",
-        "https://instagram.com/unclesamjunkremoval",
-        "https://www.yelp.com/biz/uncle-sam-junk-removal-evansville",
-        "https://www.angi.com/companylist/us/in/evansville/uncle-sam-junk-removal-reviews"
-      ],
-      "hasOfferCatalog": {
-        "@type": "OfferCatalog",
-        "name": "Junk Removal Services",
-        "itemListElement": [
-          {
-            "@type": "Offer",
-            "itemOffered": {
-              "@type": "Service",
-              "name": "Residential Junk Removal",
-              "description": "Complete home cleanouts, garage cleaning, and household item removal across the Tri-State area."
-            }
-          },
-          {
-            "@type": "Offer",
-            "itemOffered": {
-              "@type": "Service",
-              "name": "Commercial Junk Removal",
-              "description": "Office cleanouts, retail space clearing, and business junk removal services."
-            }
-          },
-          {
-            "@type": "Offer",
-            "itemOffered": {
-              "@type": "Service",
-              "name": "Appliance Removal",
-              "description": "Safe removal and eco-friendly disposal of refrigerators, washers, dryers, and other appliances."
-            }
-          }
-        ]
-      },
-      "aggregateRating": {
-        "@type": "AggregateRating",
-        "ratingValue": "4.9",
-        "reviewCount": "247",
-        "bestRating": "5",
-        "worstRating": "1"
-      },
-      "priceRange": "$$",
-      "openingHoursSpecification": [
-        {
-          "@type": "OpeningHoursSpecification",
-          "dayOfWeek": [
-            "Monday",
-            "Tuesday", 
-            "Wednesday",
-            "Thursday",
-            "Friday",
-            "Saturday"
-          ],
-          "opens": "07:00",
-          "closes": "19:00"
-        }
-      ]
-    }
-  };
-
   return (
     <PageLayout showBreadcrumb={false} spacing="compact">
       <SEO 
         title="Professional Junk Removal Services | Uncle Sam Junk Removal"
         description="Fast, reliable junk removal services across the Tri-State area. Residential & commercial cleanouts, furniture & appliance removal. Get a free quote today! Veteran-owned, eco-friendly, same-day service available."
         keywords="junk removal, Evansville junk removal, Henderson junk removal, Tri-State area, same-day service, furniture removal, appliance removal, veteran owned, eco-friendly disposal, free estimate"
-        structuredData={homeStructuredData}
         lang={currentLang}
         alternateLanguages={alternateLanguages}
       />
       
+      {/* Enhanced Local Business Schema */}
+      <LocalBusinessSchema 
+        serviceAreas={["Evansville", "Henderson", "Newburgh", "Owensboro", "Boonville", "Princeton", "Mt. Vernon", "Chandler", "Darmstadt"]}
+        services={[
+          "Residential Junk Removal",
+          "Commercial Junk Removal",
+          "Furniture Removal", 
+          "Appliance Removal",
+          "Construction Debris Removal",
+          "Estate Cleanouts",
+          "Hot Tub Removal",
+          "Same-Day Junk Removal",
+          "Eco-Friendly Disposal",
+          "Donation Services"
+        ]}
+      />
+      
       {isLoading ? (
+        
         <div className="space-y-8 py-4 px-4 md:py-8 md:px-6" aria-label="Loading content">
           <div className="container-custom">
             {/* Hero skeleton */}
