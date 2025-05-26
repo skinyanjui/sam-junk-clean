@@ -23,14 +23,15 @@ export interface CompanyStat {
 
 export const fetchCompanyBenefits = async (): Promise<CompanyBenefit[]> => {
   try {
-    // We'll handle the case where this table doesn't exist yet
-    // by returning default/mock data
+    console.log('Fetching company benefits...');
+    
+    // Enhanced mock benefits data
     const mockBenefits: CompanyBenefit[] = [
       {
         id: '1',
-        title: 'Fast Response',
-        description: 'We arrive quickly to handle your junk removal needs',
-        icon: 'clock',
+        title: 'Same-Day Service',
+        description: 'Quick response for urgent junk removal needs',
+        icon: 'Clock',
         color_class: 'bg-green-100 text-green-800',
         sort_order: 1,
         created_at: new Date().toISOString()
@@ -38,8 +39,8 @@ export const fetchCompanyBenefits = async (): Promise<CompanyBenefit[]> => {
       {
         id: '2',
         title: 'Free Estimates',
-        description: 'Get a no-obligation price quote before any work begins',
-        icon: 'calculator',
+        description: 'No-obligation quotes before any work begins',
+        icon: 'Calculator',
         color_class: 'bg-blue-100 text-blue-800',
         sort_order: 2,
         created_at: new Date().toISOString()
@@ -47,25 +48,83 @@ export const fetchCompanyBenefits = async (): Promise<CompanyBenefit[]> => {
       {
         id: '3',
         title: 'Eco-Friendly',
-        description: 'We recycle or donate as much as possible',
-        icon: 'leaf',
+        description: 'We recycle and donate whenever possible',
+        icon: 'Leaf',
         color_class: 'bg-emerald-100 text-emerald-800',
         sort_order: 3,
+        created_at: new Date().toISOString()
+      },
+      {
+        id: '4',
+        title: 'Veteran Owned',
+        description: 'Proudly owned and operated by veterans',
+        icon: 'Award',
+        color_class: 'bg-red-100 text-red-800',
+        sort_order: 4,
+        created_at: new Date().toISOString()
+      },
+      {
+        id: '5',
+        title: 'Full Coverage',
+        description: 'Licensed and insured for your protection',
+        icon: 'Shield',
+        color_class: 'bg-purple-100 text-purple-800',
+        sort_order: 5,
+        created_at: new Date().toISOString()
+      },
+      {
+        id: '6',
+        title: 'Fair Pricing',
+        description: 'Transparent pricing with no hidden fees',
+        icon: 'DollarSign',
+        color_class: 'bg-yellow-100 text-yellow-800',
+        sort_order: 6,
+        created_at: new Date().toISOString()
+      },
+      {
+        id: '7',
+        title: 'Professional Team',
+        description: 'Trained and background-checked crew',
+        icon: 'Users',
+        color_class: 'bg-indigo-100 text-indigo-800',
+        sort_order: 7,
+        created_at: new Date().toISOString()
+      },
+      {
+        id: '8',
+        title: 'No Heavy Lifting',
+        description: 'We handle all the heavy work for you',
+        icon: 'Truck',
+        color_class: 'bg-orange-100 text-orange-800',
+        sort_order: 8,
         created_at: new Date().toISOString()
       }
     ];
     
+    console.log('Company benefits loaded successfully:', mockBenefits.length);
     return mockBenefits;
   } catch (error) {
     console.error('Failed to fetch company benefits:', error);
-    return [];
+    // Return fallback data instead of empty array
+    return [
+      {
+        id: 'fallback-1',
+        title: 'Professional Service',
+        description: 'Reliable junk removal you can trust',
+        icon: 'Check',
+        color_class: 'bg-green-100 text-green-800',
+        sort_order: 1,
+        created_at: new Date().toISOString()
+      }
+    ];
   }
 };
 
 export const fetchCompanyStats = async (): Promise<CompanyStat[]> => {
   try {
-    // We'll handle the case where this table doesn't exist yet
-    // by returning default/mock data
+    console.log('Fetching company stats...');
+    
+    // Enhanced mock stats data
     const mockStats: CompanyStat[] = [
       {
         id: '1',
@@ -77,22 +136,39 @@ export const fetchCompanyStats = async (): Promise<CompanyStat[]> => {
       {
         id: '2',
         value: '10+',
-        label: 'Years of Experience',
+        label: 'Years Experience',
         sort_order: 2,
         created_at: new Date().toISOString()
       },
       {
         id: '3',
         value: '5,000+',
-        label: 'Successful Jobs',
+        label: 'Jobs Completed',
         sort_order: 3,
+        created_at: new Date().toISOString()
+      },
+      {
+        id: '4',
+        value: '85%',
+        label: 'Items Recycled',
+        sort_order: 4,
         created_at: new Date().toISOString()
       }
     ];
     
+    console.log('Company stats loaded successfully:', mockStats.length);
     return mockStats;
   } catch (error) {
     console.error('Failed to fetch company stats:', error);
-    return [];
+    // Return fallback data instead of empty array
+    return [
+      {
+        id: 'fallback-1',
+        value: '100%',
+        label: 'Reliable Service',
+        sort_order: 1,
+        created_at: new Date().toISOString()
+      }
+    ];
   }
 };

@@ -16,20 +16,56 @@ const WhyChooseUs = () => {
   const [stats, setStats] = useState<CompanyStat[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isVisible, setIsVisible] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    console.log('WhyChooseUs: Component mounted, starting data load...');
+    
     const loadData = async () => {
       setIsLoading(true);
+      setError(null);
+      
       try {
+        console.log('WhyChooseUs: Fetching benefits and stats...');
         const [benefitsData, statsData] = await Promise.all([
           fetchCompanyBenefits(),
           fetchCompanyStats()
         ]);
+        
+        console.log('WhyChooseUs: Data loaded successfully', {
+          benefits: benefitsData.length,
+          stats: statsData.length
+        });
+        
         setBenefits(benefitsData);
         setStats(statsData);
       } catch (error) {
-        console.error('Error loading company data:', error);
+        console.error('WhyChooseUs: Error loading company data:', error);
+        setError('Failed to load company data');
+        
+        // Set fallback data to ensure something displays
+        setBenefits([
+          {
+            id: 'fallback-1',
+            title: 'Professional Service',
+            description: 'Reliable junk removal you can trust',
+            icon: 'Check',
+            color_class: 'bg-green-100 text-green-800',
+            sort_order: 1,
+            created_at: new Date().toISOString()
+          }
+        ]);
+        setStats([
+          {
+            id: 'fallback-1',
+            value: '100%',
+            label: 'Reliable Service',
+            sort_order: 1,
+            created_at: new Date().toISOString()
+          }
+        ]);
       } finally {
+        console.log('WhyChooseUs: Setting loading to false');
         setIsLoading(false);
       }
     };
@@ -40,6 +76,7 @@ const WhyChooseUs = () => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
+          console.log('WhyChooseUs: Section became visible');
           setIsVisible(true);
           observer.disconnect();
         }
@@ -47,19 +84,45 @@ const WhyChooseUs = () => {
       { threshold: 0.1 }
     );
     
-    // Find the section element to observe
-    const sectionElement = document.getElementById('why-choose-us-section');
-    if (sectionElement) {
-      observer.observe(sectionElement);
-    }
+    // Add a small delay to ensure DOM is ready
+    const timer = setTimeout(() => {
+      const sectionElement = document.getElementById('why-choose-us-section');
+      if (sectionElement) {
+        console.log('WhyChooseUs: Observing section element');
+        observer.observe(sectionElement);
+      } else {
+        console.warn('WhyChooseUs: Section element not found');
+        setIsVisible(true); // Fallback to visible
+      }
+    }, 100);
     
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+      clearTimeout(timer);
+    };
   }, []);
 
-  // If loading, show skeleton
+  console.log('WhyChooseUs: Rendering with state', { isLoading, benefits: benefits.length, stats: stats.length, error });
+
+  // Show loading skeleton
   if (isLoading) {
+    console.log('WhyChooseUs: Showing loading skeleton');
     return <LoadingSkeleton />;
   }
+
+  // Show error state if needed
+  if (error && benefits.length === 0) {
+    console.log('WhyChooseUs: Showing error state');
+    return (
+      <section className="py-16 px-4 bg-gray-50">
+        <div className="container-custom text-center">
+          <p className="text-gray-600">Unable to load content. Please try again later.</p>
+        </div>
+      </section>
+    );
+  }
+
+  console.log('WhyChooseUs: Rendering full component');
 
   return (
     <section 

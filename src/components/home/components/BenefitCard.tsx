@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Shield, Calendar, Leaf, Truck, Award, Users, Star, Check } from 'lucide-react';
+import { Shield, Calendar, Leaf, Truck, Award, Users, Star, Check, Clock, Calculator, DollarSign } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { CompanyBenefit } from '@/integrations/supabase/companyService';
 
@@ -34,6 +34,10 @@ const BenefitCard = ({ benefit, index }: BenefitCardProps) => {
       'Award': <Award className="h-4 w-4" />,
       'Users': <Users className="h-4 w-4" />,
       'Star': <Star className="h-4 w-4" />,
+      'Check': <Check className="h-4 w-4" />,
+      'Clock': <Clock className="h-4 w-4" />,
+      'Calculator': <Calculator className="h-4 w-4" />,
+      'DollarSign': <DollarSign className="h-4 w-4" />,
     };
 
     return iconMap[iconName] || <Shield className="h-4 w-4" />;
