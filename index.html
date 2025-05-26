@@ -8,9 +8,28 @@
     <meta name="description" content="Uncle Sam Junk Removal - Professional junk removal services in the Tri-State area. Residential, Commercial, and Estate Cleanouts. Get a free quote today!" />
     <meta name="author" content="Uncle Sam Junk Removal" />
 
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#B22234">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Uncle Sam Junk">
+    <link rel="apple-touch-icon" href="/lovable-uploads/b102b174-1562-4730-9825-d6bf5822fef0.png">
+
     <!-- Performance optimizations -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="dns-prefetch" href="https://images.unsplash.com">
+    <link rel="dns-prefetch" href="https://lovable.dev">
+    
+    <!-- Critical CSS for LCP optimization -->
+    <style>
+      /* Critical above-the-fold styles */
+      body { margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; }
+      .hero-section { background-color: #1a365d; min-height: 100vh; }
+      .container-custom { max-width: 1200px; margin: 0 auto; padding: 0 1rem; }
+    </style>
+    
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@300;400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"></noscript>
     
@@ -38,16 +57,33 @@
     
     <!-- Mobile-specific meta -->
     <meta name="format-detection" content="telephone=no">
-    <meta name="theme-color" content="#B22234">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Uncle Sam Junk">
     
     <!-- Accessibility -->
-    <meta name="apple-mobile-web-app-title" content="Uncle Sam Junk">
+    <meta name="color-scheme" content="light">
+    
+    <!-- Preload critical resources for LCP -->
+    <link rel="preload" href="/lovable-uploads/b102b174-1562-4730-9825-d6bf5822fef0.png" as="image" type="image/png">
   </head>
 
   <body>
     <div id="root"></div>
+    
+    <!-- Service Worker Registration -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js')
+            .then((registration) => {
+              console.log('SW registered: ', registration);
+            })
+            .catch((registrationError) => {
+              console.log('SW registration failed: ', registrationError);
+            });
+        });
+      }
+    </script>
+    
     <!-- IMPORTANT: DO NOT REMOVE THIS SCRIPT TAG OR THIS VERY COMMENT! -->
     <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
     <script type="module" src="/src/main.tsx"></script>

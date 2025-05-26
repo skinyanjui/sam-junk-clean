@@ -20,30 +20,38 @@ export default defineConfig(({ mode }) => ({
     alias: {
       "@": path.resolve(__dirname, "./src"),
     },
-    // Ensure directories aren't treated as modules
     preserveSymlinks: false
   },
   build: {
-    // Show detailed build errors
     reportCompressedSize: true,
-    // Optimize chunk size
     cssCodeSplit: true,
     chunkSizeWarningLimit: 1000,
     rollupOptions: {
       output: {
         manualChunks: {
-          vendor: ['react', 'react-dom', 'react-router-dom'],
-          ui: ['@/components/ui/button', '@/components/ui/form']  // Specify individual UI components instead of entire directory
+          vendor: ['react', 'react-dom'],
+          router: ['react-router-dom'],
+          motion: ['framer-motion'],
+          ui: ['@radix-ui/react-dialog', '@radix-ui/react-button'],
+          icons: ['lucide-react'],
+          query: ['@tanstack/react-query']
         }
       }
     },
-    // Generate source maps for production builds
     sourcemap: mode === 'development',
-    // Minify output in production
     minify: mode === 'production' ? 'esbuild' : false,
+    target: 'esnext',
+    // Enable compression
+    cssMinify: 'esbuild',
   },
   // Optimize performance with faster HMR
   optimizeDeps: {
-    include: ['react', 'react-dom', 'react-router-dom']
+    include: ['react', 'react-dom', 'react-router-dom', 'framer-motion', 'lucide-react']
   },
+  // Enable gzip compression
+  preview: {
+    headers: {
+      'Cache-Control': 'public, max-age=31536000'
+    }
+  }
 }));

@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -9,6 +8,8 @@ import { useToast } from '@/hooks/use-toast';
 import { motion } from 'framer-motion';
 import { fetchSiteContent } from '@/integrations/supabase/siteContentService';
 import { Skeleton } from '@/components/ui/skeleton';
+import { LazyImage } from '@/components/ui/lazy-image';
+import { TouchFeedback } from '@/components/ui/touch-feedback';
 
 const HeroSection = () => {
   const { isMobile, orientation, isLandscapeMobile } = useResponsiveLayout();
@@ -66,7 +67,7 @@ const HeroSection = () => {
   // Loading skeleton
   if (isLoading) {
     return (
-      <section className="relative flex items-center overflow-hidden bg-brand-navy" style={{
+      <section className="relative flex items-center overflow-hidden bg-brand-navy hero-section" style={{
         height: isLandscapeMobile ? "auto" : isMobile ? "auto" : viewportHeight,
         minHeight: isLandscapeMobile ? "90vh" : isMobile ? "auto" : "100vh",
         paddingTop: isMobile ? "2rem" : "0",
@@ -111,7 +112,7 @@ const HeroSection = () => {
   }
 
   return (
-    <section className="relative flex items-center overflow-hidden bg-brand-navy" style={{
+    <section className="relative flex items-center overflow-hidden bg-brand-navy hero-section" style={{
       height: isLandscapeMobile ? "auto" : isMobile ? "auto" : viewportHeight,
       minHeight: isLandscapeMobile ? "90vh" : isMobile ? "auto" : "100vh",
       paddingTop: isMobile ? "2rem" : "0",
@@ -159,16 +160,20 @@ const HeroSection = () => {
               </li>
             </ul>
             
-            {/* CTA section */}
+            {/* Enhanced CTA section with touch feedback */}
             <div className={`flex ${isMobile ? 'flex-col gap-2' : isLandscapeMobile ? 'flex-row gap-3' : 'flex-col sm:flex-row gap-4'} ${isMobile ? 'mb-4' : isLandscapeMobile ? 'mb-4' : 'mb-6'} relative`}>
-              <Button asChild size={isMobile || isLandscapeMobile ? "default" : "lg"} className="bg-brand-red hover:bg-brand-red/90 text-white font-bold tracking-wide shadow-lg transition-all duration-300 hover:scale-[1.03] border border-brand-red/20">
-                <Link to="/quote">Get Your Free Estimate</Link>
-              </Button>
+              <TouchFeedback intensity="medium">
+                <Button asChild size={isMobile || isLandscapeMobile ? "default" : "lg"} className="bg-brand-red hover:bg-brand-red/90 text-white font-bold tracking-wide shadow-lg transition-all duration-300 hover:scale-[1.03] border border-brand-red/20 w-full sm:w-auto">
+                  <Link to="/quote">Get Your Free Estimate</Link>
+                </Button>
+              </TouchFeedback>
               
-              <Button size={isMobile || isLandscapeMobile ? "default" : "lg"} className="bg-transparent border border-white hover:bg-white hover:text-brand-navy transition-colors duration-300 gap-2 font-semibold" onClick={handleCallClick}>
-                <Phone size={isMobile ? 16 : 20} aria-hidden="true" />
-                <a href="tel:+18126101657" aria-label="Call us at (812) 610-1657">(812) 610-1657</a>
-              </Button>
+              <TouchFeedback intensity="light">
+                <Button size={isMobile || isLandscapeMobile ? "default" : "lg"} className="bg-transparent border border-white hover:bg-white hover:text-brand-navy transition-colors duration-300 gap-2 font-semibold w-full sm:w-auto" onClick={handleCallClick}>
+                  <Phone size={isMobile ? 16 : 20} aria-hidden="true" />
+                  <a href="tel:+18126101657" aria-label="Call us at (812) 610-1657">(812) 610-1657</a>
+                </Button>
+              </TouchFeedback>
             </div>
           </div>
 
