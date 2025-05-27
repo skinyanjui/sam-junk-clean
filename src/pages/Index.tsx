@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from 'react';
 import PageLayout from '@/components/PageLayout';
 import HeroSection from '@/components/home/HeroSection';
@@ -6,7 +7,9 @@ import PricingOverview from '@/components/home/PricingOverview';
 import CtaSection from '@/components/home/CtaSection';
 import TestimonialsSection from '@/components/home/TestimonialsSection';
 import WhyChooseUs from '@/components/home/WhyChooseUs';
-import TrustSignals from '@/components/home/TrustSignals';
+import EnhancedTrustSignals from '@/components/home/EnhancedTrustSignals';
+import ExitIntentPopup from '@/components/conversion/ExitIntentPopup';
+import SocialProofNotifications from '@/components/conversion/SocialProofNotifications';
 import SEO from '@/components/SEO';
 import LocalBusinessSchema from '@/components/SEO/LocalBusinessSchema';
 import { useTranslation } from 'react-i18next';
@@ -14,11 +17,27 @@ import { LoadingSkeleton } from '@/components/ui/loading-skeleton';
 import SectionSeparator from '@/components/ui/section-separator';
 import FeaturedProjects from '@/components/home/FeaturedProjects';
 import ProcessSection from '@/components/home/ProcessSection';
+import { useExitIntent } from '@/hooks/use-exit-intent';
 
 const Index = () => {
   const { t, i18n } = useTranslation();
   const currentLang = i18n.language;
   const [isLoading, setIsLoading] = useState(true);
+  const [showExitIntent, setShowExitIntent] = useState(false);
+
+  // Exit intent detection
+  const { hasTriggered } = useExitIntent({
+    enabled: true,
+    threshold: 50,
+    delay: 500,
+    onExitIntent: () => {
+      // Only show if user hasn't seen it in this session
+      if (!sessionStorage.getItem('exit-intent-shown')) {
+        setShowExitIntent(true);
+        sessionStorage.setItem('exit-intent-shown', 'true');
+      }
+    }
+  });
 
   useEffect(() => {
     // Simulate some data loading to show skeleton state
@@ -100,7 +119,7 @@ const Index = () => {
       ) : (
         <div className="space-y-2 md:space-y-3">
           <HeroSection />
-          <TrustSignals />
+          <EnhancedTrustSignals />
           <SectionSeparator variant="gradient" padding="sm" />
           
           <ProcessSection />
@@ -124,6 +143,13 @@ const Index = () => {
           <CtaSection />
         </div>
       )}
+
+      {/* Conversion optimization components */}
+      <SocialProofNotifications />
+      <ExitIntentPopup 
+        isOpen={showExitIntent} 
+        onClose={() => setShowExitIntent(false)} 
+      />
     </PageLayout>
   );
 };

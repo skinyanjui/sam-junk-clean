@@ -32,7 +32,7 @@ export default defineConfig(({ mode }) => ({
           vendor: ['react', 'react-dom'],
           router: ['react-router-dom'],
           motion: ['framer-motion'],
-          ui: ['@radix-ui/react-dialog', '@radix-ui/react-button'],
+          ui: ['@radix-ui/react-dialog'],
           icons: ['lucide-react'],
           query: ['@tanstack/react-query']
         }
