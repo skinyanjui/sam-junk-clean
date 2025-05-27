@@ -14,6 +14,7 @@ interface PhoneFormFieldProps {
   showValidation?: boolean;
   disabled?: boolean;
   autoComplete?: string;
+  onFocus?: () => void;
 }
 
 export const PhoneFormField = ({ 
@@ -25,7 +26,8 @@ export const PhoneFormField = ({
   inputBorderClass = 'border-gray-600', // Darker default border
   showValidation = true,
   disabled = false,
-  autoComplete = 'tel'
+  autoComplete = 'tel',
+  onFocus
 }: PhoneFormFieldProps) => {
   return (
     <FormField id={id} label={label} error={error} showValidation={showValidation}>
@@ -35,6 +37,7 @@ export const PhoneFormField = ({
         className={`bg-white ${inputBorderClass} ${error ? 'border-red-500' : ''}`}
         disabled={disabled}
         autoComplete={autoComplete}
+        onFocus={onFocus}
         {...register}
       />
     </FormField>
