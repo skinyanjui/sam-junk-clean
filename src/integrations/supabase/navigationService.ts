@@ -45,35 +45,44 @@ export const fetchNavigationItems = async (): Promise<DbNavigationItem[]> => {
 };
 
 export const getNavigationStructure = async (): Promise<NavItem[]> => {
+  // Fetch all navigation items from the database.
   const allItems: DbNavigationItem[] = await fetchNavigationItems();
 
-  // Filter for active items only before building the structure
+  // Filter for active items only before building the structure.
+  // This ensures that only enabled navigation links are processed.
   const activeItems = allItems.filter(item => item.is_active);
 
+  // Step 1: Create a map for O(1) access to items by their ID.
+  // Also, initialize a 'children' array for each item to store its descendants.
   const itemsById: { [key: string]: DbNavigationItem & { children?: DbNavigationItem[] } } = {};
   activeItems.forEach(item => itemsById[item.id] = { ...item, children: [] });
 
+  // Step 2: Build the hierarchy.
+  // Iterate through active items to place children under their respective parents.
   const rootItems: (DbNavigationItem & { children?: DbNavigationItem[] })[] = [];
   activeItems.forEach(item => {
     if (item.parent_id && itemsById[item.parent_id]) {
-      // Ensure children array exists
-      if (!itemsById[item.parent_id].children) {
-        itemsById[item.parent_id].children = [];
-      }
+      // This item is a child. Add it to its parent's 'children' array.
+      // The 'itemsById[item.id]' ensures we are pushing the object that has the 'children' property initialized.
       itemsById[item.parent_id].children?.push(itemsById[item.id]);
     } else if (!item.parent_id) {
+      // This item has no parent_id, so it's a root-level item.
       rootItems.push(itemsById[item.id]);
     }
   });
 
-  // Sort children by sort_order
+  // Step 3: Sort children within each item by their 'sort_order'.
+  // This ensures dropdown menus and sub-navigation appear in the intended sequence.
   Object.values(itemsById).forEach(item => {
     item.children?.sort((a, b) => a.sort_order - b.sort_order);
   });
-  // Sort root items by sort_order as well
+
+  // Step 4: Sort the root-level items by their 'sort_order'.
+  // This determines the order of top-level navigation links.
   rootItems.sort((a,b) => a.sort_order - b.sort_order);
 
-  // Map to the NavItem structure expected by Navbar component
+  // Step 5: Map the hierarchical DbNavigationItem structure to the NavItem structure.
+  // The NavItem structure is what the Navbar UI component expects.
   const mapToNavItem = (items: (DbNavigationItem & { children?: DbNavigationItem[] })[]): NavItem[] => {
     return items.map(item => ({
       name: item.name,
