@@ -8,6 +8,7 @@ import SEO from '@/components/SEO';
 import { relatedLinks } from '@/data/blogData';
 import { fetchAllBlogPosts } from '@/integrations/supabase/blogService';
 import { mapBlogToBlogPost } from '@/integrations/supabase/services/blogUtils';
+import { siteConfig } from '@/config/siteConfig'; // Import siteConfig
 import { useToast } from '@/hooks/use-toast';
 import { useBlogFilters } from '@/hooks/use-blog-filters';
 
@@ -90,27 +91,75 @@ const Blog = () => {
     }
   };
 
+  // Dynamic Title and Description
+  let pageTitle = `Junk Removal Blog | Tips & Advice | ${siteConfig.siteName}`;
+  let pageDescription = `Explore expert tips on junk removal, recycling guides, decluttering strategies, and sustainability practices from ${siteConfig.businessName}'s professional team serving ${siteConfig.address.addressLocality} and the Tri-State area.`;
+
+  if (activeCategory) {
+    pageTitle = `Category: ${activeCategory} | Blog - ${siteConfig.siteName}`;
+    pageDescription = `Browse blog posts in the category: ${activeCategory}. ${siteConfig.siteName} Blog.`;
+  } else if (searchQuery) {
+    pageTitle = `Search results for "${searchQuery}" | Blog - ${siteConfig.siteName}`;
+    pageDescription = `Displaying search results for "${searchQuery}" on the ${siteConfig.siteName} Blog.`;
+  }
+
+  const blogSchema = {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    "name": `${siteConfig.businessName} Blog`,
+    "description": `Expert tips, advice, and guides on junk removal, recycling, and sustainable waste management practices from ${siteConfig.businessName}.`,
+    "url": `${siteConfig.siteUrl}/blog`,
+    "publisher": {
+      "@type": "Organization",
+      "name": siteConfig.businessName,
+      "logo": {
+        "@type": "ImageObject",
+        "url": `${siteConfig.siteUrl}${siteConfig.defaultOgImage}` // Ensure absolute URL
+      }
+    },
+    "mainEntity": filteredPosts.length > 0 ? {
+      "@type": "ItemList",
+      "itemListElement": filteredPosts.map((post, index) => ({
+        "@type": "ListItem",
+        "position": index + 1,
+        "item": {
+          "@type": "BlogPosting",
+          "headline": post.title,
+          "url": `${siteConfig.siteUrl}/blog/${post.slug}`,
+          "image": post.imageUrl?.startsWith('http') ? post.imageUrl : `${siteConfig.siteUrl}${post.imageUrl?.startsWith('/') ? '' : '/'}${post.imageUrl}`,
+          "datePublished": new Date(post.date).toISOString(),
+          "author": { "@type": "Person", "name": post.author },
+          "description": post.excerpt, // Added excerpt as description
+          "publisher": {
+             "@type": "Organization",
+             "name": siteConfig.businessName,
+             "logo": {
+               "@type": "ImageObject",
+               "url": `${siteConfig.siteUrl}${siteConfig.defaultOgImage}`
+             }
+          }
+        }
+      }))
+    } : undefined
+  };
+  
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": siteConfig.siteUrl },
+      { "@type": "ListItem", "position": 2, "name": "Blog", "item": `${siteConfig.siteUrl}/blog` }
+    ]
+  };
+
+
   return (
     <PageLayout>
       <SEO 
-        title="Junk Removal Blog | Tips & Advice | Uncle Sam Junk Removal"
-        description="Explore expert tips on junk removal, recycling guides, decluttering strategies, and sustainability practices from Uncle Sam Junk Removal's professional team serving Evansville and the Tri-State area."
+        title={pageTitle} // Uses dynamic title, SEO component does not append site name if title includes it already
+        description={pageDescription}
         keywords="junk removal blog, decluttering tips, recycling guide, waste management, Evansville junk removal, Tri-State waste disposal, home organization"
-        structuredData={{
-          "@context": "https://schema.org",
-          "@type": "Blog",
-          "name": "Uncle Sam Junk Removal Blog",
-          "description": "Expert tips, advice, and guides on junk removal, recycling, and sustainable waste management practices for homes and businesses.",
-          "url": "https://unclesamjunkremoval.com/blog",
-          "publisher": {
-            "@type": "Organization",
-            "name": "Uncle Sam Junk Removal",
-            "logo": {
-              "@type": "ImageObject",
-              "url": "https://unclesamjunkremoval.com/logo.png"
-            }
-          }
-        }}
+        structuredData={[blogSchema, breadcrumbSchema]} // Pass schemas as array
       />
 
       <BlogHero searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
