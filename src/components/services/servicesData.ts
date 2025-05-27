@@ -16,4 +16,5 @@ export interface ServiceData {
   benefits?: string[];
   relatedBlogs: RelatedBlog[];
   relatedServices: string[];
+  category?: string; // Added category field
 }
