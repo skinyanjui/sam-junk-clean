@@ -3,10 +3,68 @@ import PageLayout from '@/components/PageLayout';
 import { Check } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
+import SEO from '@/components/SEO'; // Import SEO
+import { siteConfig } from '@/config/siteConfig'; // Import siteConfig
 
 const About = () => {
+  const organizationSchema = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": siteConfig.businessName,
+    "url": siteConfig.siteUrl,
+    "logo": `${siteConfig.siteUrl}${siteConfig.defaultOgImage}`,
+    "sameAs": siteConfig.sameAs,
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": siteConfig.telephone,
+      "contactType": "Customer Service",
+      "email": siteConfig.email
+    }
+  };
+
+  const webPageSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "url": `${siteConfig.siteUrl}/about`,
+    "name": "About Us | Uncle Sam Junk Removal",
+    "description": "Learn about Uncle Sam Junk Removal, our story, mission, values, and commitment to the Tri-State community.",
+    "publisher": {
+      "@type": "Organization",
+      "name": siteConfig.businessName,
+      "logo": {
+        "@type": "ImageObject",
+        "url": `${siteConfig.siteUrl}${siteConfig.defaultOgImage}`
+      }
+    }
+  };
+  
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": siteConfig.siteUrl
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "About Us",
+        "item": `${siteConfig.siteUrl}/about`
+      }
+    ]
+  };
+
   return (
     <PageLayout>
+      <SEO
+        title="About Us | Uncle Sam Junk Removal"
+        description="Learn about Uncle Sam Junk Removal, our story, mission, values, and commitment to the Tri-State community."
+        keywords="about junk removal, company story, junk removal mission, Evansville junk removal company, veteran-owned business"
+        structuredData={[organizationSchema, webPageSchema, breadcrumbSchema]}
+      />
       {/* Hero Section */}
       <section className="pt-10 pb-16 bg-brand-navy text-white" aria-labelledby="about-heading">
         <div className="container-custom">

@@ -16,10 +16,77 @@ import CareersCta from '@/components/careers/CareersCta';
 // Removed: import { jobListings } from '@/components/careers/jobData';
 import { fetchActiveJobListings, JobListingDb } from '@/integrations/supabase/jobService';
 import { JobListing as JobCardListing } from '@/components/careers/JobCard'; // For type mapping
+import { siteConfig } from '@/config/siteConfig'; // Import siteConfig
+
+// Helper function to create JobPosting schema
+const createJobPostingSchema = (job: JobListingDb, config: typeof siteConfig): Record<string, any> => {
+  const datePosted = new Date(job.posted_at).toISOString();
+  const validThroughDate = new Date(job.posted_at);
+  validThroughDate.setDate(new Date(job.posted_at).getDate() + 60); // Expires in 60 days
+  const validThrough = validThroughDate.toISOString();
+
+  let employmentType = "OTHER"; // Default
+  if (job.type?.toLowerCase() === "full-time") employmentType = "FULL_TIME";
+  if (job.type?.toLowerCase() === "part-time") employmentType = "PART_TIME";
+  if (job.type?.toLowerCase() === "contract") employmentType = "CONTRACTOR";
+
+  // Basic location parsing (assuming "City, ST" format or just city)
+  let jobLocationCity = config.address.addressLocality;
+  let jobLocationRegion = config.address.addressRegion;
+  if (job.location) {
+    const parts = job.location.split(',');
+    jobLocationCity = parts[0]?.trim() || jobLocationCity;
+    jobLocationRegion = parts[1]?.trim() || jobLocationRegion;
+  }
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "JobPosting",
+    "title": job.title,
+    "description": job.description || `Join ${config.businessName} as a ${job.title}. Apply today!`,
+    "identifier": {
+      "@type": "PropertyValue",
+      "name": config.businessName,
+      "value": job.id
+    },
+    "datePosted": datePosted,
+    "validThrough": validThrough,
+    "employmentType": employmentType,
+    "hiringOrganization": {
+      "@type": "Organization",
+      "name": config.businessName,
+      "sameAs": config.siteUrl,
+      "logo": `${config.siteUrl}${config.defaultOgImage}`
+    },
+    "jobLocation": {
+      "@type": "Place",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": jobLocationCity,
+        "addressRegion": jobLocationRegion,
+        "postalCode": config.address.postalCode, // Use company's postal if job specific isn't available
+        "addressCountry": config.address.addressCountry
+      }
+    },
+    // "baseSalary": { // Example, if salary info were available
+    //   "@type": "MonetaryAmount",
+    //   "currency": "USD",
+    //   "value": {
+    //     "@type": "QuantitativeValue",
+    //     "minValue": 20, // Example
+    //     "maxValue": 25, // Example
+    //     "unitText": "HOUR"
+    //   }
+    // },
+    "qualifications": job.requirements?.join('. ') || undefined, // Join requirements array into a string
+    "experienceRequirements": job.requirements?.join('. ') || undefined, // Can also use for experience
+  };
+};
+
 
 const Careers = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [selectedJobId, setSelectedJobId] = useState<string | null>(null); // Changed to string for UUID
+  const [selectedJobId, setSelectedJobId] = useState<string | null>(null);
   const [jobs, setJobs] = useState<JobListingDb[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -65,13 +132,32 @@ const Careers = () => {
   // Prepare positions for JobApplicationForm, ensuring id is string
   const applicationFormPositions = jobs.map(job => ({ id: job.id, title: job.title }));
 
+  // Structured Data
+  const pageTitle = `Careers | ${siteConfig.siteName}`;
+  const pageDescription = `Join our patriotic team at ${siteConfig.businessName}. View current job openings, benefits, and apply online for junk removal careers in ${siteConfig.address.addressLocality}.`;
+  
+  const careersPageSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "url": `${siteConfig.siteUrl}/careers`,
+    "name": pageTitle,
+    "description": pageDescription,
+    "isPartOf": { "@type": "WebSite", "url": siteConfig.siteUrl }
+  };
+
+  const jobPostingSchemas = isLoading ? [] : jobs.map(job => createJobPostingSchema(job, siteConfig));
+  
+  const structuredDataForSeo = isLoading || jobs.length === 0 
+    ? [careersPageSchema] 
+    : [careersPageSchema, ...jobPostingSchemas];
 
   return (
     <PageLayout>
       <SEO 
-        title="Careers | Uncle Sam Junk Removal"
-        description="Join our patriotic team of junk removal professionals. View current job openings, benefits, and apply online. Uncle Sam wants YOU!"
-        keywords="junk removal jobs, Evansville job openings, Tri-State area employment, Uncle Sam Junk Removal careers, job applications, veteran owned business jobs"
+        title="Careers" // SEO component appends siteName
+        description={pageDescription}
+        keywords={`junk removal jobs, ${siteConfig.address.addressLocality} job openings, Tri-State area employment, ${siteConfig.businessName} careers, job applications, veteran owned business jobs`}
+        structuredData={structuredDataForSeo}
       />
 
       <CareerHero />
