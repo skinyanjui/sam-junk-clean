@@ -9,19 +9,24 @@ import SEO from '@/components/SEO';
 import { ServiceData } from '@/components/services/servicesData';
 import { fetchServices } from '@/integrations/supabase/servicesService';
 import { LoadingSkeleton } from '@/components/ui/loading-skeleton';
+import { Button } from '@/components/ui/button'; // Import Button
+import { Link } from 'react-router-dom'; // Import Link
 
 const Services = () => {
   const [services, setServices] = useState<ServiceData[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null); // Added error state
 
   useEffect(() => {
     const loadServices = async () => {
       setIsLoading(true);
+      setError(null); // Reset error state
       try {
         const data = await fetchServices();
         setServices(data);
       } catch (error) {
         console.error("Error loading services:", error);
+        setError("Failed to load services. Please try again later or contact support."); // Set error message
       } finally {
         setIsLoading(false);
       }
@@ -80,12 +85,13 @@ const Services = () => {
       
       <ServicesHero />
       
-      {isLoading ? (
+      {isLoading && ( // Display loading skeletons
         <div className="py-16 bg-white">
           <div className="container-custom">
+            <h2 className="text-3xl font-bold text-center text-brand-navy mb-12 sr-only">Our Comprehensive Junk Removal Services</h2>
             <div className="space-y-24">
               {[1, 2, 3, 4].map((item) => (
-                <div key={item} className="grid md:grid-cols-2 gap-8">
+                <div key={item} className="grid md:grid-cols-2 gap-8 items-center">
                   <LoadingSkeleton className="h-64 rounded-lg" />
                   <div className="space-y-4">
                     <LoadingSkeleton className="h-10 w-3/4" />
@@ -93,8 +99,8 @@ const Services = () => {
                     <LoadingSkeleton className="h-4 w-full" />
                     <LoadingSkeleton className="h-4 w-3/4" />
                     <div className="space-y-2 pt-4">
-                      {[1, 2, 3, 4].map((item) => (
-                        <LoadingSkeleton key={item} className="h-6 w-full" />
+                      {[1, 2, 3].map((subItem) => (
+                        <LoadingSkeleton key={subItem} className="h-6 w-full" />
                       ))}
                     </div>
                   </div>
@@ -103,7 +109,33 @@ const Services = () => {
             </div>
           </div>
         </div>
-      ) : (
+      )}
+
+      {!isLoading && error && ( // Display error message
+        <section className="py-16 bg-brand-gray" aria-labelledby="services-error-heading">
+          <div className="container-custom text-center py-12">
+            <h2 id="services-error-heading" className="text-2xl font-semibold text-red-600 mb-4">Error Loading Services</h2>
+            <p className="text-gray-600 mb-6">{error}</p>
+            <Button asChild className="bg-brand-red hover:bg-opacity-90">
+              <Link to="/contact">Contact Support</Link>
+            </Button>
+          </div>
+        </section>
+      )}
+
+      {!isLoading && !error && services.length === 0 && ( // Display no services message
+         <section className="py-16 bg-brand-gray" aria-labelledby="no-services-heading">
+          <div className="container-custom text-center py-12">
+            <h2 id="no-services-heading" className="text-2xl font-semibold text-brand-navy mb-4">No Services Currently Available</h2>
+            <p className="text-gray-600 mb-6">Please check back later or contact us for more information about our offerings.</p>
+            <Button asChild className="bg-brand-red hover:bg-opacity-90">
+              <Link to="/contact">Contact Us</Link>
+            </Button>
+          </div>
+        </section>
+      )}
+
+      {!isLoading && !error && services.length > 0 && ( // Render list if services exist
         <ServicesList services={services} />
       )}
       

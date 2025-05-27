@@ -5,7 +5,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 export interface JobListing {
-  id: number;
+  id: string; // Changed from number to string for UUIDs
   title: string;
   type: string;
   location: string;
@@ -16,7 +16,7 @@ export interface JobListing {
 
 interface JobCardProps {
   job: JobListing;
-  onApply: (jobId: number) => void;
+  onApply: (jobId: string) => void; // Changed from number to string
 }
 
 const JobCard = ({ job, onApply }: JobCardProps) => {

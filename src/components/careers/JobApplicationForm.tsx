@@ -22,14 +22,14 @@ import { useJobApplication } from './hooks/useJobApplication';
 import { FormStepManager } from './components/FormStepManager';
 
 interface Position {
-  id: number;
+  id: string; // Changed from number to string
   title: string;
 }
 
 interface JobApplicationFormProps {
   positions: Position[];
   onClose: () => void;
-  preselectedPosition?: number;
+  preselectedPosition?: string; // Changed from number to string
 }
 
 const JobApplicationForm = ({ positions, onClose, preselectedPosition }: JobApplicationFormProps) => {
@@ -48,7 +48,7 @@ const JobApplicationForm = ({ positions, onClose, preselectedPosition }: JobAppl
         veteranStatus: "",
       },
       positionInfo: {
-        positionId: preselectedPosition?.toString() || "",
+        positionId: preselectedPosition || "", // Now accepts string directly
         coverLetter: "",
       },
       resume: {

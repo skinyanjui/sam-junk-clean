@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -13,20 +13,58 @@ import WhyWorkWithUs from '@/components/careers/WhyWorkWithUs';
 import JobListings from '@/components/careers/JobListings';
 import ApplicationProcess from '@/components/careers/ApplicationProcess';
 import CareersCta from '@/components/careers/CareersCta';
-import { jobListings } from '@/components/careers/jobData';
+// Removed: import { jobListings } from '@/components/careers/jobData';
+import { fetchActiveJobListings, JobListingDb } from '@/integrations/supabase/jobService';
+import { JobListing as JobCardListing } from '@/components/careers/JobCard'; // For type mapping
 
 const Careers = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [selectedJobId, setSelectedJobId] = useState<number | null>(null);
+  const [selectedJobId, setSelectedJobId] = useState<string | null>(null); // Changed to string for UUID
+  const [jobs, setJobs] = useState<JobListingDb[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleOpenApplicationForm = (jobId: number) => {
+  useEffect(() => {
+    const loadJobs = async () => {
+      setIsLoading(true);
+      setError(null);
+      try {
+        const fetchedJobs = await fetchActiveJobListings();
+        setJobs(fetchedJobs);
+      } catch (e) {
+        console.error("Error fetching job listings:", e);
+        setError("Failed to load job openings. Please try again later.");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    loadJobs();
+  }, []);
+
+  const handleOpenApplicationForm = (jobId: string) => { // Changed to string for UUID
     setSelectedJobId(jobId);
     setIsDialogOpen(true);
   };
 
   const handleCloseDialog = () => {
     setIsDialogOpen(false);
+    setSelectedJobId(null); // Reset selected job
   };
+
+  // Map JobListingDb to JobCardListing
+  const mappedJobs: JobCardListing[] = jobs.map(job => ({
+    id: job.id, // Pass UUID string
+    title: job.title,
+    type: job.type || 'N/A',
+    location: job.location || 'N/A',
+    description: job.description || 'No description available.',
+    requirements: job.requirements || [],
+    benefits: job.benefits || [],
+  }));
+  
+  // Prepare positions for JobApplicationForm, ensuring id is string
+  const applicationFormPositions = jobs.map(job => ({ id: job.id, title: job.title }));
+
 
   return (
     <PageLayout>
@@ -38,7 +76,26 @@ const Careers = () => {
 
       <CareerHero />
       <WhyWorkWithUs />
-      <JobListings jobListings={jobListings} onApply={handleOpenApplicationForm} />
+      
+      {isLoading && (
+        <div className="container-custom py-12 text-center">
+          <p className="text-xl text-brand-navy">Loading job listings...</p>
+        </div>
+      )}
+      {!isLoading && error && (
+        <div className="container-custom py-12 text-center">
+          <p className="text-xl text-red-600">{error}</p>
+        </div>
+      )}
+      {!isLoading && !error && mappedJobs.length === 0 && (
+        <div className="container-custom py-12 text-center">
+          <p className="text-xl text-brand-navy">No job openings currently available. Please check back soon!</p>
+        </div>
+      )}
+      {!isLoading && !error && mappedJobs.length > 0 && (
+        <JobListings jobListings={mappedJobs} onApply={handleOpenApplicationForm} />
+      )}
+      
       <ApplicationProcess />
       <CareersCta />
 
@@ -88,9 +145,9 @@ const Careers = () => {
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogContent className="sm:max-w-[700px] max-h-[90vh] overflow-y-auto">
           <JobApplicationForm 
-            positions={jobListings.map(job => ({ id: job.id, title: job.title }))}
+            positions={applicationFormPositions} // Use mapped positions with string IDs
             onClose={handleCloseDialog}
-            preselectedPosition={selectedJobId || undefined}
+            preselectedPosition={selectedJobId || undefined} // Will now be string | undefined
           />
         </DialogContent>
       </Dialog>

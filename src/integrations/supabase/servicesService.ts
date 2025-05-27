@@ -2,229 +2,51 @@
 import { supabase } from './client';
 import type { ServiceData, RelatedBlog } from '@/components/services/servicesData';
 
+// Type guard to ensure related_blogs is always an array
+const ensureRelatedBlogsArray = (blogs: any): RelatedBlog[] => {
+  if (Array.isArray(blogs)) {
+    // Check if items are valid RelatedBlog objects (optional, basic check here)
+    return blogs.filter(blog => typeof blog.title === 'string' && typeof blog.slug === 'string');
+  }
+  return []; // Default to empty array if not an array or invalid structure
+};
+
 // Fetch all services
 export const fetchServices = async (): Promise<ServiceData[]> => {
   try {
-    // Return mock data since the table doesn't exist in the current database
-    const mockServices: ServiceData[] = [
-      {
-        id: '1',
-        title: 'Residential Junk Removal',
-        description: 'We help homeowners clear out unwanted items from their properties, including furniture, appliances, general household junk, and more.',
-        items: ['Full house cleanouts', 'Single item removal', 'Garage & attic cleanouts', 'Basement cleanups', 'Moving & relocation junk'],
-        image: '/placeholder.svg',
-        popularity: 'high',
-        priceRange: '$99 - $650+',
-        timeEstimate: '1-4 hours',
-        benefits: ['Same-day service available', 'Eco-friendly disposal', 'No hidden fees'],
-        relatedBlogs: [
-          { title: 'How to Prepare for Residential Junk Removal', slug: 'prepare-for-junk-removal' },
-          { title: 'Top 5 Items People Remove From Their Homes', slug: 'top-5-removal-items' }
-        ],
-        relatedServices: ['3', '4', '9']
-      },
-      {
-        id: '2',
-        title: 'Commercial Junk Removal',
-        description: 'Our commercial services help businesses maintain clean, safe, and efficient workspaces by removing office furniture, equipment, and renovation debris.',
-        items: ['Office cleanouts', 'Retail space clearing', 'Construction debris removal', 'Equipment disposal', 'Commercial renovations'],
-        image: '/placeholder.svg',
-        popularity: 'high',
-        priceRange: '$149 - $850+',
-        timeEstimate: '2-8 hours',
-        benefits: ['Minimal business disruption', 'Work with your schedule', 'Proper recycling and disposal'],
-        relatedBlogs: [
-          { title: 'Keeping Your Business Clean and Organized', slug: 'business-organization' },
-          { title: 'Office Cleanout Tips for Businesses', slug: 'office-cleanout-tips' }
-        ],
-        relatedServices: ['12', '11', '13']
-      },
-      {
-        id: '3',
-        title: 'Furniture Removal',
-        description: 'We remove all types of furniture including sofas, beds, tables, chairs, and more. We make sure items are donated or recycled when possible.',
-        items: ['Sofas & couches', 'Beds & mattresses', 'Tables & chairs', 'Cabinets & shelving', 'Office furniture'],
-        image: '/placeholder.svg',
-        popularity: 'high',
-        priceRange: '$75 - $350+',
-        timeEstimate: '30 min - 2 hours',
-        benefits: ['Careful handling', 'Donation options available', 'No need to move items yourself'],
-        relatedBlogs: [
-          { title: 'What Happens to Your Furniture After Removal', slug: 'furniture-removal-process' },
-          { title: 'Sustainable Furniture Disposal Guide', slug: 'sustainable-furniture-disposal' }
-        ],
-        relatedServices: ['1', '4', '13']
-      },
-      {
-        id: '4',
-        title: 'Large Appliance Removal',
-        description: 'We safely remove and dispose of old appliances, ensuring they\'re properly recycled or disposed of according to regulations.',
-        items: ['Refrigerators & freezers', 'Washing machines & dryers', 'Dishwashers', 'Ovens & stoves', 'Water heaters'],
-        image: '/placeholder.svg',
-        popularity: 'high',
-        priceRange: '$75 - $250',
-        timeEstimate: '30 min - 1 hour',
-        benefits: ['Eco-friendly disposal', 'Proper handling of hazardous materials', 'All sizes accommodated'],
-        relatedBlogs: [
-          { title: 'Appliance Disposal Guide', slug: 'appliance-disposal-guide' },
-          { title: 'Why Proper Appliance Recycling Matters', slug: 'appliance-recycling-importance' }
-        ],
-        relatedServices: ['1', '8', '11']
-      },
-      {
-        id: '5',
-        title: 'Mattress Removal',
-        description: 'We provide environmentally responsible mattress disposal, ensuring your old mattresses are recycled or properly disposed of.',
-        items: ['King & Queen mattresses', 'Full & Twin mattresses', 'Box springs', 'Memory foam mattresses', 'Futons & sofa beds'],
-        image: '/placeholder.svg',
-        popularity: 'medium',
-        priceRange: '$75 - $175',
-        timeEstimate: '15-30 minutes',
-        benefits: ['Eco-friendly recycling', 'Quick removal', 'Hygienic handling'],
-        relatedBlogs: [
-          { title: 'How to Dispose of Mattresses Properly', slug: 'mattress-disposal-guide' }
-        ],
-        relatedServices: ['3', '1']
-      },
-      {
-        id: '6',
-        title: 'Hot Tub Removal',
-        description: 'Removing a hot tub is complicated work. Our team has the experience and equipment to safely remove and dispose of your unwanted hot tub.',
-        items: ['Above-ground hot tubs', 'In-ground hot tubs', 'Spa demolition', 'Hot tub base removal', 'Complete disposal'],
-        image: '/placeholder.svg',
-        popularity: 'low',
-        priceRange: '$350 - $700',
-        timeEstimate: '2-4 hours',
-        benefits: ['Professional dismantling', 'Complete removal of all components', 'Site cleanup included'],
-        relatedBlogs: [
-          { title: 'Hot Tub Removal Process Explained', slug: 'hot-tub-removal-guide' }
-        ],
-        relatedServices: ['10', '9']
-      },
-      {
-        id: '7',
-        title: 'Shed Removal',
-        description: 'From small garden sheds to larger outdoor structures, we can dismantle and remove any unwanted sheds from your property.',
-        items: ['Wood sheds', 'Metal sheds', 'Plastic sheds', 'Large storage structures', 'Greenhouse removal'],
-        image: '/placeholder.svg',
-        popularity: 'low',
-        priceRange: '$200 - $600',
-        timeEstimate: '1-3 hours',
-        benefits: ['Complete dismantling', 'Foundation removal available', 'All debris hauled away'],
-        relatedBlogs: [
-          { title: 'Preparing for Shed Removal: What You Need to Know', slug: 'shed-removal-preparation' }
-        ],
-        relatedServices: ['10', '12', '9']
-      },
-      {
-        id: '8',
-        title: 'Gym Equipment Removal',
-        description: 'Heavy gym equipment is difficult to move. Let our professionals safely remove and dispose of your unwanted fitness equipment.',
-        items: ['Treadmills', 'Elliptical machines', 'Weight benches', 'Home gyms', 'Free weights & racks'],
-        image: '/placeholder.svg',
-        popularity: 'medium',
-        priceRange: '$100 - $350',
-        timeEstimate: '30 min - 2 hours',
-        benefits: ['Safe handling of heavy equipment', 'No damage to your home', 'Donation options available'],
-        relatedBlogs: [
-          { title: 'What to Do With Old Gym Equipment', slug: 'old-gym-equipment-options' }
-        ],
-        relatedServices: ['11', '13']
-      },
-      {
-        id: '9',
-        title: 'Electronics Removal',
-        description: 'We safely dispose of electronic devices and components, ensuring they are recycled properly and data is securely handled.',
-        items: ['TVs & monitors', 'Computers & laptops', 'Printers & scanners', 'Audio equipment', 'Gaming consoles'],
-        image: '/placeholder.svg',
-        popularity: 'medium',
-        priceRange: '$50 - $200',
-        timeEstimate: '30 min - 1 hour',
-        benefits: ['Data security assured', 'Proper e-waste recycling', 'Component recovery'],
-        relatedBlogs: [
-          { title: 'Electronic Waste Disposal Guide', slug: 'electronic-waste-disposal' }
-        ],
-        relatedServices: ['11', '13']
-      },
-      {
-        id: '10',
-        title: 'Yard Waste Removal',
-        description: 'We help clear your yard of debris, branches, leaves, and other organic waste, leaving your outdoor space clean and tidy.',
-        items: ['Tree branches & limbs', 'Leaves & garden waste', 'Grass clippings', 'Bushes & shrub removal', 'Soil & dirt removal'],
-        image: '/placeholder.svg',
-        popularity: 'medium',
-        priceRange: '$125 - $450',
-        timeEstimate: '1-3 hours',
-        benefits: ['Eco-friendly disposal', 'Composting options', 'Complete cleanup'],
-        relatedBlogs: [
-          { title: 'Seasonal Yard Cleanup Guide', slug: 'seasonal-yard-cleanup' }
-        ],
-        relatedServices: ['7', '12']
-      },
-      {
-        id: '11',
-        title: 'Light Demolition',
-        description: 'After construction or renovation projects, we help clear out debris and leftover materials to leave your space clean and ready to use.',
-        items: ['Deck & patio removal', 'Shed & playset demolition', 'Fence teardown', 'Kitchen & bathroom demolition', 'Drywall removal'],
-        image: '/placeholder.svg',
-        popularity: 'medium',
-        priceRange: '$250 - $750+',
-        timeEstimate: '2-6 hours',
-        benefits: ['Professional tools & equipment', 'Safe demolition practices', 'Complete debris removal'],
-        relatedBlogs: [
-          { title: 'Post-Renovation Cleanup Tips', slug: 'post-renovation-cleanup' },
-          { title: 'DIY vs Professional Demolition', slug: 'diy-vs-pro-demolition' }
-        ],
-        relatedServices: ['12', '7', '6']
-      },
-      {
-        id: '12',
-        title: 'Scrap Removal',
-        description: 'We collect and properly dispose of scrap metal, appliances, and other recyclable materials from your home or business.',
-        items: ['Metal scrap', 'Appliances', 'Electronics', 'Automotive parts', 'Plumbing fixtures'],
-        image: '/placeholder.svg',
-        popularity: 'low',
-        priceRange: '$100 - $400',
-        timeEstimate: '1-3 hours',
-        benefits: ['Environmentally responsible recycling', 'Proper sorting of materials', 'Potential rebates for valuable metals'],
-        relatedBlogs: [
-          { title: 'Scrap Metal Recycling Guide', slug: 'scrap-metal-recycling' }
-        ],
-        relatedServices: ['4', '8', '9']
-      },
-      {
-        id: '13',
-        title: 'Construction Debris Removal',
-        description: 'We handle the cleanup of construction and renovation sites, removing debris, materials, and waste for a clean workspace.',
-        items: ['Wood & lumber scraps', 'Drywall & plaster', 'Concrete & brick', 'Tile & flooring', 'Packaging materials'],
-        image: '/placeholder.svg',
-        popularity: 'high',
-        priceRange: '$200 - $850+',
-        timeEstimate: '1-8 hours',
-        benefits: ['Efficient site cleanup', 'Sorting of recyclable materials', 'Responsible disposal'],
-        relatedBlogs: [
-          { title: 'Managing Construction Waste Efficiently', slug: 'construction-waste-management' }
-        ],
-        relatedServices: ['2', '11', '10']
-      },
-      {
-        id: '14',
-        title: 'Donation Pick Up',
-        description: 'We collect and transport your gently used items to local charities, helping your unwanted possessions find new homes.',
-        items: ['Furniture', 'Clothing & textiles', 'Books & media', 'Kitchen items', 'Small appliances'],
-        image: '/placeholder.svg',
-        popularity: 'medium',
-        priceRange: '$75 - $300',
-        timeEstimate: '30 min - 2 hours',
-        benefits: ['Tax deduction receipts', 'Supporting local charities', 'Environmentally friendly'],
-        relatedBlogs: [
-          { title: 'Donation Guide: What Can and Cannot Be Donated', slug: 'donation-guidelines' }
-        ],
-        relatedServices: ['3', '1', '8']
-      }
-    ];
+    const { data, error } = await supabase
+      .from('services')
+      .select(`
+        id,
+        title,
+        description,
+        items,
+        image,
+        popularity,
+        price_range,
+        time_estimate,
+        benefits,
+        related_blogs,
+        related_services_ids,
+        created_at,
+        updated_at
+      `)
+      .order('title', { ascending: true }); // Default ordering
 
-    return mockServices;
+    if (error) {
+      console.error('Error fetching services:', error);
+      throw error;
+    }
+
+    // Map DB data to ServiceData, ensuring relatedServices and relatedBlogs are correctly typed
+    return (data || []).map(service => ({
+      ...service,
+      priceRange: service.price_range, // Map price_range to priceRange
+      timeEstimate: service.time_estimate, // Map time_estimate to timeEstimate
+      relatedBlogs: ensureRelatedBlogsArray(service.related_blogs), // Supabase client auto-parses JSONB
+      relatedServices: service.related_services_ids || [], // Map related_services_ids to relatedServices
+    })) as ServiceData[]; // Type assertion after mapping
+    
   } catch (error) {
     console.error('Error in fetchServices:', error);
     return [];
@@ -234,15 +56,46 @@ export const fetchServices = async (): Promise<ServiceData[]> => {
 // Fetch a single service by ID
 export const fetchServiceById = async (serviceId: string): Promise<ServiceData | null> => {
   try {
-    // Find the service in our mock data
-    const mockServices = await fetchServices();
-    const service = mockServices.find(s => s.id === serviceId);
-    
-    if (!service) {
-      return null;
-    }
+    const { data, error } = await supabase
+      .from('services')
+      .select(`
+        id,
+        title,
+        description,
+        items,
+        image,
+        popularity,
+        price_range,
+        time_estimate,
+        benefits,
+        related_blogs,
+        related_services_ids,
+        created_at,
+        updated_at
+      `)
+      .eq('id', serviceId)
+      .single();
 
-    return service;
+    if (error) {
+      if (error.code === 'PGRST116') { // PostgREST error for "Object not found"
+        console.warn(`Service with ID ${serviceId} not found.`);
+        return null;
+      }
+      console.error('Error fetching service by ID:', error);
+      throw error;
+    }
+    
+    if (!data) return null;
+
+    // Map DB data to ServiceData
+    return {
+      ...data,
+      priceRange: data.price_range,
+      timeEstimate: data.time_estimate,
+      relatedBlogs: ensureRelatedBlogsArray(data.related_blogs),
+      relatedServices: data.related_services_ids || [],
+    } as ServiceData; // Type assertion after mapping
+
   } catch (error) {
     console.error('Error in fetchServiceById:', error);
     return null;
@@ -265,22 +118,31 @@ const getIconName = (serviceTitle: string): string => {
 // Transform service data for the home page service cards
 export const getHomePageServices = async () => {
   try {
-    // Get our mock services
-    const mockServices = await fetchServices();
-    
-    // Select the 8 most important services to display on the homepage
-    // Typically high popularity services and most common services
-    const homePageServiceIds = ['1', '2', '3', '4', '5', '8', '11', '13'];
-    const homePageServices = mockServices.filter(service => homePageServiceIds.includes(service.id));
-    
-    // Map services to the format expected by the home page
-    return homePageServices.map(service => ({
+    const { data, error } = await supabase
+      .from('services')
+      .select(`
+        title,
+        description,
+        image,
+        price_range,
+        popularity
+      `)
+      .eq('popularity', 'high')
+      .order('title', { ascending: true }) // Consistent ordering
+      .limit(8);
+
+    if (error) {
+      console.error('Error fetching high popularity services:', error);
+      throw error;
+    }
+
+    return (data || []).map(service => ({
       title: service.title,
       iconName: getIconName(service.title),
-      description: service.description,
+      description: service.description || '', // Ensure description is not null
       image: service.image,
-      alt: `${service.title} service showing ${service.description.toLowerCase()}`,
-      priceRange: service.priceRange,
+      alt: `${service.title} service showing ${service.description ? service.description.toLowerCase() : 'details'}.`,
+      priceRange: service.price_range,
       popularity: service.popularity
     }));
   } catch (error) {

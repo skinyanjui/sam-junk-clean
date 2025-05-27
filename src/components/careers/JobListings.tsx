@@ -3,8 +3,8 @@ import { Button } from '@/components/ui/button';
 import JobCard, { JobListing } from './JobCard';
 
 interface JobListingsProps {
-  jobListings: JobListing[];
-  onApply: (jobId: number) => void;
+  jobListings: JobListing[]; // JobListing now expects id: string
+  onApply: (jobId: string) => void; // Changed from number to string
 }
 
 const JobListings = ({ jobListings, onApply }: JobListingsProps) => {
