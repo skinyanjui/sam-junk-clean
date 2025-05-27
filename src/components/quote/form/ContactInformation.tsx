@@ -6,9 +6,10 @@ import { PhoneFormField } from '@/components/forms/fields/PhoneFormField';
 
 interface ContactInformationProps {
   errors: Record<string, any>;
+  onFieldFocus?: (fieldName: string) => void;
 }
 
-const ContactInformation = ({ errors }: ContactInformationProps) => {
+const ContactInformation = ({ errors, onFieldFocus }: ContactInformationProps) => {
   const { register } = useFormContext();
   
   const contactPreferences = [
@@ -16,6 +17,10 @@ const ContactInformation = ({ errors }: ContactInformationProps) => {
     'Phone',
     'Text Message'
   ];
+
+  const handleFieldFocus = (fieldName: string) => {
+    onFieldFocus?.(fieldName);
+  };
 
   return (
     <div className="space-y-4">
@@ -29,6 +34,7 @@ const ContactInformation = ({ errors }: ContactInformationProps) => {
             placeholder="John Doe"
             {...register("name", { required: "Name is required" })}
             className={errors.name ? "border-red-500" : ""}
+            onFocus={() => handleFieldFocus('name')}
           />
           {errors.name && (
             <p className="text-red-500 text-sm">{errors.name.message}</p>
@@ -46,6 +52,7 @@ const ContactInformation = ({ errors }: ContactInformationProps) => {
               message: "Invalid email address"
             }})}
             className={errors.email ? "border-red-500" : ""}
+            onFocus={() => handleFieldFocus('email')}
           />
           {errors.email && (
             <p className="text-red-500 text-sm">{errors.email.message}</p>
@@ -63,6 +70,7 @@ const ContactInformation = ({ errors }: ContactInformationProps) => {
             register={register("phone", { required: "Phone number is required" })}
             error={errors.phone?.message}
             inputBorderClass={errors.phone ? "border-red-500" : ""}
+            onFocus={() => handleFieldFocus('phone')}
           />
         </div>
         
@@ -72,6 +80,7 @@ const ContactInformation = ({ errors }: ContactInformationProps) => {
             id="contactPreference"
             {...register("contactPreference")}
             className="w-full border border-gray-300 rounded-md p-2"
+            onFocus={() => handleFieldFocus('contactPreference')}
           >
             {contactPreferences.map(method => (
               <option key={method} value={method}>{method}</option>

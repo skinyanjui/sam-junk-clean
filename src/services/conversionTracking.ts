@@ -1,6 +1,4 @@
 
-import { supabase } from '@/integrations/supabase/client';
-
 interface ConversionEvent {
   event_type: string;
   page_url: string;
@@ -85,14 +83,12 @@ class ConversionTrackingService {
     }
 
     try {
-      // Store in Supabase
-      const { error } = await supabase
-        .from('conversion_events')
-        .insert(event);
-
-      if (error) {
-        console.error('Failed to track conversion event:', error);
-      }
+      // Store in localStorage for now since conversion_events table doesn't exist
+      const events = JSON.parse(localStorage.getItem('conversion_events') || '[]');
+      events.push(event);
+      localStorage.setItem('conversion_events', JSON.stringify(events));
+      
+      console.log('Conversion event tracked:', event);
     } catch (error) {
       console.error('Conversion tracking error:', error);
     }

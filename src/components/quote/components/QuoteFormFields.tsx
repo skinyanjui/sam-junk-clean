@@ -10,9 +10,10 @@ import { useQuoteForm } from '../hooks/useQuoteForm';
 
 interface QuoteFormFieldsProps {
   formMethods: ReturnType<typeof useQuoteForm>;
+  onFieldFocus?: (fieldName: string) => void;
 }
 
-const QuoteFormFields = ({ formMethods }: QuoteFormFieldsProps) => {
+const QuoteFormFields = ({ formMethods, onFieldFocus }: QuoteFormFieldsProps) => {
   const { 
     methods, 
     isSubmitting, 
@@ -33,10 +34,10 @@ const QuoteFormFields = ({ formMethods }: QuoteFormFieldsProps) => {
         <ValidationSummary errors={errors} isSubmitted={isSubmitted} />
         
         {/* Contact Information */}
-        <ContactInformation errors={errors} />
+        <ContactInformation errors={errors} onFieldFocus={onFieldFocus} />
 
         {/* Service Information */}
-        <ServiceInformation errors={errors} />
+        <ServiceInformation errors={errors} onFieldFocus={onFieldFocus} />
 
         {/* Image Upload */}
         <ImageUpload 
