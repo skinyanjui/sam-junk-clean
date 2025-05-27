@@ -1,5 +1,5 @@
-
 import { useEffect, useState } from 'react';
+import { useParams, Link } from 'react-router-dom';
 import PageLayout from '@/components/PageLayout';
 import ServicesHero from '@/components/services/ServicesHero';
 import ServicesList from '@/components/services/ServicesList';
@@ -9,83 +9,129 @@ import SEO from '@/components/SEO';
 import { ServiceData } from '@/components/services/servicesData';
 import { fetchServices } from '@/integrations/supabase/servicesService';
 import { LoadingSkeleton } from '@/components/ui/loading-skeleton';
-import { Button } from '@/components/ui/button'; // Import Button
-import { Link } from 'react-router-dom'; // Import Link
+import { Button } from '@/components/ui/button';
 
 const Services = () => {
+  const { category } = useParams<{ category?: string }>();
   const [services, setServices] = useState<ServiceData[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null); // Added error state
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const loadServices = async () => {
       setIsLoading(true);
-      setError(null); // Reset error state
+      setError(null);
       try {
         const data = await fetchServices();
-        setServices(data);
+        const filteredServices = category
+          ? data.filter(service => service.category?.toLowerCase() === category.toLowerCase())
+          : data;
+        setServices(filteredServices);
       } catch (error) {
         console.error("Error loading services:", error);
-        setError("Failed to load services. Please try again later or contact support."); // Set error message
+        setServices([]); // Avoid .map errors
+        setError("Failed to load services. Please try again later or contact support.");
       } finally {
         setIsLoading(false);
       }
     };
 
     loadServices();
-  }, []);
+  }, [category]);
 
-  // Define schema for Services page
+  const formattedCategory = category ? category.charAt(0).toUpperCase() + category.slice(1).toLowerCase() : null;
+
+  const pageTitle = formattedCategory
+    ? `${formattedCategory} Junk Removal Services`
+    : "Junk Removal Services";
+  
+  const pageDescription = formattedCategory
+    ? `Explore our specialized ${formattedCategory.toLowerCase()} junk removal solutions in the Tri-State area. We efficiently handle all types of ${formattedCategory.toLowerCase()} cleanouts, debris, and unwanted item removal.`
+    : "Comprehensive junk removal services for residential and commercial needs in the Tri-State area. From furniture and appliance disposal to full property cleanouts, Uncle Sam Junk Removal is here to help.";
+
+  const pageUrl = category
+    ? `https://unclesamjunkremoval.com/services/${category.toLowerCase()}`
+    : "https://unclesamjunkremoval.com/services";
+  
+  const breadcrumbBase = [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://unclesamjunkremoval.com"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Services",
+      "item": "https://unclesamjunkremoval.com/services"
+    }
+  ];
+
+  const breadcrumbItemList = formattedCategory
+    ? [
+        ...breadcrumbBase,
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": pageTitle,
+          "item": pageUrl
+        }
+      ]
+    : breadcrumbBase;
+  
+  const keywords = `junk removal, waste removal, debris removal, cleanouts, ${formattedCategory ? formattedCategory.toLowerCase() + ' services, ' : ''}Evansville junk removal, Henderson junk removal, Kentucky junk removal, Indiana junk removal, Tri-State area junk removal, Uncle Sam Junk Removal`;
+
   const servicesSchemaData = {
     "@context": "https://schema.org",
     "@type": "WebPage",
-    "name": "Junk Removal Services | Uncle Sam Junk Removal",
-    "description": "Professional junk removal services for residential and commercial properties. We handle furniture removal, appliance disposal, estate cleanouts, and more.",
-    "url": "https://unclesamjunkremoval.com/services",
+    "name": `${pageTitle} | Uncle Sam Junk Removal`,
+    "description": pageDescription,
+    "url": pageUrl,
+    "keywords": keywords,
     "breadcrumb": {
       "@type": "BreadcrumbList",
-      "itemListElement": [
-        {
-          "@type": "ListItem",
-          "position": 1,
-          "name": "Home",
-          "item": "https://unclesamjunkremoval.com"
-        },
-        {
-          "@type": "ListItem",
-          "position": 2,
-          "name": "Services",
-          "item": "https://unclesamjunkremoval.com/services"
-        }
-      ]
+      "itemListElement": breadcrumbItemList
     },
-    "mainEntity": {
-      "@type": "ItemList",
-      "itemListElement": services.map((service, index) => ({
-        "@type": "Service",
-        "position": index + 1,
-        "name": service.title,
-        "description": service.description,
-        "provider": {
-          "@type": "LocalBusiness",
-          "name": "Uncle Sam Junk Removal"
-        }
-      }))
-    }
+    ...(services.length > 0 && {
+      "mainEntity": {
+        "@type": "ItemList",
+        "name": pageTitle,
+        "description": `Browse our ${formattedCategory ? formattedCategory.toLowerCase() : 'general'} junk removal services.`,
+        "itemListElement": services.map((service, index) => ({
+          "@type": "Service",
+          "position": index + 1,
+          "name": service.title,
+          "description": service.description,
+          "url": `${pageUrl}#${service.id}`,
+          ...(service.category && { "serviceCategory": service.category }),
+          "provider": {
+            "@type": "LocalBusiness",
+            "name": "Uncle Sam Junk Removal"
+          },
+          ...(service.priceRange && {
+            "offers": {
+              "@type": "Offer",
+              "priceRange": service.priceRange
+            }
+          })
+        }))
+      }
+    })
   };
 
   return (
     <PageLayout>
       <SEO 
-        title="Junk Removal Services"
-        description="Professional junk removal services for residential and commercial properties. We handle furniture removal, appliance disposal, estate cleanouts, and more."
-        keywords="junk removal services, residential cleanouts, commercial junk removal, appliance removal, furniture disposal, estate cleanouts"
+        title={pageTitle}
+        description={pageDescription}
+        keywords={keywords}
         structuredData={servicesSchemaData}
       />
-      
+
       <ServicesHero />
-      
-      {isLoading && ( // Display loading skeletons
+
+      {isLoading && (
         <div className="py-16 bg-white">
           <div className="container-custom">
             <h2 className="text-3xl font-bold text-center text-brand-navy mb-12 sr-only">Our Comprehensive Junk Removal Services</h2>
@@ -111,7 +157,7 @@ const Services = () => {
         </div>
       )}
 
-      {!isLoading && error && ( // Display error message
+      {!isLoading && error && (
         <section className="py-16 bg-brand-gray" aria-labelledby="services-error-heading">
           <div className="container-custom text-center py-12">
             <h2 id="services-error-heading" className="text-2xl font-semibold text-red-600 mb-4">Error Loading Services</h2>
@@ -123,8 +169,8 @@ const Services = () => {
         </section>
       )}
 
-      {!isLoading && !error && services.length === 0 && ( // Display no services message
-         <section className="py-16 bg-brand-gray" aria-labelledby="no-services-heading">
+      {!isLoading && !error && services.length === 0 && (
+        <section className="py-16 bg-brand-gray" aria-labelledby="no-services-heading">
           <div className="container-custom text-center py-12">
             <h2 id="no-services-heading" className="text-2xl font-semibold text-brand-navy mb-4">No Services Currently Available</h2>
             <p className="text-gray-600 mb-6">Please check back later or contact us for more information about our offerings.</p>
@@ -135,10 +181,10 @@ const Services = () => {
         </section>
       )}
 
-      {!isLoading && !error && services.length > 0 && ( // Render list if services exist
+      {!isLoading && !error && services.length > 0 && (
         <ServicesList services={services} />
       )}
-      
+
       <ServicesCta />
       <ServicesAreaLink />
     </PageLayout>
