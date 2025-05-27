@@ -6,15 +6,16 @@ import ContactForm from '@/components/contact/ContactForm';
 import ServiceAreaMap from '@/components/contact/ServiceAreaMap';
 import ContactFaqs from '@/components/contact/ContactFaqs';
 import SEO from '@/components/SEO';
+import { siteConfig } from '@/config/siteConfig'; // Import siteConfig
 
 const Contact = () => {
   // Define schema for Contact page - enhanced for local SEO
   const contactSchemaData = {
     "@context": "https://schema.org",
     "@type": "ContactPage",
-    "name": "Contact Uncle Sam Junk Removal",
-    "description": "Get in touch with our team for all your junk removal needs in Evansville, Henderson, Owensboro and throughout the Tri-State area. Quick responses and exceptional service guaranteed.",
-    "url": "https://unclesamjunkremoval.com/contact",
+    "name": `Contact ${siteConfig.businessName}`,
+    "description": `Get in touch with ${siteConfig.businessName} for quotes, questions, or to schedule service in ${siteConfig.address.addressLocality} and the Tri-State area.`,
+    "url": `${siteConfig.siteUrl}/contact`,
     "breadcrumb": {
       "@type": "BreadcrumbList",
       "itemListElement": [
@@ -22,56 +23,50 @@ const Contact = () => {
           "@type": "ListItem",
           "position": 1,
           "name": "Home",
-          "item": "https://unclesamjunkremoval.com"
+          "item": siteConfig.siteUrl
         },
         {
           "@type": "ListItem",
           "position": 2,
           "name": "Contact",
-          "item": "https://unclesamjunkremoval.com/contact"
+          "item": `${siteConfig.siteUrl}/contact`
         }
       ]
     },
     "mainEntity": {
       "@type": "Organization",
-      "name": "Uncle Sam Junk Removal",
-      "telephone": "+18126101657",
-      "email": "info@unclesamjunkremoval.com",
+      "name": siteConfig.businessName,
+      "telephone": siteConfig.telephone,
+      "email": siteConfig.email,
       "address": {
         "@type": "PostalAddress",
-        "streetAddress": "123 Freedom Lane",
-        "addressLocality": "Evansville",
-        "addressRegion": "IN",
-        "postalCode": "47715",
-        "addressCountry": "US"
+        "streetAddress": siteConfig.address.streetAddress,
+        "addressLocality": siteConfig.address.addressLocality,
+        "addressRegion": siteConfig.address.addressRegion,
+        "postalCode": siteConfig.address.postalCode,
+        "addressCountry": siteConfig.address.addressCountry
       },
-      "openingHoursSpecification": [
-        {
-          "@type": "OpeningHoursSpecification",
-          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-          "opens": "07:00",
-          "closes": "19:00"
-        }
-      ],
+      "openingHoursSpecification": siteConfig.openingHoursSpecification,
       "contactPoint": [
         {
           "@type": "ContactPoint",
-          "telephone": "+18126101657",
-          "contactType": "customer service",
-          "availableLanguage": ["English", "Spanish"],
-          "areaServed": ["Evansville", "Henderson", "Owensboro", "Newburgh", "Mt. Carmel", "Princeton"]
+          "telephone": siteConfig.telephone,
+          "contactType": "Customer Service", // More generic
+          "availableLanguage": ["English"], // Example
+          "areaServed": [siteConfig.address.addressLocality, "Surrounding Tri-State Area"] // Example
         }
-      ]
+      ],
+      "sameAs": siteConfig.sameAs
     }
   };
 
   return (
     <PageLayout>
       <SEO 
-        title="Contact Us | Uncle Sam Junk Removal Evansville"
-        description="Contact Uncle Sam Junk Removal for fast, reliable junk removal services in Evansville, IN and throughout the Tri-State area. Request a free quote today for residential and commercial junk removal."
-        keywords="contact junk removal, junk removal phone number, Evansville junk removal contact, Henderson junk removal contact, Owensboro junk removal, Tri-State area junk removal"
-        structuredData={contactSchemaData}
+        title={`Contact Us | ${siteConfig.businessName}`}
+        description={`Get in touch with ${siteConfig.businessName} for quotes, questions, or to schedule service in ${siteConfig.address.addressLocality} and the Tri-State area.`}
+        keywords={`contact junk removal, ${siteConfig.address.addressLocality} junk removal contact, junk removal phone number, junk removal email, ${siteConfig.businessName} contact`}
+        structuredData={contactSchemaData} // Passed as a single object, SEO component handles it
       />
       
       <ContactHero />

@@ -1,5 +1,6 @@
 
 import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom'; // Import useLocation
 import PageLayout from '@/components/PageLayout';
 import SEO from '@/components/SEO';
 import { useTranslation } from 'react-i18next';
@@ -8,12 +9,14 @@ import { LocationsContent } from '@/components/locations/LocationsContent';
 import { LocationsHero } from '@/components/locations/LocationsHero';
 import ZipCodeLookup from '@/components/locations/ZipCodeLookup';
 import LocationsCta from '@/components/locations/LocationsCta';
-import { LocationsSchema } from '@/components/locations/LocationsSchema';
+import { LocationsSchema as initialLocationsSchema } from '@/components/locations/LocationsSchema'; // Rename to avoid conflict
 import { LocationsSeoContent } from '@/components/locations/LocationsSeoContent';
 import { Skeleton } from '@/components/ui/skeleton';
+import { siteConfig } from '@/config/siteConfig'; // Import siteConfig
 
 const Locations = () => {
   const { t } = useTranslation();
+  const routerLocation = useLocation(); // Use a different name to avoid conflict with location objects from data
   const { 
     locations, 
     isLoading, 
@@ -21,15 +24,55 @@ const Locations = () => {
     searchProps
   } = useLocationData();
 
+  // Dynamic Title and Description
+  let pageTitle = "Junk Removal Service Areas | Tri-State Area"; // Default
+  let pageDescription = `${siteConfig.businessName} serves Evansville, Henderson, Owensboro, Newburgh, and the entire Tri-State area. Find reliable junk removal services near you.`; // Default
+
+  if (searchProps.searchTerm) {
+    pageTitle = `Search results for "${searchProps.searchTerm}" | Service Areas - ${siteConfig.siteName}`;
+    pageDescription = `Find ${siteConfig.businessName} service areas matching your search for "${searchProps.searchTerm}".`;
+  }
+
+  // Canonical URL
+  const canonicalUrl = `${siteConfig.siteUrl}${routerLocation.pathname}${routerLocation.search}`;
+
+  // Structured Data
+  let locationItemListSchema: Record<string, any> | null = null;
+  if (!isLoading && filteredLocations.length > 0) {
+    locationItemListSchema = {
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      "name": "Service Areas List",
+      "description": `List of areas served by ${siteConfig.businessName}.`,
+      "itemListElement": filteredLocations.map((location, index) => ({
+        "@type": "ListItem",
+        "position": index + 1,
+        "item": {
+          "@type": "Place",
+          "name": location.name,
+          "description": location.description || `Junk removal services provided by ${siteConfig.businessName} in and around ${location.name}.`,
+          "image": location.image?.startsWith('http') ? location.image : `${siteConfig.siteUrl}${location.image || siteConfig.defaultOgImage}`,
+          // "url": `${siteConfig.siteUrl}/locations#${location.id}` // Assuming location.id exists for anchor links
+        }
+      }))
+    };
+  }
+
+  const combinedStructuredData = [initialLocationsSchema]; // Start with the base schema
+  if (locationItemListSchema) {
+    combinedStructuredData.push(locationItemListSchema);
+  }
+  
   // Loading skeleton
   if (isLoading) {
     return (
       <PageLayout>
         <SEO 
-          title="Junk Removal Service Areas | Tri-State Area"
-          description="Uncle Sam Junk Removal serves Evansville, Henderson, Owensboro, Newburgh, and the entire Tri-State area. Find reliable junk removal services near you."
+          title={pageTitle} // Use dynamic title even for loading state
+          description={pageDescription} // Use dynamic description
           keywords="junk removal Evansville, junk removal Owensboro, junk removal Mt. Carmel, Tri-State area junk removal, Henderson junk removal, Princeton junk removal, Newburgh junk removal"
-          structuredData={LocationsSchema}
+          structuredData={[initialLocationsSchema]} // Only initial schema when loading
+          canonicalUrl={canonicalUrl}
         />
 
         <LocationsHero isLoading={true} />
@@ -43,10 +86,11 @@ const Locations = () => {
   return (
     <PageLayout>
       <SEO 
-        title="Junk Removal Service Areas | Tri-State Area"
-        description="Uncle Sam Junk Removal serves Evansville, Henderson, Owensboro, Newburgh, and the entire Tri-State area. Find reliable junk removal services near you."
+        title={pageTitle}
+        description={pageDescription}
         keywords="junk removal Evansville, junk removal Owensboro, junk removal Mt. Carmel, Tri-State area junk removal, Henderson junk removal, Princeton junk removal, Newburgh junk removal"
-        structuredData={LocationsSchema}
+        structuredData={combinedStructuredData}
+        canonicalUrl={canonicalUrl}
       />
 
       <LocationsHero isLoading={false} />

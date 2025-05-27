@@ -11,7 +11,8 @@ import EnhancedTrustSignals from '@/components/home/EnhancedTrustSignals';
 import ExitIntentPopup from '@/components/conversion/ExitIntentPopup';
 import SocialProofNotifications from '@/components/conversion/SocialProofNotifications';
 import SEO from '@/components/SEO';
-import LocalBusinessSchema from '@/components/SEO/LocalBusinessSchema';
+import { siteConfig } from '@/config/siteConfig'; // Import siteConfig
+// Removed: import LocalBusinessSchema from '@/components/SEO/LocalBusinessSchema';
 import { useTranslation } from 'react-i18next';
 import { LoadingSkeleton } from '@/components/ui/loading-skeleton';
 import SectionSeparator from '@/components/ui/section-separator';
@@ -50,36 +51,81 @@ const Index = () => {
 
   // Create alternative language URLs for SEO
   const alternateLanguages = [
-    { lang: 'en', url: 'https://unclesamjunkremoval.com/?lang=en' },
-    { lang: 'es', url: 'https://unclesamjunkremoval.com/?lang=es' }
+    { lang: 'en', url: `${siteConfig.siteUrl}/?lang=en` },
+    { lang: 'es', url: `${siteConfig.siteUrl}/?lang=es` }
   ];
+
+  const webSiteSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "url": siteConfig.siteUrl,
+    "name": siteConfig.siteName,
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": `${siteConfig.siteUrl}/search?q={search_term_string}`,
+      "query-input": "required name=search_term_string"
+    }
+  };
+
+  const localBusinessSchema = {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": siteConfig.businessName,
+    "image": `${siteConfig.siteUrl}${siteConfig.defaultOgImage}`, // Assuming defaultOgImage is relative path
+    "url": siteConfig.siteUrl,
+    "telephone": siteConfig.telephone,
+    "email": siteConfig.email,
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": siteConfig.address.streetAddress,
+      "addressLocality": siteConfig.address.addressLocality,
+      "addressRegion": siteConfig.address.addressRegion,
+      "postalCode": siteConfig.address.postalCode,
+      "addressCountry": siteConfig.address.addressCountry
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": siteConfig.geo.latitude,
+      "longitude": siteConfig.geo.longitude
+    },
+    "openingHoursSpecification": siteConfig.openingHoursSpecification,
+    "sameAs": siteConfig.sameAs,
+    "priceRange": siteConfig.priceRange,
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": siteConfig.siteUrl
+    },
+    "areaServed": [ // Example areaServed, can be expanded or moved to siteConfig
+      { "@type": "City", "name": "Evansville" },
+      { "@type": "City", "name": "Henderson" },
+      { "@type": "City", "name": "Newburgh" },
+      { "@type": "City", "name": "Owensboro" }
+    ],
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Junk Removal Services",
+      "itemListElement": [
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Residential Junk Removal" } },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Commercial Junk Removal" } },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Furniture Removal" } },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Appliance Removal" } }
+      ]
+    }
+    // Add aggregateRating and review if available and appropriate for homepage
+  };
 
   return (
     <PageLayout showBreadcrumb={false} spacing="compact">
       <SEO 
-        title="Professional Junk Removal Services | Uncle Sam Junk Removal"
-        description="Fast, reliable junk removal services across the Tri-State area. Residential & commercial cleanouts, furniture & appliance removal. Get a free quote today! Veteran-owned, eco-friendly, same-day service available."
-        keywords="junk removal, Evansville junk removal, Henderson junk removal, Tri-State area, same-day service, furniture removal, appliance removal, veteran owned, eco-friendly disposal, free estimate"
+        title={`${siteConfig.siteName} | Junk Removal & Hauling Services`} // Example title
+        description="Your trusted local partner for fast, reliable, and eco-friendly junk removal services in the Tri-State area. We handle residential and commercial cleanouts, furniture, appliances, and more. Get your free quote today!"
+        keywords="junk removal, Evansville junk removal, Henderson junk removal, Owensboro junk removal, Tri-State junk removal, hauling services, debris removal, furniture disposal, appliance disposal, veteran owned business, eco-friendly junk removal"
         lang={currentLang}
         alternateLanguages={alternateLanguages}
+        structuredData={[webSiteSchema, localBusinessSchema]}
       />
       
-      {/* Enhanced Local Business Schema */}
-      <LocalBusinessSchema 
-        serviceAreas={["Evansville", "Henderson", "Newburgh", "Owensboro", "Boonville", "Princeton", "Mt. Vernon", "Chandler", "Darmstadt"]}
-        services={[
-          "Residential Junk Removal",
-          "Commercial Junk Removal",
-          "Furniture Removal", 
-          "Appliance Removal",
-          "Construction Debris Removal",
-          "Estate Cleanouts",
-          "Hot Tub Removal",
-          "Same-Day Junk Removal",
-          "Eco-Friendly Disposal",
-          "Donation Services"
-        ]}
-      />
+      {/* Removed LocalBusinessSchema component */}
       
       {isLoading ? (
         

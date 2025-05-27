@@ -1,11 +1,12 @@
 
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom'; // Import useLocation
 import PageLayout from '@/components/PageLayout';
 import SEO from '@/components/SEO';
-import { getBlogPostBySlug, Blog as BlogType } from '@/integrations/supabase/blogService';
+import { getBlogPostBySlug } from '@/integrations/supabase/blogService'; // Removed BlogType as it's not used
 import { useToast } from '@/hooks/use-toast';
 import { mapBlogToBlogPost } from '@/integrations/supabase/services/blogUtils';
+import { siteConfig } from '@/config/siteConfig'; // Import siteConfig
 
 // Import components
 import BlogPostLoading from '@/components/blog/BlogPostLoading';
@@ -19,7 +20,8 @@ import BlogCallToAction from '@/components/blog/BlogCallToAction';
 
 const BlogPostPage = () => {
   const { slug } = useParams<{ slug: string }>();
-  const [post, setPost] = useState<any | null>(null);
+  const location = useLocation(); // Initialize useLocation
+  const [post, setPost] = useState<any | null>(null); // Consider defining a more specific type if possible
   const [isLoading, setIsLoading] = useState(true);
   const { toast } = useToast();
 
@@ -71,14 +73,59 @@ const BlogPostPage = () => {
     );
   }
 
+  const absoluteOgImageUrl = post.imageUrl?.startsWith('http') 
+    ? post.imageUrl 
+    : `${siteConfig.siteUrl}${post.imageUrl?.startsWith('/') ? '' : '/'}${post.imageUrl}`;
+
+  const canonicalUrl = `${siteConfig.siteUrl}${location.pathname}`;
+
+  const articleSchema = {
+    "@context": "https://schema.org",
+    "@type": "Article", // Or "BlogPosting"
+    "headline": post.title,
+    "description": post.excerpt,
+    "image": absoluteOgImageUrl,
+    "datePublished": new Date(post.date).toISOString(),
+    "dateModified": new Date(post.date).toISOString(), // Use a separate modified date if available
+    "author": {
+      "@type": "Person",
+      "name": post.author // Assuming post.author is a string name
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": siteConfig.businessName,
+      "logo": {
+        "@type": "ImageObject",
+        "url": `${siteConfig.siteUrl}${siteConfig.defaultOgImage}`
+      }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": canonicalUrl
+    },
+    "keywords": post.tags ? post.tags.join(', ') : undefined
+  };
+
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": siteConfig.siteUrl },
+      { "@type": "ListItem", "position": 2, "name": "Blog", "item": `${siteConfig.siteUrl}/blog` },
+      { "@type": "ListItem", "position": 3, "name": post.title, "item": canonicalUrl }
+    ]
+  };
+  
   return (
     <PageLayout>
       <SEO 
-        title={`${post.title} | Uncle Sam Junk Removal Blog`}
+        title={post.title} // SEO component will append site name
         description={post.excerpt}
-        keywords={`${post.category}, junk removal blog, waste management, Uncle Sam Junk Removal, ${post.title}`}
-        ogImage={post.imageUrl}
+        keywords={post.tags ? `${post.category}, ${post.tags.join(', ')}, junk removal blog, ${siteConfig.businessName}` : `${post.category}, junk removal blog, ${siteConfig.businessName}`}
+        ogImage={absoluteOgImageUrl}
         ogType="article"
+        canonicalUrl={canonicalUrl}
+        structuredData={[articleSchema, breadcrumbSchema]}
       />
       
       <div className="container-custom py-10 md:py-16">
