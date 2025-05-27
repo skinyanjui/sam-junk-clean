@@ -10,7 +10,7 @@ const Privacy = () => {
           
           <div className="space-y-6 text-gray-700">
             <p>
-              Last updated: May 5, 2025
+              Last updated: May 27, 2025
             </p>
             
             <h2 id="privacy-intro" className="text-2xl font-bold text-brand-navy mt-8 mb-4">Introduction</h2>
@@ -81,8 +81,8 @@ const Privacy = () => {
             </p>
             <p className="mt-4">
               Uncle Sam Junk Removal<br />
-              Email: privacy@unclesamjunk.com<br />
-              Phone: (800) 555-1234
+              Email: info@unclesamjunkremoval.com<br />
+              Phone: +18126101657
             </p>
           </div>
         </div>

@@ -1,6 +1,5 @@
-
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import PageLayout from '@/components/PageLayout';
 import ServicesHero from '@/components/services/ServicesHero';
 import ServicesList from '@/components/services/ServicesList';
@@ -10,15 +9,18 @@ import SEO from '@/components/SEO';
 import { ServiceData } from '@/components/services/servicesData';
 import { fetchServices } from '@/integrations/supabase/servicesService';
 import { LoadingSkeleton } from '@/components/ui/loading-skeleton';
+import { Button } from '@/components/ui/button';
 
 const Services = () => {
   const { category } = useParams<{ category?: string }>();
   const [services, setServices] = useState<ServiceData[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const loadServices = async () => {
       setIsLoading(true);
+      setError(null);
       try {
         const data = await fetchServices();
         const filteredServices = category
@@ -27,14 +29,15 @@ const Services = () => {
         setServices(filteredServices);
       } catch (error) {
         console.error("Error loading services:", error);
-        setServices([]); // Set to empty array on error to avoid issues with .map
+        setServices([]); // Avoid .map errors
+        setError("Failed to load services. Please try again later or contact support.");
       } finally {
         setIsLoading(false);
       }
     };
 
     loadServices();
-  }, [category]); // Add category to dependency array
+  }, [category]);
 
   const formattedCategory = category ? category.charAt(0).toUpperCase() + category.slice(1).toLowerCase() : null;
 
@@ -60,7 +63,7 @@ const Services = () => {
     {
       "@type": "ListItem",
       "position": 2,
-      "name": "Services", // General "Services" page link
+      "name": "Services",
       "item": "https://unclesamjunkremoval.com/services"
     }
   ];
@@ -71,7 +74,7 @@ const Services = () => {
         {
           "@type": "ListItem",
           "position": 3,
-          "name": pageTitle, // Specific category page title
+          "name": pageTitle,
           "item": pageUrl
         }
       ]
@@ -79,7 +82,6 @@ const Services = () => {
   
   const keywords = `junk removal, waste removal, debris removal, cleanouts, ${formattedCategory ? formattedCategory.toLowerCase() + ' services, ' : ''}Evansville junk removal, Henderson junk removal, Kentucky junk removal, Indiana junk removal, Tri-State area junk removal, Uncle Sam Junk Removal`;
 
-  // Define schema for Services page
   const servicesSchemaData = {
     "@context": "https://schema.org",
     "@type": "WebPage",
@@ -91,27 +93,26 @@ const Services = () => {
       "@type": "BreadcrumbList",
       "itemListElement": breadcrumbItemList
     },
-    // Only include mainEntity if services are available for the current filter
     ...(services.length > 0 && {
       "mainEntity": {
         "@type": "ItemList",
-        "name": pageTitle, // Title for the list of services
+        "name": pageTitle,
         "description": `Browse our ${formattedCategory ? formattedCategory.toLowerCase() : 'general'} junk removal services.`,
         "itemListElement": services.map((service, index) => ({
           "@type": "Service",
           "position": index + 1,
           "name": service.title,
           "description": service.description,
-          "url": `${pageUrl}#${service.id}`, // Link to service anchor on the page
+          "url": `${pageUrl}#${service.id}`,
           ...(service.category && { "serviceCategory": service.category }),
           "provider": {
             "@type": "LocalBusiness",
             "name": "Uncle Sam Junk Removal"
           },
-          ...(service.priceRange && { 
+          ...(service.priceRange && {
             "offers": {
               "@type": "Offer",
-              "priceRange": service.priceRange 
+              "priceRange": service.priceRange
             }
           })
         }))
@@ -127,16 +128,16 @@ const Services = () => {
         keywords={keywords}
         structuredData={servicesSchemaData}
       />
-      
-      {/* ServicesHero does not take props for title based on previous check in turn 2 */}
-      <ServicesHero /> 
-      
-      {isLoading ? (
+
+      <ServicesHero />
+
+      {isLoading && (
         <div className="py-16 bg-white">
           <div className="container-custom">
+            <h2 className="text-3xl font-bold text-center text-brand-navy mb-12 sr-only">Our Comprehensive Junk Removal Services</h2>
             <div className="space-y-24">
               {[1, 2, 3, 4].map((item) => (
-                <div key={item} className="grid md:grid-cols-2 gap-8">
+                <div key={item} className="grid md:grid-cols-2 gap-8 items-center">
                   <LoadingSkeleton className="h-64 rounded-lg" />
                   <div className="space-y-4">
                     <LoadingSkeleton className="h-10 w-3/4" />
@@ -144,8 +145,8 @@ const Services = () => {
                     <LoadingSkeleton className="h-4 w-full" />
                     <LoadingSkeleton className="h-4 w-3/4" />
                     <div className="space-y-2 pt-4">
-                      {[1, 2, 3, 4].map((item) => (
-                        <LoadingSkeleton key={item} className="h-6 w-full" />
+                      {[1, 2, 3].map((subItem) => (
+                        <LoadingSkeleton key={subItem} className="h-6 w-full" />
                       ))}
                     </div>
                   </div>
@@ -154,10 +155,36 @@ const Services = () => {
             </div>
           </div>
         </div>
-      ) : (
+      )}
+
+      {!isLoading && error && (
+        <section className="py-16 bg-brand-gray" aria-labelledby="services-error-heading">
+          <div className="container-custom text-center py-12">
+            <h2 id="services-error-heading" className="text-2xl font-semibold text-red-600 mb-4">Error Loading Services</h2>
+            <p className="text-gray-600 mb-6">{error}</p>
+            <Button asChild className="bg-brand-red hover:bg-opacity-90">
+              <Link to="/contact">Contact Support</Link>
+            </Button>
+          </div>
+        </section>
+      )}
+
+      {!isLoading && !error && services.length === 0 && (
+        <section className="py-16 bg-brand-gray" aria-labelledby="no-services-heading">
+          <div className="container-custom text-center py-12">
+            <h2 id="no-services-heading" className="text-2xl font-semibold text-brand-navy mb-4">No Services Currently Available</h2>
+            <p className="text-gray-600 mb-6">Please check back later or contact us for more information about our offerings.</p>
+            <Button asChild className="bg-brand-red hover:bg-opacity-90">
+              <Link to="/contact">Contact Us</Link>
+            </Button>
+          </div>
+        </section>
+      )}
+
+      {!isLoading && !error && services.length > 0 && (
         <ServicesList services={services} />
       )}
-      
+
       <ServicesCta />
       <ServicesAreaLink />
     </PageLayout>

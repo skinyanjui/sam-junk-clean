@@ -1,70 +1,75 @@
-
 import { supabase } from './client';
 
-export interface NavigationItem {
-  id: string;
+// Interface for the raw data from the Supabase table
+export interface DbNavigationItem {
+  id: string; // UUID
   name: string;
   path: string;
   has_dropdown: boolean;
-  parent_id: string | null;
+  parent_id: string | null; // UUID
   sort_order: number;
   is_active: boolean;
-  children?: NavigationItem[];
+  created_at: string; // TIMESTAMPTZ
 }
 
-export const fetchNavigationItems = async (): Promise<NavigationItem[]> => {
+// Interface for the NavItem structure expected by Navbar.tsx
+interface NavItem {
+  name: string;
+  path: string;
+  hasDropdown: boolean;
+  dropdownItems?: {
+    name: string;
+    path: string;
+  }[];
+}
+
+export const fetchNavigationItems = async (): Promise<DbNavigationItem[]> => {
   try {
     const { data, error } = await supabase
       .from('navigation_items')
-      .select('id, name, path, has_dropdown, parent_id, sort_order, is_active')
+      .select('id, name, path, has_dropdown, parent_id, sort_order, is_active, created_at')
       .eq('is_active', true)
       .order('sort_order', { ascending: true });
 
     if (error) {
       console.error('Error fetching navigation items:', error);
-      return [];
+      throw error;
     }
-    // Data from Supabase will not have the 'children' property.
-    // The NavigationItem interface defines 'children?' as optional.
-    // getNavigationStructure will handle the 'children' array initialization.
     return data || [];
   } catch (error) {
-    console.error('Error fetching navigation items:', error);
+    console.error('Supabase call failed:', error);
     return [];
   }
 };
 
-export const getNavigationStructure = (items: NavigationItem[]): NavigationItem[] => {
-  if (!items || items.length === 0) {
-    return [];
-  }
+export const getNavigationStructure = async (): Promise<NavItem[]> => {
+  const allItems: DbNavigationItem[] = await fetchNavigationItems();
 
-  const itemsById = new Map<string, NavigationItem>();
-  // Initialize items in the map and ensure each has a children array
-  items.forEach(item => {
-    itemsById.set(item.id, { ...item, children: [] });
-  });
+  const itemsById: { [key: string]: DbNavigationItem & { children?: DbNavigationItem[] } } = {};
+  allItems.forEach(item => itemsById[item.id] = { ...item, children: [] });
 
-  const roots: NavigationItem[] = [];
-
-  itemsById.forEach(item => {
-    if (item.parent_id) {
-      const parent = itemsById.get(item.parent_id);
-      if (parent) {
-        // The check for item.is_active is already done in fetchNavigationItems
-        // Children are already sorted by sort_order due to the initial query.
-        // If specific sorting of children within parent is needed again, it can be done here.
-        parent.children?.push(item);
-      }
+  const rootItems: (DbNavigationItem & { children?: DbNavigationItem[] })[] = [];
+  allItems.forEach(item => {
+    if (item.parent_id && itemsById[item.parent_id]) {
+      itemsById[item.parent_id].children?.push(itemsById[item.id]);
     } else {
-      roots.push(item);
+      rootItems.push(itemsById[item.id]);
     }
   });
 
-  // The initial query already sorts all items by sort_order.
-  // If roots themselves need to be re-sorted (e.g. if not all items were fetched initially),
-  // it can be done here. For now, we assume `fetchNavigationItems` provides them in order.
-  // Children within each parent are also already sorted.
+  Object.values(itemsById).forEach(item => {
+    item.children?.sort((a, b) => a.sort_order - b.sort_order);
+  });
+  rootItems.sort((a, b) => a.sort_order - b.sort_order);
 
-  return roots;
+  const mapToNavItem = (items: (DbNavigationItem & { children?: DbNavigationItem[] })[]): NavItem[] => {
+    return items.map(item => ({
+      name: item.name,
+      path: item.path,
+      hasDropdown: item.has_dropdown || (item.children && item.children.length > 0),
+      dropdownItems: item.children?.map(child => ({ name: child.name, path: child.path })) || []
+    }));
+  };
+
+  return mapToNavItem(rootItems);
 };
