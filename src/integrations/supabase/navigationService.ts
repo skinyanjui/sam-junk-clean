@@ -1,4 +1,3 @@
-
 import { supabase } from './client';
 
 // Interface for the raw data from the Supabase table
@@ -14,7 +13,6 @@ export interface DbNavigationItem {
 }
 
 // Interface for the NavItem structure expected by Navbar.tsx
-// This needs to be kept in sync with Navbar.tsx or imported if possible
 interface NavItem {
   name: string;
   path: string;
@@ -29,7 +27,8 @@ export const fetchNavigationItems = async (): Promise<DbNavigationItem[]> => {
   try {
     const { data, error } = await supabase
       .from('navigation_items')
-      .select('*')
+      .select('id, name, path, has_dropdown, parent_id, sort_order, is_active, created_at')
+      .eq('is_active', true)
       .order('sort_order', { ascending: true });
 
     if (error) {
@@ -38,7 +37,6 @@ export const fetchNavigationItems = async (): Promise<DbNavigationItem[]> => {
     }
     return data || [];
   } catch (error) {
-    // Log or handle more gracefully
     console.error('Supabase call failed:', error);
     return [];
   }
@@ -47,42 +45,29 @@ export const fetchNavigationItems = async (): Promise<DbNavigationItem[]> => {
 export const getNavigationStructure = async (): Promise<NavItem[]> => {
   const allItems: DbNavigationItem[] = await fetchNavigationItems();
 
-  // Filter for active items only before building the structure
-  const activeItems = allItems.filter(item => item.is_active);
-
   const itemsById: { [key: string]: DbNavigationItem & { children?: DbNavigationItem[] } } = {};
-  activeItems.forEach(item => itemsById[item.id] = { ...item, children: [] });
+  allItems.forEach(item => itemsById[item.id] = { ...item, children: [] });
 
   const rootItems: (DbNavigationItem & { children?: DbNavigationItem[] })[] = [];
-  activeItems.forEach(item => {
+  allItems.forEach(item => {
     if (item.parent_id && itemsById[item.parent_id]) {
-      // Ensure children array exists
-      if (!itemsById[item.parent_id].children) {
-        itemsById[item.parent_id].children = [];
-      }
       itemsById[item.parent_id].children?.push(itemsById[item.id]);
-    } else if (!item.parent_id) {
+    } else {
       rootItems.push(itemsById[item.id]);
     }
   });
 
-  // Sort children by sort_order
   Object.values(itemsById).forEach(item => {
     item.children?.sort((a, b) => a.sort_order - b.sort_order);
   });
-  // Sort root items by sort_order as well
-  rootItems.sort((a,b) => a.sort_order - b.sort_order);
+  rootItems.sort((a, b) => a.sort_order - b.sort_order);
 
-  // Map to the NavItem structure expected by Navbar component
   const mapToNavItem = (items: (DbNavigationItem & { children?: DbNavigationItem[] })[]): NavItem[] => {
     return items.map(item => ({
       name: item.name,
       path: item.path,
       hasDropdown: item.has_dropdown || (item.children && item.children.length > 0),
-      // Navbar.tsx expects dropdownItems to be a flat list of direct children's name and path
-      dropdownItems: item.children && item.children.length > 0 
-        ? item.children.map(child => ({ name: child.name, path: child.path })) 
-        : []
+      dropdownItems: item.children?.map(child => ({ name: child.name, path: child.path })) || []
     }));
   };
 
