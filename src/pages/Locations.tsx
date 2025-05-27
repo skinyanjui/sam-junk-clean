@@ -51,7 +51,19 @@ const Locations = () => {
           "@type": "Place",
           "name": location.name,
           "description": location.description || `Junk removal services provided by ${siteConfig.businessName} in and around ${location.name}.`,
-          "image": location.image?.startsWith('http') ? location.image : `${siteConfig.siteUrl}${location.image || siteConfig.defaultOgImage}`,
+          "image": (() => {
+            let imageUrl = siteConfig.defaultOgImage; // Fallback to default OG image
+            if (location.image) {
+              if (location.image.startsWith('http')) {
+                imageUrl = location.image;
+              } else {
+                // Ensure leading slash for relative paths
+                imageUrl = location.image.startsWith('/') ? location.image : `/${location.image}`;
+              }
+            }
+            // Prepend siteUrl for relative paths
+            return imageUrl.startsWith('http') ? imageUrl : `${siteConfig.siteUrl}${imageUrl}`;
+          })(),
           // "url": `${siteConfig.siteUrl}/locations#${location.id}` // Assuming location.id exists for anchor links
         }
       }))

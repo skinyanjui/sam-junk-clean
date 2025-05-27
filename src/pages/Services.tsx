@@ -1,5 +1,6 @@
+
 import { useEffect, useState } from 'react';
-import { useLocation, useParams, Link } from 'react-router-dom';
+import { useLocation } from 'react-router-dom'; // Import useLocation
 import PageLayout from '@/components/PageLayout';
 import ServicesHero from '@/components/services/ServicesHero';
 import ServicesList from '@/components/services/ServicesList';
@@ -10,17 +11,16 @@ import { ServiceData } from '@/components/services/servicesData';
 import { fetchServices } from '@/integrations/supabase/servicesService';
 import { LoadingSkeleton } from '@/components/ui/loading-skeleton';
 import { Button } from '@/components/ui/button';
-import { siteConfig } from '@/config/siteConfig';
+import { Link } from 'react-router-dom';
+import { siteConfig } from '@/config/siteConfig'; // Import siteConfig
 
 const Services = () => {
-  const location = useLocation();
-  const { category } = useParams<{ category?: string }>();
-
+  const location = useLocation(); // Initialize useLocation
   const [services, setServices] = useState<ServiceData[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [dynamicPageTitle, setDynamicPageTitle] = useState<string | undefined>();
-  const [dynamicPageDescription, setDynamicPageDescription] = useState<string | undefined>();
+  const [dynamicPageTitle, setDynamicPageTitle] = useState<string | undefined>(undefined);
+  const [dynamicPageDescription, setDynamicPageDescription] = useState<string | undefined>(undefined);
 
   useEffect(() => {
     const loadServices = async () => {
@@ -28,13 +28,9 @@ const Services = () => {
       setError(null);
       try {
         const data = await fetchServices();
-        const filteredServices = category
-          ? data.filter(service => service.category?.toLowerCase() === category.toLowerCase())
-          : data;
-        setServices(filteredServices);
+        setServices(data);
       } catch (error) {
         console.error("Error loading services:", error);
-        setServices([]);
         setError("Failed to load services. Please try again later or contact support.");
       } finally {
         setIsLoading(false);
@@ -42,7 +38,7 @@ const Services = () => {
     };
 
     loadServices();
-  }, [category]);
+  }, []);
 
   useEffect(() => {
     if (location.hash && services.length > 0) {
@@ -50,9 +46,8 @@ const Services = () => {
       const focusedService = services.find(s => s.id === serviceId);
       if (focusedService) {
         setDynamicPageTitle(`${focusedService.title} | ${siteConfig.siteName}`);
-        const descSnippet = focusedService.description
-          ? focusedService.description.substring(0, 160)
-          : `Learn more about our ${focusedService.title} service.`;
+        // Ensure description is not null before substring
+        const descSnippet = focusedService.description ? focusedService.description.substring(0, 160) : `Learn more about our ${focusedService.title} service.`;
         setDynamicPageDescription(descSnippet);
       } else {
         setDynamicPageTitle(undefined);
@@ -62,99 +57,64 @@ const Services = () => {
       setDynamicPageTitle(undefined);
       setDynamicPageDescription(undefined);
     }
-  }, [location.hash, services]);
+  }, [location.hash, services]); // Removed siteConfig from deps as it's constant
 
-  const formattedCategory = category
-    ? category.charAt(0).toUpperCase() + category.slice(1).toLowerCase()
-    : null;
-
-  const pageTitle = dynamicPageTitle || (formattedCategory
-    ? `${formattedCategory} Junk Removal Services`
-    : "Junk Removal Services");
-
-  const pageDescription = dynamicPageDescription || (formattedCategory
-    ? `Explore our specialized ${formattedCategory.toLowerCase()} junk removal solutions in the Tri-State area. We efficiently handle all types of ${formattedCategory.toLowerCase()} cleanouts, debris, and unwanted item removal.`
-    : `Professional junk removal services for residential and commercial properties in ${siteConfig.address.addressLocality}. We handle furniture removal, appliance disposal, estate cleanouts, and more.`);
-
-  const pageUrl = category
-    ? `${siteConfig.siteUrl}/services/${category.toLowerCase()}`
-    : `${siteConfig.siteUrl}/services`;
-
-  const breadcrumbBase = [
-    {
-      "@type": "ListItem",
-      "position": 1,
-      "name": "Home",
-      "item": siteConfig.siteUrl,
-    },
-    {
-      "@type": "ListItem",
-      "position": 2,
-      "name": "Services",
-      "item": `${siteConfig.siteUrl}/services`,
-    }
-  ];
-
-  const breadcrumbItemList = formattedCategory
-    ? [
-        ...breadcrumbBase,
-        {
-          "@type": "ListItem",
-          "position": 3,
-          "name": pageTitle,
-          "item": pageUrl,
-        }
-      ]
-    : breadcrumbBase;
-
-  const keywords = `junk removal, waste removal, debris removal, cleanouts, ${formattedCategory ? formattedCategory.toLowerCase() + ' services, ' : ''}Evansville junk removal, Henderson junk removal, Kentucky junk removal, Indiana junk removal, Tri-State area junk removal, Uncle Sam Junk Removal`;
-
+  // Define schema for Services page
   const servicesSchemaData = {
     "@context": "https://schema.org",
     "@type": "WebPage",
-    "name": pageTitle,
-    "description": pageDescription,
-    "url": pageUrl,
-    "keywords": keywords,
+    "name": dynamicPageTitle || `Junk Removal Services | ${siteConfig.siteName}`,
+    "description": dynamicPageDescription || `Professional junk removal services from ${siteConfig.businessName}. We handle furniture removal, appliance disposal, estate cleanouts, and more in ${siteConfig.address.addressLocality}.`,
+    "url": `${siteConfig.siteUrl}/services`, // Canonical URL for the main services page
     "breadcrumb": {
       "@type": "BreadcrumbList",
-      "itemListElement": breadcrumbItemList
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": siteConfig.siteUrl
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Services",
+          "item": `${siteConfig.siteUrl}/services`
+        }
+      ]
     },
     "mainEntity": {
       "@type": "ItemList",
       "itemListElement": services.map((service, index) => {
-        const imageUrl = service.image?.startsWith('/')
-          ? `${siteConfig.siteUrl}${service.image}`
-          : `${siteConfig.siteUrl}/${service.image}`;
-        const offer = service.priceRange && {
+        const offer = service.priceRange ? {
           "@type": "Offer",
-          "priceCurrency": "USD",
+          "priceCurrency": "USD", // Assuming USD
           "name": service.title,
           "description": `Affordable ${service.title.toLowerCase()}.`,
-          "priceRange": service.priceRange,
-        };
+          "priceRange": service.priceRange 
+        } : undefined;
+
         return {
           "@type": "Service",
           "position": index + 1,
           "name": service.title,
           "description": service.description,
-          "image": imageUrl || `${siteConfig.siteUrl}${siteConfig.defaultOgImage}`,
-          "serviceType": service.title,
-          "url": `${pageUrl}#${service.id}`,
+          "image": service.image ? `${siteConfig.siteUrl}${service.image.startsWith('/') ? service.image : '/' + service.image}` : `${siteConfig.siteUrl}${siteConfig.defaultOgImage}`,
+          "serviceType": service.title, // Or a more specific category if available
           "provider": {
             "@type": "LocalBusiness",
             "name": siteConfig.businessName,
             "url": siteConfig.siteUrl,
             "logo": `${siteConfig.siteUrl}${siteConfig.defaultOgImage}`,
             "address": siteConfig.address,
-            "telephone": siteConfig.telephone,
+            "telephone": siteConfig.telephone
           },
           "areaServed": {
             "@type": "Place",
-            "name": "Tri-State Area",
-            "geo": siteConfig.geo,
+            "name": "Tri-State Area", // General, or siteConfig.address.addressLocality
+            "geo": siteConfig.geo
           },
-          ...(offer && { offers: offer }),
+          ...(offer && { "offers": offer })
         };
       })
     }
@@ -162,20 +122,20 @@ const Services = () => {
 
   return (
     <PageLayout>
-      <SEO
-        title={pageTitle}
-        description={pageDescription}
-        keywords={keywords}
+      <SEO 
+        title={dynamicPageTitle || "Junk Removal Services"}
+        description={dynamicPageDescription || `Professional junk removal services for residential and commercial properties in ${siteConfig.address.addressLocality}. We handle furniture removal, appliance disposal, estate cleanouts, and more.`}
+        keywords="junk removal services, residential cleanouts, commercial junk removal, appliance removal, furniture disposal, estate cleanouts, local junk removal"
         structuredData={servicesSchemaData}
-        canonicalUrl={pageUrl}
+        canonicalUrl={`${siteConfig.siteUrl}/services`}
       />
-
+      
       <ServicesHero />
-
-      {isLoading ? (
+      
+      {isLoading && ( // Display loading skeletons
         <div className="py-16 bg-white">
           <div className="container-custom">
-            <h2 className="sr-only">Loading Services</h2>
+            <h2 className="text-3xl font-bold text-center text-brand-navy mb-12 sr-only">Our Comprehensive Junk Removal Services</h2>
             <div className="space-y-24">
               {[1, 2, 3, 4].map((item) => (
                 <div key={item} className="grid md:grid-cols-2 gap-8 items-center">
@@ -196,30 +156,36 @@ const Services = () => {
             </div>
           </div>
         </div>
-      ) : error ? (
-        <section className="py-16 bg-brand-gray text-center">
-          <div className="container-custom py-12">
-            <h2 className="text-2xl font-semibold text-red-600 mb-4">Error Loading Services</h2>
+      )}
+
+      {!isLoading && error && ( // Display error message
+        <section className="py-16 bg-brand-gray" aria-labelledby="services-error-heading">
+          <div className="container-custom text-center py-12">
+            <h2 id="services-error-heading" className="text-2xl font-semibold text-red-600 mb-4">Error Loading Services</h2>
             <p className="text-gray-600 mb-6">{error}</p>
             <Button asChild className="bg-brand-red hover:bg-opacity-90">
               <Link to="/contact">Contact Support</Link>
             </Button>
           </div>
         </section>
-      ) : services.length === 0 ? (
-        <section className="py-16 bg-brand-gray text-center">
-          <div className="container-custom py-12">
-            <h2 className="text-2xl font-semibold text-brand-navy mb-4">No Services Currently Available</h2>
+      )}
+
+      {!isLoading && !error && services.length === 0 && ( // Display no services message
+         <section className="py-16 bg-brand-gray" aria-labelledby="no-services-heading">
+          <div className="container-custom text-center py-12">
+            <h2 id="no-services-heading" className="text-2xl font-semibold text-brand-navy mb-4">No Services Currently Available</h2>
             <p className="text-gray-600 mb-6">Please check back later or contact us for more information about our offerings.</p>
             <Button asChild className="bg-brand-red hover:bg-opacity-90">
               <Link to="/contact">Contact Us</Link>
             </Button>
           </div>
         </section>
-      ) : (
-        <ServicesList services={services} />
       )}
 
+      {!isLoading && !error && services.length > 0 && ( // Render list if services exist
+        <ServicesList services={services} />
+      )}
+      
       <ServicesCta />
       <ServicesAreaLink />
     </PageLayout>

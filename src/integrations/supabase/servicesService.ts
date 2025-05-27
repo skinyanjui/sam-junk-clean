@@ -1,12 +1,14 @@
+
 import { supabase } from './client';
 import type { ServiceData, RelatedBlog } from '@/components/services/servicesData';
 
 // Type guard to ensure related_blogs is always an array
 const ensureRelatedBlogsArray = (blogs: any): RelatedBlog[] => {
   if (Array.isArray(blogs)) {
+    // Check if items are valid RelatedBlog objects (optional, basic check here)
     return blogs.filter(blog => typeof blog.title === 'string' && typeof blog.slug === 'string');
   }
-  return [];
+  return []; // Default to empty array if not an array or invalid structure
 };
 
 // Fetch all services
@@ -29,29 +31,25 @@ export const fetchServices = async (): Promise<ServiceData[]> => {
         created_at,
         updated_at
       `)
-      .order('title', { ascending: true });
+      .order('title', { ascending: true }); // Default ordering
 
     if (error) {
       console.error('Error fetching services:', error);
       throw error;
     }
 
+    // Map DB data to ServiceData, ensuring relatedServices and relatedBlogs are correctly typed
     return (data || []).map(service => ({
       ...service,
-      priceRange: service.price_range,
-      timeEstimate: service.time_estimate,
-      relatedBlogs: ensureRelatedBlogsArray(service.related_blogs),
-      relatedServices: service.related_services_ids || [],
-    })) as ServiceData[];
-
+      priceRange: service.price_range, // Map price_range to priceRange
+      timeEstimate: service.time_estimate, // Map time_estimate to timeEstimate
+      relatedBlogs: ensureRelatedBlogsArray(service.related_blogs), // Supabase client auto-parses JSONB
+      relatedServices: service.related_services_ids || [], // Map related_services_ids to relatedServices
+    })) as ServiceData[]; // Type assertion after mapping
+    
   } catch (error) {
     console.error('Error in fetchServices:', error);
     return [];
-
-    // Uncomment this block for mock data testing if DB is not ready
-    /*
-    return mockServices;
-    */
   }
 };
 
@@ -79,23 +77,24 @@ export const fetchServiceById = async (serviceId: string): Promise<ServiceData |
       .single();
 
     if (error) {
-      if (error.code === 'PGRST116') {
+      if (error.code === 'PGRST116') { // PostgREST error for "Object not found"
         console.warn(`Service with ID ${serviceId} not found.`);
         return null;
       }
       console.error('Error fetching service by ID:', error);
       throw error;
     }
-
+    
     if (!data) return null;
 
+    // Map DB data to ServiceData
     return {
       ...data,
       priceRange: data.price_range,
       timeEstimate: data.time_estimate,
       relatedBlogs: ensureRelatedBlogsArray(data.related_blogs),
       relatedServices: data.related_services_ids || [],
-    } as ServiceData;
+    } as ServiceData; // Type assertion after mapping
 
   } catch (error) {
     console.error('Error in fetchServiceById:', error);
@@ -113,7 +112,7 @@ const getIconName = (serviceTitle: string): string => {
   if (serviceTitle.includes('Gym')) return 'Dumbbell';
   if (serviceTitle.includes('Demolition')) return 'Hammer';
   if (serviceTitle.includes('Construction')) return 'Construction';
-  return 'Home';
+  return 'Home'; // default icon
 };
 
 // Transform service data for the home page service cards
@@ -129,7 +128,7 @@ export const getHomePageServices = async () => {
         popularity
       `)
       .eq('popularity', 'high')
-      .order('title', { ascending: true })
+      .order('title', { ascending: true }) // Consistent ordering
       .limit(8);
 
     if (error) {
@@ -140,7 +139,7 @@ export const getHomePageServices = async () => {
     return (data || []).map(service => ({
       title: service.title,
       iconName: getIconName(service.title),
-      description: service.description || '',
+      description: service.description || '', // Ensure description is not null
       image: service.image,
       alt: `${service.title} service showing ${service.description ? service.description.toLowerCase() : 'details'}.`,
       priceRange: service.price_range,
