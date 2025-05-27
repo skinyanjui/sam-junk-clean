@@ -1,5 +1,6 @@
 
 import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom'; // Import useLocation
 import PageLayout from '@/components/PageLayout';
 import ServicesHero from '@/components/services/ServicesHero';
 import ServicesList from '@/components/services/ServicesList';
@@ -9,24 +10,28 @@ import SEO from '@/components/SEO';
 import { ServiceData } from '@/components/services/servicesData';
 import { fetchServices } from '@/integrations/supabase/servicesService';
 import { LoadingSkeleton } from '@/components/ui/loading-skeleton';
-import { Button } from '@/components/ui/button'; // Import Button
-import { Link } from 'react-router-dom'; // Import Link
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import { siteConfig } from '@/config/siteConfig'; // Import siteConfig
 
 const Services = () => {
+  const location = useLocation(); // Initialize useLocation
   const [services, setServices] = useState<ServiceData[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null); // Added error state
+  const [error, setError] = useState<string | null>(null);
+  const [dynamicPageTitle, setDynamicPageTitle] = useState<string | undefined>(undefined);
+  const [dynamicPageDescription, setDynamicPageDescription] = useState<string | undefined>(undefined);
 
   useEffect(() => {
     const loadServices = async () => {
       setIsLoading(true);
-      setError(null); // Reset error state
+      setError(null);
       try {
         const data = await fetchServices();
         setServices(data);
       } catch (error) {
         console.error("Error loading services:", error);
-        setError("Failed to load services. Please try again later or contact support."); // Set error message
+        setError("Failed to load services. Please try again later or contact support.");
       } finally {
         setIsLoading(false);
       }
@@ -35,13 +40,32 @@ const Services = () => {
     loadServices();
   }, []);
 
+  useEffect(() => {
+    if (location.hash && services.length > 0) {
+      const serviceId = location.hash.substring(1);
+      const focusedService = services.find(s => s.id === serviceId);
+      if (focusedService) {
+        setDynamicPageTitle(`${focusedService.title} | ${siteConfig.siteName}`);
+        // Ensure description is not null before substring
+        const descSnippet = focusedService.description ? focusedService.description.substring(0, 160) : `Learn more about our ${focusedService.title} service.`;
+        setDynamicPageDescription(descSnippet);
+      } else {
+        setDynamicPageTitle(undefined);
+        setDynamicPageDescription(undefined);
+      }
+    } else {
+      setDynamicPageTitle(undefined);
+      setDynamicPageDescription(undefined);
+    }
+  }, [location.hash, services]); // Removed siteConfig from deps as it's constant
+
   // Define schema for Services page
   const servicesSchemaData = {
     "@context": "https://schema.org",
     "@type": "WebPage",
-    "name": "Junk Removal Services | Uncle Sam Junk Removal",
-    "description": "Professional junk removal services for residential and commercial properties. We handle furniture removal, appliance disposal, estate cleanouts, and more.",
-    "url": "https://unclesamjunkremoval.com/services",
+    "name": dynamicPageTitle || `Junk Removal Services | ${siteConfig.siteName}`,
+    "description": dynamicPageDescription || `Professional junk removal services from ${siteConfig.businessName}. We handle furniture removal, appliance disposal, estate cleanouts, and more in ${siteConfig.address.addressLocality}.`,
+    "url": `${siteConfig.siteUrl}/services`, // Canonical URL for the main services page
     "breadcrumb": {
       "@type": "BreadcrumbList",
       "itemListElement": [
@@ -49,38 +73,61 @@ const Services = () => {
           "@type": "ListItem",
           "position": 1,
           "name": "Home",
-          "item": "https://unclesamjunkremoval.com"
+          "item": siteConfig.siteUrl
         },
         {
           "@type": "ListItem",
           "position": 2,
           "name": "Services",
-          "item": "https://unclesamjunkremoval.com/services"
+          "item": `${siteConfig.siteUrl}/services`
         }
       ]
     },
     "mainEntity": {
       "@type": "ItemList",
-      "itemListElement": services.map((service, index) => ({
-        "@type": "Service",
-        "position": index + 1,
-        "name": service.title,
-        "description": service.description,
-        "provider": {
-          "@type": "LocalBusiness",
-          "name": "Uncle Sam Junk Removal"
-        }
-      }))
+      "itemListElement": services.map((service, index) => {
+        const offer = service.priceRange ? {
+          "@type": "Offer",
+          "priceCurrency": "USD", // Assuming USD
+          "name": service.title,
+          "description": `Affordable ${service.title.toLowerCase()}.`,
+          "priceRange": service.priceRange 
+        } : undefined;
+
+        return {
+          "@type": "Service",
+          "position": index + 1,
+          "name": service.title,
+          "description": service.description,
+          "image": service.image ? `${siteConfig.siteUrl}${service.image.startsWith('/') ? service.image : '/' + service.image}` : `${siteConfig.siteUrl}${siteConfig.defaultOgImage}`,
+          "serviceType": service.title, // Or a more specific category if available
+          "provider": {
+            "@type": "LocalBusiness",
+            "name": siteConfig.businessName,
+            "url": siteConfig.siteUrl,
+            "logo": `${siteConfig.siteUrl}${siteConfig.defaultOgImage}`,
+            "address": siteConfig.address,
+            "telephone": siteConfig.telephone
+          },
+          "areaServed": {
+            "@type": "Place",
+            "name": "Tri-State Area", // General, or siteConfig.address.addressLocality
+            "geo": siteConfig.geo
+          },
+          ...(offer && { "offers": offer })
+        };
+      })
     }
   };
 
   return (
     <PageLayout>
       <SEO 
-        title="Junk Removal Services"
-        description="Professional junk removal services for residential and commercial properties. We handle furniture removal, appliance disposal, estate cleanouts, and more."
-        keywords="junk removal services, residential cleanouts, commercial junk removal, appliance removal, furniture disposal, estate cleanouts"
+        title={dynamicPageTitle || "Junk Removal Services"}
+        description={dynamicPageDescription || `Professional junk removal services for residential and commercial properties in ${siteConfig.address.addressLocality}. We handle furniture removal, appliance disposal, estate cleanouts, and more.`}
+        keywords="junk removal services, residential cleanouts, commercial junk removal, appliance removal, furniture disposal, estate cleanouts, local junk removal"
         structuredData={servicesSchemaData}
+        canonicalUrl={`${siteConfig.siteUrl}/services`}
       />
       
       <ServicesHero />

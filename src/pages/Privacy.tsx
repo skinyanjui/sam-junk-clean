@@ -1,9 +1,82 @@
 
 import PageLayout from '@/components/PageLayout';
+import SEO from '@/components/SEO'; // Import SEO
+import { siteConfig } from '@/config/siteConfig'; // Import siteConfig
 
 const Privacy = () => {
+  const pageUrl = `${siteConfig.siteUrl}/privacy`;
+  const lastUpdatedDate = "2025-05-27"; // From file content
+
+  const webPageSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "url": pageUrl,
+    "name": "Privacy Policy | Uncle Sam Junk Removal",
+    "description": "Read the Privacy Policy for Uncle Sam Junk Removal to understand how we collect, use, and protect your personal information.",
+    "publisher": {
+      "@type": "Organization",
+      "name": siteConfig.businessName,
+      "logo": {
+        "@type": "ImageObject",
+        "url": `${siteConfig.siteUrl}${siteConfig.defaultOgImage}`
+      }
+    }
+  };
+
+  const articleSchema = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": pageUrl
+    },
+    "headline": "Privacy Policy",
+    "description": "Details on how Uncle Sam Junk Removal handles user data, privacy, and information security.",
+    "image": `${siteConfig.siteUrl}${siteConfig.defaultOgImage}`, // Generic image
+    "author": {
+      "@type": "Organization",
+      "name": siteConfig.businessName,
+      "url": siteConfig.siteUrl
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": siteConfig.businessName,
+      "logo": {
+        "@type": "ImageObject",
+        "url": `${siteConfig.siteUrl}${siteConfig.defaultOgImage}`
+      }
+    },
+    "datePublished": "2024-01-01T00:00:00Z", // Assuming an initial publish date
+    "dateModified": lastUpdatedDate 
+  };
+  
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": siteConfig.siteUrl
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Privacy Policy",
+        "item": pageUrl
+      }
+    ]
+  };
+
   return (
     <PageLayout>
+      <SEO
+        title="Privacy Policy | Uncle Sam Junk Removal"
+        description="Read the Privacy Policy for Uncle Sam Junk Removal to understand how we collect, use, and protect your personal information."
+        keywords="privacy policy, data protection, user information, website privacy, junk removal privacy"
+        structuredData={[webPageSchema, articleSchema, breadcrumbSchema]}
+      />
       <section className="pt-24 pb-16" aria-labelledby="privacy-heading">
         <div className="container-custom max-w-4xl">
           <h1 id="privacy-heading" className="text-4xl font-bold text-brand-navy mb-8">Privacy Policy</h1>
