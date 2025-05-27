@@ -8,7 +8,7 @@ import { getHomePageServices } from '@/integrations/supabase/servicesService';
 import { ServiceItem } from './ServicesGrid';
 import { 
   Home, Building, Sofa, Refrigerator, Hammer, 
-  Bed, Dumbbell, Construction
+  Bed, Dumbbell, Construction, HelpCircle
 } from 'lucide-react';
 
 const ServicesOverview = () => {
@@ -38,7 +38,8 @@ const ServicesOverview = () => {
       case 'Construction':
         return <Construction {...iconProps} />;
       default:
-        return <Home {...iconProps} />;
+        console.warn(`Unknown icon name: ${iconName}, defaulting to HelpCircle`);
+        return <HelpCircle {...iconProps} />;
     }
   };
   
