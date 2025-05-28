@@ -1,3 +1,4 @@
+import * as crypto from 'crypto';
 
 interface ConversionEvent {
   event_type: string;
@@ -35,7 +36,9 @@ class ConversionTrackingService {
   }
 
   private generateSessionId(): string {
-    return `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    const randomBytes = crypto.randomBytes(12); // Generate 12 random bytes
+    const randomString = randomBytes.toString('hex'); // Convert to hexadecimal string
+    return `session_${Date.now()}_${randomString}`;
   }
 
   private initializeSession() {
