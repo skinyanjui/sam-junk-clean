@@ -63,7 +63,14 @@ export const LazyImage = ({
 
   // Generate responsive src set for better performance
   const generateSrcSet = (baseSrc: string) => {
-    if (!baseSrc.includes('unsplash.com') && !baseSrc.includes('lovable-uploads')) {
+    try {
+      const parsedUrl = new URL(baseSrc);
+      const allowedHosts = ['unsplash.com', 'lovable-uploads'];
+      if (!allowedHosts.includes(parsedUrl.host)) {
+        return undefined;
+      }
+    } catch (error) {
+      // If URL parsing fails, treat it as invalid
       return undefined;
     }
     
