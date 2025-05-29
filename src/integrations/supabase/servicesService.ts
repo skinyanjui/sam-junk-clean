@@ -33,7 +33,7 @@ export const fetchServices = async (category?: string): Promise<ServiceData[]> =
       priceRange: service.price_range,
       timeEstimate: service.time_estimate,
       benefits: service.benefits || [],
-      relatedBlogs: Array.isArray(service.related_blogs) ? service.related_blogs as RelatedBlog[] : [],
+      relatedBlogs: Array.isArray(service.related_blogs) ? (service.related_blogs as unknown as RelatedBlog[]) : [],
       relatedServices: service.related_services_ids || []
     }));
   } catch (error) {

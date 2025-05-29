@@ -25,7 +25,7 @@ import { cn } from '@/lib/utils';
 
 export interface PersonalInfoStepProps {
   positions: Array<{
-    id: number;
+    id: string; // Changed from number to string to match Position interface
     title: string;
   }>;
 }
@@ -249,7 +249,7 @@ const PersonalInfoStep = ({ positions }: PersonalInfoStepProps) => {
                 </FormControl>
                 <SelectContent>
                   {positions.map((position) => (
-                    <SelectItem key={position.id} value={String(position.id)}>
+                    <SelectItem key={position.id} value={position.id}>
                       {position.title}
                     </SelectItem>
                   ))}
