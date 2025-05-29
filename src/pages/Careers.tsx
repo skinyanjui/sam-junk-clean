@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { Link } from 'react-router-dom';
@@ -13,24 +12,22 @@ import WhyWorkWithUs from '@/components/careers/WhyWorkWithUs';
 import JobListings from '@/components/careers/JobListings';
 import ApplicationProcess from '@/components/careers/ApplicationProcess';
 import CareersCta from '@/components/careers/CareersCta';
-// Removed: import { jobListings } from '@/components/careers/jobData';
 import { fetchActiveJobListings, JobListingDb } from '@/integrations/supabase/jobService';
-import { JobListing as JobCardListing } from '@/components/careers/JobCard'; // For type mapping
-import { siteConfig } from '@/config/siteConfig'; // Import siteConfig
+import { JobListing as JobCardListing } from '@/components/careers/JobCard';
+import { siteConfig } from '@/config/siteConfig';
 
 // Helper function to create JobPosting schema
 const createJobPostingSchema = (job: JobListingDb, config: typeof siteConfig): Record<string, any> => {
   const datePosted = new Date(job.posted_at).toISOString();
   const validThroughDate = new Date(job.posted_at);
-  validThroughDate.setDate(new Date(job.posted_at).getDate() + 60); // Expires in 60 days
+  validThroughDate.setDate(new Date(job.posted_at).getDate() + 60);
   const validThrough = validThroughDate.toISOString();
 
-  let employmentType = "OTHER"; // Default
+  let employmentType = "OTHER";
   if (job.type?.toLowerCase() === "full-time") employmentType = "FULL_TIME";
   if (job.type?.toLowerCase() === "part-time") employmentType = "PART_TIME";
   if (job.type?.toLowerCase() === "contract") employmentType = "CONTRACTOR";
 
-  // Basic location parsing (assuming "City, ST" format or just city)
   let jobLocationCity = config.address.addressLocality;
   let jobLocationRegion = config.address.addressRegion;
   if (job.location) {
@@ -64,25 +61,14 @@ const createJobPostingSchema = (job: JobListingDb, config: typeof siteConfig): R
         "@type": "PostalAddress",
         "addressLocality": jobLocationCity,
         "addressRegion": jobLocationRegion,
-        "postalCode": config.address.postalCode, // Use company's postal if job specific isn't available
+        "postalCode": config.address.postalCode,
         "addressCountry": config.address.addressCountry
       }
     },
-    // "baseSalary": { // Example, if salary info were available
-    //   "@type": "MonetaryAmount",
-    //   "currency": "USD",
-    //   "value": {
-    //     "@type": "QuantitativeValue",
-    //     "minValue": 20, // Example
-    //     "maxValue": 25, // Example
-    //     "unitText": "HOUR"
-    //   }
-    // },
-    "qualifications": job.requirements?.join('. ') || undefined, // Join requirements array into a string
-    "experienceRequirements": job.requirements?.join('. ') || undefined, // Can also use for experience
+    "qualifications": job.requirements?.join('. ') || undefined,
+    "experienceRequirements": job.requirements?.join('. ') || undefined,
   };
 };
-
 
 const Careers = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -108,19 +94,19 @@ const Careers = () => {
     loadJobs();
   }, []);
 
-  const handleOpenApplicationForm = (jobId: string) => { // Changed to string for UUID
+  const handleOpenApplicationForm = (jobId: string) => {
     setSelectedJobId(jobId);
     setIsDialogOpen(true);
   };
 
   const handleCloseDialog = () => {
     setIsDialogOpen(false);
-    setSelectedJobId(null); // Reset selected job
+    setSelectedJobId(null);
   };
 
   // Map JobListingDb to JobCardListing
   const mappedJobs: JobCardListing[] = jobs.map(job => ({
-    id: job.id, // Pass UUID string
+    id: job.id,
     title: job.title,
     type: job.type || 'N/A',
     location: job.location || 'N/A',
@@ -129,7 +115,7 @@ const Careers = () => {
     benefits: job.benefits || [],
   }));
   
-  // Prepare positions for JobApplicationForm, ensuring id is string
+  // Prepare positions for JobApplicationForm
   const applicationFormPositions = jobs.map(job => ({ id: job.id, title: job.title }));
 
   // Structured Data
@@ -154,7 +140,7 @@ const Careers = () => {
   return (
     <PageLayout>
       <SEO 
-        title="Careers" // SEO component appends siteName
+        title="Careers"
         description={pageDescription}
         keywords={`junk removal jobs, ${siteConfig.address.addressLocality} job openings, Tri-State area employment, ${siteConfig.businessName} careers, job applications, veteran owned business jobs`}
         structuredData={structuredDataForSeo}
@@ -231,9 +217,9 @@ const Careers = () => {
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogContent className="sm:max-w-[700px] max-h-[90vh] overflow-y-auto">
           <JobApplicationForm 
-            positions={applicationFormPositions} // Use mapped positions with string IDs
+            positions={applicationFormPositions}
             onClose={handleCloseDialog}
-            preselectedPosition={selectedJobId || undefined} // Will now be string | undefined
+            preselectedPosition={selectedJobId || undefined}
           />
         </DialogContent>
       </Dialog>

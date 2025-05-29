@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { useLocation } from 'react-router-dom'; // Import useLocation
+import { useLocation } from 'react-router-dom';
 import PageLayout from '@/components/PageLayout';
 import SEO from '@/components/SEO';
 import { 
@@ -12,10 +12,10 @@ import {
   FaqCta
 } from '@/components/faq';
 import { useFaqData } from '@/components/faq/useFaqData';
-import { siteConfig } from '@/config/siteConfig'; // Import siteConfig
+import { siteConfig } from '@/config/siteConfig';
 
 const FAQ = () => {
-  const location = useLocation(); // Initialize useLocation
+  const location = useLocation();
   const { 
     searchQuery, 
     setSearchQuery, 
@@ -62,7 +62,7 @@ const FAQ = () => {
     "url": canonicalUrl,
     "name": pageTitleForSchema,
     "isPartOf": { "@type": "WebSite", "url": siteConfig.siteUrl },
-    "description": pageDescription // Add description to WebPage schema as well
+    "description": pageDescription
   };
 
   const breadcrumbSchema = {
@@ -74,7 +74,7 @@ const FAQ = () => {
     ]
   };
 
-  const structuredDataArray = [webPageSchema, breadcrumbSchema];
+  const structuredDataArray: any[] = [webPageSchema, breadcrumbSchema];
   if (faqPageSchema.mainEntity) {
       structuredDataArray.push(faqPageSchema);
   }

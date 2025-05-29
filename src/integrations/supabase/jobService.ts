@@ -1,3 +1,4 @@
+
 import { supabase } from './client';
 
 export interface JobListingDb {
@@ -15,17 +16,10 @@ export interface JobListingDb {
 
 export const fetchActiveJobListings = async (): Promise<JobListingDb[]> => {
   try {
-    const { data, error } = await supabase
-      .from('job_listings')
-      .select('*')
-      .eq('is_active', true)
-      .order('posted_at', { ascending: false });
-
-    if (error) {
-      console.error('Error fetching active job listings:', error);
-      throw error;
-    }
-    return data || [];
+    // Since job_listings table doesn't exist, return empty array for now
+    // This prevents the app from breaking while job listings functionality is being set up
+    console.log('Job listings table not yet created, returning empty array');
+    return [];
   } catch (error) {
     console.error('Supabase call failed for fetchActiveJobListings:', error);
     return [];

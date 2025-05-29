@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom'; // Import useLocation
+import { useLocation } from 'react-router-dom';
 import PageLayout from '@/components/PageLayout';
 import SEO from '@/components/SEO';
 import { useTranslation } from 'react-i18next';
@@ -9,14 +9,14 @@ import { LocationsContent } from '@/components/locations/LocationsContent';
 import { LocationsHero } from '@/components/locations/LocationsHero';
 import ZipCodeLookup from '@/components/locations/ZipCodeLookup';
 import LocationsCta from '@/components/locations/LocationsCta';
-import { LocationsSchema as initialLocationsSchema } from '@/components/locations/LocationsSchema'; // Rename to avoid conflict
+import { LocationsSchema as initialLocationsSchema } from '@/components/locations/LocationsSchema';
 import { LocationsSeoContent } from '@/components/locations/LocationsSeoContent';
 import { Skeleton } from '@/components/ui/skeleton';
-import { siteConfig } from '@/config/siteConfig'; // Import siteConfig
+import { siteConfig } from '@/config/siteConfig';
 
 const Locations = () => {
   const { t } = useTranslation();
-  const routerLocation = useLocation(); // Use a different name to avoid conflict with location objects from data
+  const routerLocation = useLocation();
   const { 
     locations, 
     isLoading, 
@@ -25,8 +25,8 @@ const Locations = () => {
   } = useLocationData();
 
   // Dynamic Title and Description
-  let pageTitle = "Junk Removal Service Areas | Tri-State Area"; // Default
-  let pageDescription = `${siteConfig.businessName} serves Evansville, Henderson, Owensboro, Newburgh, and the entire Tri-State area. Find reliable junk removal services near you.`; // Default
+  let pageTitle = "Junk Removal Service Areas | Tri-State Area";
+  let pageDescription = `${siteConfig.businessName} serves Evansville, Henderson, Owensboro, Newburgh, and the entire Tri-State area. Find reliable junk removal services near you.`;
 
   if (searchProps.searchTerm) {
     pageTitle = `Search results for "${searchProps.searchTerm}" | Service Areas - ${siteConfig.siteName}`;
@@ -37,7 +37,7 @@ const Locations = () => {
   const canonicalUrl = `${siteConfig.siteUrl}${routerLocation.pathname}${routerLocation.search}`;
 
   // Structured Data
-  let locationItemListSchema: Record<string, any> | null = null;
+  let locationItemListSchema: any = null;
   if (!isLoading && filteredLocations.length > 0) {
     locationItemListSchema = {
       "@context": "https://schema.org",
@@ -51,14 +51,13 @@ const Locations = () => {
           "@type": "Place",
           "name": location.name,
           "description": location.description || `Junk removal services provided by ${siteConfig.businessName} in and around ${location.name}.`,
-          "image": location.image?.startsWith('http') ? location.image : `${siteConfig.siteUrl}${location.image || siteConfig.defaultOgImage}`,
-          // "url": `${siteConfig.siteUrl}/locations#${location.id}` // Assuming location.id exists for anchor links
+          "image": location.image?.startsWith('http') ? location.image : `${siteConfig.siteUrl}${location.image || siteConfig.defaultOgImage}`
         }
       }))
     };
   }
 
-  const combinedStructuredData = [initialLocationsSchema]; // Start with the base schema
+  const combinedStructuredData: any[] = [initialLocationsSchema];
   if (locationItemListSchema) {
     combinedStructuredData.push(locationItemListSchema);
   }
@@ -68,10 +67,10 @@ const Locations = () => {
     return (
       <PageLayout>
         <SEO 
-          title={pageTitle} // Use dynamic title even for loading state
-          description={pageDescription} // Use dynamic description
+          title={pageTitle}
+          description={pageDescription}
           keywords="junk removal Evansville, junk removal Owensboro, junk removal Mt. Carmel, Tri-State area junk removal, Henderson junk removal, Princeton junk removal, Newburgh junk removal"
-          structuredData={[initialLocationsSchema]} // Only initial schema when loading
+          structuredData={[initialLocationsSchema]}
           canonicalUrl={canonicalUrl}
         />
 
