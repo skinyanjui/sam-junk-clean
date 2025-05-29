@@ -10,11 +10,11 @@ export interface ServiceData {
   description: string;
   items: string[];
   image: string;
+  category: string;
   popularity?: 'high' | 'medium' | 'low';
   priceRange?: string;
   timeEstimate?: string;
   benefits?: string[];
   relatedBlogs: RelatedBlog[];
   relatedServices: string[];
-  category?: string; // Added category field
 }

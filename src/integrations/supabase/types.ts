@@ -351,6 +351,47 @@ export type Database = {
         }
         Relationships: []
       }
+      navigation_items: {
+        Row: {
+          created_at: string | null
+          has_dropdown: boolean | null
+          id: string
+          is_active: boolean | null
+          name: string
+          parent_id: string | null
+          path: string
+          sort_order: number | null
+        }
+        Insert: {
+          created_at?: string | null
+          has_dropdown?: boolean | null
+          id?: string
+          is_active?: boolean | null
+          name: string
+          parent_id?: string | null
+          path: string
+          sort_order?: number | null
+        }
+        Update: {
+          created_at?: string | null
+          has_dropdown?: boolean | null
+          id?: string
+          is_active?: boolean | null
+          name?: string
+          parent_id?: string | null
+          path?: string
+          sort_order?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "navigation_items_parent_id_fkey"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "navigation_items"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       pricing_tiers: {
         Row: {
           created_at: string
@@ -460,6 +501,57 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      services: {
+        Row: {
+          benefits: string[] | null
+          category: string
+          created_at: string | null
+          description: string
+          id: string
+          image: string
+          items: string[]
+          popularity: string | null
+          price_range: string | null
+          related_blogs: Json | null
+          related_services_ids: string[] | null
+          time_estimate: string | null
+          title: string
+          updated_at: string | null
+        }
+        Insert: {
+          benefits?: string[] | null
+          category: string
+          created_at?: string | null
+          description: string
+          id?: string
+          image: string
+          items: string[]
+          popularity?: string | null
+          price_range?: string | null
+          related_blogs?: Json | null
+          related_services_ids?: string[] | null
+          time_estimate?: string | null
+          title: string
+          updated_at?: string | null
+        }
+        Update: {
+          benefits?: string[] | null
+          category?: string
+          created_at?: string | null
+          description?: string
+          id?: string
+          image?: string
+          items?: string[]
+          popularity?: string | null
+          price_range?: string | null
+          related_blogs?: Json | null
+          related_services_ids?: string[] | null
+          time_estimate?: string | null
+          title?: string
+          updated_at?: string | null
+        }
+        Relationships: []
       }
     }
     Views: {
