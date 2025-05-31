@@ -1,12 +1,13 @@
 
 import { useState, useEffect } from 'react';
-import { useParams, useLocation } from 'react-router-dom'; // Import useLocation
+import { useParams, useLocation } from 'react-router-dom';
 import PageLayout from '@/components/PageLayout';
 import SEO from '@/components/SEO';
-import { getBlogPostBySlug } from '@/integrations/supabase/blogService'; // Removed BlogType as it's not used
+import { getBlogPostBySlug } from '@/integrations/supabase/blogService';
+import { comprehensiveBlogPosts, relatedPostsMapping } from '@/data/comprehensiveBlogData';
 import { useToast } from '@/hooks/use-toast';
 import { mapBlogToBlogPost } from '@/integrations/supabase/services/blogUtils';
-import { siteConfig } from '@/config/siteConfig'; // Import siteConfig
+import { siteConfig } from '@/config/siteConfig';
 
 // Import components
 import BlogPostLoading from '@/components/blog/BlogPostLoading';
@@ -17,11 +18,13 @@ import BlogPostTags from '@/components/blog/BlogPostTags';
 import ShareButtons from '@/components/blog/ShareButtons';
 import BlogSidebar from '@/components/blog/BlogSidebar';
 import BlogCallToAction from '@/components/blog/BlogCallToAction';
+import RelatedPosts from '@/components/blog/RelatedPosts';
 
 const BlogPostPage = () => {
   const { slug } = useParams<{ slug: string }>();
-  const location = useLocation(); // Initialize useLocation
-  const [post, setPost] = useState<any | null>(null); // Consider defining a more specific type if possible
+  const location = useLocation();
+  const [post, setPost] = useState<any | null>(null);
+  const [allPosts, setAllPosts] = useState<any[]>(comprehensiveBlogPosts);
   const [isLoading, setIsLoading] = useState(true);
   const { toast } = useToast();
 
@@ -31,6 +34,16 @@ const BlogPostPage = () => {
       
       try {
         setIsLoading(true);
+        
+        // First try to find in comprehensive blog posts
+        const comprehensivePost = comprehensiveBlogPosts.find(p => p.slug === slug);
+        if (comprehensivePost) {
+          setPost(comprehensivePost);
+          setIsLoading(false);
+          return;
+        }
+        
+        // If not found, try Supabase
         const fetchedPost = await getBlogPostBySlug(slug);
         
         if (fetchedPost) {
@@ -81,15 +94,15 @@ const BlogPostPage = () => {
 
   const articleSchema = {
     "@context": "https://schema.org",
-    "@type": "Article", // Or "BlogPosting"
+    "@type": "Article",
     "headline": post.title,
     "description": post.excerpt,
     "image": absoluteOgImageUrl,
     "datePublished": new Date(post.date).toISOString(),
-    "dateModified": new Date(post.date).toISOString(), // Use a separate modified date if available
+    "dateModified": new Date(post.date).toISOString(),
     "author": {
       "@type": "Person",
-      "name": post.author // Assuming post.author is a string name
+      "name": post.author
     },
     "publisher": {
       "@type": "Organization",
@@ -119,7 +132,7 @@ const BlogPostPage = () => {
   return (
     <PageLayout>
       <SEO 
-        title={post.title} // SEO component will append site name
+        title={post.title}
         description={post.excerpt}
         keywords={post.tags ? `${post.category}, ${post.tags.join(', ')}, junk removal blog, ${siteConfig.businessName}` : `${post.category}, junk removal blog, ${siteConfig.businessName}`}
         ogImage={absoluteOgImageUrl}
@@ -153,6 +166,13 @@ const BlogPostPage = () => {
               <BlogPostContent excerpt={post.excerpt} content={post.content} />
               <BlogPostTags tags={post.tags} />
               <ShareButtons />
+              
+              {/* Related Posts */}
+              <RelatedPosts 
+                currentPostSlug={post.slug}
+                allPosts={allPosts}
+                relatedPostSlugs={relatedPostsMapping[post.slug]}
+              />
             </div>
             
             {/* Sidebar */}
@@ -169,3 +189,4 @@ const BlogPostPage = () => {
 };
 
 export default BlogPostPage;
+

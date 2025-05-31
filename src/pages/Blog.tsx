@@ -6,11 +6,11 @@ import { motion } from 'framer-motion';
 import PageLayout from '@/components/PageLayout';
 import SEO from '@/components/SEO';
 import { relatedLinks } from '@/data/blogData';
+import { comprehensiveBlogPosts } from '@/data/comprehensiveBlogData';
 import { fetchAllBlogPosts } from '@/integrations/supabase/blogService';
 import { mapBlogToBlogPost } from '@/integrations/supabase/services/blogUtils';
-import { siteConfig } from '@/config/siteConfig'; // Import siteConfig
+import { siteConfig } from '@/config/siteConfig';
 import { useToast } from '@/hooks/use-toast';
-import { useBlogFilters } from '@/hooks/use-blog-filters';
 
 // Import components
 import BlogHero from '@/components/blog/BlogHero';
@@ -19,37 +19,36 @@ import AllPosts from '@/components/blog/AllPosts';
 import RelatedResources from '@/components/blog/RelatedResources';
 import CategoriesSection from '@/components/blog/CategoriesSection';
 import BlogCta from '@/components/blog/BlogCta';
-import BlogCategories from '@/components/blog/BlogCategories';
-import BlogListHeader from '@/components/blog/BlogListHeader';
+import BlogSearch from '@/components/blog/BlogSearch';
+import DownloadableResources from '@/components/blog/DownloadableResources';
+import BlogNewsletter from '@/components/blog/BlogNewsletter';
 import BlogLoading from '@/components/blog/BlogLoading';
 
 const Blog = () => {
   const [blogPosts, setBlogPosts] = useState<any[]>([]);
+  const [filteredPosts, setFilteredPosts] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const { toast } = useToast();
-  
-  // Use our custom hook for filtering logic
-  const {
-    searchQuery,
-    setSearchQuery,
-    activeCategory,
-    setActiveCategory,
-    filteredPosts,
-    categories
-  } = useBlogFilters({ posts: blogPosts });
 
   useEffect(() => {
     const fetchBlogPosts = async () => {
       try {
         setIsLoading(true);
-        const posts = await fetchAllBlogPosts();
-        setBlogPosts(posts.map(mapBlogToBlogPost));
+        const supabasePosts = await fetchAllBlogPosts();
+        const mappedSupabasePosts = supabasePosts.map(mapBlogToBlogPost);
+        
+        // Combine Supabase posts with comprehensive blog posts
+        const allPosts = [...mappedSupabasePosts, ...comprehensiveBlogPosts];
+        setBlogPosts(allPosts);
+        setFilteredPosts(allPosts);
       } catch (error) {
         console.error('Failed to fetch blog posts:', error);
+        // Fallback to comprehensive blog posts if Supabase fails
+        setBlogPosts(comprehensiveBlogPosts);
+        setFilteredPosts(comprehensiveBlogPosts);
         toast({
-          title: "Error loading blog posts",
-          description: "Please try again later",
-          variant: "destructive"
+          title: "Using cached blog posts",
+          description: "Some posts may not be the latest version",
         });
       } finally {
         setIsLoading(false);
@@ -58,6 +57,9 @@ const Blog = () => {
 
     fetchBlogPosts();
   }, [toast]);
+
+  // Get unique categories
+  const categories = Array.from(new Set(blogPosts.map(post => post.category))).filter(Boolean);
 
   // Add icon to related links
   const linksWithIcons = relatedLinks.map(link => {
@@ -91,17 +93,8 @@ const Blog = () => {
     }
   };
 
-  // Dynamic Title and Description
-  let pageTitle = `Junk Removal Blog | Tips & Advice | ${siteConfig.siteName}`;
-  let pageDescription = `Explore expert tips on junk removal, recycling guides, decluttering strategies, and sustainability practices from ${siteConfig.businessName}'s professional team serving ${siteConfig.address.addressLocality} and the Tri-State area.`;
-
-  if (activeCategory) {
-    pageTitle = `Category: ${activeCategory} | Blog - ${siteConfig.siteName}`;
-    pageDescription = `Browse blog posts in the category: ${activeCategory}. ${siteConfig.siteName} Blog.`;
-  } else if (searchQuery) {
-    pageTitle = `Search results for "${searchQuery}" | Blog - ${siteConfig.siteName}`;
-    pageDescription = `Displaying search results for "${searchQuery}" on the ${siteConfig.siteName} Blog.`;
-  }
+  const pageTitle = `Junk Removal Blog | Tips & Advice | ${siteConfig.siteName}`;
+  const pageDescription = `Explore expert tips on junk removal, recycling guides, decluttering strategies, and sustainability practices from ${siteConfig.businessName}'s professional team serving ${siteConfig.address.addressLocality} and the Tri-State area.`;
 
   const blogSchema = {
     "@context": "https://schema.org",
@@ -114,12 +107,12 @@ const Blog = () => {
       "name": siteConfig.businessName,
       "logo": {
         "@type": "ImageObject",
-        "url": `${siteConfig.siteUrl}${siteConfig.defaultOgImage}` // Ensure absolute URL
+        "url": `${siteConfig.siteUrl}${siteConfig.defaultOgImage}`
       }
     },
     "mainEntity": filteredPosts.length > 0 ? {
       "@type": "ItemList",
-      "itemListElement": filteredPosts.map((post, index) => ({
+      "itemListElement": filteredPosts.slice(0, 10).map((post, index) => ({
         "@type": "ListItem",
         "position": index + 1,
         "item": {
@@ -129,7 +122,7 @@ const Blog = () => {
           "image": post.imageUrl?.startsWith('http') ? post.imageUrl : `${siteConfig.siteUrl}${post.imageUrl?.startsWith('/') ? '' : '/'}${post.imageUrl}`,
           "datePublished": new Date(post.date).toISOString(),
           "author": { "@type": "Person", "name": post.author },
-          "description": post.excerpt, // Added excerpt as description
+          "description": post.excerpt,
           "publisher": {
              "@type": "Organization",
              "name": siteConfig.businessName,
@@ -152,17 +145,16 @@ const Blog = () => {
     ]
   };
 
-
   return (
     <PageLayout>
       <SEO 
-        title={pageTitle} // Uses dynamic title, SEO component does not append site name if title includes it already
+        title={pageTitle}
         description={pageDescription}
         keywords="junk removal blog, decluttering tips, recycling guide, waste management, Evansville junk removal, Tri-State waste disposal, home organization"
-        structuredData={[blogSchema, breadcrumbSchema]} // Pass schemas as array
+        structuredData={[blogSchema, breadcrumbSchema]}
       />
 
-      <BlogHero searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+      <BlogHero searchQuery="" setSearchQuery={() => {}} />
       
       {isLoading ? (
         <BlogLoading />
@@ -170,23 +162,19 @@ const Blog = () => {
         <>
           <FeaturedPosts posts={blogPosts} />
           
-          <section className="py-16 bg-gray-50" aria-labelledby="articles-heading">
+          {/* Blog Search and Filters */}
+          <section className="py-8 bg-gray-50">
             <div className="container-custom">
-              <BlogListHeader 
-                searchQuery={searchQuery} 
-                setSearchQuery={setSearchQuery} 
-                activeCategory={activeCategory}
+              <BlogSearch 
+                posts={blogPosts} 
+                onFilteredResults={setFilteredPosts}
+                categories={categories}
               />
-              
-              {/* Categories filter */}
-              <div className="mb-8">
-                <BlogCategories 
-                  categories={categories}
-                  activeCategory={activeCategory}
-                  onSelectCategory={setActiveCategory}
-                />
-              </div>
-              
+            </div>
+          </section>
+          
+          <section className="py-16 bg-white" aria-labelledby="articles-heading">
+            <div className="container-custom">
               <motion.div
                 variants={containerVariants}
                 initial="hidden"
@@ -194,16 +182,25 @@ const Blog = () => {
               >
                 <AllPosts 
                   posts={filteredPosts} 
-                  searchQuery={searchQuery} 
-                  setSearchQuery={setSearchQuery} 
+                  searchQuery="" 
+                  setSearchQuery={() => {}} 
                   itemVariants={itemVariants}
                 />
               </motion.div>
             </div>
           </section>
           
+          <DownloadableResources />
+          
+          {/* Newsletter Section */}
+          <section className="py-16 bg-gray-50">
+            <div className="container-custom max-w-4xl">
+              <BlogNewsletter />
+            </div>
+          </section>
+          
           <RelatedResources links={linksWithIcons} />
-          <CategoriesSection categories={categories} setSearchQuery={setSearchQuery} />
+          <CategoriesSection categories={categories} setSearchQuery={() => {}} />
           <BlogCta />
         </>
       )}
@@ -212,3 +209,4 @@ const Blog = () => {
 };
 
 export default Blog;
+
