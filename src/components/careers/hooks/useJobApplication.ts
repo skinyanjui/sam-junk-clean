@@ -11,7 +11,7 @@ export function useJobApplication(onSuccess: () => void) {
 
   const submitApplication = async (
     data: ApplicationFormValues, 
-    positions: Array<{ id: number; title: string }>
+    positions: Array<{ id: string; title: string }> // Changed from number to string
   ) => {
     setIsSubmitting(true);
     
