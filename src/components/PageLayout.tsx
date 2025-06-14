@@ -3,7 +3,6 @@ import { ReactNode } from 'react';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import { Breadcrumb } from './Breadcrumb';
-import { Toaster } from './ui/toaster';
 import { useResponsiveLayout } from '@/hooks/use-mobile';
 import Divider from './ui/divider';
 
@@ -78,8 +77,6 @@ const PageLayout = ({
       {/* Bottom padding for mobile sticky button */}
       <div className={`${getBottomSpacerHeight()} w-full`}></div>
       
-      {/* Global Toast Notifications */}
-      <Toaster />
     </div>
   );
 };

@@ -3,7 +3,7 @@ import { useState, useRef, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useTranslation } from 'react-i18next';
-import { toast } from 'sonner';
+import { toast } from 'react-hot-toast';
 import { MapPin, Search, Loader2 } from 'lucide-react';
 import { checkZipCodeServiceStatus, fetchServicedZipCodes } from '@/integrations/supabase/zipCodeService';
 
@@ -57,7 +57,7 @@ const ZipCodeLookup = () => {
       if (serviceStatus) {
         toast.success("Great news! We service your area. Get a free quote today!");
       } else {
-        toast.info("We don't currently service this ZIP code. Please call us to check if we can make an exception.");
+        toast("We don't currently service this ZIP code. Please call us to check if we can make an exception.");
       }
     } catch (error) {
       console.error('Error checking ZIP code:', error);
@@ -70,7 +70,7 @@ const ZipCodeLookup = () => {
       if (serviceStatus) {
         toast.success("Great news! We service your area. Get a free quote today!");
       } else {
-        toast.info("We don't currently service this ZIP code. Please call us to check if we can make an exception.");
+        toast("We don't currently service this ZIP code. Please call us to check if we can make an exception.");
       }
     } finally {
       setIsChecking(false);
