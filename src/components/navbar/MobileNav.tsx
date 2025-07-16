@@ -7,7 +7,7 @@ import { motion } from 'framer-motion';
 import { Loader2, Phone } from 'lucide-react';
 import { PHONE_NUMBER, getPhoneLink } from '@/utils/contact-info';
 import { useAnalyticsContext } from '@/providers/AnalyticsProvider';
-import { conversionTracking } from '@/services/conversionTracking';
+
 
 interface MobileNavProps {
   navStructure: Array<{
@@ -43,7 +43,6 @@ const MobileNav = ({
       category: 'mobile_navigation',
       label: 'phone_cta'
     });
-    conversionTracking.trackPhoneClick(PHONE_NUMBER);
   };
   
   if (!isOpen) return null;

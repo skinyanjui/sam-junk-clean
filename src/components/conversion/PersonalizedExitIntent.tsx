@@ -8,7 +8,7 @@ import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
 import { useAnalyticsContext } from '@/providers/AnalyticsProvider';
-import { conversionTracking } from '@/services/conversionTracking';
+
 import { PHONE_NUMBER, getPhoneLink } from '@/utils/contact-info';
 
 interface PersonalizedExitIntentProps {
@@ -127,12 +127,7 @@ const PersonalizedExitIntent = ({ isOpen, onClose }: PersonalizedExitIntentProps
         value: 1
       });
 
-      conversionTracking.trackEvent('personalized_exit_intent_conversion', {
-        page: location.pathname,
-        offer_type: content.title,
-        has_email: !!email,
-        has_phone: !!phone
-      });
+
 
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1000));
@@ -160,7 +155,7 @@ const PersonalizedExitIntent = ({ isOpen, onClose }: PersonalizedExitIntentProps
       category: 'conversion',
       label: location.pathname
     });
-    conversionTracking.trackPhoneClick(PHONE_NUMBER);
+
   };
 
   return (

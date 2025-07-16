@@ -5,7 +5,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Phone, Mail, MessageSquare } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useAnalyticsContext } from '@/providers/AnalyticsProvider';
-import { conversionTracking } from '@/services/conversionTracking';
+
 import { PHONE_NUMBER, getPhoneLink } from '@/utils/contact-info';
 
 interface QuickQuoteFormProps {
@@ -68,11 +68,7 @@ const QuickQuoteForm = ({ onSuccess, className = '' }: QuickQuoteFormProps) => {
         }]
       });
 
-      conversionTracking.trackEvent('quick_quote_submission', {
-        form_type: 'quick_quote',
-        has_email: !!formData.email,
-        description_length: formData.description.length
-      });
+
 
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1000));

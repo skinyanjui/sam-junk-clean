@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Phone } from 'lucide-react';
 import { PHONE_NUMBER, getPhoneLink } from '@/utils/contact-info';
 import { useAnalyticsContext } from '@/providers/AnalyticsProvider';
-import { conversionTracking } from '@/services/conversionTracking';
+
 import ZipCodeChecker from './ZipCodeChecker';
 
 const HeroSection = () => {
@@ -21,7 +21,7 @@ const HeroSection = () => {
       category: 'hero',
       label: 'get_quote_button'
     });
-    conversionTracking.trackButtonClick('Get Quote', 'hero_section');
+
     
     // Track A/B test conversion
     if (ctaTest) {
@@ -35,7 +35,7 @@ const HeroSection = () => {
       category: 'hero',
       label: 'phone_button'
     });
-    conversionTracking.trackPhoneClick(PHONE_NUMBER);
+
   };
 
   return (

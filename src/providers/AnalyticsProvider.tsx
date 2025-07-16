@@ -3,7 +3,7 @@ import React, { createContext, useContext, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useAnalytics } from '@/hooks/use-analytics';
 import { useABTesting } from '@/hooks/use-ab-testing';
-import { conversionTracking } from '@/services/conversionTracking';
+
 
 interface AnalyticsContextType {
   trackEvent: (event: { action: string; category: string; label?: string; value?: number }) => void;
@@ -31,7 +31,6 @@ export const AnalyticsProvider = ({ children }: { children: React.ReactNode }) =
   useEffect(() => {
     const pageTitle = document.title;
     trackPageView(pageTitle, window.location.href);
-    conversionTracking.trackPageView(pageTitle);
   }, [location, trackPageView]);
 
   // Track scroll depth
@@ -44,7 +43,7 @@ export const AnalyticsProvider = ({ children }: { children: React.ReactNode }) =
       
       if (scrollPercentage > maxScrollPercentage && scrollPercentage % 25 === 0) {
         maxScrollPercentage = scrollPercentage;
-        conversionTracking.trackScrollDepth(scrollPercentage);
+        // Scroll depth tracking removed
       }
     };
 
@@ -55,9 +54,7 @@ export const AnalyticsProvider = ({ children }: { children: React.ReactNode }) =
   // Track exit intent
   useEffect(() => {
     const handleBeforeUnload = () => {
-      conversionTracking.trackEvent('session_end', {
-        session_duration: Date.now() - performance.timing.navigationStart
-      });
+      // Session end tracking removed
     };
 
     window.addEventListener('beforeunload', handleBeforeUnload);

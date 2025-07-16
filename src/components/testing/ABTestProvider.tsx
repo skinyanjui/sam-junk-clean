@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 import { useAnalyticsContext } from '@/providers/AnalyticsProvider';
-import { conversionTracking } from '@/services/conversionTracking';
+
 
 interface ABTest {
   id: string;
@@ -242,11 +242,7 @@ export const ABTestProvider = ({ children }: ABTestProviderProps) => {
           label: `${test.id}_${assignment.variantId}`
         });
         
-        conversionTracking.trackEvent('ab_test_assignment', {
-          test_id: test.id,
-          variant_id: assignment.variantId,
-          test_name: test.name
-        });
+
       }
     });
     
@@ -268,12 +264,7 @@ export const ABTestProvider = ({ children }: ABTestProviderProps) => {
       value: value
     });
     
-    conversionTracking.trackEvent('ab_test_conversion', {
-      test_id: testId,
-      variant_id: testResult.variantId,
-      conversion_type: conversionType,
-      conversion_value: value
-    });
+
   };
 
   const isUserInTest = (testId: string): boolean => {

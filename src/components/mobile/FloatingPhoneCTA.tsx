@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { useResponsiveLayout } from '@/hooks/use-mobile';
 import { PHONE_NUMBER, getPhoneLink } from '@/utils/contact-info';
 import { useAnalyticsContext } from '@/providers/AnalyticsProvider';
-import { conversionTracking } from '@/services/conversionTracking';
+
 import { motion, AnimatePresence } from 'framer-motion';
 
 const FloatingPhoneCTA = () => {
@@ -40,7 +40,7 @@ const FloatingPhoneCTA = () => {
       category: 'mobile_cta',
       label: 'floating_button'
     });
-    conversionTracking.trackPhoneClick(PHONE_NUMBER);
+
   };
 
   const handleDismiss = () => {

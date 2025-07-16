@@ -6,7 +6,7 @@ import QuoteFormFields from './components/QuoteFormFields';
 import QuoteSuccess from './components/QuoteSuccess';
 import { scrollToFirstError } from '@/utils/form-helpers';
 import { useAnalyticsContext } from '@/providers/AnalyticsProvider';
-import { conversionTracking } from '@/services/conversionTracking';
+
 
 interface QuoteFormProps {
   onFormSuccess?: () => void;
@@ -52,10 +52,7 @@ const QuoteForm = ({ onFormSuccess }: QuoteFormProps) => {
       value: Math.round(completionTime / 1000) // completion time in seconds
     });
     
-    conversionTracking.trackEvent('quote_form_completed', {
-      completion_time_ms: completionTime,
-      form_type: 'quote_request'
-    });
+
     
     setShowSuccess(true);
     if (onFormSuccess) {
@@ -73,7 +70,7 @@ const QuoteForm = ({ onFormSuccess }: QuoteFormProps) => {
       label: 'validation_error'
     });
     
-    conversionTracking.trackFormAbandonment('quote_form', 'validation_error');
+
     formMethods.onError();
     scrollToFirstError(formMethods.methods);
   };

@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { MapPin, Check, X } from 'lucide-react';
 import { useAnalyticsContext } from '@/providers/AnalyticsProvider';
-import { conversionTracking } from '@/services/conversionTracking';
+
 
 interface ZipCodeCheckerProps {
   className?: string;
@@ -36,10 +36,6 @@ const ZipCodeChecker = ({ className = '' }: ZipCodeCheckerProps) => {
       action: 'zip_code_check',
       category: 'hero',
       label: zipCode
-    });
-    conversionTracking.trackEvent('zip_code_check', {
-      zip_code: zipCode,
-      location: 'hero_section'
     });
 
     // Simulate API call delay
