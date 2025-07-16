@@ -157,7 +157,7 @@ export const ABTestProvider = ({ children }: ABTestProviderProps) => {
   const getUserId = (): string => {
     let userId = localStorage.getItem('ab-test-user-id');
     if (!userId) {
-      userId = `user_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+      userId = `user_${Date.now()}_${Math.random().toString(36).substring(2, 11)}`;
       localStorage.setItem('ab-test-user-id', userId);
     }
     return userId;

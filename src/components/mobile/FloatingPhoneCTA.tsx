@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Phone, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useResponsiveLayout } from '@/hooks/use-mobile';

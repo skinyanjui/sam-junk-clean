@@ -25,23 +25,58 @@ export default defineConfig(({ mode }) => ({
   build: {
     reportCompressedSize: true,
     cssCodeSplit: true,
-    chunkSizeWarningLimit: 1000,
+    chunkSizeWarningLimit: 500,
     rollupOptions: {
       output: {
-        manualChunks: {
-          vendor: ['react', 'react-dom'],
-          router: ['react-router-dom'],
-          motion: ['framer-motion'],
-          ui: ['@radix-ui/react-dialog'],
-          icons: ['lucide-react'],
-          query: ['@tanstack/react-query']
+        manualChunks: (id) => {
+          // Vendor chunks
+          if (id.includes('node_modules')) {
+            if (id.includes('react') || id.includes('react-dom')) {
+              return 'react-vendor';
+            }
+            if (id.includes('react-router')) {
+              return 'router';
+            }
+            if (id.includes('framer-motion')) {
+              return 'motion';
+            }
+            if (id.includes('@radix-ui') || id.includes('shadcn')) {
+              return 'ui-vendor';
+            }
+            if (id.includes('lucide-react')) {
+              return 'icons';
+            }
+            if (id.includes('@tanstack/react-query')) {
+              return 'query';
+            }
+            if (id.includes('i18next') || id.includes('react-i18next')) {
+              return 'i18n';
+            }
+            return 'vendor';
+          }
+          
+          // App chunks
+          if (id.includes('src/pages')) {
+            return 'pages';
+          }
+          if (id.includes('src/components/home')) {
+            return 'home';
+          }
+          if (id.includes('src/components/quote')) {
+            return 'quote';
+          }
+          if (id.includes('src/components/services')) {
+            return 'services';
+          }
+          if (id.includes('src/components/ui')) {
+            return 'ui-components';
+          }
         }
       }
     },
     sourcemap: mode === 'development',
     minify: mode === 'production' ? 'esbuild' : false,
     target: 'esnext',
-    // Enable compression
     cssMinify: 'esbuild',
   },
   // Optimize performance with faster HMR

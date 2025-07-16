@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { Link } from 'react-router-dom';
 import { useResponsiveLayout } from '@/hooks/use-mobile';
 import { Button } from '@/components/ui/button';
@@ -6,13 +6,11 @@ import { Phone } from 'lucide-react';
 import { PHONE_NUMBER, getPhoneLink } from '@/utils/contact-info';
 import { useAnalyticsContext } from '@/providers/AnalyticsProvider';
 import { conversionTracking } from '@/services/conversionTracking';
-import { useABTest } from '@/components/testing/ABTestProvider';
 import ZipCodeChecker from './ZipCodeChecker';
 
 const HeroSection = () => {
   const { isMobile } = useResponsiveLayout();
-  const { trackEvent } = useAnalyticsContext();
-  const { getTestVariant, trackConversion } = useABTest();
+  const { trackEvent, getTestVariant, trackABConversion } = useAnalyticsContext();
   
   // Get A/B test variant for CTA button
   const ctaTest = getTestVariant('hero-cta-test');
@@ -27,7 +25,7 @@ const HeroSection = () => {
     
     // Track A/B test conversion
     if (ctaTest) {
-      trackConversion('hero-cta-test', 'cta_click');
+      trackABConversion('hero-cta-test', 'cta_click');
     }
   };
 
@@ -44,8 +42,8 @@ const HeroSection = () => {
     <section className={`relative ${isMobile ? 'min-h-[70vh]' : 'min-h-screen'} flex items-center justify-center overflow-hidden bg-gradient-to-br from-brand-navy via-brand-navy/95 to-brand-navy/90`}>
       <div className="absolute inset-0 pointer-events-none mix-blend-multiply">
         <img
-          src="/images/home/hero-bg.jpg"
-          alt="Junk removal background"
+          src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80"
+          alt="Professional junk removal truck and team"
           className="absolute inset-0 w-full h-full object-cover object-center opacity-40"
         />
       </div>

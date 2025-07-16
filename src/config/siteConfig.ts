@@ -1,5 +1,7 @@
+import { CONTACT_INFO, PRICING_STRUCTURE, COPY_STANDARDS } from '@/utils/design-audit';
+
 export const siteConfig = {
-  siteName: 'Uncle Sam Junk Removal',
+  siteName: COPY_STANDARDS.businessName,
   siteUrl: 'https://unclesamjunkremoval.com',
   defaultOgImage: '/logo.png',
   twitterHandle: '@UncleSamJunk',
@@ -8,21 +10,21 @@ export const siteConfig = {
   gaTrackingId: 'G-XXXXXXXXXX',
 
   // Core Local Business Info
-  businessName: 'Uncle Sam Junk Removal',
+  businessName: COPY_STANDARDS.businessName,
   address: {
-    streetAddress: '123 Freedom Lane',
-    addressLocality: 'Evansville',
-    addressRegion: 'IN',
-    postalCode: '47715',
+    streetAddress: CONTACT_INFO.address.street,
+    addressLocality: CONTACT_INFO.address.city,
+    addressRegion: CONTACT_INFO.address.state,
+    postalCode: CONTACT_INFO.address.zip,
     addressCountry: 'US'
   },
-  telephone: '+18126101657',
-  email: 'info@unclesamjunkremoval.com',
+  telephone: CONTACT_INFO.phoneHref,
+  email: CONTACT_INFO.email,
   geo: {
     latitude: 37.9748,
     longitude: -87.5558
   },
-  priceRange: '$75-$850',
+  priceRange: PRICING_STRUCTURE.range,
   openingHoursSpecification: [
     {
       "@type": "OpeningHoursSpecification",

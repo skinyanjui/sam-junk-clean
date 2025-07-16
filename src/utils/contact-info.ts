@@ -4,11 +4,13 @@
  * This ensures consistency across the entire application
  */
 
+import { CONTACT_INFO } from './design-audit';
+
 // Standard format for display: (812) 610-1657
-export const PHONE_NUMBER = '(812) 610-1657';
+export const PHONE_NUMBER = CONTACT_INFO.phone;
 
 // Format for href tel: links: +18126101657
-export const PHONE_NUMBER_HREF = '+18126101657';
+export const PHONE_NUMBER_HREF = CONTACT_INFO.phoneHref;
 
 // Function to format a phone number for display
 export const formatPhoneNumber = (phone: string): string => {
