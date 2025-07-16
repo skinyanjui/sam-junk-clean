@@ -193,7 +193,7 @@ export const usePerformanceMonitoring = () => {
 // Hook for component-level performance monitoring
 export const useComponentPerformance = (componentName: string) => {
     const { trackEvent } = useAnalyticsContext();
-    const startTimeRef = useRef<number>();
+    const startTimeRef = useRef<number>(0);
 
     useEffect(() => {
         startTimeRef.current = performance.now();
