@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HelmetProvider } from 'react-helmet-async';
 import { AnalyticsProvider } from "@/providers/AnalyticsProvider";
 import ScrollToTop from "@/components/ScrollToTop";
+import FloatingPhoneCTA from "@/components/mobile/FloatingPhoneCTA";
 import Index from "./pages/Index";
 import About from "./pages/About";
 import Services from "./pages/Services";
@@ -50,6 +51,9 @@ const App = () => (
               <Route path="/terms" element={<Terms />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
+            
+            {/* Mobile Floating Phone CTA */}
+            <FloatingPhoneCTA />
           </AnalyticsProvider>
         </BrowserRouter>
       </TooltipProvider>

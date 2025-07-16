@@ -3,14 +3,16 @@ import { useState } from 'react';
 import PageLayout from '@/components/PageLayout';
 import QuoteHero from '@/components/quote/QuoteHero';
 import QuoteForm from '@/components/quote/QuoteForm';
+import QuickQuoteForm from '@/components/quote/QuickQuoteForm';
 import ProcessSteps from '@/components/quote/ProcessSteps';
 import PricingDisplay from '@/components/quote/PricingDisplay';
 import SEO from '@/components/SEO';
-import { useTranslation } from 'react-i18next';
+import { Button } from '@/components/ui/button';
+import { Clock, FileText } from 'lucide-react';
 
 const Quote = () => {
-  const { t } = useTranslation();
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [showQuickQuote, setShowQuickQuote] = useState(true);
 
   const handleFormSuccess = () => {
     setFormSubmitted(true);
@@ -79,12 +81,77 @@ const Quote = () => {
       {/* Hero Section */}
       <QuoteHero />
 
-      {/* Quote Form Section */}
+      {/* Quote Form Selection */}
       <section className="py-16 bg-white" aria-labelledby="quote-form-heading">
-        <div className="container-custom max-w-3xl">
-          <h2 id="quote-form-heading" className="sr-only">Request a Quote</h2>
-          <div className="bg-brand-gray p-8 rounded-lg shadow-sm">
-            <QuoteForm onFormSuccess={handleFormSuccess} />
+        <div className="container-custom max-w-4xl">
+          <h2 id="quote-form-heading" className="text-3xl font-bold text-center text-brand-navy mb-8">
+            Choose Your Quote Option
+          </h2>
+          
+          {/* Form Type Selector */}
+          <div className="flex justify-center mb-8">
+            <div className="bg-gray-100 p-1 rounded-lg inline-flex">
+              <Button
+                onClick={() => setShowQuickQuote(true)}
+                variant={showQuickQuote ? "default" : "ghost"}
+                className={`flex items-center gap-2 ${showQuickQuote ? 'bg-brand-red text-white' : 'text-gray-600'}`}
+              >
+                <Clock className="w-4 h-4" />
+                Quick Quote (2 min)
+              </Button>
+              <Button
+                onClick={() => setShowQuickQuote(false)}
+                variant={!showQuickQuote ? "default" : "ghost"}
+                className={`flex items-center gap-2 ${!showQuickQuote ? 'bg-brand-red text-white' : 'text-gray-600'}`}
+              >
+                <FileText className="w-4 h-4" />
+                Detailed Quote (5 min)
+              </Button>
+            </div>
+          </div>
+
+          {/* Form Container */}
+          <div className="grid md:grid-cols-2 gap-8">
+            {showQuickQuote ? (
+              <>
+                {/* Quick Quote Form */}
+                <div>
+                  <QuickQuoteForm onSuccess={handleFormSuccess} />
+                </div>
+                
+                {/* Quick Quote Benefits */}
+                <div className="bg-brand-gray p-6 rounded-lg">
+                  <h3 className="text-xl font-bold text-brand-navy mb-4">Quick Quote Benefits</h3>
+                  <ul className="space-y-3 text-gray-700">
+                    <li className="flex items-start gap-2">
+                      <Clock className="w-5 h-5 text-brand-red mt-0.5 flex-shrink-0" />
+                      <span>Get a personalized quote within 2 hours</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <Clock className="w-5 h-5 text-brand-red mt-0.5 flex-shrink-0" />
+                      <span>Takes less than 2 minutes to complete</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <Clock className="w-5 h-5 text-brand-red mt-0.5 flex-shrink-0" />
+                      <span>Perfect for simple junk removal needs</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <Clock className="w-5 h-5 text-brand-red mt-0.5 flex-shrink-0" />
+                      <span>We'll call you to discuss details</span>
+                    </li>
+                  </ul>
+                </div>
+              </>
+            ) : (
+              <>
+                {/* Detailed Quote Form */}
+                <div className="md:col-span-2">
+                  <div className="bg-brand-gray p-8 rounded-lg shadow-sm">
+                    <QuoteForm onFormSuccess={handleFormSuccess} />
+                  </div>
+                </div>
+              </>
+            )}
           </div>
         </div>
       </section>

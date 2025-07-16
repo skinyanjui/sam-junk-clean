@@ -6,6 +6,7 @@ import { Phone } from 'lucide-react';
 import { PHONE_NUMBER, getPhoneLink } from '@/utils/contact-info';
 import { useAnalyticsContext } from '@/providers/AnalyticsProvider';
 import { conversionTracking } from '@/services/conversionTracking';
+import ZipCodeChecker from './ZipCodeChecker';
 
 const HeroSection = () => {
   const { isMobile } = useResponsiveLayout();
@@ -77,6 +78,11 @@ const HeroSection = () => {
               Call {PHONE_NUMBER}
             </a>
           </Button>
+        </div>
+
+        {/* ZIP Code Checker */}
+        <div className="mb-8 max-w-sm mx-auto">
+          <ZipCodeChecker />
         </div>
 
         <div className="flex flex-wrap justify-center gap-4 text-sm text-white/70">

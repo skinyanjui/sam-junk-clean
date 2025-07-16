@@ -4,7 +4,10 @@ import { Button } from '@/components/ui/button';
 import MobileMenuItem from './MobileMenuItem';
 import { useResponsiveLayout } from '@/hooks/use-mobile';
 import { motion } from 'framer-motion';
-import { Loader2 } from 'lucide-react';
+import { Loader2, Phone } from 'lucide-react';
+import { PHONE_NUMBER, getPhoneLink } from '@/utils/contact-info';
+import { useAnalyticsContext } from '@/providers/AnalyticsProvider';
+import { conversionTracking } from '@/services/conversionTracking';
 
 interface MobileNavProps {
   navStructure: Array<{
@@ -32,6 +35,16 @@ const MobileNav = ({
   isLoading
 }: MobileNavProps) => {
   const { isLandscapeMobile } = useResponsiveLayout();
+  const { trackEvent } = useAnalyticsContext();
+  
+  const handlePhoneClick = () => {
+    trackEvent({
+      action: 'mobile_nav_phone_click',
+      category: 'mobile_navigation',
+      label: 'phone_cta'
+    });
+    conversionTracking.trackPhoneClick(PHONE_NUMBER);
+  };
   
   if (!isOpen) return null;
   
@@ -68,14 +81,30 @@ const MobileNav = ({
           )}
         </div>
         
-        <div className={`mt-4 ${isLandscapeMobile ? 'w-2/5 pl-4 self-center' : 'w-full'} border-t border-gray-200 pt-4`}>
+        <div className={`mt-4 ${isLandscapeMobile ? 'w-2/5 pl-4 self-center' : 'w-full'} border-t border-gray-200 pt-4 space-y-3`}>
+          {/* Phone CTA - Most prominent */}
           <Button 
             asChild 
-            className={`w-full bg-brand-red hover:bg-brand-red/90 text-white ${
+            className={`w-full bg-brand-navy hover:bg-brand-navy/90 text-white ${
               isLandscapeMobile ? 'text-sm py-2' : 'py-3 text-base'
-            } font-semibold tracking-wide transition-all duration-300 shadow-md rounded-md`}
+            } font-bold tracking-wide transition-all duration-300 shadow-lg rounded-md border-2 border-brand-red`}
+            onClick={handlePhoneClick}
           >
-            <Link to="/quote">Get a Free Quote</Link>
+            <a href={getPhoneLink()} className="flex items-center justify-center gap-2">
+              <Phone className="w-4 h-4" />
+              Call {PHONE_NUMBER}
+            </a>
+          </Button>
+          
+          {/* Quote CTA - Secondary */}
+          <Button 
+            asChild 
+            variant="outline"
+            className={`w-full border-2 border-brand-red text-brand-red hover:bg-brand-red hover:text-white ${
+              isLandscapeMobile ? 'text-sm py-2' : 'py-2 text-sm'
+            } font-semibold tracking-wide transition-all duration-300 rounded-md`}
+          >
+            <Link to="/quote">Get Free Quote</Link>
           </Button>
         </div>
       </nav>
