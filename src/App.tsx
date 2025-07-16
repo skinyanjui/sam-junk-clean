@@ -68,7 +68,9 @@ const App = () => (
           <Sonner />
           <BrowserRouter>
             <AnalyticsProvider>
-              <AppContent />
+              <ABTestProvider>
+                <AppContent />
+              </ABTestProvider>
             </AnalyticsProvider>
           </BrowserRouter>
         </TooltipProvider>
