@@ -1,30 +1,29 @@
 export const siteConfig = {
   siteName: 'Uncle Sam Junk Removal',
   siteUrl: 'https://unclesamjunkremoval.com',
-  defaultOgImage: '/logo.png', // Using logo.png as placeholder for generic OG image
-  twitterHandle: '@UncleSamJunk', // Example, replace with actual if known
-  googleSiteVerification: 'YOUR_GOOGLE_VERIFICATION_CODE', // Placeholder
-  bingSiteVerification: 'YOUR_BING_VERIFICATION_CODE', // Placeholder
-  gaTrackingId: 'G-XXXXXXXXXX', // Placeholder for Google Analytics 4
+  defaultOgImage: '/logo.png',
+  twitterHandle: '@UncleSamJunk',
+  googleSiteVerification: 'YOUR_GOOGLE_VERIFICATION_CODE',
+  bingSiteVerification: 'YOUR_BING_VERIFICATION_CODE',
+  gaTrackingId: 'G-XXXXXXXXXX',
 
-  // Core Local Business Info (for default schema on relevant pages)
+  // Core Local Business Info
   businessName: 'Uncle Sam Junk Removal',
   address: {
-    streetAddress: '123 Freedom Lane', // Example address
+    streetAddress: '123 Freedom Lane',
     addressLocality: 'Evansville',
     addressRegion: 'IN',
     postalCode: '47715',
     addressCountry: 'US'
   },
-  telephone: '+18126101657', // From previous tasks
-  email: 'info@unclesamjunkremoval.com', // From previous tasks
+  telephone: '+18126101657',
+  email: 'info@unclesamjunkremoval.com',
   geo: {
-    latitude: 37.9748, // Example coordinates for Evansville
+    latitude: 37.9748,
     longitude: -87.5558
   },
-  // Example of other relevant details (can be expanded)
-  priceRange: '$$-$$$', // Example price range
-  openingHoursSpecification: [ // Example opening hours
+  priceRange: '$75-$850',
+  openingHoursSpecification: [
     {
       "@type": "OpeningHoursSpecification",
       "dayOfWeek": [
@@ -34,8 +33,8 @@ export const siteConfig = {
         "Thursday",
         "Friday"
       ],
-      "opens": "08:00",
-      "closes": "18:00"
+      "opens": "07:00",
+      "closes": "19:00"
     },
     {
       "@type": "OpeningHoursSpecification",
@@ -44,9 +43,8 @@ export const siteConfig = {
       "closes": "15:00"
     }
   ],
-  sameAs: [ // Example social media links
-    'https://www.facebook.com/unclesamjunkremoval', // Replace with actual
-    'https://twitter.com/UncleSamJunk' // Replace with actual
-    // Add Yelp, etc. if available
+  sameAs: [
+    'https://www.facebook.com/unclesamjunkremoval',
+    'https://twitter.com/UncleSamJunk'
   ]
 };

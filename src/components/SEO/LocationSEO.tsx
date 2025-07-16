@@ -51,7 +51,7 @@ const LocationSEO = ({
       case 'services':
         return `${baseDesc} Residential & commercial cleanouts, furniture & appliance removal, construction debris disposal.`;
       case 'pricing':
-        return `${baseDesc} Transparent pricing, free estimates, no hidden fees. Starting at $99 for small loads.`;
+        return `${baseDesc} Transparent pricing, free estimates, no hidden fees. Starting at $75 for small loads.`;
       case 'contact':
         return `${baseDesc} Call (812) 610-1657 for immediate service or get your free estimate online.`;
       default:

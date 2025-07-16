@@ -149,7 +149,7 @@ const ZipCodeLookup = () => {
               </div>
             )}
             <p className="mt-3 text-sm text-gray-500 text-center">
-              Don't see your ZIP code? Call us at (800) 555-1234 to check availability.
+              Don't see your ZIP code? Call us at (812) 610-1657 to check availability.
             </p>
           </div>
         </div>

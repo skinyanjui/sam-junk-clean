@@ -53,7 +53,7 @@ const Pricing = () => {
         },
         "priceSpecification": {
           "@type": "PriceSpecification",
-          "price": "99", // Example, adjust if actual numbers are available
+          "price": "75", // Updated to match actual minimum pricing
           "priceCurrency": "USD",
           "valueAddedTaxIncluded": true
         }
@@ -66,7 +66,7 @@ const Pricing = () => {
         },
         "priceSpecification": {
           "@type": "PriceSpecification",
-          "price": "199", // Example
+          "price": "175", // Updated to match 1/4 truck load pricing
           "priceCurrency": "USD"
         }
       },
@@ -78,7 +78,7 @@ const Pricing = () => {
         },
         "priceSpecification": {
           "@type": "PriceSpecification",
-          "price": "599", // Example
+          "price": "550", // Updated to match full truck load pricing
           "priceCurrency": "USD"
         }
       }

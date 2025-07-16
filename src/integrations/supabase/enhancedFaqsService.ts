@@ -28,7 +28,7 @@ export const fetchEnhancedFaqs = async (): Promise<FaqItem[]> => {
       {
         id: '1',
         question: 'How much does junk removal cost in Evansville?',
-        answer: 'Our pricing is based on volume and type of items. Small loads start at $99, medium loads are $199-299, and large loads range from $399-599. We provide free, no-obligation estimates and honor our quoted prices with no hidden fees.',
+        answer: 'Our pricing is based on volume and type of items. Small loads start at $75, medium loads are $175-450, and large loads range from $450-850. We provide free, no-obligation estimates and honor our quoted prices with no hidden fees.',
         category: 'Pricing & Estimates',
         tags: ['pricing', 'cost', 'estimates', 'evansville'],
         priority: 1,
@@ -50,7 +50,7 @@ export const fetchEnhancedFaqs = async (): Promise<FaqItem[]> => {
       {
         id: '3',
         question: 'Is there a minimum charge for small items?',
-        answer: 'Yes, we have a minimum charge of $99 for any service call. This covers our truck, labor, and disposal costs. However, this minimum often covers more items than customers expect!',
+        answer: 'Yes, we have a minimum charge of $75 for any service call. This covers our truck, labor, and disposal costs. However, this minimum often covers more items than customers expect!',
         category: 'Pricing & Estimates',
         tags: ['minimum charge', 'small items', 'pricing'],
         priority: 3,
@@ -131,7 +131,7 @@ export const fetchEnhancedFaqs = async (): Promise<FaqItem[]> => {
       {
         id: '10',
         question: 'What are your service hours?',
-        answer: 'We operate Monday-Friday 7 AM to 7 PM, Saturdays 8 AM to 5 PM. We\'re available for emergency calls on Sundays. We offer flexible scheduling to work around your busy schedule.',
+        answer: 'We operate Monday-Friday 7 AM to 7 PM, Saturdays 9 AM to 3 PM. We\'re available for emergency calls on Sundays. We offer flexible scheduling to work around your busy schedule.',
         category: 'Scheduling & Service',
         tags: ['hours', 'schedule', 'availability'],
         priority: 2,
