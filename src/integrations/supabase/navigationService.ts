@@ -34,7 +34,7 @@ export const fetchNavigationItems = async (): Promise<DbNavigationItem[]> => {
 
     if (error) {
       console.error('Error fetching navigation items:', error);
-      throw error;
+      return []; // Return empty array instead of throwing
     }
     return data || [];
   } catch (error) {
@@ -44,13 +44,40 @@ export const fetchNavigationItems = async (): Promise<DbNavigationItem[]> => {
   }
 };
 
-export const getNavigationStructure = async (): Promise<NavItem[]> => {
-  // Fetch all navigation items from the database.
-  const allItems: DbNavigationItem[] = await fetchNavigationItems();
+// Fallback navigation structure when database is unavailable
+const getFallbackNavigation = (): NavItem[] => {
+  return [
+    { name: 'Home', path: '/', hasDropdown: false },
+    { 
+      name: 'Services', 
+      path: '/services', 
+      hasDropdown: true,
+      dropdownItems: [
+        { name: 'Residential', path: '/services/residential' },
+        { name: 'Commercial', path: '/services/commercial' },
+        { name: 'Construction', path: '/services/construction' }
+      ]
+    },
+    { name: 'Pricing', path: '/pricing', hasDropdown: false },
+    { name: 'Locations', path: '/locations', hasDropdown: false },
+    { name: 'About', path: '/about', hasDropdown: false },
+    { name: 'Contact', path: '/contact', hasDropdown: false }
+  ];
+};
 
-  // Filter for active items only before building the structure.
-  // This ensures that only enabled navigation links are processed.
-  const activeItems = allItems.filter(item => item.is_active);
+export const getNavigationStructure = async (): Promise<NavItem[]> => {
+  try {
+    // Fetch all navigation items from the database.
+    const allItems: DbNavigationItem[] = await fetchNavigationItems();
+
+    // If no items returned, use fallback
+    if (!allItems || allItems.length === 0) {
+      return getFallbackNavigation();
+    }
+
+    // Filter for active items only before building the structure.
+    // This ensures that only enabled navigation links are processed.
+    const activeItems = allItems.filter(item => item.is_active);
 
   // Step 1: Create a map for O(1) access to items by their ID.
   // Also, initialize a 'children' array for each item to store its descendants.
@@ -96,4 +123,8 @@ export const getNavigationStructure = async (): Promise<NavItem[]> => {
   };
 
   return mapToNavItem(rootItems);
+  } catch (error) {
+    console.error('Error building navigation structure:', error);
+    return getFallbackNavigation();
+  }
 };

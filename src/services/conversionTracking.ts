@@ -1,4 +1,4 @@
-import * as crypto from 'crypto';
+// Using browser's Web Crypto API instead of Node.js crypto
 
 interface ConversionEvent {
   event_type: string;
@@ -36,8 +36,10 @@ class ConversionTrackingService {
   }
 
   private generateSessionId(): string {
-    const randomBytes = crypto.randomBytes(12); // Generate 12 random bytes
-    const randomString = randomBytes.toString('hex'); // Convert to hexadecimal string
+    // Use browser's crypto.getRandomValues instead of Node.js crypto.randomBytes
+    const array = new Uint8Array(12);
+    crypto.getRandomValues(array);
+    const randomString = Array.from(array, byte => byte.toString(16).padStart(2, '0')).join('');
     return `session_${Date.now()}_${randomString}`;
   }
 
