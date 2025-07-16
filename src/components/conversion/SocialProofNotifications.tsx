@@ -1,135 +1,271 @@
-
 import { useState, useEffect } from 'react';
-import { X, MapPin, Clock } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
+import { CheckCircle, MapPin, Clock, Users } from 'lucide-react';
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { useResponsiveLayout } from '@/hooks/use-mobile';
+import { useAnalyticsContext } from '@/providers/AnalyticsProvider';
 
-interface CustomerActivity {
+interface SocialProofItem {
   id: string;
+  type: 'booking' | 'review' | 'completion' | 'milestone';
   name: string;
   location: string;
-  service: string;
+  action: string;
   timeAgo: string;
-  avatar?: string;
+  rating?: number;
+  service?: string;
+  icon: React.ReactNode;
+  color: string;
 }
 
 const SocialProofNotifications = () => {
-  const [currentNotification, setCurrentNotification] = useState<CustomerActivity | null>(null);
+  const [currentNotification, setCurrentNotification] = useState<SocialProofItem | null>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const { isMobile } = useResponsiveLayout();
+  const { trackEvent } = useAnalyticsContext();
 
-  // Mock customer activities - in real app, this would come from your backend
-  const customerActivities: CustomerActivity[] = [
+  // Sample social proof data - in production, this would come from real data
+  const socialProofItems: SocialProofItem[] = [
     {
       id: '1',
+      type: 'booking',
       name: 'Sarah M.',
-      location: 'Evansville',
-      service: 'furniture removal',
-      timeAgo: '2 hours ago'
+      location: 'Evansville, IN',
+      action: 'just booked a furniture removal',
+      timeAgo: '2 minutes ago',
+      service: 'Furniture Removal',
+      icon: <CheckCircle className="w-4 h-4" />,
+      color: 'text-green-600'
     },
     {
       id: '2',
+      type: 'review',
       name: 'Mike R.',
-      location: 'Henderson',
-      service: 'appliance pickup',
-      timeAgo: '4 hours ago'
+      location: 'Henderson, KY',
+      action: 'left a 5-star review',
+      timeAgo: '5 minutes ago',
+      rating: 5,
+      service: 'Full House Cleanout',
+      icon: <CheckCircle className="w-4 h-4" />,
+      color: 'text-yellow-500'
     },
     {
       id: '3',
+      type: 'completion',
       name: 'Jennifer L.',
-      location: 'Newburgh',
-      service: 'estate cleanout',
-      timeAgo: '6 hours ago'
+      location: 'Newburgh, IN',
+      action: 'completed their junk removal',
+      timeAgo: '8 minutes ago',
+      service: 'Appliance Removal',
+      icon: <CheckCircle className="w-4 h-4" />,
+      color: 'text-blue-600'
     },
     {
       id: '4',
+      type: 'booking',
       name: 'David K.',
-      location: 'Owensboro',
-      service: 'construction debris removal',
-      timeAgo: '8 hours ago'
+      location: 'Owensboro, KY',
+      action: 'scheduled same-day service',
+      timeAgo: '12 minutes ago',
+      service: 'Construction Debris',
+      icon: <Clock className="w-4 h-4" />,
+      color: 'text-orange-600'
+    },
+    {
+      id: '5',
+      type: 'milestone',
+      name: '47 people',
+      location: 'Tri-State Area',
+      action: 'used our service this week',
+      timeAgo: '15 minutes ago',
+      icon: <Users className="w-4 h-4" />,
+      color: 'text-purple-600'
+    },
+    {
+      id: '6',
+      type: 'booking',
+      name: 'Lisa T.',
+      location: 'Mt. Carmel, IL',
+      action: 'requested a quote',
+      timeAgo: '18 minutes ago',
+      service: 'Yard Waste Removal',
+      icon: <CheckCircle className="w-4 h-4" />,
+      color: 'text-green-600'
+    },
+    {
+      id: '7',
+      type: 'review',
+      name: 'Robert H.',
+      location: 'Evansville, IN',
+      action: 'recommended us to friends',
+      timeAgo: '22 minutes ago',
+      rating: 5,
+      service: 'Office Cleanout',
+      icon: <CheckCircle className="w-4 h-4" />,
+      color: 'text-yellow-500'
+    },
+    {
+      id: '8',
+      type: 'completion',
+      name: 'Amanda S.',
+      location: 'Henderson, KY',
+      action: 'saved $200 with our service',
+      timeAgo: '25 minutes ago',
+      service: 'Estate Cleanout',
+      icon: <CheckCircle className="w-4 h-4" />,
+      color: 'text-green-600'
     }
   ];
 
   useEffect(() => {
-    if (customerActivities.length === 0) return;
+    if (isMobile) return; // Don't show on mobile to avoid clutter
 
     let currentIndex = 0;
     
-    const showNotification = () => {
-      setCurrentNotification(customerActivities[currentIndex]);
-      setIsVisible(true);
+    const showNextNotification = () => {
+      setIsVisible(false);
       
-      // Hide after 4 seconds
       setTimeout(() => {
-        setIsVisible(false);
-      }, 4000);
-      
-      currentIndex = (currentIndex + 1) % customerActivities.length;
+        setCurrentNotification(socialProofItems[currentIndex]);
+        setIsVisible(true);
+        currentIndex = (currentIndex + 1) % socialProofItems.length;
+        
+        // Track social proof impression
+        trackEvent({
+          action: 'social_proof_shown',
+          category: 'engagement',
+          label: socialProofItems[currentIndex].type
+        });
+      }, 500);
     };
 
-    // Show first notification after 3 seconds
-    const initialTimer = setTimeout(showNotification, 3000);
+    // Show first notification after 10 seconds
+    const initialTimer = setTimeout(showNextNotification, 10000);
     
-    // Then show subsequent notifications every 15 seconds
-    const interval = setInterval(showNotification, 15000);
+    // Then show every 15 seconds
+    const interval = setInterval(showNextNotification, 15000);
 
     return () => {
       clearTimeout(initialTimer);
       clearInterval(interval);
     };
-  }, []);
+  }, [isMobile, trackEvent]);
+
+  const handleNotificationClick = () => {
+    if (!currentNotification) return;
+    
+    trackEvent({
+      action: 'social_proof_click',
+      category: 'engagement',
+      label: currentNotification.type
+    });
+
+    // Navigate to appropriate page based on notification type
+    if (currentNotification.type === 'booking' || currentNotification.type === 'milestone') {
+      window.location.href = '/quote';
+    } else if (currentNotification.type === 'review') {
+      window.location.href = '/about#testimonials';
+    }
+  };
 
   const handleClose = () => {
     setIsVisible(false);
+    setCurrentNotification(null);
+    
+    trackEvent({
+      action: 'social_proof_dismiss',
+      category: 'engagement',
+      label: currentNotification?.type || 'unknown'
+    });
   };
+
+  if (isMobile || !currentNotification) return null;
 
   return (
     <AnimatePresence>
-      {isVisible && currentNotification && (
+      {isVisible && (
         <motion.div
-          initial={{ opacity: 0, x: 300, scale: 0.8 }}
+          initial={{ opacity: 0, x: -100, scale: 0.8 }}
           animate={{ opacity: 1, x: 0, scale: 1 }}
-          exit={{ opacity: 0, x: 300, scale: 0.8 }}
-          transition={{ type: "spring", stiffness: 300, damping: 30 }}
-          className="fixed bottom-4 right-4 z-50 bg-white shadow-lg border border-gray-200 rounded-lg p-4 max-w-sm"
+          exit={{ opacity: 0, x: -100, scale: 0.8 }}
+          transition={{ duration: 0.4, ease: "easeOut" }}
+          className="fixed bottom-6 left-6 z-40 max-w-sm"
         >
-          <div className="flex items-start justify-between">
-            <div className="flex items-start space-x-3">
-              {/* Avatar placeholder */}
-              <div className="w-10 h-10 bg-brand-red/10 rounded-full flex items-center justify-center">
-                <span className="text-brand-red font-semibold text-sm">
-                  {currentNotification.name.charAt(0)}
-                </span>
-              </div>
-              
-              <div className="flex-1">
-                <p className="text-sm font-medium text-gray-900">
-                  <span className="text-brand-red">{currentNotification.name}</span> just booked {currentNotification.service}
-                </p>
-                
-                <div className="flex items-center text-xs text-gray-500 mt-1">
-                  <MapPin className="h-3 w-3 mr-1" />
-                  <span>{currentNotification.location}</span>
-                  <Clock className="h-3 w-3 ml-2 mr-1" />
-                  <span>{currentNotification.timeAgo}</span>
+          <Card 
+            className="bg-white shadow-2xl border-l-4 border-l-green-500 cursor-pointer hover:shadow-3xl transition-all duration-300 hover:scale-105"
+            onClick={handleNotificationClick}
+          >
+            <CardContent className="p-4">
+              <div className="flex items-start gap-3">
+                {/* Avatar */}
+                <Avatar className="w-10 h-10 flex-shrink-0">
+                  <AvatarFallback className="bg-gray-100 text-gray-600 text-sm font-medium">
+                    {currentNotification.name.split(' ').map(n => n[0]).join('').slice(0, 2)}
+                  </AvatarFallback>
+                </Avatar>
+
+                {/* Content */}
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2 mb-1">
+                    <div className={`${currentNotification.color}`}>
+                      {currentNotification.icon}
+                    </div>
+                    <Badge variant="secondary" className="text-xs">
+                      {currentNotification.type === 'milestone' ? 'Popular' : 'Recent'}
+                    </Badge>
+                  </div>
+
+                  <p className="text-sm font-medium text-gray-900 mb-1">
+                    <span className="font-semibold">{currentNotification.name}</span>{' '}
+                    {currentNotification.action}
+                  </p>
+
+                  {currentNotification.service && (
+                    <p className="text-xs text-gray-600 mb-1">
+                      Service: {currentNotification.service}
+                    </p>
+                  )}
+
+                  <div className="flex items-center gap-2 text-xs text-gray-500">
+                    <MapPin className="w-3 h-3" />
+                    <span>{currentNotification.location}</span>
+                    <span>•</span>
+                    <span>{currentNotification.timeAgo}</span>
+                  </div>
+
+                  {currentNotification.rating && (
+                    <div className="flex items-center gap-1 mt-1">
+                      {[...Array(currentNotification.rating)].map((_, i) => (
+                        <span key={i} className="text-yellow-400 text-xs">★</span>
+                      ))}
+                    </div>
+                  )}
                 </div>
+
+                {/* Close button */}
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleClose();
+                  }}
+                  className="text-gray-400 hover:text-gray-600 transition-colors"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
               </div>
-            </div>
-            
-            <button
-              onClick={handleClose}
-              className="ml-2 text-gray-400 hover:text-gray-600 transition-colors"
-              aria-label="Close notification"
-            >
-              <X className="h-4 w-4" />
-            </button>
-          </div>
-          
-          {/* Trust indicator */}
-          <div className="mt-2 pt-2 border-t border-gray-100">
-            <div className="flex items-center justify-between text-xs">
-              <span className="text-green-600 font-medium">✓ Verified Customer</span>
-              <span className="text-gray-500">Join 2,500+ happy customers</span>
-            </div>
-          </div>
+
+              {/* Call to action hint */}
+              <div className="mt-3 pt-2 border-t border-gray-100">
+                <p className="text-xs text-gray-500 text-center">
+                  Click to {currentNotification.type === 'review' ? 'see more reviews' : 'get your quote'}
+                </p>
+              </div>
+            </CardContent>
+          </Card>
         </motion.div>
       )}
     </AnimatePresence>

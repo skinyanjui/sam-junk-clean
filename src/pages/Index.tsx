@@ -8,8 +8,8 @@ import CtaSection from '@/components/home/CtaSection';
 import TestimonialsSection from '@/components/home/TestimonialsSection';
 import WhyChooseUs from '@/components/home/WhyChooseUs';
 import EnhancedTrustSignals from '@/components/home/EnhancedTrustSignals';
-import ExitIntentPopup from '@/components/conversion/ExitIntentPopup';
-import SocialProofNotifications from '@/components/conversion/SocialProofNotifications';
+import PersonalizedExitIntent from '@/components/conversion/PersonalizedExitIntent';
+import { useABTest } from '@/components/testing/ABTestProvider';
 import SEO from '@/components/SEO';
 import { siteConfig } from '@/config/siteConfig'; // Import siteConfig
 // Removed: import LocalBusinessSchema from '@/components/SEO/LocalBusinessSchema';
@@ -25,6 +25,7 @@ const Index = () => {
   const currentLang = i18n.language;
   const [isLoading, setIsLoading] = useState(true);
   const [showExitIntent, setShowExitIntent] = useState(false);
+  const { getTestVariant, trackConversion } = useABTest();
 
   // Exit intent detection
   const { hasTriggered } = useExitIntent({
@@ -190,9 +191,8 @@ const Index = () => {
         </div>
       )}
 
-      {/* Conversion optimization components */}
-      <SocialProofNotifications />
-      <ExitIntentPopup 
+      {/* Phase 2 Conversion optimization components */}
+      <PersonalizedExitIntent 
         isOpen={showExitIntent} 
         onClose={() => setShowExitIntent(false)} 
       />

@@ -6,11 +6,13 @@ import { Phone } from 'lucide-react';
 import { PHONE_NUMBER, getPhoneLink } from '@/utils/contact-info';
 import { useAnalyticsContext } from '@/providers/AnalyticsProvider';
 import { conversionTracking } from '@/services/conversionTracking';
+import { useABTest } from '@/components/testing/ABTestProvider';
 import ZipCodeChecker from './ZipCodeChecker';
 
 const HeroSection = () => {
   const { isMobile } = useResponsiveLayout();
-  const { trackEvent, getTestVariant, trackABConversion } = useAnalyticsContext();
+  const { trackEvent } = useAnalyticsContext();
+  const { getTestVariant, trackConversion } = useABTest();
   
   // Get A/B test variant for CTA button
   const ctaTest = getTestVariant('hero-cta-test');
@@ -23,8 +25,9 @@ const HeroSection = () => {
     });
     conversionTracking.trackButtonClick('Get Quote', 'hero_section');
     
+    // Track A/B test conversion
     if (ctaTest) {
-      trackABConversion('hero-cta-test', 'cta_click');
+      trackConversion('hero-cta-test', 'cta_click');
     }
   };
 
