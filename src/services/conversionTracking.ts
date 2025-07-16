@@ -36,9 +36,9 @@ class ConversionTrackingService {
   }
 
   private generateSessionId(): string {
-    // Use browser's crypto.getRandomValues instead of Node.js crypto.randomBytes
+    // Generate session ID using browser's Web Crypto API
     const array = new Uint8Array(12);
-    crypto.getRandomValues(array);
+    window.crypto.getRandomValues(array);
     const randomString = Array.from(array, byte => byte.toString(16).padStart(2, '0')).join('');
     return `session_${Date.now()}_${randomString}`;
   }
