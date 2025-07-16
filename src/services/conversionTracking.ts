@@ -36,10 +36,20 @@ class ConversionTrackingService {
   }
 
   private generateSessionId(): string {
-    // Generate session ID using browser's Web Crypto API
-    const array = new Uint8Array(12);
-    window.crypto.getRandomValues(array);
-    const randomString = Array.from(array, byte => byte.toString(16).padStart(2, '0')).join('');
+    try {
+      // Check if Web Crypto API is available
+      if (typeof window !== 'undefined' && window.crypto && window.crypto.getRandomValues) {
+        const array = new Uint8Array(12);
+        window.crypto.getRandomValues(array);
+        const randomString = Array.from(array, byte => byte.toString(16).padStart(2, '0')).join('');
+        return `session_${Date.now()}_${randomString}`;
+      }
+    } catch (error) {
+      console.warn('Web Crypto API not available, using fallback:', error);
+    }
+    
+    // Fallback to Math.random() if Web Crypto API is not available
+    const randomString = Math.random().toString(36).substring(2, 15);
     return `session_${Date.now()}_${randomString}`;
   }
 
