@@ -105,7 +105,7 @@ export const useQuoteForm = (onFormSuccess?: () => void) => {
       }
       
       // Create a random UUID for anonymous users
-      const anonymousUserId = crypto.randomUUID();
+      const anonymousUserId = 'anon_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
       
       // Convert sameDay value to boolean, handling both string and boolean types
       const sameDayValue = typeof data.sameDay === 'string' 
