@@ -3,6 +3,7 @@ import React from 'react';
 import { ChevronDown } from 'lucide-react';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui';
+import { Card, CardContent } from '@/components/ui/card';
 
 interface FaqItem {
   question: string;
@@ -23,37 +24,52 @@ const FaqCategory = ({ category, questions, index, isExpanded, onToggle }: FaqCa
   };
 
   return (
-    <Collapsible
-      open={isExpanded}
-      onOpenChange={onToggle}
+    <Card 
+      variant="process" 
+      size="md" 
+      elevation="sm"
+      collapsible={true}
       className="mb-8"
     >
-      <CollapsibleTrigger className="w-full">
-        <div className="flex justify-between items-center bg-brand-gray px-6 py-4 rounded-lg cursor-pointer shadow-sm hover:bg-brand-gray/80 transition-colors">
+      <Collapsible
+        open={isExpanded}
+        onOpenChange={onToggle}
+      >
+        <CollapsibleTrigger className="card-collapsible-trigger w-full">
           <h2 id={`faq-category-${index}`} className="text-2xl font-bold text-brand-navy">
             {category} <span className="text-brand-red">({questions.length})</span>
           </h2>
           <ChevronDown 
             size={24} 
-            className={`text-brand-navy transition-transform ${isExpanded ? 'rotate-180' : ''}`}
+            className={`card-collapsible-icon text-brand-navy`}
           />
-        </div>
-      </CollapsibleTrigger>
-      <CollapsibleContent>
-        <Accordion type="single" collapsible className="bg-white rounded-lg shadow-sm mt-2">
-          {questions.map((item, qIndex) => (
-            <AccordionItem key={qIndex} value={`item-${index}-${qIndex}`}>
-              <AccordionTrigger className="px-6 hover:bg-brand-gray hover:no-underline text-left">
-                {item.question}
-              </AccordionTrigger>
-              <AccordionContent className="px-6 pb-4 text-gray-600">
-                <div dangerouslySetInnerHTML={renderAnswer(item.answer)} />
-              </AccordionContent>
-            </AccordionItem>
-          ))}
-        </Accordion>
-      </CollapsibleContent>
-    </Collapsible>
+        </CollapsibleTrigger>
+        <CollapsibleContent>
+          <CardContent size="md" className="pt-0">
+            <Accordion type="single" collapsible className="space-y-2">
+              {questions.map((item, qIndex) => (
+                <Card 
+                  key={qIndex} 
+                  variant="standard" 
+                  size="sm" 
+                  elevation="none"
+                  className="border-gray-200"
+                >
+                  <AccordionItem value={`item-${index}-${qIndex}`} className="border-none">
+                    <AccordionTrigger className="px-4 py-3 hover:bg-brand-gray/50 hover:no-underline text-left rounded-t-lg">
+                      {item.question}
+                    </AccordionTrigger>
+                    <AccordionContent className="px-4 pb-4 text-gray-600 border-t border-gray-100">
+                      <div dangerouslySetInnerHTML={renderAnswer(item.answer)} />
+                    </AccordionContent>
+                  </AccordionItem>
+                </Card>
+              ))}
+            </Accordion>
+          </CardContent>
+        </CollapsibleContent>
+      </Collapsible>
+    </Card>
   );
 };
 

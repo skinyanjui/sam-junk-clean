@@ -6,6 +6,7 @@ import QuoteFormFields from './components/QuoteFormFields';
 import QuoteSuccess from './components/QuoteSuccess';
 import { scrollToFirstError } from '@/utils/form-helpers';
 import { useAnalyticsContext } from '@/providers/AnalyticsProvider';
+import { Card, CardContent } from '@/components/ui/card';
 
 
 interface QuoteFormProps {
@@ -97,21 +98,28 @@ const QuoteForm = ({ onFormSuccess }: QuoteFormProps) => {
   };
   
   return (
-    <div className="bg-white p-8 rounded-lg shadow-md border border-gray-200">
-      <QuoteHeader />
-      
-      {showSuccess ? (
-        <QuoteSuccess onRestart={resetForm} />
-      ) : (
-        <QuoteFormFields 
-          formMethods={{
-            ...formMethods,
-            onError: handleFormError
-          }}
-          onFieldFocus={handleFieldFocus}
-        />
-      )}
-    </div>
+    <Card 
+      variant="standard" 
+      size="lg" 
+      elevation="md"
+      className="max-w-2xl mx-auto"
+    >
+      <CardContent size="lg">
+        <QuoteHeader />
+        
+        {showSuccess ? (
+          <QuoteSuccess onRestart={resetForm} />
+        ) : (
+          <QuoteFormFields 
+            formMethods={{
+              ...formMethods,
+              onError: handleFormError
+            }}
+            onFieldFocus={handleFieldFocus}
+          />
+        )}
+      </CardContent>
+    </Card>
   );
 };
 

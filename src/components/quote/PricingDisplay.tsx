@@ -37,11 +37,17 @@ const PricingDisplay = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[...Array(4)].map((_, index) => (
-              <Card key={index} className="border-2">
-                <CardHeader className="pb-3">
+              <Card 
+                key={index} 
+                variant="standard"
+                size="md"
+                elevation="sm"
+                className="border-2"
+              >
+                <CardHeader size="md" className="pb-3">
                   <Skeleton className="h-6 w-32" />
                 </CardHeader>
-                <CardContent>
+                <CardContent size="md">
                   <Skeleton className="h-4 w-full mb-2" />
                   <Skeleton className="h-4 w-3/4 mb-4" />
                   <Skeleton className="h-6 w-24" />
@@ -77,11 +83,18 @@ const PricingDisplay = () => {
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {pricingData.map((item) => (
-            <Card key={item.id} className="border-2 hover:border-brand-red transition-colors">
-              <CardHeader className="pb-3">
-                <CardTitle className="text-xl font-bold text-brand-navy">{item.tier_name}</CardTitle>
+            <Card 
+              key={item.id} 
+              variant="standard"
+              size="md"
+              elevation="sm"
+              interactive={true}
+              className="border-2 hover:border-brand-red transition-colors"
+            >
+              <CardHeader size="md" className="pb-3">
+                <CardTitle size="md" className="text-brand-navy">{item.tier_name}</CardTitle>
               </CardHeader>
-              <CardContent>
+              <CardContent size="md">
                 <p className="text-gray-600 mb-4">{item.description}</p>
                 <p className="text-2xl font-bold text-brand-red">
                   Starting at {item.price_display.split('–')[0]}

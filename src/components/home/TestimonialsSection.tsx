@@ -69,8 +69,15 @@ const TestimonialsSection = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
           {testimonials.map((testimonial) => (
-            <Card key={testimonial.id} className="bg-white shadow-lg hover:shadow-xl transition-shadow duration-300">
-              <CardContent className="p-6">
+            <Card 
+              key={testimonial.id} 
+              variant="featured"
+              size="md"
+              elevation="lg"
+              interactive={false}
+              className="bg-white hover:shadow-xl transition-shadow duration-300"
+            >
+              <CardContent size="md">
                 <Quote className="h-8 w-8 text-brand-red mb-4" />
                 <blockquote className="text-gray-700 mb-4 leading-relaxed">
                   "{testimonial.quote}"

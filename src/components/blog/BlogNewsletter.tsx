@@ -48,8 +48,13 @@ const BlogNewsletter = () => {
 
   if (isSubscribed) {
     return (
-      <Card className="bg-green-50 border-green-200">
-        <CardContent className="p-6 text-center">
+      <Card 
+        variant="featured"
+        size="lg"
+        elevation="md"
+        className="bg-green-50 border-green-200"
+      >
+        <CardContent size="lg" className="text-center">
           <CheckCircle className="mx-auto text-green-600 mb-4" size={48} />
           <h3 className="text-xl font-bold text-green-800 mb-2">
             Thank you for subscribing!
@@ -63,8 +68,14 @@ const BlogNewsletter = () => {
   }
 
   return (
-    <Card className="bg-gradient-to-r from-brand-navy to-brand-navy/90 text-white">
-      <CardContent className="p-8">
+    <Card 
+      variant="featured"
+      size="lg"
+      elevation="md"
+      gradient={true}
+      className="bg-gradient-to-r from-brand-navy to-brand-navy/90 text-white"
+    >
+      <CardContent size="lg">
         <div className="flex items-center justify-center mb-4">
           <Mail className="text-brand-red mr-3" size={32} />
           <h3 className="text-2xl font-bold">Stay Connected</h3>

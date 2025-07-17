@@ -194,7 +194,12 @@ const SocialProofNotifications = () => {
           className="fixed bottom-6 left-6 z-40 max-w-sm"
         >
           <Card 
-            className="bg-white shadow-2xl border-l-4 border-l-green-500 cursor-pointer hover:shadow-3xl transition-all duration-300 hover:scale-105"
+            variant="notification"
+            size="sm"
+            elevation="xl"
+            interactive={true}
+            borderAccent={true}
+            className="cursor-pointer"
             onClick={handleNotificationClick}
           >
             <CardContent className="p-4">

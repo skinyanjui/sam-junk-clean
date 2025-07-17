@@ -1,272 +1,244 @@
-/**
- * Design System Components
- * Ensures consistent UI patterns across the application
- */
+// Design System - Card Configuration Interfaces
+// This file contains all the TypeScript interfaces for the unified card system
 
-import { cn } from '@/lib/utils';
-import { TYPOGRAPHY_SCALE, SPACING_SCALE, BUTTON_VARIANTS } from '@/utils/design-audit';
+import { CardVariant, CardSize, CardElevation } from './card';
 
-// Consistent Section Component
-interface SectionProps {
-  children: React.ReactNode;
-  className?: string;
-  variant?: 'default' | 'compact' | 'hero';
-  background?: 'white' | 'gray' | 'navy' | 'gradient';
+// Base Card Configuration Interface
+export interface CardConfig {
+  variant: CardVariant;
+  size: CardSize;
+  elevation: CardElevation;
+  interactive: boolean;
+  spacing: CardSize;
+  hasImage: boolean;
+  hasFooter: boolean;
+  hasBadge: boolean;
 }
 
-export const Section = ({
-  children,
-  className = '',
-  variant = 'default',
-  background = 'white'
-}: SectionProps) => {
-  const baseClasses = variant === 'hero'
-    ? 'min-h-screen flex items-center justify-center'
-    : variant === 'compact'
-      ? SPACING_SCALE.sectionCompact
-      : SPACING_SCALE.section;
+// Section-Specific Card Configurations
 
-  const backgroundClasses = {
-    white: 'bg-white',
-    gray: 'bg-brand-gray',
-    navy: 'bg-brand-navy text-white',
-    gradient: 'bg-gradient-to-br from-brand-navy via-brand-navy/95 to-brand-navy/90'
-  };
-
-  return (
-    <section className={cn(
-      baseClasses,
-      backgroundClasses[background],
-      className
-    )}>
-      <div className={SPACING_SCALE.container}>
-        {children}
-      </div>
-    </section>
-  );
-};
-
-// Consistent Heading Component
-interface HeadingProps {
-  level: 1 | 2 | 3 | 4 | 5 | 6;
-  children: React.ReactNode;
-  className?: string;
-  color?: 'navy' | 'red' | 'white' | 'inherit';
+// Home Section Cards
+export interface ServiceCardConfig extends Partial<CardConfig> {
+  variant: 'compact';
+  size: 'sm';
+  hasImage: true;
+  overlay: boolean;
+  popularity?: 'high' | 'medium' | 'low';
 }
 
-export const Heading = ({
-  level,
-  children,
-  className = '',
-  color = 'navy'
-}: HeadingProps) => {
-  const Tag = `h${level}` as keyof JSX.IntrinsicElements;
-
-  const scaleClasses = {
-    1: TYPOGRAPHY_SCALE.h1,
-    2: TYPOGRAPHY_SCALE.h2,
-    3: TYPOGRAPHY_SCALE.h3,
-    4: TYPOGRAPHY_SCALE.h4,
-    5: TYPOGRAPHY_SCALE.h5,
-    6: TYPOGRAPHY_SCALE.h6
-  };
-
-  const colorClasses = {
-    navy: 'text-brand-navy',
-    red: 'text-brand-red',
-    white: 'text-white',
-    inherit: ''
-  };
-
-  return (
-    <Tag className={cn(
-      scaleClasses[level],
-      colorClasses[color],
-      'font-montserrat',
-      className
-    )}>
-      {children}
-    </Tag>
-  );
-};
-
-// Consistent Card Component
-interface CardProps {
-  children: React.ReactNode;
-  className?: string;
-  variant?: 'default' | 'glass' | 'elevated';
-  padding?: 'sm' | 'md' | 'lg';
+export interface TestimonialCardConfig extends Partial<CardConfig> {
+  variant: 'featured';
+  size: 'md';
+  elevation: 'lg';
+  hasQuoteIcon: boolean;
 }
 
-export const Card = ({
-  children,
-  className = '',
-  variant = 'default',
-  padding = 'md'
-}: CardProps) => {
-  const variantClasses = {
-    default: 'bg-white border border-gray-300 rounded-xl shadow-sm',
-    glass: 'bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl',
-    elevated: 'bg-white border border-gray-300 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300'
-  };
-
-  const paddingClasses = {
-    sm: 'p-4',
-    md: 'p-6',
-    lg: 'p-8'
-  };
-
-  return (
-    <div className={cn(
-      variantClasses[variant],
-      paddingClasses[padding],
-      className
-    )}>
-      {children}
-    </div>
-  );
-};
-
-// Consistent Grid Component
-interface GridProps {
-  children: React.ReactNode;
-  className?: string;
-  cols?: 1 | 2 | 3 | 4;
-  gap?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
-  responsive?: boolean;
+export interface PricingOverviewCardConfig extends Partial<CardConfig> {
+  variant: 'featured';
+  size: 'md';
+  hasBadge?: boolean;
+  popular?: boolean;
 }
 
-export const Grid = ({
-  children,
-  className = '',
-  cols = 3,
-  gap = 'md',
-  responsive = true
-}: GridProps) => {
-  const colClasses = responsive ? {
-    1: 'grid-cols-1',
-    2: 'grid-cols-1 md:grid-cols-2',
-    3: 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3',
-    4: 'grid-cols-1 md:grid-cols-2 lg:grid-cols-4'
-  } : {
-    1: 'grid-cols-1',
-    2: 'grid-cols-2',
-    3: 'grid-cols-3',
-    4: 'grid-cols-4'
-  };
-
-  return (
-    <div className={cn(
-      'grid',
-      colClasses[cols],
-      SPACING_SCALE.gap[gap],
-      className
-    )}>
-      {children}
-    </div>
-  );
-};
-
-// Consistent Feature List Component
-interface FeatureListProps {
-  features: string[];
-  className?: string;
-  iconColor?: 'red' | 'navy' | 'green';
+export interface FeaturedProjectCardConfig extends Partial<CardConfig> {
+  variant: 'standard';
+  size: 'md';
+  hasImage: true;
+  hasTags: boolean;
 }
 
-export const FeatureList = ({
-  features,
-  className = '',
-  iconColor = 'red'
-}: FeatureListProps) => {
-  const iconColorClasses = {
-    red: 'text-brand-red',
-    navy: 'text-brand-navy',
-    green: 'text-green-600'
-  };
-
-  return (
-    <ul className={cn('space-y-3', className)}>
-      {features.map((feature, index) => (
-        <li key={index} className="flex items-start">
-          <svg
-            className={cn('w-5 h-5 mt-0.5 mr-3 flex-shrink-0', iconColorClasses[iconColor])}
-            fill="currentColor"
-            viewBox="0 0 20 20"
-          >
-            <path
-              fillRule="evenodd"
-              d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-              clipRule="evenodd"
-            />
-          </svg>
-          <span className="text-gray-700">{feature}</span>
-        </li>
-      ))}
-    </ul>
-  );
-};
-
-// Consistent CTA Section Component
-interface CTASectionProps {
-  title: string;
-  subtitle?: string;
-  primaryAction: {
-    text: string;
-    href: string;
-    onClick?: () => void;
-  };
-  secondaryAction?: {
-    text: string;
-    href: string;
-    onClick?: () => void;
-  };
-  className?: string;
+export interface BenefitCardConfig extends Partial<CardConfig> {
+  variant: 'compact';
+  size: 'xs';
+  hasIcon: boolean;
+  glassEffect?: boolean;
 }
 
-export const CTASection = ({
-  title,
-  subtitle,
-  primaryAction,
-  secondaryAction,
-  className = ''
-}: CTASectionProps) => {
-  return (
-    <Section variant="compact" background="navy" className={className}>
-      <div className="text-center">
-        <Heading level={2} color="white" className="mb-4">
-          {title}
-        </Heading>
-        {subtitle && (
-          <p className="text-lg text-white/80 mb-8 max-w-2xl mx-auto">
-            {subtitle}
-          </p>
-        )}
-        <div className="flex flex-col sm:flex-row justify-center gap-4">
-          <a
-            href={primaryAction.href}
-            onClick={primaryAction.onClick}
-            className={cn(
-              'inline-flex items-center justify-center px-8 py-3 rounded-lg font-semibold transition-all duration-300 hover:scale-105',
-              'bg-brand-red hover:bg-brand-red/90 text-white shadow-lg'
-            )}
-          >
-            {primaryAction.text}
-          </a>
-          {secondaryAction && (
-            <a
-              href={secondaryAction.href}
-              onClick={secondaryAction.onClick}
-              className={cn(
-                'inline-flex items-center justify-center px-8 py-3 rounded-lg font-semibold transition-all duration-300 hover:scale-105',
-                'border-2 border-white text-white hover:bg-white hover:text-brand-navy'
-              )}
-            >
-              {secondaryAction.text}
-            </a>
-          )}
-        </div>
-      </div>
-    </Section>
-  );
-};
+export interface StatsCardConfig extends Partial<CardConfig> {
+  variant: 'standard';
+  size: 'md';
+  hasStats: boolean;
+  gridLayout?: boolean;
+}
+
+// Blog Section Cards
+export interface BlogCardConfig extends Partial<CardConfig> {
+  variant: 'standard';
+  size: 'md';
+  hasImage: true;
+  featured?: boolean;
+  showTags?: boolean;
+  showAuthor?: boolean;
+  showReadTime?: boolean;
+}
+
+export interface BlogNewsletterCardConfig extends Partial<CardConfig> {
+  variant: 'featured';
+  size: 'lg';
+  gradient?: boolean;
+  successState?: boolean;
+}
+
+// Career Section Cards
+export interface JobCardConfig extends Partial<CardConfig> {
+  variant: 'interactive';
+  size: 'lg';
+  hasTabs: true;
+  hasFooter: true;
+  tabCount?: number;
+}
+
+// Location Section Cards
+export interface ServiceAreaCardConfig extends Partial<CardConfig> {
+  variant: 'interactive';
+  size: 'lg';
+  hasImage: true;
+  hasTabs: true;
+  hasFooter: true;
+  contactInfo?: boolean;
+}
+
+// Pricing Section Cards
+export interface PricingDisplayCardConfig extends Partial<CardConfig> {
+  variant: 'standard';
+  size: 'md';
+  interactive: true;
+  borderHighlight?: boolean;
+  priceDisplay?: boolean;
+}
+
+export interface TruckVisualizerCardConfig extends Partial<CardConfig> {
+  variant: 'process';
+  size: 'lg';
+  hasVisualizer: boolean;
+  interactive?: boolean;
+}
+
+export interface AdditionalPricingCardConfig extends Partial<CardConfig> {
+  variant: 'standard';
+  size: 'md';
+  hasTable?: boolean;
+  hasList?: boolean;
+}
+
+// Contact Section Cards
+export interface ContactFormCardConfig extends Partial<CardConfig> {
+  variant: 'glass';
+  size: 'lg';
+  backdropBlur: boolean;
+  formFields?: boolean;
+}
+
+// FAQ Section Cards
+export interface FaqCategoryCardConfig extends Partial<CardConfig> {
+  variant: 'process';
+  size: 'md';
+  collapsible: true;
+  hasAccordion: true;
+  expandable?: boolean;
+}
+
+// Quote Section Cards
+export interface QuoteFormCardConfig extends Partial<CardConfig> {
+  variant: 'standard';
+  size: 'lg';
+  elevation: 'md';
+  hasSteps?: boolean;
+}
+
+export interface ProcessStepCardConfig extends Partial<CardConfig> {
+  variant: 'process';
+  size: 'md';
+  hasStepNumber: boolean;
+  activeState?: boolean;
+  stepIndex?: number;
+}
+
+export interface PricingReferenceCardConfig extends Partial<CardConfig> {
+  variant: 'standard';
+  size: 'md';
+  informational: boolean;
+  hasReference?: boolean;
+}
+
+// Conversion Component Cards
+export interface NotificationCardConfig extends Partial<CardConfig> {
+  variant: 'notification';
+  size: 'sm';
+  elevation: 'xl';
+  hasAvatar?: boolean;
+  borderAccent?: boolean;
+  overlay?: boolean;
+}
+
+export interface ExitIntentCardConfig extends Partial<CardConfig> {
+  variant: 'notification';
+  size: 'md';
+  elevation: 'xl';
+  hasOffer?: boolean;
+  urgency?: boolean;
+}
+
+// Design Token Constants
+export const CARD_DESIGN_TOKENS = {
+  spacing: {
+    xs: '8px',   // p-2
+    sm: '12px',  // p-3
+    md: '16px',  // p-4
+    lg: '20px',  // p-5
+    xl: '24px'   // p-6
+  },
+  borderRadius: '8px', // rounded-lg
+  shadows: {
+    none: 'none',
+    sm: '0 1px 2px 0 rgb(0 0 0 / 0.05)',
+    md: '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)',
+    lg: '0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)',
+    xl: '0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)'
+  },
+  borders: {
+    default: '1px solid rgb(243 244 246)', // border-gray-100
+    accent: '1px solid rgb(229 231 235)',  // border-gray-200
+    glass: '1px solid rgb(255 255 255 / 0.2)' // border-white/20
+  },
+  transitions: {
+    default: 'all 0.3s ease',
+    fast: 'all 0.15s ease',
+    slow: 'all 0.5s ease'
+  }
+} as const;
+
+// Utility function to get card configuration by type
+export function getCardConfig(type: keyof typeof CARD_CONFIGS): Partial<CardConfig> {
+  return CARD_CONFIGS[type];
+}
+
+// Pre-defined card configurations for common use cases
+export const CARD_CONFIGS = {
+  // Home section
+  service: { variant: 'compact', size: 'sm', elevation: 'sm', interactive: true } as ServiceCardConfig,
+  testimonial: { variant: 'featured', size: 'md', elevation: 'lg' } as TestimonialCardConfig,
+  pricingOverview: { variant: 'featured', size: 'md', elevation: 'md' } as PricingOverviewCardConfig,
+  featuredProject: { variant: 'standard', size: 'md', elevation: 'sm', hasImage: true } as FeaturedProjectCardConfig,
+  benefit: { variant: 'compact', size: 'xs', elevation: 'sm' } as BenefitCardConfig,
+  
+  // Blog section
+  blogPost: { variant: 'standard', size: 'md', elevation: 'sm', hasImage: true } as BlogCardConfig,
+  blogNewsletter: { variant: 'featured', size: 'lg', elevation: 'md' } as BlogNewsletterCardConfig,
+  
+  // Interactive sections
+  job: { variant: 'interactive', size: 'lg', elevation: 'sm', hasTabs: true } as JobCardConfig,
+  serviceArea: { variant: 'interactive', size: 'lg', elevation: 'sm', hasImage: true } as ServiceAreaCardConfig,
+  
+  // Forms and processes
+  contactForm: { variant: 'glass', size: 'lg', elevation: 'md' } as ContactFormCardConfig,
+  processStep: { variant: 'process', size: 'md', elevation: 'sm' } as ProcessStepCardConfig,
+  faqCategory: { variant: 'process', size: 'md', elevation: 'sm', collapsible: true } as FaqCategoryCardConfig,
+  
+  // Notifications
+  notification: { variant: 'notification', size: 'sm', elevation: 'xl' } as NotificationCardConfig,
+  exitIntent: { variant: 'notification', size: 'md', elevation: 'xl' } as ExitIntentCardConfig
+} as const;
+
+// Type helper for card configuration keys
+export type CardConfigKey = keyof typeof CARD_CONFIGS;

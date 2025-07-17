@@ -18,7 +18,16 @@ const ServiceAreaCard = ({ location }: ServiceAreaCardProps) => {
   const formattedPhone = formatPhoneNumber(phoneNumber);
   
   return (
-    <Card key={location.id} className="overflow-hidden hover:shadow-md transition-shadow">
+    <Card 
+      key={location.id} 
+      variant="interactive"
+      size="lg"
+      elevation="sm"
+      interactive={true}
+      hasImage={true}
+      hasTabs={true}
+      className="overflow-hidden hover:shadow-md transition-shadow"
+    >
       <div className="h-48 overflow-hidden">
         <img 
           src={location.image} 
@@ -26,26 +35,26 @@ const ServiceAreaCard = ({ location }: ServiceAreaCardProps) => {
           className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
         />
       </div>
-      <CardHeader className="pb-2">
+      <CardHeader size="lg" className="pb-2">
         <div className="flex items-start justify-between">
           <div>
-            <CardTitle className="text-2xl flex items-center gap-2">
+            <CardTitle size="lg" className="flex items-center gap-2">
               {location.name}
               {location.isPrimary && (
                 <span className="bg-brand-red text-white text-xs px-2 py-1 rounded">Primary Area</span>
               )}
             </CardTitle>
-            <CardDescription>Coverage: {location.serviceRadius}</CardDescription>
+            <CardDescription size="lg">Coverage: {location.serviceRadius}</CardDescription>
           </div>
           <MapPin className="text-brand-red" />
         </div>
       </CardHeader>
-      <CardContent className="pb-2">
+      <CardContent size="lg" className="pb-2">
         <Tabs defaultValue="cities">
-          <TabsList className="grid w-full grid-cols-3">
-            <TabsTrigger value="cities">Cities Served</TabsTrigger>
-            <TabsTrigger value="contact">Contact</TabsTrigger>
-            <TabsTrigger value="about">About</TabsTrigger>
+          <TabsList className="grid w-full grid-cols-3 card-tabs">
+            <TabsTrigger value="cities" className="card-tab">Cities Served</TabsTrigger>
+            <TabsTrigger value="contact" className="card-tab">Contact</TabsTrigger>
+            <TabsTrigger value="about" className="card-tab">About</TabsTrigger>
           </TabsList>
           <TabsContent value="cities" className="pt-4">
             <ul className="grid grid-cols-2 gap-2">
@@ -87,7 +96,7 @@ const ServiceAreaCard = ({ location }: ServiceAreaCardProps) => {
           </TabsContent>
         </Tabs>
       </CardContent>
-      <CardFooter className="flex flex-col sm:flex-row gap-2">
+      <CardFooter size="lg" className="flex flex-col sm:flex-row gap-2">
         <Button asChild className="w-full bg-brand-red hover:bg-opacity-90">
           <Link to="/quote">Get a Quote</Link>
         </Button>

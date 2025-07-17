@@ -87,13 +87,19 @@ const PricingOverview = () => {
           
           <div className={`grid ${isMobile ? 'grid-cols-1' : 'md:grid-cols-3'} gap-4 max-w-5xl mx-auto`}>
             {[...Array(3)].map((_, i) => (
-              <Card key={i} className="h-full shadow-md">
-                <CardHeader className="text-center pb-3">
+              <Card 
+                key={i} 
+                variant="featured"
+                size="md"
+                elevation="md"
+                className="h-full"
+              >
+                <CardHeader size="md" className="text-center pb-3">
                   <Skeleton className="h-5 w-32 mx-auto mb-1" />
                   <Skeleton className="h-6 w-24 mx-auto mb-1" />
                   <Skeleton className="h-4 w-48 mx-auto" />
                 </CardHeader>
-                <CardContent className="pb-3">
+                <CardContent size="md" className="pb-3">
                   <div className="space-y-2">
                     {[...Array(4)].map((_, j) => (
                       <div key={j} className="flex items-center">
@@ -103,7 +109,7 @@ const PricingOverview = () => {
                     ))}
                   </div>
                 </CardContent>
-                <CardFooter className="pt-1 pb-3">
+                <CardFooter size="md" className="pt-1 pb-3">
                   <Skeleton className="h-8 w-full" />
                 </CardFooter>
               </Card>
@@ -142,13 +148,18 @@ const PricingOverview = () => {
                 ? 'md:-mt-3 md:mb-3 z-10' 
                 : ''
               } ${isMobile ? 'mb-4' : ''}`}>
-              <Card className={`h-full transition-all duration-500 hover:-translate-y-1 hover:shadow-lg ${
-                tier.popular 
-                  ? 'border-2 border-brand-red shadow-lg' 
-                  : 'shadow-md'
+              <Card 
+                variant="featured"
+                size="md"
+                elevation={tier.popular ? "lg" : "md"}
+                interactive={true}
+                className={`h-full transition-all duration-500 hover:-translate-y-1 hover:shadow-lg ${
+                  tier.popular 
+                    ? 'border-2 border-brand-red shadow-lg' 
+                    : ''
                 }`}
               >
-                <CardHeader className={`text-center pb-3 ${isMobile ? 'pt-3 px-3' : ''}`}>
+                <CardHeader size="md" className={`text-center pb-3 ${isMobile ? 'pt-3 px-3' : ''}`}>
                   {tier.popular && (
                     <Badge className="bg-brand-red mb-1 mx-auto">Most Common</Badge>
                   )}
@@ -157,7 +168,7 @@ const PricingOverview = () => {
                   <p className="text-gray-600 text-sm">{tier.description}</p>
                 </CardHeader>
                 
-                <CardContent className={`pb-3 ${isMobile ? 'px-3' : ''}`}>
+                <CardContent size="md" className={`pb-3 ${isMobile ? 'px-3' : ''}`}>
                   <ul className="space-y-1">
                     {tier.features?.map((feature, i) => (
                       <li key={i} className="flex items-center text-sm">
@@ -168,7 +179,7 @@ const PricingOverview = () => {
                   </ul>
                 </CardContent>
                 
-                <CardFooter className={`pt-1 pb-3 ${isMobile ? 'px-3' : ''}`}>
+                <CardFooter size="md" className={`pt-1 pb-3 ${isMobile ? 'px-3' : ''}`}>
                   <Button 
                     asChild 
                     className={`w-full ${

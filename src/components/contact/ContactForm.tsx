@@ -18,6 +18,7 @@ import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { LoadingButton } from '@/components/ui/loading-button';
 import { scrollToFirstError } from '@/utils/form-helpers';
+import { Card, CardContent } from '@/components/ui/card';
 
 // Define form validation schema
 const formSchema = z.object({
@@ -88,42 +89,87 @@ const ContactForm = () => {
   }
 
   return (
-    <div className="glass-card p-8">
-      <h2 className="text-2xl font-bold text-brand-navy mb-6">Send Us a Message</h2>
-      
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit, handleInvalidSubmit)} className="space-y-6">
-          <FormField
-            control={form.control}
-            name="name"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Full Name <span className="text-brand-red">*</span></FormLabel>
-                <FormControl>
-                  <Input 
-                    placeholder="John Doe" 
-                    {...field} 
-                    autoComplete="name"
-                    aria-required="true"
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <Card 
+      variant="glass"
+      size="lg"
+      elevation="md"
+      glassEffect={true}
+    >
+      <CardContent size="lg">
+        <h2 className="text-2xl font-bold text-brand-navy mb-6">Send Us a Message</h2>
+        
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit, handleInvalidSubmit)} className="space-y-6">
             <FormField
               control={form.control}
-              name="email"
+              name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email <span className="text-brand-red">*</span></FormLabel>
+                  <FormLabel>Full Name <span className="text-brand-red">*</span></FormLabel>
                   <FormControl>
-                    <Input
-                      type="email"
-                      placeholder="johndoe@example.com"
-                      autoComplete="email"
+                    <Input 
+                      placeholder="John Doe" 
+                      {...field} 
+                      autoComplete="name"
+                      aria-required="true"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Email <span className="text-brand-red">*</span></FormLabel>
+                    <FormControl>
+                      <Input
+                        type="email"
+                        placeholder="johndoe@example.com"
+                        autoComplete="email"
+                        aria-required="true"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              
+              <FormField
+                control={form.control}
+                name="phone"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Phone Number</FormLabel>
+                    <FormControl>
+                      <PhoneInput
+                        placeholder="(123) 456-7890"
+                        onValueChange={field.onChange}
+                        value={field.value}
+                        autoComplete="tel"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            
+            <FormField
+              control={form.control}
+              name="message"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Message <span className="text-brand-red">*</span></FormLabel>
+                  <FormControl>
+                    <Textarea
+                      placeholder="How can we help you?"
+                      rows={6}
                       aria-required="true"
                       {...field}
                     />
@@ -133,60 +179,22 @@ const ContactForm = () => {
               )}
             />
             
-            <FormField
-              control={form.control}
-              name="phone"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Phone Number</FormLabel>
-                  <FormControl>
-                    <PhoneInput
-                      placeholder="(123) 456-7890"
-                      onValueChange={field.onChange}
-                      value={field.value}
-                      autoComplete="tel"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-          
-          <FormField
-            control={form.control}
-            name="message"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Message <span className="text-brand-red">*</span></FormLabel>
-                <FormControl>
-                  <Textarea
-                    placeholder="How can we help you?"
-                    rows={6}
-                    aria-required="true"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          
-          <LoadingButton 
-            type="submit" 
-            className="w-full bg-brand-red hover:bg-opacity-90 py-6"
-            isLoading={isSubmitting}
-            loadingText="Sending..."
-          >
-            Send Message
-          </LoadingButton>
+            <LoadingButton 
+              type="submit" 
+              className="w-full bg-brand-red hover:bg-opacity-90 py-6"
+              isLoading={isSubmitting}
+              loadingText="Sending..."
+            >
+              Send Message
+            </LoadingButton>
 
-          <p className="text-sm text-gray-500 text-center">
-            We typically respond within 24 business hours.
-          </p>
-        </form>
-      </Form>
-    </div>
+            <p className="text-sm text-gray-500 text-center">
+              We typically respond within 24 business hours.
+            </p>
+          </form>
+        </Form>
+      </CardContent>
+    </Card>
   );
 };
 

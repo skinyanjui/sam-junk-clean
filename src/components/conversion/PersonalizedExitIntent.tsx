@@ -188,8 +188,14 @@ const PersonalizedExitIntent = ({ isOpen, onClose }: PersonalizedExitIntentProps
 
         <div className="space-y-6">
           {/* Offer Card */}
-          <Card className="border-2 border-dashed border-red-500 bg-red-50">
-            <CardContent className="p-4 text-center">
+          <Card 
+            variant="notification" 
+            size="md" 
+            elevation="md"
+            borderAccent={true}
+            className="border-2 border-dashed border-red-500 bg-red-50"
+          >
+            <CardContent size="md" className="text-center">
               <Badge variant="destructive" className="mb-2">
                 EXCLUSIVE OFFER
               </Badge>
