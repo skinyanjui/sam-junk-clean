@@ -4,6 +4,8 @@ import LocationsMap from './LocationsMap';
 import NoLocationsFound from './NoLocationsFound';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useTranslation } from 'react-i18next';
+import { MapPin, LayoutGrid, Map } from 'lucide-react';
+import { useState } from 'react';
 
 interface LocationsContentProps {
   filteredLocations: LocationData[];
@@ -20,41 +22,59 @@ export const LocationsContent = ({
   searchProps 
 }: LocationsContentProps) => {
   const { t } = useTranslation();
+  const [activeTab, setActiveTab] = useState<string>('cards');
   
   return (
-    <section className="py-4 bg-white" aria-labelledby="locations-content">
+    <section className="py-8 bg-white" aria-labelledby="locations-content">
       <div className="container-custom">
-        <Tabs defaultValue="cards" className="w-full">
-          <div className="flex justify-center mb-4">
-            <TabsList className="grid grid-cols-2 w-full max-w-md">
-              <TabsTrigger value="cards" className="text-sm md:text-base">
+        <div className="mb-8 text-center">
+          <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-brand-navy/10 mb-3">
+            <MapPin className="h-5 w-5 text-brand-navy" />
+          </div>
+          <h2 className="text-2xl md:text-3xl font-bold mb-2 text-gray-800">Our Service Areas</h2>
+          <p className="text-gray-600 max-w-2xl mx-auto">
+            We provide professional junk removal services across the Tri-State area. Browse our service locations below or use the interactive map to find coverage in your area.
+          </p>
+        </div>
+        
+        <Tabs 
+          defaultValue="cards" 
+          className="w-full"
+          value={activeTab}
+          onValueChange={setActiveTab}
+        >
+          <div className="flex justify-center mb-6">
+            <TabsList className="grid grid-cols-2 w-full max-w-md bg-gray-100/80 p-1 rounded-lg shadow-sm">
+              <TabsTrigger 
+                value="cards" 
+                className="text-sm md:text-base rounded-md data-[state=active]:bg-white data-[state=active]:text-brand-navy data-[state=active]:shadow-sm h-10"
+              >
                 <span className="flex items-center gap-2">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="hidden sm:inline-block">
-                    <rect width="18" height="18" x="3" y="3" rx="2" />
-                    <path d="M3 9h18" />
-                    <path d="M9 21V9" />
-                  </svg>
+                  <LayoutGrid size={18} className="text-current" />
                   Service Areas
                 </span>
               </TabsTrigger>
-              <TabsTrigger value="map" className="text-sm md:text-base">
+              <TabsTrigger 
+                value="map" 
+                className="text-sm md:text-base rounded-md data-[state=active]:bg-white data-[state=active]:text-brand-navy data-[state=active]:shadow-sm h-10"
+              >
                 <span className="flex items-center gap-2">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="hidden sm:inline-block">
-                    <polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21" />
-                    <line x1="9" x2="9" y1="3" y2="18" />
-                    <line x1="15" x2="15" y1="6" y2="21" />
-                  </svg>
+                  <Map size={18} className="text-current" />
                   Coverage Map
                 </span>
               </TabsTrigger>
             </TabsList>
           </div>
 
-          <TabsContent value="cards" className="mt-0">
+          <TabsContent value="cards" className="mt-0 transition-all duration-500 ease-in-out">
             {filteredLocations.length > 0 ? (
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6" aria-label="Service locations">
-                {filteredLocations.map((location) => (
-                  <ServiceAreaCard key={location.id} location={location} />
+                {filteredLocations.map((location, index) => (
+                  <ServiceAreaCard 
+                    key={location.id} 
+                    location={location} 
+                    variant={location.isPrimary ? 'featured' : 'standard'}
+                  />
                 ))}
               </div>
             ) : (
@@ -65,10 +85,22 @@ export const LocationsContent = ({
             )}
           </TabsContent>
 
-          <TabsContent value="map" className="mt-0">
-            <LocationsMap />
+          <TabsContent value="map" className="mt-0 transition-all duration-500 ease-in-out">
+            <LocationsMap 
+              mapStyle="modern" 
+              interactionLevel="enhanced"
+              showFilters={true}
+            />
           </TabsContent>
         </Tabs>
+        
+        {filteredLocations.length > 0 && (
+          <div className="mt-8 text-center">
+            <p className="text-sm text-gray-500">
+              Don't see your area listed? Contact us at (812) 610-1657 to check if we can make special arrangements for your location.
+            </p>
+          </div>
+        )}
       </div>
     </section>
   );
