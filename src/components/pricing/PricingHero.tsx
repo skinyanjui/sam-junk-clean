@@ -25,14 +25,14 @@ const PricingHero = ({
         const data = await fetchSiteContent('pricing_hero');
         setContent({
           title: data.title || 'Crystal Clear Pricing, Exceptional Value',
-          description: data.description || 'No hidden fees, no surprises. Our transparent pricing is based on volume and material type, giving you complete confidence in what you'll pay. See our simple breakdown below.'
+          description: data.description || 'No hidden fees, no surprises. Our transparent pricing is based on volume and material type, giving you complete confidence in what you will pay. See our simple breakdown below.'
         });
       } catch (err) {
         console.error('Error loading hero content:', err);
         // Fallback content if API fails
         setContent({
           title: 'Crystal Clear Pricing, Exceptional Value',
-          description: 'No hidden fees, no surprises. Our transparent pricing is based on volume and material type, giving you complete confidence in what you'll pay. See our simple breakdown below.'
+          description: 'No hidden fees, no surprises. Our transparent pricing is based on volume and material type, giving you complete confidence in what you will pay. See our simple breakdown below.'
         });
       } finally {
         setIsLoading(false);
