@@ -54,16 +54,16 @@ const EnhancedTrustSignals = () => {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
           <div className="text-center p-4 bg-gray-50 rounded-lg border border-gray-200">
             <Shield className="h-8 w-8 text-brand-red mx-auto mb-2" />
-            <h3 className="font-semibold text-sm text-brand-navy">Licensed & Insured</h3>
+            <h3 className="font-semibold text-sm text-brand-navy">Licensed & Fully Insured</h3>
             <p className="text-xs text-gray-600">{trustData.insurance.liability} Coverage</p>
-            <Badge variant="outline" className="mt-1 text-xs">License #JR-2018-INV</Badge>
+            <Badge variant="outline" className="mt-1 text-xs">License #JR-2025-INV</Badge>
           </div>
           
           <div className="text-center p-4 bg-gray-50 rounded-lg border border-gray-200">
             <Award className="h-8 w-8 text-brand-red mx-auto mb-2" />
-            <h3 className="font-semibold text-sm text-brand-navy">Veteran Owned</h3>
-            <p className="text-xs text-gray-600">{trustData.veteran_status.owner_branch} Veteran</p>
-            <Badge variant="outline" className="mt-1 text-xs">Proudly Serving Since 2018</Badge>
+            <h3 className="font-semibold text-sm text-brand-navy">Veteran Owned & Operated</h3>
+            <p className="text-xs text-gray-600">U.S. Marine Corps Veteran</p>
+            <Badge variant="outline" className="mt-1 text-xs">Founded in 2025</Badge>
           </div>
           
           <div className="text-center p-4 bg-gray-50 rounded-lg border border-gray-200">
@@ -76,7 +76,7 @@ const EnhancedTrustSignals = () => {
           <div className="text-center p-4 bg-gray-50 rounded-lg border border-gray-200">
             <Users className="h-8 w-8 text-brand-red mx-auto mb-2" />
             <h3 className="font-semibold text-sm text-brand-navy">{stats.customers_served}+ Customers</h3>
-            <p className="text-xs text-gray-600">Since 2018</p>
+            <p className="text-xs text-gray-600">Since 2025</p>
             <Badge variant="outline" className="mt-1 text-xs">BBB A+ Rating</Badge>
           </div>
         </div>
@@ -106,7 +106,7 @@ const EnhancedTrustSignals = () => {
         {/* Multiple Conversion Paths */}
         <div className="bg-brand-gray p-6 rounded-lg">
           <h3 className="text-xl font-bold text-brand-navy mb-4 text-center">
-            Ready to Reclaim Your Space? Choose Your Preferred Way to Get Started:
+            Ready to Experience the Uncle Sam Difference?
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <Button size="lg" className="bg-brand-red hover:bg-brand-red/90 h-auto py-4 flex-col">
@@ -117,14 +117,14 @@ const EnhancedTrustSignals = () => {
             
             <Button size="lg" variant="outline" className="border-brand-navy text-brand-navy h-auto py-4 flex-col">
               <Calendar className="h-5 w-5 mb-1" />
-              <span className="font-bold">Book Online</span>
-              <span className="text-sm opacity-70">Free Quote in 60 Seconds</span>
+              <span className="font-bold">Free Quote</span>
+              <span className="text-sm opacity-70">No Obligation</span>
             </Button>
             
             <Button size="lg" variant="outline" className="border-brand-navy text-brand-navy h-auto py-4 flex-col">
               <CheckCircle className="h-5 w-5 mb-1" />
-              <span className="font-bold">Text Us</span>
-              <span className="text-sm opacity-70">Quick Response Guaranteed</span>
+              <span className="font-bold">Same-Day Service</span>
+              <span className="text-sm opacity-70">Flexible Scheduling</span>
             </Button>
           </div>
         </div>
