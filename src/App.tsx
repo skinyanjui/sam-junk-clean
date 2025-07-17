@@ -11,7 +11,6 @@ import ScrollToTop from "@/components/ScrollToTop";
 import FloatingPhoneCTA from "@/components/mobile/FloatingPhoneCTA";
 import { usePerformanceMonitoring } from "@/hooks/use-performance-monitoring";
 import ABTestProvider from "@/components/testing/ABTestProvider";
-import SocialProofNotifications from "@/components/conversion/SocialProofNotifications";
 import Index from "./pages/Index";
 import About from "./pages/About";
 import Services from "./pages/Services";
@@ -31,6 +30,8 @@ const queryClient = new QueryClient();
 
 const AppContent = () => {
   usePerformanceMonitoring();
+  
+  console.log('AppContent rendered successfully');
   
   return (
     <>
@@ -59,24 +60,28 @@ const AppContent = () => {
   );
 };
 
-const App = () => (
-  <ErrorBoundary>
-    <QueryClientProvider client={queryClient}>
-      <HelmetProvider>
-        <TooltipProvider>
-          <Toaster />
-          <Sonner />
-          <BrowserRouter>
-            <AnalyticsProvider>
-              <ABTestProvider>
-                <AppContent />
-              </ABTestProvider>
-            </AnalyticsProvider>
-          </BrowserRouter>
-        </TooltipProvider>
-      </HelmetProvider>
-    </QueryClientProvider>
-  </ErrorBoundary>
-);
+const App = () => {
+  console.log('App component starting');
+  
+  return (
+    <ErrorBoundary>
+      <QueryClientProvider client={queryClient}>
+        <HelmetProvider>
+          <TooltipProvider>
+            <Toaster />
+            <Sonner />
+            <BrowserRouter>
+              <AnalyticsProvider>
+                <ABTestProvider>
+                  <AppContent />
+                </ABTestProvider>
+              </AnalyticsProvider>
+            </BrowserRouter>
+          </TooltipProvider>
+        </HelmetProvider>
+      </QueryClientProvider>
+    </ErrorBoundary>
+  );
+};
 
 export default App;

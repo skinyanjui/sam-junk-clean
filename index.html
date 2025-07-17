@@ -1,88 +1,16 @@
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
-    <title>Uncle Sam Junk Removal | Tri-State Area Junk Removal Services</title>
-    <meta name="description" content="Uncle Sam Junk Removal - Professional junk removal services in the Tri-State area. Residential, Commercial, and Estate Cleanouts. Get a free quote today!" />
-    <meta name="author" content="Uncle Sam Junk Removal" />
-
-    <!-- PWA Manifest -->
-    <link rel="manifest" href="/manifest.json">
-    <meta name="theme-color" content="#B22234">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Uncle Sam Junk">
-
-    <!-- Performance optimizations -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="dns-prefetch" href="https://images.unsplash.com">
-    
-    <!-- Critical CSS for LCP optimization -->
-    <style>
-      /* Critical above-the-fold styles */
-      body { margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; }
-      .hero-section { background-color: #1a365d; min-height: 100vh; }
-      .container-custom { max-width: 1200px; margin: 0 auto; padding: 0 1rem; }
-    </style>
-    
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@300;400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"></noscript>
-    
-    <!-- Security and caching -->
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
-    
-    <!-- Open Graph / Facebook -->
-    <meta property="og:title" content="Uncle Sam Junk Removal | Professional Junk Removal Services" />
-    <meta property="og:description" content="Uncle Sam wants YOU to live junk-free! Professional junk removal in the Tri-State area." />
-    <meta property="og:type" content="website" />
-    <meta property="og:image" content="https://example.com/opengraph-image.png" />
-    <meta property="og:site_name" content="Uncle Sam Junk Removal" />
-
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@UnceSamJunk" />
-    <meta name="twitter:image" content="https://example.com/opengraph-image.png" />
-    
-    <!-- Additional SEO tags -->
-    <meta name="keywords" content="junk removal, trash removal, cleanout services, appliance removal, furniture removal, Evansville, Henderson, Tri-State area, veteran owned" />
-    <meta name="geo.region" content="US-IN" />
-    <meta name="geo.placename" content="Evansville" />
-    <link rel="canonical" href="https://unclesamjunkremoval.com" />
-    
-    <!-- Mobile-specific meta -->
-    <meta name="format-detection" content="telephone=no">
-    <meta name="apple-mobile-web-app-title" content="Uncle Sam Junk">
-    
-    <!-- Accessibility -->
-    <meta name="color-scheme" content="light">
-    
-    <!-- Preload critical resources for LCP -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite + React + TS</title>
+    <!-- Clear cache script to remove phantom services -->
+    <script src="/clear-cache.js"></script>
   </head>
-
   <body>
     <div id="root"></div>
-    
-    <!-- Service Worker Registration -->
-    <script>
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-          navigator.serviceWorker.register('/sw.js')
-            .then((registration) => {
-              console.log('SW registered: ', registration);
-            })
-            .catch((registrationError) => {
-              console.log('SW registration failed: ', registrationError);
-            });
-        });
-      }
-    </script>
-    
-    <!-- IMPORTANT: DO NOT REMOVE THIS SCRIPT TAG OR THIS VERY COMMENT! -->
-    <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
