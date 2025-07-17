@@ -1,130 +1,99 @@
 
-import React from "react";
-import { Skeleton } from "@/components/ui/skeleton";
+import React from 'react';
 import { cn } from "@/lib/utils";
 
 interface EnhancedLoadingSkeletonProps {
-  variant?: "hero" | "service-card" | "testimonial" | "blog-card" | "stats" | "navigation";
+  variant?: 'default' | 'card' | 'image' | 'text' | 'list';
   count?: number;
   className?: string;
-  animated?: boolean;
+  height?: string;
+  width?: string;
+  animate?: boolean;
 }
 
-export function EnhancedLoadingSkeleton({
-  variant = "hero",
+const EnhancedLoadingSkeleton: React.FC<EnhancedLoadingSkeletonProps> = ({
+  variant = 'default',
   count = 1,
   className,
-  animated = true,
-}: EnhancedLoadingSkeletonProps) {
-  
-  const baseClasses = animated ? "animate-pulse" : "";
-  
+  height,
+  width,
+  animate = true
+}) => {
+  const baseClasses = cn(
+    "bg-gray-200 rounded",
+    animate && "animate-pulse",
+    className
+  );
+
   const renderSkeleton = () => {
     switch (variant) {
-      case "hero":
+      case 'card':
         return (
-          <div className={cn("w-full space-y-6", className)}>
-            <div className="space-y-4">
-              <Skeleton className={cn("h-4 w-32", baseClasses)} />
-              <Skeleton className={cn("h-12 md:h-16 w-full", baseClasses)} />
-              <Skeleton className={cn("h-6 w-4/5", baseClasses)} />
-            </div>
-            <div className="space-y-3">
-              <Skeleton className={cn("h-4 w-80", baseClasses)} />
-              <Skeleton className={cn("h-4 w-72", baseClasses)} />
-              <Skeleton className={cn("h-4 w-84", baseClasses)} />
-            </div>
-            <div className="flex gap-4">
-              <Skeleton className={cn("h-12 w-48", baseClasses)} />
-              <Skeleton className={cn("h-12 w-48", baseClasses)} />
-            </div>
+          <div className={cn("p-4 border rounded-lg", className)}>
+            <div className={cn(baseClasses, "h-32 mb-4")} />
+            <div className={cn(baseClasses, "h-4 mb-2")} />
+            <div className={cn(baseClasses, "h-4 w-3/4 mb-4")} />
+            <div className={cn(baseClasses, "h-8 w-24")} />
           </div>
         );
-
-      case "service-card":
+      
+      case 'image':
         return (
-          <div className={cn("bg-white rounded-lg p-6 shadow-sm", className)}>
-            <div className="flex items-start space-x-4">
-              <Skeleton className={cn("h-8 w-8 rounded-full", baseClasses)} />
-              <div className="flex-1 space-y-2">
-                <Skeleton className={cn("h-5 w-3/4", baseClasses)} />
-                <Skeleton className={cn("h-4 w-full", baseClasses)} />
-                <Skeleton className={cn("h-4 w-5/6", baseClasses)} />
-              </div>
-            </div>
-          </div>
+          <div 
+            className={baseClasses}
+            style={{ 
+              height: height || '200px',
+              width: width || '100%'
+            }}
+          />
         );
-
-      case "testimonial":
+      
+      case 'text':
         return (
-          <div className={cn("bg-white rounded-xl p-6 shadow-sm", className)}>
-            <div className="space-y-4">
-              <div className="flex items-center space-x-3">
-                <Skeleton className={cn("h-12 w-12 rounded-full", baseClasses)} />
-                <div className="space-y-2">
-                  <Skeleton className={cn("h-4 w-32", baseClasses)} />
-                  <Skeleton className={cn("h-3 w-24", baseClasses)} />
-                </div>
-              </div>
-              <div className="space-y-2">
-                <Skeleton className={cn("h-4 w-full", baseClasses)} />
-                <Skeleton className={cn("h-4 w-full", baseClasses)} />
-                <Skeleton className={cn("h-4 w-3/4", baseClasses)} />
-              </div>
-              <div className="flex space-x-1">
-                {[...Array(5)].map((_, i) => (
-                  <Skeleton key={i} className={cn("h-4 w-4", baseClasses)} />
-                ))}
-              </div>
-            </div>
-          </div>
+          <div 
+            className={baseClasses}
+            style={{ 
+              height: height || '1rem',
+              width: width || '100%'
+            }}
+          />
         );
-
-      case "blog-card":
+      
+      case 'list':
         return (
-          <div className={cn("bg-white rounded-lg overflow-hidden shadow-sm", className)}>
-            <Skeleton className={cn("h-48 w-full", baseClasses)} />
-            <div className="p-6 space-y-3">
-              <Skeleton className={cn("h-3 w-20", baseClasses)} />
-              <Skeleton className={cn("h-6 w-4/5", baseClasses)} />
-              <div className="space-y-2">
-                <Skeleton className={cn("h-4 w-full", baseClasses)} />
-                <Skeleton className={cn("h-4 w-3/4", baseClasses)} />
-              </div>
-              <Skeleton className={cn("h-3 w-24", baseClasses)} />
-            </div>
-          </div>
-        );
-
-      case "stats":
-        return (
-          <div className={cn("text-center p-4", className)}>
-            <Skeleton className={cn("h-8 w-20 mx-auto mb-2", baseClasses)} />
-            <Skeleton className={cn("h-4 w-32 mx-auto", baseClasses)} />
-          </div>
-        );
-
-      case "navigation":
-        return (
-          <div className={cn("flex items-center space-x-6", className)}>
-            {[...Array(4)].map((_, i) => (
-              <Skeleton key={i} className={cn("h-4 w-16", baseClasses)} />
+          <div className="space-y-2">
+            {Array.from({ length: 3 }).map((_, index) => (
+              <div key={index} className={cn(baseClasses, "h-4")} />
             ))}
           </div>
         );
-
+      
       default:
-        return <Skeleton className={cn("h-4 w-full", baseClasses, className)} />;
+        return (
+          <div 
+            className={baseClasses}
+            style={{ 
+              height: height || '1rem',
+              width: width || '100%'
+            }}
+          />
+        );
     }
   };
 
+  if (count === 1) {
+    return renderSkeleton();
+  }
+
   return (
-    <>
-      {Array.from({ length: count }).map((_, i) => (
-        <div key={i} className={count > 1 && i < count - 1 ? "mb-6" : ""}>
+    <div className="space-y-4">
+      {Array.from({ length: count }).map((_, index) => (
+        <div key={index}>
           {renderSkeleton()}
         </div>
       ))}
-    </>
+    </div>
   );
-}
+};
+
+export default EnhancedLoadingSkeleton;

@@ -1,93 +1,67 @@
 
-import React from "react";
-import { Skeleton } from "@/components/ui/skeleton";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils"
 
 interface LoadingSkeletonProps {
-  variant?: "card" | "text" | "form" | "button" | "image" | "avatar" | "table";
-  count?: number;
-  className?: string;
-  height?: string;
-  width?: string;
-  gap?: string;
+  className?: string
+  height?: string
+  width?: string
+  variant?: 'default' | 'image' | 'card' | 'text'
+  children?: React.ReactNode
 }
 
-export function LoadingSkeleton({
-  variant = "text",
-  count = 1,
-  className,
-  height,
-  width,
-  gap = "space-y-2",
+export function LoadingSkeleton({ 
+  className, 
+  height = "1rem", 
+  width = "100%", 
+  variant = "default",
+  children,
+  ...props 
 }: LoadingSkeletonProps) {
-  const renderSkeleton = () => {
-    switch (variant) {
-      case "card":
-        return (
-          <div className={cn("w-full rounded-xl overflow-hidden", className)}>
-            <Skeleton className="h-48 w-full rounded-t-xl" />
-            <div className="p-4 space-y-3">
-              <Skeleton className="h-6 w-3/4" />
-              <Skeleton className="h-4 w-full" />
-              <Skeleton className="h-4 w-5/6" />
-              <Skeleton className="h-4 w-4/6" />
-            </div>
-          </div>
-        );
-      case "form":
-        return (
-          <div className={cn("space-y-4 w-full", className)}>
-            <Skeleton className="h-5 w-1/4 mb-1" />
-            <Skeleton className="h-10 w-full rounded-md" />
-            <Skeleton className="h-5 w-1/4 mb-1" />
-            <Skeleton className="h-10 w-full rounded-md" />
-            <Skeleton className="h-5 w-1/4 mb-1" />
-            <Skeleton className="h-24 w-full rounded-md" />
-            <Skeleton className="h-10 w-full rounded-md mt-4" />
-          </div>
-        );
-      case "button":
-        return <Skeleton className={cn("h-10 w-20 rounded-md", className)} />;
-      case "image":
-        return <Skeleton className={cn("w-full aspect-video rounded-md", className)} />;
-      case "avatar":
-        return <Skeleton className={cn("h-12 w-12 rounded-full", className)} />;
-      case "table":
-        return (
-          <div className={cn("w-full space-y-3", className)}>
-            <div className="flex gap-2">
-              {[...Array(3)].map((_, i) => (
-                <Skeleton key={i} className="h-8 flex-1" />
-              ))}
-            </div>
-            {[...Array(count)].map((_, i) => (
-              <div key={i} className="flex gap-2">
-                {[...Array(3)].map((_, j) => (
-                  <Skeleton key={j} className="h-12 flex-1" />
-                ))}
-              </div>
-            ))}
-          </div>
-        );
-      case "text":
-      default:
-        return (
-          <div className={cn(gap, className)}>
-            {Array.from({ length: count }).map((_, i) => (
-              <Skeleton 
-                key={i} 
-                className={cn(
-                  "h-4 w-full", 
-                  i === count - 1 && count > 1 ? "w-4/5" : "",
-                  height ? `h-${height}` : "",
-                  width ? `w-${width}` : ""
-                )} 
-              />
-            ))}
-          </div>
-        );
-    }
-  };
+  if (variant === 'image') {
+    return (
+      <div 
+        className={cn(
+          "relative overflow-hidden rounded-lg bg-muted animate-pulse",
+          className
+        )}
+        style={{ height, width }}
+        {...props}
+      >
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full animate-shimmer" />
+      </div>
+    )
+  }
 
-  return <>{renderSkeleton()}</>;
+  if (variant === 'card') {
+    return (
+      <div className={cn("space-y-3 p-4 rounded-lg border bg-card", className)} {...props}>
+        <div className="h-32 bg-muted rounded animate-pulse" />
+        <div className="space-y-2">
+          <div className="h-4 bg-muted rounded animate-pulse" />
+          <div className="h-4 bg-muted rounded w-3/4 animate-pulse" />
+        </div>
+        <div className="h-8 bg-muted rounded animate-pulse" />
+      </div>
+    )
+  }
+
+  if (variant === 'text') {
+    return (
+      <div 
+        className={cn("bg-muted rounded animate-pulse", className)}
+        style={{ height, width }}
+        {...props}
+      />
+    )
+  }
+
+  return (
+    <div 
+      className={cn("bg-muted rounded animate-pulse", className)}
+      style={{ height, width }}
+      {...props}
+    >
+      {children}
+    </div>
+  )
 }
