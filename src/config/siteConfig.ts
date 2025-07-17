@@ -1,4 +1,4 @@
-import { CONTACT_INFO, PRICING_STRUCTURE, COPY_STANDARDS } from '@/utils/design-audit';
+import { CONTACT_INFO, PRICING_STRUCTURE, COPY_STANDARDS } from '@/utils/business-constants';
 
 export const siteConfig = {
   siteName: COPY_STANDARDS.businessName,

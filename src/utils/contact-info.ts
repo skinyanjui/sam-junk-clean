@@ -4,7 +4,7 @@
  * This ensures consistency across the entire application
  */
 
-import { CONTACT_INFO } from './design-audit';
+import { CONTACT_INFO } from './business-constants';
 
 // Standard format for display: (812) 610-1657
 export const PHONE_NUMBER = CONTACT_INFO.phone;
