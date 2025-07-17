@@ -43,15 +43,78 @@ const WhyChooseUs = () => {
         console.error('WhyChooseUs: Error loading company data:', error);
         setError('Failed to load company data');
         
-        // Set fallback data to ensure something displays
+        // Set fallback data to ensure something displays and align with About Us page
         setBenefits([
           {
             id: 'fallback-1',
-            title: 'Professional Service',
-            description: 'Reliable junk removal you can trust',
-            icon: 'Check',
-            color_class: 'bg-green-100 text-green-800',
+            title: 'Veteran-Owned',
+            description: 'U.S. Marine Corps veteran owned and operated business',
+            icon: 'Award',
+            color_class: 'bg-blue-100 text-blue-800',
             sort_order: 1,
+            created_at: new Date().toISOString()
+          },
+          {
+            id: 'fallback-2',
+            title: 'Licensed & Insured',
+            description: 'Fully licensed and insured for your protection',
+            icon: 'Shield',
+            color_class: 'bg-green-100 text-green-800',
+            sort_order: 2,
+            created_at: new Date().toISOString()
+          },
+          {
+            id: 'fallback-3',
+            title: 'Eco-Friendly',
+            description: 'We donate and recycle whenever possible',
+            icon: 'Leaf',
+            color_class: 'bg-emerald-100 text-emerald-800',
+            sort_order: 3,
+            created_at: new Date().toISOString()
+          },
+          {
+            id: 'fallback-4',
+            title: 'Transparent Pricing',
+            description: 'Upfront pricing with no hidden fees',
+            icon: 'DollarSign',
+            color_class: 'bg-amber-100 text-amber-800',
+            sort_order: 4,
+            created_at: new Date().toISOString()
+          },
+          {
+            id: 'fallback-5',
+            title: 'Flexible Scheduling',
+            description: 'Same-day service available',
+            icon: 'Calendar',
+            color_class: 'bg-purple-100 text-purple-800',
+            sort_order: 5,
+            created_at: new Date().toISOString()
+          },
+          {
+            id: 'fallback-6',
+            title: '100% Satisfaction',
+            description: 'Guaranteed satisfaction with every job',
+            icon: 'Star',
+            color_class: 'bg-red-100 text-red-800',
+            sort_order: 6,
+            created_at: new Date().toISOString()
+          },
+          {
+            id: 'fallback-7',
+            title: 'Professional Team',
+            description: 'Experienced team of trained professionals',
+            icon: 'Users',
+            color_class: 'bg-indigo-100 text-indigo-800',
+            sort_order: 7,
+            created_at: new Date().toISOString()
+          },
+          {
+            id: 'fallback-8',
+            title: 'Tri-State Service',
+            description: 'Proudly serving the entire Tri-State area',
+            icon: 'Truck',
+            color_class: 'bg-cyan-100 text-cyan-800',
+            sort_order: 8,
             created_at: new Date().toISOString()
           }
         ]);
@@ -143,14 +206,14 @@ const WhyChooseUs = () => {
           animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.5 }}
         >
-          <span className="inline-block px-4 py-1.5 rounded-full bg-brand-red/10 text-brand-red font-semibold text-sm uppercase tracking-wider mb-3">Your Best Choice</span>
+          <span className="inline-block px-4 py-1.5 rounded-full bg-brand-red/10 text-brand-red font-semibold text-sm uppercase tracking-wider mb-3">Why Choose Uncle Sam</span>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-brand-navy to-brand-navy/80 bg-clip-text text-transparent">
-            Experience The Difference
+            Experience The Uncle Sam Difference
           </h2>
           <div className="w-20 h-1 bg-gradient-to-r from-brand-red to-brand-red/60 mx-auto mb-6"></div>
           <p className="text-base sm:text-lg max-w-2xl mx-auto text-gray-600">
-            We're not just another junk removal company. Our veteran leadership, environmental commitment, 
-            and dedication to customer satisfaction set us apart.
+            We're not just another junk removal company. Our veteran-owned and operated business, 
+            environmental responsibility, and commitment to 100% customer satisfaction set us apart.
           </p>
         </motion.div>
         
