@@ -21,31 +21,24 @@ interface JobCardProps {
 
 const JobCard = ({ job, onApply }: JobCardProps) => {
   return (
-    <Card 
-      variant="interactive"
-      size="lg"
-      elevation="sm"
-      interactive={true}
-      hasTabs={true}
-      className="overflow-hidden hover:shadow-md transition-shadow flex flex-col"
-    >
-      <CardHeader size="lg">
+    <Card className="overflow-hidden hover:shadow-md transition-shadow flex flex-col shadow-sm">
+      <CardHeader className="p-6">
         <div className="flex justify-between items-start">
           <div className="flex flex-col">
-            <CardTitle size="lg" className="text-brand-navy">{job.title}</CardTitle>
-            <CardDescription size="lg">
+            <CardTitle className="text-lg text-brand-navy">{job.title}</CardTitle>
+            <CardDescription className="text-base">
               {job.type} • {job.location}
             </CardDescription>
           </div>
           <Briefcase size={24} className="text-brand-red" />
         </div>
       </CardHeader>
-      <CardContent size="lg" className="flex-grow">
+      <CardContent className="flex-grow p-6 pt-0">
         <Tabs defaultValue="description" className="w-full">
-          <TabsList className="grid w-full grid-cols-3 card-tabs">
-            <TabsTrigger value="description" className="card-tab">Description</TabsTrigger>
-            <TabsTrigger value="requirements" className="card-tab">Requirements</TabsTrigger>
-            <TabsTrigger value="benefits" className="card-tab">Benefits</TabsTrigger>
+          <TabsList className="grid w-full grid-cols-3">
+            <TabsTrigger value="description">Description</TabsTrigger>
+            <TabsTrigger value="requirements">Requirements</TabsTrigger>
+            <TabsTrigger value="benefits">Benefits</TabsTrigger>
           </TabsList>
           <TabsContent value="description" className="pt-4">
             <p className="text-gray-600">{job.description}</p>
@@ -66,7 +59,7 @@ const JobCard = ({ job, onApply }: JobCardProps) => {
           </TabsContent>
         </Tabs>
       </CardContent>
-      <CardFooter size="lg" className="flex justify-end">
+      <CardFooter className="flex justify-end p-6 pt-0">
         <Button 
           className="w-full md:w-auto bg-brand-red hover:bg-opacity-90"
           onClick={() => onApply(job.id)}

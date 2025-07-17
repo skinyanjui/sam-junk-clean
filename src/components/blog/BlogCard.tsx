@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { BlogPost } from '@/types/blog';
 import { Clock, User, Tag } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 interface BlogCardProps {
   post: BlogPost;
@@ -13,12 +14,11 @@ interface BlogCardProps {
 const BlogCard = ({ post, featured = false }: BlogCardProps) => {
   return (
     <Card 
-      variant={featured ? "featured" : "standard"}
-      size="md"
-      elevation="sm"
-      interactive={true}
       hasImage={true}
-      className="overflow-hidden h-full flex flex-col transition-all duration-300 hover:shadow-md"
+      className={cn(
+        "overflow-hidden h-full flex flex-col transition-all duration-300 hover:shadow-md",
+        featured && "border-2 border-brand-red"
+      )}
     >
       <Link to={`/blog/${post.slug}`} className="block overflow-hidden aspect-[16/9]">
         <img 
@@ -27,7 +27,7 @@ const BlogCard = ({ post, featured = false }: BlogCardProps) => {
           className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
         />
       </Link>
-      <CardContent size={featured ? "lg" : "md"} className="flex flex-col flex-grow">
+      <CardContent className={cn("flex flex-col flex-grow", featured ? "p-6" : "p-4")}>
         <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
           <span className={`text-sm font-medium text-brand-red px-2 py-1 bg-red-50 rounded-full`}>
             {post.category}

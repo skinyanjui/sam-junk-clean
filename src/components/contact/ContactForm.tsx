@@ -89,13 +89,8 @@ const ContactForm = () => {
   }
 
   return (
-    <Card 
-      variant="glass"
-      size="lg"
-      elevation="md"
-      glassEffect={true}
-    >
-      <CardContent size="lg">
+    <Card className="backdrop-blur-sm bg-white/95 shadow-md">
+      <CardContent className="p-6">
         <h2 className="text-2xl font-bold text-brand-navy mb-6">Send Us a Message</h2>
         
         <Form {...form}>

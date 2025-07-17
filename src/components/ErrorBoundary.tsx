@@ -1,3 +1,4 @@
+
 import React, { Component, ErrorInfo, ReactNode } from 'react';
 import { Button } from '@/components/ui/button';
 import { AlertTriangle, RefreshCw, Home } from 'lucide-react';
@@ -28,18 +29,6 @@ class ErrorBoundary extends Component<Props, State> {
       error,
       errorInfo
     });
-
-    // Log error to analytics/monitoring service
-    if (typeof window !== 'undefined' && window.gtag) {
-      window.gtag('event', 'exception', {
-        description: error.toString(),
-        fatal: false,
-        custom_map: {
-          error_boundary: true,
-          component_stack: errorInfo.componentStack
-        }
-      });
-    }
 
     // Log to console in development
     if (process.env.NODE_ENV === 'development') {
