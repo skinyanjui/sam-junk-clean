@@ -58,10 +58,8 @@ const Card = React.forwardRef<HTMLDivElement, UnifiedCardProps>(
   ({ 
     className, 
     variant = 'standard', 
-    size = 'md', 
     elevation = 'sm', 
     interactive = false,
-    hasImage = false,
     hasTabs = false,
     collapsible = false,
     glassEffect = false,
@@ -336,21 +334,87 @@ const CardTitle = React.forwardRef<HTMLHeadingElement, CardTitleProps>(
       xl: "text-2xl font-bold"
     };
     
-    // Create the appropriate heading element based on headingLevel
-    const HeadingTag = `h${headingLevel}` as keyof JSX.IntrinsicElements;
-    
-    return (
-      <HeadingTag
-        ref={ref}
-        className={cn(
-          titleSizes[size],
-          "leading-tight tracking-tight",
-          visuallyHidden && "sr-only", // Screen reader only if visuallyHidden
-          className
-        )}
-        {...props}
-      />
-    );
+    // Render the appropriate heading element based on headingLevel
+    if (headingLevel === 1) {
+      return (
+        <h1
+          ref={ref}
+          className={cn(
+            titleSizes[size],
+            "leading-tight tracking-tight",
+            visuallyHidden && "sr-only",
+            className
+          )}
+          {...props}
+        />
+      );
+    } else if (headingLevel === 2) {
+      return (
+        <h2
+          ref={ref}
+          className={cn(
+            titleSizes[size],
+            "leading-tight tracking-tight",
+            visuallyHidden && "sr-only",
+            className
+          )}
+          {...props}
+        />
+      );
+    } else if (headingLevel === 4) {
+      return (
+        <h4
+          ref={ref}
+          className={cn(
+            titleSizes[size],
+            "leading-tight tracking-tight",
+            visuallyHidden && "sr-only",
+            className
+          )}
+          {...props}
+        />
+      );
+    } else if (headingLevel === 5) {
+      return (
+        <h5
+          ref={ref}
+          className={cn(
+            titleSizes[size],
+            "leading-tight tracking-tight",
+            visuallyHidden && "sr-only",
+            className
+          )}
+          {...props}
+        />
+      );
+    } else if (headingLevel === 6) {
+      return (
+        <h6
+          ref={ref}
+          className={cn(
+            titleSizes[size],
+            "leading-tight tracking-tight",
+            visuallyHidden && "sr-only",
+            className
+          )}
+          {...props}
+        />
+      );
+    } else {
+      // Default to h3
+      return (
+        <h3
+          ref={ref}
+          className={cn(
+            titleSizes[size],
+            "leading-tight tracking-tight",
+            visuallyHidden && "sr-only",
+            className
+          )}
+          {...props}
+        />
+      );
+    }
   }
 ) as React.ForwardRefExoticComponent<CardTitleProps & React.RefAttributes<HTMLHeadingElement>>;
 CardTitle.displayName = "CardTitle";
@@ -436,7 +500,7 @@ interface CardFooterProps extends CardSubComponentProps {
 }
 
 const CardFooter = React.forwardRef<HTMLDivElement, CardFooterProps>(
-  ({ className, size = 'md', ariaLabel, ariaLabelledBy, ariaDescribedBy, role, actionLabels, ...props }, ref) => {
+  ({ className, size = 'md', ariaLabel, ariaLabelledBy, ariaDescribedBy, role, ...props }, ref) => {
     // Size-based padding for footers
     const footerPadding = {
       xs: "p-2 pt-0",

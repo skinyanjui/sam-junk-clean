@@ -7,8 +7,6 @@ import { CARD_CONFIGS, CardConfigKey } from './design-system';
 // Utility function to generate card classes based on props
 export function getCardClasses({
   variant = 'standard',
-  size = 'md',
-  elevation = 'sm',
   interactive = false,
   glassEffect = false,
   gradient = false,
@@ -18,6 +16,8 @@ export function getCardClasses({
   state
 }: {
   variant?: CardVariant;
+  // We're not using size and elevation in this function, but keeping them in the interface
+  // for consistency with other functions that might need them
   size?: CardSize;
   elevation?: CardElevation;
   interactive?: boolean;

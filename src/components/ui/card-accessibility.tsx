@@ -406,9 +406,8 @@ interface CardTabPanelProps {
   onActivate?: () => void;
 }
 
-export const CardTab: React.FC<CardTabPanelProps> = ({
+export const CardTab: React.FC<Omit<CardTabPanelProps, 'label'>> = ({
   id,
-  label,
   children,
   active = false,
   onActivate
