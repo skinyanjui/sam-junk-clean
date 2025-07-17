@@ -22,14 +22,14 @@ import { useJobApplication } from './hooks/useJobApplication';
 import { FormStepManager } from './components/FormStepManager';
 
 interface Position {
-  id: string; // Changed from number to string
+  id: string;
   title: string;
 }
 
 interface JobApplicationFormProps {
   positions: Position[];
   onClose: () => void;
-  preselectedPosition?: string; // Changed from number to string
+  preselectedPosition?: string;
 }
 
 const JobApplicationForm = ({ positions, onClose, preselectedPosition }: JobApplicationFormProps) => {

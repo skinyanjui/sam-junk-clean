@@ -5,6 +5,7 @@ interface UseExitIntentOptions {
   enabled?: boolean;
   threshold?: number;
   delay?: number;
+  aggressive?: boolean;
   onExitIntent?: () => void;
 }
 
@@ -12,9 +13,11 @@ export const useExitIntent = ({
   enabled = true,
   threshold = 50,
   delay = 0,
+  aggressive = false,
   onExitIntent
 }: UseExitIntentOptions = {}) => {
   const [hasTriggered, setHasTriggered] = useState(false);
+  const [exitDetected, setExitDetected] = useState(false);
 
   const handleMouseLeave = useCallback((e: MouseEvent) => {
     if (!enabled || hasTriggered) return;
@@ -24,6 +27,7 @@ export const useExitIntent = ({
       setTimeout(() => {
         if (!hasTriggered) {
           setHasTriggered(true);
+          setExitDetected(true);
           onExitIntent?.();
         }
       }, delay);
@@ -31,7 +35,7 @@ export const useExitIntent = ({
   }, [enabled, hasTriggered, threshold, delay, onExitIntent]);
 
   const handleScroll = useCallback(() => {
-    if (!enabled || hasTriggered) return;
+    if (!enabled || hasTriggered || !aggressive) return;
     
     // Trigger on aggressive scroll behavior (mobile)
     const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
@@ -43,11 +47,12 @@ export const useExitIntent = ({
       setTimeout(() => {
         if (!hasTriggered) {
           setHasTriggered(true);
+          setExitDetected(true);
           onExitIntent?.();
         }
       }, delay);
     }
-  }, [enabled, hasTriggered, delay, onExitIntent]);
+  }, [enabled, hasTriggered, delay, aggressive, onExitIntent]);
 
   useEffect(() => {
     if (!enabled) return;
@@ -62,25 +67,32 @@ export const useExitIntent = ({
       scrollTimer = setTimeout(handleScroll, 100);
     };
     
-    window.addEventListener('scroll', handleScrollWithTimer);
+    if (aggressive) {
+      window.addEventListener('scroll', handleScrollWithTimer);
+    }
 
     return () => {
       document.removeEventListener('mouseleave', handleMouseLeave);
-      window.removeEventListener('scroll', handleScrollWithTimer);
+      if (aggressive) {
+        window.removeEventListener('scroll', handleScrollWithTimer);
+      }
       clearTimeout(scrollTimer);
     };
-  }, [handleMouseLeave, handleScroll, enabled]);
+  }, [handleMouseLeave, handleScroll, enabled, aggressive]);
 
   const reset = useCallback(() => {
     setHasTriggered(false);
+    setExitDetected(false);
   }, []);
 
   return {
     hasTriggered,
+    exitDetected,
     reset,
     trigger: () => {
       if (!hasTriggered) {
         setHasTriggered(true);
+        setExitDetected(true);
         onExitIntent?.();
       }
     }
