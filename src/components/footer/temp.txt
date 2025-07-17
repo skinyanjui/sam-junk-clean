@@ -1,0 +1,792 @@
+ter;lt Fooxport defau;
+
+e>
+  );
+}    </footer </div>
+>
+     } /earurrentYear={cntYurrerCopyright c    <Footediv>
+
+         </    />
+   t')}
+      ('contacection) => toggleSggle={(nTo o           ntact}
+Open.coobileed={m isExpand
+           {isMobile}e=   isMobil   g}
+      adinding={isLoisLoa  
+          s}essHourbusininessHours={   bus        
+ nfo}{contactIctInfo= conta          tInfo 
+ FooterContac  <     
+   
+           />         }
+eas')n('serviceArioleSect=> togg()   onToggle={          eAreas}
+n.servicOpebileExpanded={mo     is}
+       isMobilesMobile={     i}
+       ocations={isLoadingLoading     isL     eas}
+  ={serviceAreAreas      servic
+      s rServiceAreaote  <Fo        
+          
+         />any')}
+ omp('cioncttoggleSe={() => ggle        onTo
+    pen.company}d={mobileO isExpande       obile}
+    obile={isM isM           ion 
+rNavigat   <Foote        
+             />
+     ialLinks}
+ sococialLinks={   s   "
+      oval Rem Junk"Uncle SamtText=  al      g"
+    pn85a70a3.9ad4-a2ed5f-9-4c07287f-ec8ds/92cle-uploa/lovab  logo="         Branding 
+ <Footer       -8">
+   gap-8 mbid-cols-4 lg:grd-cols-2 d:gricols-1 m grid-ame="grid classN <div       /}
+t *ntenn footer co    {/* Mai  >
+  10" relative z-:px-8px-6 lgm:4 sx-auto px-er m="containclassName<div      
+      
+ </div>30">d/nd-reto-brared/70 via-brand-brand-red o-r from-adient-tbg-gr-1 ull h0 left-0 w-f top-"absoluteassName=iv cl
+      <dgradient */}r lo* Accent co   {/    
+   /div>
+  >
+      <"></divx]h:24px_24pengt_1px)] bg-[l_transparent)_1px,.15,0255,255,25_rgba(e,nt(circlieradial-grad-full bg-[ hlleft-0 w-fuute top-0 le="absolsNamlas     <div c   -5">
+city inset-0 opaabsolutessName="iv cla
+      <drn look */}or modeattern fkground p/* Bac  {en">
+    verflow-hiddve o-6 relati-12 pbxt-white ptark tebrand-navy-do-y tnd-navom-brat-to-b frbg-gradien=" className<footern (
+    ;
+
+  retur};
+  }, [])   
+ e);checkMobile', resiztListener('oveEvendow.rem{
+      win) => eturn (
+    
+    rMobile);eck', chzeer('resiListenEventindow.add   wle();
+  checkMobi
+   
+    8);
+    }; 76Width <.innerwindowile(sMobetI     s => {
+  = ()ckMobile  const che=> {
+  ect(()  useEff;
+  
+ lse)eState(fa= usetIsMobile] sMobile, st [idth
+  conson window wie based 're on mobil wee if // Determin
+
+  }, []); }));
+ ection]
+    !prev[stion]:sec    [v,
+  ...pre
+      n(prev => ({obileOpesetM
+    string) => {section: k((= useCallbacction t toggleSe
+  consre-rendersecessary t unn to prevenemoized ms -dion sectionorbile accoggle mo/ T
+  /ar();
+tFullYeew Date().getYear = ncurrenst 
+
+  con]); }, [
+    };
+ );ller.abort(contro       false;
+Mounted = is     
+ () => {rn
+    retufunctionleanup   // C  
+    
+ta();rDachFoote    fet    
+
+ }
+    };  }
+     
+      ng(false);oadi    setIsL       {
+ounted)sM (i
+        ifly {    } final       }
+  f
+ ackofntial bne1)); // ExpoCount + (retry00 *  10     },+ 1);
+     unt tryCorData(re  fetchFoote
+          () => {t(eouetTim      s{
+    ror') = 'AbortError.name !=or && ernceof Errr insta&& erroCount < 2    if (retryies)
+     etrax 2 rt errors (men for transi logicetry// R  
+        );
+      .' dataaultShowing def. ionest informatthe lat load uld notor('Co    setErr    ack data
+t use fallbr message buerroet // S  
+              error);
+, a:'atng footer drror fetchile.error('E       conso 
+ ;
+       turn reMounted)!isf ( i      (error) {
+   } catch }
+               });
+      
+ : Closed' || 'SundaykendrsData.weeeekend: hou    w        PM',
+- 7:00 ay: 7:00 AM  - Saturd|| 'Mondayata.weekday ay: hoursD weekd      
+     ours({nessHetBusi          s {
+hoursData)      if (       
+  }
+        });
+         '
+  junkremovalclesampany/unomkedin.com/c://linn || 'httpsedita.linkialDakedin: soc    lin       
+ mjunk',com/unclesater.//twit || 'https:.twitteralDatater: soci      twit      oval',
+nkremamjum/unclesstagram.co://in || 'httpsta.instagramam: socialDa    instagr    ,
+    junkremoval'amm/unclesook.co//facebps:|| 'httk faceboocialData. so  facebook:        
+  alLinks({etSoci          s {
+ocialData)if (sds
+         fielthere o, only updatnumber fixedne p the phoee      // K        
+  n;
+eturted) runsMo if (!i  
+       ]);
+             ours()
+ BusinessH       getks(),
+   lLin getSocia
+         ([ise.allt Prom= awaiata] Data, hoursDcialonst [so
+        c{    try 
+      
+  ror(null);  setEr   ue);
+ ng(tr setIsLoadi
+     urn;
+      etounted) r   if (!isM> {
+   0) =nt = c (retryCousynerData = aetchFoott f
+    conser();
+    rollContbortller = new Aconst contro    
+ed = true;ntt isMou {
+    le=>fect(() ic
+  useEfog ld retrydling aner error hanth bettwitching feized data   // Optim 
+>(null);
+ g | nullstrin = useState<tError]seor, const [errate
+  error st // Track ons]);
+
+ ti[loca);
+  }, 
+    })ies   cittate,
+     s => ({
+    es])tate, citi[sp((ate).maStrviceAreasByes(setribject.en   return O{});
+
+ ;
+    }, urn accret     
+ });
+                   }
+h(area);
+ te].pusacc[sta       ) {
+   area)des(cluate].in if (!acc[st    ea => {
+   rEach(arviceAreas.foon.sertioca
+      lo the arraye cities tniqu // Add u     
+   }
+         
+state] = [];      acc[te]) {
+  ta[s(!acc   if       
+   ion.name;
+locattate = const s
+      tuse a defaulea or vice ar serhe first tte from Extract sta 
+      // acc;
+     s) returnviceAreaation.ser (!loc      iftion) => {
+ locastring[]>,g, trincc: Record<seduce((aions.re = locatByStateas serviceAr
+    constby stateons p locati Grou {
+    //emo(() => = useMviceAreas
+  const serlationsrecalcuessary vent unnecation to preculcalreas e service a// Memoiz  
+  
+rue);= useState(t] adingsLosetIng, [isLoadi
+  const ;
+
+  }) Closed'nday:Su: 'weekend
+    7:00 PM',:00 AM - : 7 Saturday 'Monday -kday:ee
+    wHours>({sste<Busines] = useStaoursHsetBusiness, inessHournst [bus });
+
+  coal'
+ ovkremlesamjunany/uncdin.com/complinke: 'https://edin',
+    linklesamjunker.com/uncps://twittwitter: 'htt  tl', 
+  nkremovaesamju/uncl.comramnstag: 'https://i  instagram
+  removal',unclesamjunkook.com/cebhttps://fafacebook: '({
+    nks>SocialLie< = useStatlLinks] setSocias,cialLinksonst [co;
+
+  -7PM'
+  })n-Sat: 7AMs: 'Mohour    .com',
+kremovalunclesamjunil: 'info@,
+    ema610-1657'2) '(81 phone: e({
+   ] = useStatntactInfoCoactInfo, setcont
+  const [ APIomng fr of loaditeaddirectly insber  phone numhe fixedet t
+
+  // S
+  });ct: false,
+    conta: falseserviceAreasalse,
+    any: fmp   co({
+ olean>>string, bo<Record<eStaten] = usleOpepen, setMobist [mobileOta();
+  connDaseLocatio} = ucations gLosLoadinoading: ions, isLst { locati
+  con;slation() = useTrannst { t }
+  co() => { Footer = 
+
+const
+}; );>
+   </divdiv>
+      </>
+  iv   </dink>
+          </Lce')}
+     ServimsOf'footer.ter    {t(        >
+       "
+   entertext-cin-w-[80px] hite/5 mover:bg-wunded-md h-1.5 ro-200 px-3 pydurationon-colors ite transitiext-wh-400 hover:tt-gray="texmeNa class          " 
+ rms    to="/te     nk 
+         <Lispan>
+    ">•</-center00 selfxt-gray-6temx-1 nline  sm:i="hiddenassName <span cl        k>
+   </Lin}
+        cyPolicy')privafooter.    {t('>
+               er"
+   nt text-cemin-w-[80px]/5 teg-whiver:bd-md ho5 roundey-1.200 px-3 pation- dur-colorstionansiwhite trtext-er:ay-400 hov-gre="textlassNam       c   acy" 
+  "/priv to=         ink 
+   <L     ">
+     sm:gap-0gap-2stify-end ter sm:justify-cenp juflex-wra="flex mediv classNa    <*/}
+    links ized imop opt and deskt{/* Mobile        
+          </p>
+      oval
+Sam Junk Rem Uncle ear })} •rrentYr: cu yeapyright', {er.cot('foot        {
+  mt-0">-4 sm:eft mt sm:text-lt-centersName="texp clas      <">
+  nter gap-4-cetemstween ify-be-row justie sm:flexversl-re flex-cosName="flexv clas <di>
+     -gray-400"text-xs te/10 textborder-whi4 border-t ="pt-6 mt-v className
+    <dieturn (
+
+  rtion();ransla{ t } = useT {
+  const  }) =>earntYre{ curps> = (ghtProerCopyrit.FC<Footright: ReacooterCopyconst F  );
+};
+
+iv>
+</d   </div>
+ iv>
+          </d</div>
+    
+              </div>    />
+    Switcher    <Language         ">
+  enterjustify-ctems-center lex issName="fiv cla          <d
+             /Link>
+         <
+    tact')}av.cont('n {             >
+    
+        and-navy"et-broffsring-et-1 focus:ring-offsus:30 focand-red/g-brus:rin-2 foc:ringocusne futline-nofocus:o text-sm centeron-300 text--all duratition transinded-lgrou py-2 px-4  text-whitewhite/15over:bg-/10 hhitelex-1 bg-wssName="f     cla   
+      act" o="/cont   t         
+  k      <Lin   2">
+    ap--between gstifynter ju items-ceexame="flssN <div cla
+           
+           </Link>  e')}
+     oton.getQu    {t('comm           >
+ "
+      vy-brand-naeting-offs2 focus:rg-offset-ocus:rinand-red fg-brs:rinng-2 focu:rine focusnocus:outline-um fo-mediy-0.5 fontanslate-hover:-trform w-xl trans:shadolg hoverer shadow-t-cent tex w-full300ation-durnsition-all ed-lg trax-5 round py-2.5 phitext-w terand-red/90hover:bg-bg-brand-red k be-bloc"inlinclassName=           /quote" 
+       to="ink 
+               <L
+ ap-3 mt-4">flex-col gx ="fleameiv classN      <d  
+          )}
+     v>
+     </di
+               )}
+    </ul>            li>
+           </iv>
+         </d               </span>
+kend}rs.weesHou0">{businestext-gray-30"assName=span cl   <            >
+     ay}</spans.weekdssHour">{businegray-300e="text-n classNam     <spa       ">
+        colflex flex-"e=classNam     <div           
+   iv>     </d             />
+ -brand-red"ame="textsNclask size={16}       <Cloc            0.5">
+  t- mll mr-3rounded-fu10 p-1.5 and-red/bg-br"className= <div             ">
+     items-startme="flex <li classNa              </li>
+          >
+        /a       <           ail}
+tInfo.em {contac               >
+               "
+       smavy rounded-t-brand-nseff-oringcus:-offset-1 foringcus: forand-red/30ing-bocus:rcus:ring-2 fnone foutline-200 focus:oion-ratdun-colors nsitioxt-white tra:teay-300 hoverext-grame="t classN                   email}`} 
+tInfo.{contaco:$`mailt    href={               
+      <a            div>
+          </        " />
+  -red-brand"textsName=6} clasize={1     <Mail s               
+">l mr-3nded-fulou1.5 r10 p-brand-red/"bg-e= classNam       <div         
+  s-center">ex itemme="fl<li classNa            >
+     </li              </a>
+          7
+         610-165 (812)                  
+    >      
+          -sm"y roundedd-navffset-braning-o:rusoffset-1 focing-30 focus:rg-brand-red/cus:rinus:ring-2 fone focutline-noocus:o0 f-20s durationition-colorwhite transver:text--gray-300 ho"textlassName=      c           7" 
+   61016512:+18"telref=        h             
+     <a            iv>
+     </d          >
+    -red" /ndra"text-b className=ne size={16}        <Pho            -3">
+ded-full mrun5 ro p-1.-red/10-brandassName="bg<div cl              ">
+    s-centeritemame="flex ssNla <li c               >
+"t-smce-y-3 texe="spassNam cla <ul            t
+ youp lakto/ Des   /    (
+            ) : v>
+        </di         
+    </div>                 </div>
+            }</p>
+     ndkeHours.wee<p>{business              
+      /p>kday}<essHours.weep>{busin      <          300">
+    t-gray-"pl-11 texame=v classNdi  <                
+   </div>          
+     pan>ours</sness H>Busit-medium"ite fonwhame="text-sNn clas      <spa      
+        >iv       </d          
+   >-red" /rande="text-bam{16} classNk size=Cloc        <              >
+3"mr-ull ounded-f2 rp-0 d/2bg-brand-reassName=" <div cl           
+         mb-1">ter items-cenlex"fassName=clv          <di  
+       ed-lg">3 roundte/10 p-me="bg-whidiv classNa       <          
+                  </a>
+         v>
+            </di        
+  ed" />xt-brand-rteName="} classil size={14Ma   <               
+  ull"> rounded-fd-red/10 p-1-bransName="bgv clas         <di         </div>
+                 /span>
+ email}<Info.e">{contacthitame="text-wn classN <spa             
+      </div>                  />
+   rand-red"xt-bName="te{16} classil size=         <Ma   
+          > mr-3"-fullded rouned/20 p-2and-rme="bg-brlassNa    <div c               
+ center">lex items-Name="flass    <div c       >
+                     e/20"
+  ive:bg-whit-200 actors durationansition-coltrwhite/15 er:bg-ov-lg hunded-3 rohite/10 pbg-wify-between juster ems-cent="flex itNameass         cl
+         email}`}ntactInfo.coilto:${ma href={`              
+           <a   
+                    >
+   </a              
+    </div>         />
+       rand-red"ame="text-b} classNze={14   <Phone si           ">
+      ull rounded-fp-1nd-red/10 bg-brasName="as     <div cl        
+     v>       </di           /span>
+610-1657<ite">(812) "text-whsName=pan clas   <s           
+      iv>/d      <            />
+   and-red"me="text-br6} classNaize={1<Phone s                    3">
+  d-full mr-p-2 rounderand-red/20 "bg-b className=   <div            r">
+     tex items-cenflee="amiv classN  <d        >
+                
+        ite/20"ive:bg-whact-200 tions duraion-colore/15 transiter:bg-whit hovded-lgun3 ro0 p-ite/1whg-fy-between benter justiitems-c="flex    className               657" 
+18126101="tel:+ href                  <a 
+              xt-sm">
+ -3 teace-yme="spNadiv class      <
+        ed layoutizMobile optim //        
+      e ? ({isMobil            ">
+nded-lg p-3-white/5 roue="bgv classNam    <di   : (
+         )    </div>
+       .</span>
+  ct info..g conta">Loadint-gray-300texssName="la    <span c    >
+    d" /d-reext-branr-2 t-spin m"animateme=classNa} er2 size={16   <Load      se">
+    animate-pul5 rounded-lg-3 bg-white/ems-center pstart itstify-enter md:jux justify-clessName="f    <div cla   (
+    ding ?oa {isL        >
+ing"
+     ontact-headter-clledby="fooa-labe    ari     }`}
+
+       acity-100'-96 op-hmax        : '' 
+    acity-0x-h-0 op  : 'ma  
+          -100' citypa-96 o  ? 'max-h     
+        ndedxpaisE          ? e 
+      isMobil${
+      out se-in-n-500 eaall duratio transition--hiddenverflow3 ot-sName={`m   clas
+     tent"ontact-cond="footer-c   iv 
+      <di    
+       div>
+     </       )}
+ "></div>
+ tion-opacityd transite roundehiy-10 bg-we:opacitoup-activity-0 gr2 opac-2 mb- -mt h-1ame="w-fullv classNdi <        (
+   &&ile    {isMobh3>
+            </      )}
+on>
+    butt       </}
+     18} />size={vronDown  /> : <Che{18}ize=ronUp snded ? <Chev     {isExpa
+           >       "
+   ontentact-cter-conttrols="foo  aria-con           ed}
+ sExpand-expanded={i  aria           mation"}
+ fortact in"Expand conmation" : act infore contaps"Collnded ? Expaabel={is      aria-l"
+        nipulationl touch-maed-fulnd-red roundng-brariocus:g-2 f:rin-none focusocus:outline p-2 fName="ml-2   class         ton 
+   <but    
+       bile && (     {isMo>
+     /span  <>
+        l"></span-fuld roundedrand-reh-0.5 bg-b2  w-1/-0eftm-1 lolute -bottome="abssNa <span clas           ctUs')}
+r.conta {t('foote         >
+  de"ing-wiibold track font-semlative"ressName=pan cla  <s        >
+      ing"
+  ad-hentact"footer-co        id=start"
+  y-stifjuer md:ify-centstter juex items-cen flnt-bold mb-4lg fome="text-  classNa   
+          <h3    >
+   ined}
+   e : undefggle ? onTok={isMobil      onClic`}
+   : ''}inter'por-'curso{isMobile ? up $sName={`grolas   c
+           <div -left">
+extmd:tt-center ssName="tex <div claeturn (
+   ();
+
+  rlationseTrans = u{ t }nst ) => {
+  coonToggle
+}
+  nded,
+  isExpae, isMobilding,
+ ,
+  isLoaHoursnesso,
+  busintactInf co{
+ = (ps> rontactInfoPoterCoC<Foo: React.FtInferContacot
+const Fo};
+ );
+iv>
+     </d>
+      </div        )}
+
+iv>         </dv>
+       </di     ink>
+ </L        ea
+       in your arfor serviceact us     Cont   
+            >     "
+      ration-200s dun-colorsitiowhite trantext-hover:-red t-brandxs texame="text-ssN       cla         
+ "/contact"        to=     <Link 
+           
+      /p>reas found< service ab-1">No-400 maygre="text- <p classNam            
+  mb-2" />gray-400e="text-sNam={20} clas size <MapPin          
+   ">centerjustify-r tems-cente-col iex flexsName="fllasiv c      <d">
+      ext-center-lg troundedhite/5 ="p-3 bg-wv className       <di
+     ) : (  div>
+            </  )}
+  
+          />     <            </Link>
+      
+       reas →l service aew alVi                  >
+          um"
+      medi font-ion-200durats sition-color-white trand hover:textnd-reext-braext-xs t2 tt-ine-block mme="inlsNa      clas            ns" 
+catio    to="/lo         
+      nk     <Li      ))}
+                     div>
+          </    /div>
+     <                     )}
+                   /Link>
+         <              
+  3} mores.length - tieci+{area.                          >
+                "
+        font-mediumon-200 ti-colors duraransitionand-red/80 tt-brtexd hover:ext-brand-resName="t      clas          
+          Case()}`}wera.state.toLo${are`/locations#       to={                     <Link 
+                    
+  > 3 && (ties.length a.ciare      {                     ))}
+                </Link>
+                   
+      ></span>tion-300"ral duansition-all trr:w-fulup-hoveed grond-rh-0.5 bg-bra-0 ttom-0.5 wboleft-0 -te e="absoluNamssspan cla   <                 >
+      city}</spanspan>{    <           
+                     >              ve group"
+ relatiuration-200n-colors d transitiotext-whiteer:hovy-300 xt-grame="teassNa          cl                e()}`}
+owerCas.state.toLarea${/locations#to={`                        y} 
+  ={cit    key                
+        <Link                       => (
+y .map(citlice(0, 3).cities.s {area                      pl-5">
+xsy-2 text--3 gap-rap gap-xlex flex-we="fNamssdiv cla      <         </h4>
+                    
+     }tate{area.s            
+          " />nd-red1.5 text-brar-me="m{14} classNaapPin size=  <M           
+         -center">lex items mb-2 fmediumwhite font-ame="text-<h4 classN             ">
+       ="mb-4assName clrea.state} key={a        <div       (
+    =>ea (ariceAreas.map    {serv               <>
+          re areas
+ ow moop view - sh/ Deskt   /           ) : (
+      >
+               </>
+     Link </         s
+       areall service   View a       >
+                    ium"
+    -medon-200 font duratirsolotion-cansiext-white trm tt-snded-lg texte/15 rouover:bg-whiite/10 hwhg-4 br py-2 px-entel text-c-ful-block w"inlinee=am  classN              tions" 
+  ca to="/lo               k 
+          <Lin  
+                     >
+ </div             )}
+              iv>
+       </d                 
+   </Link>            
+           areasrvicesemore 1}  - s.lengthceArea +{servi                  
+           >          r"
+      ify-cententer justtems-cex im flediuont-men-200 fiodurats sition-colorwhite traner:text- hovand-redbrxt-e="team    classN                " 
+    ionsat"/loc     to=                 
+     <Link                    te/10">
+whider-orr-t bdept-2 borenter mt-2 ext-cName="t class       <div           && (
+   ngth > 1viceAreas.leser        {     s */}
+     ervice areaadditional sa count of    {/* Show              
+               
+     }       ))           div>
+  </                v>
+   </di                   )}
+                  k>
+        /Lin      <                     more
+length - 2}.cities.     +{area              
+         >                          edium"
+ont-m200 fration-ors dusition-col0 trand/8t-brand-rehover:texd-red ext-bransName="t      clas                 
+     )}`}werCase(a.state.toLoaretions#${  to={`/loca                 
+         Link          <                 2 && (
+ es.length >  {area.citi                
+         ))}                  ink>
+   /L       <               /span>
+    ><00"duration-3tion-all  transiover:w-full-red group-h bg-brand0 h-0.5ottom-0.5 w-left-0 -b"absolute assName=an cl  <sp                        </span>
+  span>{city}         <          
+               >              
+      ve group"lation-200 reratirs duition-colo-white trans:text300 hovery-ext-graame="tclassN                          ()}`}
+  werCasee.toLo${area.stats#cation/lo       to={`            
+         } city      key={              
+        ink      <L                     city => (
+e(0, 2).map(ties.slic{area.ci                      
+  ">l-5xs ptext-p-y-2 p-x-3 gawrap galex flex-lassName="f      <div c       
+              </h4>       
+          ate}rea.st       {a             />
+     nd-red"ext-brar-1.5 tName="m4} class size={1MapPin         <               
+-center">flex itemsedium mb-2 ont-mxt-white fassName="te     <h4 cl             ">
+    "mb-2 className=a.state}are  <div key={                  => (
+ap(area e(0, 1).mceAreas.slic   {servi              ties */}
+ 2 ciarea with the first w  shobile, just  {/* On mo                3">
+p-d-lg unde/5 rowhite="bg-lassNamediv c <                     <>
+        ile ? (
+      {isMob   }
+   as */wer areith fe view wre compacta moobile, show r m     {/* Fo      
+ ce-y-4">Name="spa <div class
+         ? (ength > 0 reas.l) : serviceA  v>
+         </di      /span>
+ .<..ervice areas">Loading sy-300xt-grame="tean classNa   <sp
+         d" />t-brand-re mr-2 teximate-spinme="an{16} classNaer2 size=oad      <L      ">
+nimate-pulsended-lg awhite/5 roup-3 bg-ems-center -start ittifyjus-center md:lex justify"fclassName=<div           ? (
+g in {isLoad     >
+        ading"
+-heice-areasooter-serv"f-labelledby=        aria   }`}
+
+     pacity-100'96 ox-h-     : 'ma0' 
+       city-h-0 opa'max-      :     
+     y-100'h-96 opacit   ? 'max-           d 
+nde ? isExpa      le 
+          isMobi${
+     e-in-out as00 eion-5-all durattransitionden erflow-hid text-sm ovName={`mt-3ssla       ccontent"
+ reas-r-service-a="foote   id
+         <div      
+   </div>
+   )}
+         /div>
+  -opacity"><ransitionrounded te 0 bg-whitopacity-1ctive:oup-agrity-0 pac mb-2 omt-2ll h-1 -w-fuclassName=" <div       (
+    sMobile &&
+        {i       </h3>
+        )}   on>
+/butt         <8} />}
+   ize={1Down s> : <Chevronze={18} /onUp sivrChexpanded ? <  {isE             >
+   "
+        contentrvice-areas-oter-se="foa-controls     ari       ded}
+  sExpan-expanded={iria          a   }
+ ce areas"servipand : "Exas" arese service  ? "CollapExpandedl={isia-labe    ar
+          ipulation"manh-ucnded-full toed roung-brand-r:ricusfocus:ring-2  foutline-nonefocus:o="ml-2 p-2  className        
+     on <butt  
+          && (bile  {isMo      span>
+          <//span>
+   ded-full"><d-red roun-0.5 bg-bran2 hw-1/0 eft-om-1 lolute -bottssName="absn cla      <spa}
+      eLocations')rvicfooter.se        {t('    
+king-wide">bold tracve font-semirelatime="span classNa    <             >
+ heading"
+rvice-areas-er-seotid="fo
+          fy-start"stid:jucenter mter justify-ems-cenex itflt-bold mb-4 -lg fon="textmeNa       class<h3 
+              >
+ defined}
+  : un? onToggle isMobile k={    onClic    r' : ''}`}
+sor-pointeile ? 'curoup ${isMob`grsName={  clas      iv 
+">
+      <dd:text-leftnter mt-cee="texv classNam<di
+    turn (
+
+  reon();seTranslati u { t } =const
+  
+}) => {  onToggled,
+desExpanle,
+  ig,
+  isMobiLoadin  isreas,
+
+  serviceA = ({s>AreasPropooterServiceC<Fact.FReeas: iceAr FooterServ;
+
+const
+}>
+  ); </div/div>
+        </div>
+    <
+           ))}nk>
+          </Lipan>
+       </s           >
+  300"></spanration-l duransition-aler:w-full tov-h groupbg-brand-red5 w-0 h-0.ttom-0.5 0 -bo left-"absolutelassName=an c         <sp}
+       text{link.        ">
+        iveat0 relation-20orm durnsfansition-tra-0.5 trate-xslhover:tran"group-n className=spa  <           </span>
+               
+con}  {link.i              on-200">
+olors duration-ctired transi-brand-r:textve/70 group-horand-redxt-bme="mr-2 tessNa cla     <span                >
+"
+     r groupitems-cente00 flex n-2ors duratioion-colhite transitover:text-wy-300 h"text-graame=     classN         k.to} 
+  to={lin           ={index}
+ key         
+        <Link         dex) => (
+ k, inp((lin{navLinks.ma      
+    m">text-sgap-y-3 -4 ls-2 gap-xrid-co"grid gv className=
+        <di
+      >eading"oter-nav-hledby="fo  aria-label`}
+      
+        }ity-100'h-96 opac  : 'max-
+          opacity-0' 0 h-   : 'max-     
+      acity-100' max-h-96 op        ? 'ed 
+      Expand     ? is
+       sMobile           in-out ${
+-500 ease-ill durationon-asitien tranflow-hiddover={`mt-3   className      t"
+tenconr-nav-"foote  id=      <div 
+  >
+    div}
+      </
+        )/div>"><cityion-opa transithite roundedty-10 bg-wopaciive:group-actty-0  mb-2 opacit-2full h-1 -m"w-assName=iv cl  <d
+        le && (  {isMobi  3>
+        </h    )}
+      
+    button>  </   
+       {18} />}e=own sizvronD/> : <Che} nUp size={18d ? <ChevroExpandeis          {
+         >     ontent"
+  ter-nav-cls="fooaria-contro             anded}
+ nded={isExp aria-expa    
+          links"}gationand navi" : "Expation linksapse navig "Collanded ?abel={isExpia-lar          
+    ation"ipulouch-manl tded-fuld rounnd-reing-bra2 focus:rocus:ring-ine-none fus:outl2 p-2 focl-"mclassName=         
+     ton   <but
+           (obile &&        {isMn>
+     </spa>
+       </spanull">d rounded-f-rebg-brand h-0.5 -1/2m-1 left-0 wbottobsolute -assName="apan cl      <s
+      ')}yLinksoter.compan     {t('fo    ide">
+   tracking-wsemibold font-tive "relae=lassNamn c   <spa >
+          
+    ng"r-nav-headioteid="fo
+          y-start"r md:justifstify-centejur enteems-c flex itb-4-bold m-lg fonte="textssNam       cla    <h3 
+  >
+      ned}
+     le : undefiile ? onTogg{isMob onClick=    `}
+   nter' : ''}-poi? 'cursor ${isMobile `groupame={  classNiv 
+         <dft">
+   d:text-ler m-cente="textlassNamediv c   <n (
+ uret ];
+
+  r} /> }
+ ={14Phone size icon: <v.contact'), t('na text:ct",: "/conta,
+    { to{14} /> }rd size= <Awa'), icon:av.careers t('ns", text:/career { to: "/> },
+   e={14} le sizpCirc: <Helq'), iconfanav. text: t('"/faq", { to: /> },
+   e size={14} uarMessageSq), icon: <nav.blog't(', text: g"loo: "/b  { t
+  > },} / size={14n: <Users, icot')av.abouxt: t('nabout", te to: "/> },
+    {} /ext size={14 <FileT), icon:.getQuote'oncommext: t('te", tto: "/quo
+    { 4} /> },{1e=iefcase siz<Br), icon: ices'av.servxt: t('n", te"/services{ to:   } /> },
+   size={14 icon: <Homee'),omt: t('nav.h "/", tex    { to:
+inks = [  const navLth icons
+ion links wi  // Navigat
+slation();
+ } = useTranst { t=> {
+  con})  onToggle
+,
+ ndede,
+  isExpaobil
+  isMps> = ({ionProrNavigatC<Footen: React.FavigatioooterN;
+
+const F
+  );
+} </div>div>
+      </</a>
+           } />
+in size={18nked  <Li >
+        
+       "e-y-1slat-tranver:ransform ho tration-300on-all duransitiwhite tover:text--brand-red hover:bg hnded-fullp-2.5 rou10 ite/-whName="bg      class    dIn" 
+ke"Linria-label=      a    rer" 
+norefernoopener "  rel=    
+     nk"get="_blatar
+          n} ks.linkedi{socialLin      href=    <a 
+  
+          </a>
+    } />ize={18tter s      <Twi        >
+    "
+ranslate-y-1 hover:-tsformion-300 tranon-all duratansiti trr:text-white-red hovebrandhover:bg-ull unded-f rop-2.5/10 "bg-whiteName=ass   cl 
+       "Twitter"a-label=       ari" 
+   oreferreropener n    rel="no" 
+      "_blank     target=     itter} 
+inks.twcialL href={so 
+              <a
+   </a>  
+      8} />ram size={1tag        <Ins       >
+  1"
+ nslate-y-r:-trahovensform 0 traration-30du-all transitionwhite  hover:text--reder:bg-brandhovl  rounded-ful-2.5 pbg-white/10Name="  class    
+    stagram" bel="Inria-la     a     
+ er"referrnoopener no"  rel=        _blank" 
+   target="      agram} 
+ nks.instLihref={social         
+        <aa>
+  
+        </8} />ize={1ook s    <Faceb         >
+
+     slate-y-1"ranr:-tm hove0 transforion-30l duraton-altiransiwhite ttext-hover:d brand-re hover:bg-ulled-f p-2.5 roundwhite/10Name="bg-   class" 
+       ="Facebook-label  aria
+        er" errnorefner operel="no       
+    nk"rget="_bla         taebook} 
+ .facalLinkshref={soci
+                  <a 
+4">3 mt-y-start gap-tifd:jusy-center m-wrap justifx flexlesName="fas  <div cl   
+    </p>
+     t
+    n truses you cavicemoval seral junk rssionfe Pro  ">
+     text-leftr md:ext-cente-w-xs t4 maxray-300 mt--gt-sm text"tex className=      <p
+      
+ </div>/>
+            300"
+ n-duratio105 scale-rm hover:sfoion-trantransite="lassNam          cdth }}
+ logoSize.wiidth:, wighte.he: logoSizghtle={{ heisty
+          {altText}  alt= 
+         {logo}src=    mg 
+       <i">
+       xlover:shadow-tion-300 hall duransition-ow-lg tra/5 p-3 shad bg-whited-lgden roundelow-hidtive overfme="rela<div classNa">
+      -starttemscenter md:i items-ex-col flexName="flassv cl
+    <direturn (
+  );
+
+  }, []e);ndleResiz'resize', haentListener(oveEvw.remindoturn () => w    rep
+ Clean u
+    //
+    leResize);hand'resize', er(EventListen.add window   ener
+t listAdd even// 
+        Resize();
+andleize
+    hal s initiSet
+    // 
+    ;}
+    }     );
+ '80px' }', height: th: 'autogoSize({ widsetLo    
+        } else {;
+  ' })0pxight: '7: 'auto', heize({ widthLogoS set    
+   4) {< 102.innerWidth ndowif (wi  } else ;
+    '60px' }): height 'auto',  width:ize({   setLogoS0) {
+     idth < 64innerWdow.f (win     iwidth
+  screen e based onizjust logo s     // Ad() => {
+  = ize handleResnst> {
+    coffect(() =
+  useE;
+   '80px' })ht:auto', heigwidth: 'eState({  = usLogoSize]e, set [logoSizth
+  constid screen wze based onlogo sionsive sp Re  //{
+
+}) => lLinks , 
+  sociaxt altTe  logo, 
+ { 
+> = (opsngPrrandiooterBeact.FC<Fanding: R FooterBrnline
+constonents ifine compDe}
+
+// er;
+umbrrentYear: ncu {
+  tPropserCopyrigh Footface}
+
+interoid;
+gle: () => v onToglean;
+ ed: boosExpand
+  ioolean; b
+  isMobile:g: boolean;
+  isLoadinHours;ssurs: BusinesinessHo
+  bu;  }: string;
+
+    hoursil: string;  emastring;
+  one:     phactInfo: {
+ps {
+  contntactInfoPro FooterCoceerfaint
+
+}) => void;
+: (oggleean;
+  onTnded: boolisExpa
+  : boolean;obileean;
+  isMng: boolsLoadi[];
+  ierviceArea Seas:erviceAr s
+ Props {eAreasvicterSererface Foo
+int
+void;
+}) => e: (onToggln;
+  nded: booleaExpaolean;
+  issMobile: bo
+  iionProps {vigatterNarface Foo
+}
+
+inteSocialLinks;nks:   socialLi;
+ string  altText:tring;
+  logo: s {
+andingPropsFooterBrterface inline
+inces rfante inent propsfine compo
+
+// De';tcheruageSwing from '../LageSwitcher }{ Languat ;
+imporreact' 'lucide-apPin } from, Loader2, M, ChevronUpnDownck, ChevroCloMail, one, , Phinkedintter, Lam, Twigrook, Instacebport { Fa;
+im-dom'ct-routerfrom 'rea }  { Linkortct';
+impeact from 'rmport Reapt errors
+ipeScrioid Tyy to avdirectl React // Import
+
+/types'; from '.erviceArea }essHours, Sks, BusinSocialLinport { imService';
+ompanyInfobase/cpaegrations/surom '@/inturs } fetBusinessHo glLinks,ociatSort { gea';
+imption-dat-locaoks/usefrom '@/hoonData } eLocatiport { us
+imt';18nex 'react-i fromnslation }eTra { us
+importom 'react';k } frlbaco, useCalfect, useMemuseEf{ useState, t porim
