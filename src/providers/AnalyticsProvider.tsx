@@ -1,13 +1,9 @@
 
 import React, { createContext, useContext, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { useAnalytics } from '@/hooks/use-analytics';
-import { useABTesting } from '@/hooks/use-ab-testing';
-
 
 interface AnalyticsContextType {
   trackEvent: (event: { action: string; category: string; label?: string; value?: number }) => void;
-  trackConversion: (event: any) => void;
   getTestVariant: (testId: string) => any;
   trackABConversion: (testId: string, conversionType?: string) => void;
 }
@@ -24,46 +20,30 @@ export const useAnalyticsContext = () => {
 
 export const AnalyticsProvider = ({ children }: { children: React.ReactNode }) => {
   const location = useLocation();
-  const { trackEvent, trackConversion, trackPageView } = useAnalytics();
-  const { getTestVariant, trackABConversion } = useABTesting();
 
   // Track page views on route changes
   useEffect(() => {
-    const pageTitle = document.title;
-    trackPageView(pageTitle, window.location.href);
-  }, [location, trackPageView]);
+    console.log('Page view:', location.pathname);
+  }, [location]);
 
-  // Track scroll depth
-  useEffect(() => {
-    let maxScrollPercentage = 0;
-    const handleScroll = () => {
-      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const scrollPercentage = Math.round((scrollTop / docHeight) * 100);
-      
-      if (scrollPercentage > maxScrollPercentage && scrollPercentage % 25 === 0) {
-        maxScrollPercentage = scrollPercentage;
-        // Scroll depth tracking removed
-      }
-    };
+  // Simplified event tracking - just console log for now
+  const trackEvent = (event: { action: string; category: string; label?: string; value?: number }) => {
+    console.log('Event tracked:', event);
+  };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  // Simplified A/B testing - return null for now
+  const getTestVariant = (testId: string) => {
+    console.log('A/B test requested:', testId);
+    return null;
+  };
 
-  // Track exit intent
-  useEffect(() => {
-    const handleBeforeUnload = () => {
-      // Session end tracking removed
-    };
-
-    window.addEventListener('beforeunload', handleBeforeUnload);
-    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
-  }, []);
+  // Simplified A/B conversion tracking - just console log
+  const trackABConversion = (testId: string, conversionType?: string) => {
+    console.log('A/B conversion:', testId, conversionType);
+  };
 
   const value: AnalyticsContextType = {
     trackEvent,
-    trackConversion,
     getTestVariant,
     trackABConversion
   };

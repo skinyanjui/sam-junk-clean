@@ -8,7 +8,6 @@ import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
 import { useAnalyticsContext } from '@/providers/AnalyticsProvider';
-
 import { PHONE_NUMBER, getPhoneLink } from '@/utils/contact-info';
 
 interface PersonalizedExitIntentProps {
@@ -34,7 +33,6 @@ const PersonalizedExitIntent = ({ isOpen, onClose }: PersonalizedExitIntentProps
   const { toast } = useToast();
   const { trackEvent } = useAnalyticsContext();
 
-  // Personalize content based on current page
   const getPersonalizedContent = (): PopupContent => {
     const path = location.pathname;
     
@@ -119,7 +117,6 @@ const PersonalizedExitIntent = ({ isOpen, onClose }: PersonalizedExitIntentProps
     setIsSubmitting(true);
 
     try {
-      // Track personalized exit intent conversion
       trackEvent({
         action: 'personalized_exit_intent_submit',
         category: 'conversion',
@@ -127,9 +124,6 @@ const PersonalizedExitIntent = ({ isOpen, onClose }: PersonalizedExitIntentProps
         value: 1
       });
 
-
-
-      // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1000));
 
       toast({
@@ -155,7 +149,6 @@ const PersonalizedExitIntent = ({ isOpen, onClose }: PersonalizedExitIntentProps
       category: 'conversion',
       label: location.pathname
     });
-
   };
 
   return (
@@ -187,7 +180,6 @@ const PersonalizedExitIntent = ({ isOpen, onClose }: PersonalizedExitIntentProps
         </DialogHeader>
 
         <div className="space-y-6">
-          {/* Offer Card */}
           <Card 
             variant="notification" 
             size="md" 
@@ -208,7 +200,6 @@ const PersonalizedExitIntent = ({ isOpen, onClose }: PersonalizedExitIntentProps
             </CardContent>
           </Card>
 
-          {/* Benefits */}
           <div className="space-y-2">
             {content.benefits.map((benefit, index) => (
               <div key={index} className="flex items-center gap-2 text-sm">
@@ -218,7 +209,6 @@ const PersonalizedExitIntent = ({ isOpen, onClose }: PersonalizedExitIntentProps
             ))}
           </div>
 
-          {/* Contact Form */}
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-3">
               <Input
@@ -247,7 +237,6 @@ const PersonalizedExitIntent = ({ isOpen, onClose }: PersonalizedExitIntentProps
             </Button>
           </form>
 
-          {/* Alternative Actions */}
           <div className="space-y-2">
             <div className="text-center text-sm text-gray-500">
               Prefer to talk? Call us now:
@@ -266,7 +255,6 @@ const PersonalizedExitIntent = ({ isOpen, onClose }: PersonalizedExitIntentProps
             </Button>
           </div>
 
-          {/* Trust Signals */}
           <div className="flex justify-center items-center gap-4 text-xs text-gray-500 pt-2 border-t">
             <span>✓ Licensed & Insured</span>
             <span>✓ Veteran Owned</span>

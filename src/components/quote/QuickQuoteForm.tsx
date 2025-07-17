@@ -1,12 +1,12 @@
+
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { Phone, Mail, MessageSquare } from 'lucide-react';
+import { Phone, MessageSquare } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useAnalyticsContext } from '@/providers/AnalyticsProvider';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/card';
-
 import { PHONE_NUMBER, getPhoneLink } from '@/utils/contact-info';
 
 interface QuickQuoteFormProps {
@@ -23,7 +23,7 @@ const QuickQuoteForm = ({ onSuccess, className = '' }: QuickQuoteFormProps) => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
-  const { trackEvent, trackConversion } = useAnalyticsContext();
+  const { trackEvent } = useAnalyticsContext();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -48,28 +48,12 @@ const QuickQuoteForm = ({ onSuccess, className = '' }: QuickQuoteFormProps) => {
     setIsSubmitting(true);
 
     try {
-      // Track form submission
+      // Track form submission - simplified
       trackEvent({
         action: 'quick_quote_submit',
         category: 'quote_form',
         label: 'quick_quote'
       });
-
-      // Track conversion
-      trackConversion({
-        event_name: 'quick_quote_request',
-        value: 100, // Estimated value for quick quote
-        currency: 'USD',
-        items: [{
-          item_id: 'quick_quote',
-          item_name: 'Quick Quote Request',
-          category: 'service_request',
-          quantity: 1,
-          price: 100
-        }]
-      });
-
-
 
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1000));

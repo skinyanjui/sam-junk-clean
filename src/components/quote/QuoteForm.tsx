@@ -8,7 +8,6 @@ import { scrollToFirstError } from '@/utils/form-helpers';
 import { useAnalyticsContext } from '@/providers/AnalyticsProvider';
 import { Card, CardContent } from '@/components/ui/card';
 
-
 interface QuoteFormProps {
   onFormSuccess?: () => void;
 }
@@ -16,7 +15,7 @@ interface QuoteFormProps {
 const QuoteForm = ({ onFormSuccess }: QuoteFormProps) => {
   const [showSuccess, setShowSuccess] = useState(false);
   const [formStartTime, setFormStartTime] = useState<number>(Date.now());
-  const { trackEvent, trackConversion } = useAnalyticsContext();
+  const { trackEvent } = useAnalyticsContext();
   
   // Track form start
   useEffect(() => {
@@ -28,32 +27,17 @@ const QuoteForm = ({ onFormSuccess }: QuoteFormProps) => {
     setFormStartTime(Date.now());
   }, [trackEvent]);
   
-  // Handle form success with comprehensive tracking
+  // Handle form success with simplified tracking
   const handleFormSuccess = () => {
     const completionTime = Date.now() - formStartTime;
     
-    // Track successful conversion
-    trackConversion({
-      event_name: 'quote_request_completed',
-      value: 150, // Average quote value
-      currency: 'USD',
-      items: [{
-        item_id: 'quote_request',
-        item_name: 'Junk Removal Quote',
-        category: 'service_request',
-        quantity: 1,
-        price: 150
-      }]
-    });
-    
+    // Simplified event tracking only
     trackEvent({
       action: 'form_complete',
       category: 'quote_form',
       label: 'quote_request',
-      value: Math.round(completionTime / 1000) // completion time in seconds
+      value: Math.round(completionTime / 1000)
     });
-    
-
     
     setShowSuccess(true);
     if (onFormSuccess) {
@@ -71,7 +55,6 @@ const QuoteForm = ({ onFormSuccess }: QuoteFormProps) => {
       label: 'validation_error'
     });
     
-
     formMethods.onError();
     scrollToFirstError(formMethods.methods);
   };

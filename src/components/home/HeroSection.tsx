@@ -5,7 +5,6 @@ import { Button } from '@/components/ui/button';
 import { Phone } from 'lucide-react';
 import { PHONE_NUMBER, getPhoneLink } from '@/utils/contact-info';
 import { useAnalyticsContext } from '@/providers/AnalyticsProvider';
-
 import ZipCodeChecker from './ZipCodeChecker';
 
 const HeroSection = () => {
@@ -21,9 +20,8 @@ const HeroSection = () => {
       category: 'hero',
       label: 'get_quote_button'
     });
-
     
-    // Track A/B test conversion
+    // Track A/B test conversion - simplified
     if (ctaTest) {
       trackABConversion('hero-cta-test', 'cta_click');
     }
@@ -35,7 +33,6 @@ const HeroSection = () => {
       category: 'hero',
       label: 'phone_button'
     });
-
   };
 
   return (
