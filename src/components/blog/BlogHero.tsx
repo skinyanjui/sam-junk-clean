@@ -11,7 +11,7 @@ interface BlogHeroProps {
 
 const BlogHero = ({ searchQuery, setSearchQuery }: BlogHeroProps) => {
   return (
-    <section className="py-16 md:py-24 bg-gradient-to-r from-brand-navy to-brand-navy/90 text-white relative overflow-hidden" aria-labelledby="blog-heading">
+    <section className="hero-section bg-gradient-to-r from-brand-navy to-brand-navy/90 text-white relative overflow-hidden" aria-labelledby="blog-heading">
       {/* Decorative elements */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute -top-20 -left-20 w-64 h-64 rounded-full bg-brand-red"></div>

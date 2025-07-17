@@ -60,7 +60,7 @@ const PricingHero = ({
 
   return (
     <section 
-      className={`pt-24 pb-20 ${backgroundStyles[backgroundStyle]} text-white relative overflow-hidden`} 
+      className={`hero-section ${backgroundStyles[backgroundStyle]} text-white relative overflow-hidden`} 
       aria-labelledby="pricing-hero-heading"
     >
       {/* Decorative elements */}

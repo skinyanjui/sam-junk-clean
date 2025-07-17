@@ -19,7 +19,7 @@ const ServicesHero = () => {
       
       {/* Hero Section */}
       <section 
-        className={`${isMobile ? 'py-10 px-4' : 'py-16'} ${isLandscape && isMobile ? 'py-8' : ''} bg-brand-navy text-white`}
+        className={`hero-section ${isMobile ? 'px-4' : ''} bg-brand-navy text-white`}
         aria-labelledby="services-hero-heading"
       >
         <div className="container-custom">

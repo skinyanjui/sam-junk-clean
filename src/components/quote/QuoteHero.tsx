@@ -11,7 +11,7 @@ const QuoteHero = () => {
   
   return (
     <section 
-      className={`${isMobile ? 'py-10' : 'py-20'} ${isLandscape && isMobile ? 'py-8' : ''} bg-brand-navy text-white`}
+      className="hero-section bg-brand-navy text-white"
       aria-labelledby="quote-hero-heading"
     >
       <div className="container-custom">

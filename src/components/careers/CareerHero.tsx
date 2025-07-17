@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 
 const CareerHero = () => {
   return (
-    <section className="py-16 bg-brand-navy text-white">
+    <section className="hero-section bg-brand-navy text-white">
       <div className="container-custom">
         <div className="text-center">
           <h1 className="text-4xl md:text-5xl font-bold mb-6">Join Uncle Sam's Team</h1>

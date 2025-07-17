@@ -17,7 +17,7 @@ const ContactHero = () => {
       
       {/* Hero Section */}
       <section 
-        className={`${isMobile ? 'py-10' : 'py-20'} ${isLandscape && isMobile ? 'py-8' : ''} bg-brand-navy text-white`}
+        className="hero-section bg-brand-navy text-white"
         aria-labelledby="contact-heading"
       >
         <div className="container-custom">

@@ -37,6 +37,11 @@
     --ring: 0 0% 20%;
 
     --radius: 0.5rem;
+    
+    /* Hero spacing variables */
+    --hero-padding-y: 0.5rem;
+    --hero-padding-y-mobile: 0.25rem;
+    --hero-padding-y-tablet: 0.375rem;
   }
 
   .dark {
@@ -249,6 +254,26 @@
   
   .custom-popup .leaflet-popup-content {
     @apply p-2 m-0;
+  }
+  
+  /* Hero section spacing classes */
+  .hero-section {
+    padding-top: var(--hero-padding-y);
+    padding-bottom: var(--hero-padding-y);
+  }
+  
+  @media (max-width: 767px) {
+    .hero-section {
+      padding-top: var(--hero-padding-y-mobile);
+      padding-bottom: var(--hero-padding-y-mobile);
+    }
+  }
+  
+  @media (min-width: 768px) and (max-width: 1023px) {
+    .hero-section {
+      padding-top: var(--hero-padding-y-tablet);
+      padding-bottom: var(--hero-padding-y-tablet);
+    }
   }
 }
 

@@ -36,7 +36,7 @@ export const LocationsHero = ({
   if (isLoading) {
     return (
       <section 
-        className={`py-12 ${isExpanded ? 'md:py-20' : ''} ${backgroundStyles[backgroundStyle]} text-white`} 
+        className={`hero-section ${backgroundStyles[backgroundStyle]} text-white`} 
         aria-labelledby="locations-heading"
       >
         <div className="container-custom">
@@ -64,7 +64,7 @@ export const LocationsHero = ({
 
   return (
     <section 
-      className={`py-12 ${isExpanded ? 'md:py-20' : ''} ${backgroundStyles[backgroundStyle]} text-white relative overflow-hidden`} 
+      className={`hero-section ${backgroundStyles[backgroundStyle]} text-white relative overflow-hidden`} 
       aria-labelledby="locations-heading"
     >
       {/* Decorative elements */}

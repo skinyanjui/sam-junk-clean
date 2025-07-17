@@ -36,7 +36,7 @@ const HeroSection = () => {
   };
 
   return (
-    <section className={`relative ${isMobile ? 'min-h-[70vh]' : 'min-h-screen'} flex items-center justify-center overflow-hidden bg-gradient-to-br from-brand-navy via-brand-navy/95 to-brand-navy/90`}>
+    <section className={`hero-section relative ${isMobile ? 'min-h-[70vh]' : 'min-h-screen'} flex items-center justify-center overflow-hidden bg-gradient-to-br from-brand-navy via-brand-navy/95 to-brand-navy/90`} aria-labelledby="home-hero-heading">
       <div className="absolute inset-0 pointer-events-none mix-blend-multiply">
         <img
           src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80"
@@ -46,7 +46,7 @@ const HeroSection = () => {
       </div>
 
       <div className="container-custom relative z-10 text-center">
-        <h1 className={`text-4xl md:text-5xl lg:text-6xl font-extrabold text-white mb-4 md:mb-6 tracking-tight leading-tight`}>
+        <h1 id="home-hero-heading" className={`text-4xl md:text-5xl lg:text-6xl font-extrabold text-white mb-4 md:mb-6 tracking-tight leading-tight`}>
           Fast & Reliable Junk Removal
         </h1>
         <p className="text-lg md:text-xl text-white/80 mb-6 md:mb-8 max-w-2xl mx-auto">
