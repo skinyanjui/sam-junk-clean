@@ -26,32 +26,32 @@ const CustomerPromise = ({ isVisible }: CustomerPromiseProps) => {
           <div className="relative">
             <Badge className="bg-brand-red border-0 mb-2 px-3 py-1">100% SATISFACTION GUARANTEE</Badge>
             <h3 className="text-lg sm:text-xl md:text-2xl font-bold mb-3">
-              Our <span className="text-brand-yellow">Core Values</span> Define Who We Are
+              <span className="text-brand-yellow">Trusted</span> By Hundreds Of Happy Customers
             </h3>
             <div className="flex flex-wrap justify-center gap-3 md:gap-4 max-w-2xl mx-auto mb-2">
               <div className="flex items-center bg-white/10 backdrop-blur-sm rounded-full px-3 py-1.5">
                 <div className="mr-2 bg-white/20 backdrop-blur-sm rounded-full p-1">
                   <Star className="h-3 w-3 text-brand-yellow" />
                 </div>
-                <span className="text-white/90 text-xs">Integrity</span>
+                <span className="text-white/90 text-xs">Top-rated service</span>
               </div>
               <div className="flex items-center bg-white/10 backdrop-blur-sm rounded-full px-3 py-1.5">
                 <div className="mr-2 bg-white/20 backdrop-blur-sm rounded-full p-1">
                   <Users className="h-3 w-3 text-white" />
                 </div>
-                <span className="text-white/90 text-xs">Respect</span>
+                <span className="text-white/90 text-xs">Background-checked team</span>
               </div>
               <div className="flex items-center bg-white/10 backdrop-blur-sm rounded-full px-3 py-1.5">
                 <div className="mr-2 bg-white/20 backdrop-blur-sm rounded-full p-1">
                   <Award className="h-3 w-3 text-white" />
                 </div>
-                <span className="text-white/90 text-xs">Responsibility</span>
+                <span className="text-white/90 text-xs">Fully insured service</span>
               </div>
             </div>
             <div className="mt-3 text-sm">
               <span className="flex items-center justify-center">
                 <Check className="h-4 w-4 mr-1 text-green-300" />
-                <span className="text-white/90">We operate by these core values in everything we do.</span>
+                <span className="text-white/90">We guarantee your 100% satisfaction, every time.</span>
               </span>
             </div>
           </div>

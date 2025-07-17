@@ -47,10 +47,10 @@ const HeroSection = () => {
 
       <div className="container-custom relative z-10 text-center">
         <h1 id="home-hero-heading" className={`text-4xl md:text-5xl lg:text-6xl font-extrabold text-white mb-4 md:mb-6 tracking-tight leading-tight`}>
-          Efficient & Reliable Junk Removal
+          Fast & Reliable Junk Removal
         </h1>
         <p className="text-lg md:text-xl text-white/80 mb-6 md:mb-8 max-w-2xl mx-auto">
-          Proudly serving the Tri-State area with professional junk removal services that make your life easier and spaces cleaner. Founded by a U.S. Marine Corps veteran and committed to environmentally responsible disposal.
+          Your trusted partner for residential and commercial junk removal services. Veteran owned and committed to eco-friendly disposal.
         </p>
         
         <div className="flex flex-col sm:flex-row justify-center gap-4 mb-8">
@@ -86,19 +86,15 @@ const HeroSection = () => {
         <div className="flex flex-wrap justify-center gap-4 text-sm text-white/70">
           <span className="flex items-center gap-2">
             <svg className="w-4 h-4 fill-brand-red" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="check-circle" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"></path></svg>
-            Licensed & Fully Insured
+            Licensed & Insured
           </span>
           <span className="flex items-center gap-2">
             <svg className="w-4 h-4 fill-brand-red" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="check-circle" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"></path></svg>
-            Marine Corps Veteran Owned
+            Veteran Owned
           </span>
           <span className="flex items-center gap-2">
             <svg className="w-4 h-4 fill-brand-red" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="check-circle" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"></path></svg>
-            We Recycle & Donate
-          </span>
-          <span className="flex items-center gap-2">
-            <svg className="w-4 h-4 fill-brand-red" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="check-circle" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"></path></svg>
-            100% Satisfaction Guarantee
+            Eco-Friendly Disposal
           </span>
         </div>
       </div>
