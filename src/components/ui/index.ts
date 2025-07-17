@@ -19,7 +19,7 @@ export * from './collapsible';
 export * from './command';
 export * from './context-menu';
 export * from './dialog';
-export * from './divider';
+
 export * from './drawer';
 export * from './dropdown-menu';
 export * from './form';
@@ -39,7 +39,7 @@ export * from './radio-group';
 export * from './resizable';
 export * from './scroll-area';
 export * from './select';
-export * from './separator';
+
 export * from './sheet';
 export * from './sidebar';
 export * from './skeleton';

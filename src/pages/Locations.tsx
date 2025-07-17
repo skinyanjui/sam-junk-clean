@@ -1,17 +1,14 @@
-
-import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import PageLayout from '@/components/PageLayout';
 import SEO from '@/components/SEO';
 import { useTranslation } from 'react-i18next';
 import { useLocationData } from '@/hooks/use-location-data';
-import { LocationsContent } from '@/components/locations/LocationsContent';
 import { LocationsHero } from '@/components/locations/LocationsHero';
 import ZipCodeLookup from '@/components/locations/ZipCodeLookup';
 import LocationsCta from '@/components/locations/LocationsCta';
 import { LocationsSchema as initialLocationsSchema } from '@/components/locations/LocationsSchema';
 import { LocationsSeoContent } from '@/components/locations/LocationsSeoContent';
-import { Skeleton } from '@/components/ui/skeleton';
+import { LocationsContent } from '@/components/locations/LocationsContent';
 import { siteConfig } from '@/config/siteConfig';
 
 const Locations = () => {
@@ -61,26 +58,6 @@ const Locations = () => {
   if (locationItemListSchema) {
     combinedStructuredData.push(locationItemListSchema);
   }
-  
-  // Loading skeleton
-  if (isLoading) {
-    return (
-      <PageLayout>
-        <SEO 
-          title={pageTitle}
-          description={pageDescription}
-          keywords="junk removal Evansville, junk removal Owensboro, junk removal Mt. Carmel, Tri-State area junk removal, Henderson junk removal, Princeton junk removal, Newburgh junk removal"
-          structuredData={[initialLocationsSchema]}
-          canonicalUrl={canonicalUrl}
-        />
-
-        <LocationsHero isLoading={true} />
-        
-        <ZipCodeLookup />
-        <LocationsCta />
-      </PageLayout>
-    );
-  }
 
   return (
     <PageLayout>
@@ -92,12 +69,14 @@ const Locations = () => {
         canonicalUrl={canonicalUrl}
       />
 
-      <LocationsHero isLoading={false} />
+      <LocationsHero isLoading={isLoading} searchProps={searchProps} />
       
-      <LocationsContent 
-        filteredLocations={filteredLocations} 
-        searchProps={searchProps} 
-      />
+      {!isLoading && (
+        <LocationsContent 
+          filteredLocations={filteredLocations} 
+          searchProps={searchProps} 
+        />
+      )}
 
       {/* ZIP Code Lookup Section */}
       <ZipCodeLookup />

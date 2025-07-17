@@ -15,7 +15,6 @@ import { siteConfig } from '@/config/siteConfig'; // Import siteConfig
 // Removed: import LocalBusinessSchema from '@/components/SEO/LocalBusinessSchema';
 import { useTranslation } from 'react-i18next';
 import { LoadingSkeleton } from '@/components/ui/loading-skeleton';
-import SectionSeparator from '@/components/ui/section-separator';
 import FeaturedProjects from '@/components/home/FeaturedProjects';
 import ProcessSection from '@/components/home/ProcessSection';
 import { useExitIntent } from '@/hooks/use-exit-intent';
@@ -164,28 +163,21 @@ const Index = () => {
           </div>
         </div>
       ) : (
-        <div className="space-y-2 md:space-y-3">
+        <div className="space-y-6 md:space-y-8">
           <HeroSection />
           <EnhancedTrustSignals />
-          <SectionSeparator variant="gradient" padding="sm" />
           
           <ProcessSection />
-          <SectionSeparator variant="gradient" padding="sm" />
           
           <ServicesOverview />
-          <SectionSeparator variant="gradient" padding="sm" />
           
           <FeaturedProjects />
-          <SectionSeparator variant="gradient" padding="sm" />
           
           <PricingOverview />
-          <SectionSeparator variant="gradient" padding="sm" />
           
           <WhyChooseUs />
-          <SectionSeparator variant="gradient" padding="sm" />
           
           <TestimonialsSection />
-          <SectionSeparator variant="gradient" padding="sm" />
           
           <CtaSection />
         </div>

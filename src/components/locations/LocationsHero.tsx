@@ -1,37 +1,33 @@
-
 import { useTranslation } from 'react-i18next';
 import { Skeleton } from '@/components/ui/skeleton';
+import ServiceAreaSearch from './ServiceAreaSearch';
 
 interface LocationsHeroProps {
   isLoading: boolean;
+  searchProps?: {
+    searchTerm: string;
+    setSearchTerm: (term: string) => void;
+    filteredLocationsCount: number;
+    clearSearch: () => void;
+  };
 }
 
-export const LocationsHero = ({ isLoading }: LocationsHeroProps) => {
+export const LocationsHero = ({ isLoading, searchProps }: LocationsHeroProps) => {
   const { t } = useTranslation();
 
   if (isLoading) {
     return (
-      <section className="py-16 bg-white" aria-labelledby="locations-heading">
+      <section className="py-6 bg-white" aria-labelledby="locations-heading">
         <div className="container-custom">
-          <div className="text-center mb-12">
-            <Skeleton className="h-10 w-64 mx-auto mb-4" />
-            <Skeleton className="h-5 w-full max-w-2xl mx-auto mb-4" />
+          <div className="text-center mb-4">
+            <Skeleton className="h-10 w-64 mx-auto mb-2" />
+            <Skeleton className="h-5 w-full max-w-2xl mx-auto mb-2" />
             <Skeleton className="h-4 w-full max-w-xl mx-auto" />
           </div>
 
           {/* Search Box Skeleton */}
-          <div className="mb-10">
+          <div className="mb-4">
             <Skeleton className="h-12 w-full max-w-xl mx-auto" />
-          </div>
-
-          {/* Map Section Skeleton */}
-          <Skeleton className="h-[400px] w-full mb-10" />
-
-          {/* Service Area Cards Skeleton */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[1, 2, 3].map((index) => (
-              <Skeleton key={index} className="h-[300px] rounded-xl" />
-            ))}
           </div>
         </div>
       </section>
@@ -39,17 +35,26 @@ export const LocationsHero = ({ isLoading }: LocationsHeroProps) => {
   }
 
   return (
-    <section className="py-16 bg-white" aria-labelledby="locations-heading">
+    <section className="py-6 bg-white" aria-labelledby="locations-heading">
       <div className="container-custom">
-        <div className="text-center mb-12">
-          <h1 id="locations-heading" className="text-4xl font-bold text-brand-navy mb-4">{t('locations.title')}</h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+        <div className="text-center mb-4">
+          <h1 id="locations-heading" className="text-3xl md:text-4xl font-bold text-brand-navy mb-2">{t('locations.title')}</h1>
+          <p className="text-base md:text-lg text-gray-600 max-w-2xl mx-auto">
             {t('locations.subtitle')}
           </p>
-          <div className="mt-4 text-md text-gray-700">
-            <p>Proudly serving <strong>Evansville, IN</strong> and surrounding areas including <strong>Henderson, KY</strong>, <strong>Owensboro, KY</strong>, <strong>Newburgh, IN</strong>, <strong>Princeton, IN</strong>, <strong>Mt. Carmel, IL</strong> and the entire Tri-State region.</p>
+          <div className="mt-2 text-sm md:text-md text-gray-700">
+            <p>Proudly serving <strong>Evansville, IN</strong> and surrounding areas including <strong>Henderson, KY</strong>, <strong>Owensboro, KY</strong>, <strong>Newburgh, IN</strong>, and the entire Tri-State region.</p>
           </div>
         </div>
+        
+        {/* Search Box - Moved from LocationsContent to Hero for better UX */}
+        {searchProps && (
+          <ServiceAreaSearch 
+            searchTerm={searchProps.searchTerm} 
+            setSearchTerm={searchProps.setSearchTerm} 
+            filteredLocationsCount={searchProps.filteredLocationsCount} 
+          />
+        )}
       </div>
     </section>
   );

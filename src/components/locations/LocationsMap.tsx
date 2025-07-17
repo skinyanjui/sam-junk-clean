@@ -1,18 +1,18 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { MapContainer, TileLayer, Marker, Popup, Polygon, GeoJSON } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, Polygon } from 'react-leaflet';
 import L from 'leaflet';
 import { serviceLocations } from '@/data/serviceLocations';
 import 'leaflet/dist/leaflet.css';
-import { MapPin } from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 // Custom marker icons with branded colors
 const createMarkerIcon = (color: string) => {
   return L.divIcon({
     className: 'custom-marker',
-    html: `<div style="background-color: ${color}; width: 14px; height: 14px; border-radius: 50%; border: 3px solid white; box-shadow: 0 0 4px rgba(0,0,0,0.5);"></div>`,
-    iconSize: [20, 20],
-    iconAnchor: [10, 10]
+    html: `<div style="background-color: ${color}; width: 12px; height: 12px; border-radius: 50%; border: 2px solid white; box-shadow: 0 0 3px rgba(0,0,0,0.5);"></div>`,
+    iconSize: [16, 16],
+    iconAnchor: [8, 8]
   });
 };
 
@@ -111,87 +111,90 @@ const LocationsMap = () => {
   });
 
   return (
-    <div className="mb-12 bg-white p-6 rounded-xl shadow-lg">
-      <h3 className="text-2xl font-bold text-brand-navy mb-4">{t('locations.mapTitle')}</h3>
-      <p className="mb-6 text-gray-600 max-w-3xl">
-        Our service coverage spans across the entire Tri-State area, including cities in Indiana, Kentucky, and Illinois. Explore the map below to see if we serve your area.
-      </p>
-      
-      <div className="aspect-w-16 aspect-h-9 rounded-xl overflow-hidden border border-gray-100">
-        <div className="w-full h-[500px]">
-          {isMapReady && (
-            <MapContainer 
-              center={mapCenter} 
-              zoom={zoom} 
-              style={{ height: '100%', width: '100%', borderRadius: '0.75rem' }}
-              scrollWheelZoom={false}
-              zoomControl={true}
-              attributionControl={false}
-              className="z-10"
-            >
-              <TileLayer
-                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                className="opacity-90"
-              />
-              
-              {/* Render service area polygons */}
-              {Object.entries(serviceAreaPolygons).map(([state, coordinates]) => (
-                <Polygon
-                  key={`polygon-${state}`}
-                  positions={coordinates as [number, number][]}
-                  pathOptions={{
-                    fillColor: stateColors[state as keyof typeof stateColors] || '#1A1F71',
-                    fillOpacity: 0.2,
-                    weight: 2,
-                    color: stateColors[state as keyof typeof stateColors] || '#1A1F71',
-                    opacity: 0.8,
-                    dashArray: '5, 5'
-                  }}
-                >
-                  <Popup>
-                    <div className="text-center p-2">
-                      <div className="font-bold text-lg">{state} Service Area</div>
-                      <div className="text-sm text-gray-600">
-                        {serviceLocations.find(loc => loc.name === state)?.serviceRadius}
-                      </div>
-                    </div>
-                  </Popup>
-                </Polygon>
-              ))}
-              
-              {/* Render city markers */}
-              {Object.entries(citiesByState).map(([state, cities]) => (
-                cities.map((location, idx) => (
-                  <Marker 
-                    key={`${state}-${location.city}-${idx}`}
-                    position={location.coords} 
-                    icon={createMarkerIcon(stateColors[state as keyof typeof stateColors] || '#1A1F71')}
+    <Card variant="standard" className="overflow-hidden">
+      <CardHeader className="pb-2">
+        <CardTitle size="md">{t('locations.mapTitle')}</CardTitle>
+        <p className="text-sm text-gray-600">
+          Our service coverage spans across the entire Tri-State area, including cities in Indiana, Kentucky, and Illinois.
+        </p>
+      </CardHeader>
+      <CardContent className="p-0">
+        <div className="aspect-w-16 aspect-h-9 w-full">
+          <div className="w-full h-[400px]">
+            {isMapReady && (
+              <MapContainer 
+                center={mapCenter} 
+                zoom={zoom} 
+                style={{ height: '100%', width: '100%' }}
+                scrollWheelZoom={false}
+                zoomControl={true}
+                attributionControl={false}
+                className="z-10"
+              >
+                <TileLayer
+                  attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                  className="opacity-90"
+                />
+                
+                {/* Render service area polygons */}
+                {Object.entries(serviceAreaPolygons).map(([state, coordinates]) => (
+                  <Polygon
+                    key={`polygon-${state}`}
+                    positions={coordinates as [number, number][]}
+                    pathOptions={{
+                      fillColor: stateColors[state as keyof typeof stateColors] || '#1A1F71',
+                      fillOpacity: 0.2,
+                      weight: 2,
+                      color: stateColors[state as keyof typeof stateColors] || '#1A1F71',
+                      opacity: 0.8,
+                      dashArray: '5, 5'
+                    }}
                   >
-                    <Popup className="custom-popup">
-                      <div className="font-medium text-brand-navy">{location.city}</div>
-                      <div className="text-sm text-gray-600">{state}</div>
+                    <Popup>
+                      <div className="text-center p-2">
+                        <div className="font-bold text-lg">{state} Service Area</div>
+                        <div className="text-sm text-gray-600">
+                          {serviceLocations.find(loc => loc.name === state)?.serviceRadius}
+                        </div>
+                      </div>
                     </Popup>
-                  </Marker>
-                ))
-              ))}
-            </MapContainer>
-          )}
-        </div>
-      </div>
-      
-      <div className="mt-6 flex flex-wrap gap-6 justify-center">
-        {Object.entries(stateColors).map(([state, color]) => (
-          <div key={state} className="flex items-center">
-            <div 
-              className="w-4 h-4 rounded-full mr-2" 
-              style={{ backgroundColor: color, border: '2px solid white', boxShadow: '0 0 3px rgba(0,0,0,0.3)' }}
-            ></div>
-            <span className="text-gray-700 font-medium">{state}</span>
+                  </Polygon>
+                ))}
+                
+                {/* Render city markers */}
+                {Object.entries(citiesByState).map(([state, cities]) => (
+                  cities.map((location, idx) => (
+                    <Marker 
+                      key={`${state}-${location.city}-${idx}`}
+                      position={location.coords} 
+                      icon={createMarkerIcon(stateColors[state as keyof typeof stateColors] || '#1A1F71')}
+                    >
+                      <Popup className="custom-popup">
+                        <div className="font-medium text-brand-navy">{location.city}</div>
+                        <div className="text-sm text-gray-600">{state}</div>
+                      </Popup>
+                    </Marker>
+                  ))
+                ))}
+              </MapContainer>
+            )}
           </div>
-        ))}
-      </div>
-    </div>
+        </div>
+        
+        <div className="p-4 flex flex-wrap gap-4 justify-center">
+          {Object.entries(stateColors).map(([state, color]) => (
+            <div key={state} className="flex items-center">
+              <div 
+                className="w-3 h-3 rounded-full mr-2" 
+                style={{ backgroundColor: color, border: '1px solid white', boxShadow: '0 0 2px rgba(0,0,0,0.3)' }}
+              ></div>
+              <span className="text-sm text-gray-700">{state}</span>
+            </div>
+          ))}
+        </div>
+      </CardContent>
+    </Card>
   );
 };
 

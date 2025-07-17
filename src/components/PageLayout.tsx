@@ -5,7 +5,6 @@ import Footer from './Footer';
 import { Breadcrumb } from './Breadcrumb';
 import { Toaster } from './ui/toaster';
 import { useResponsiveLayout } from '@/hooks/use-mobile';
-import Divider from './ui/divider';
 
 interface PageLayoutProps {
   children: ReactNode;
@@ -62,17 +61,13 @@ const PageLayout = ({
       
       <main className={`flex-grow w-full ${getSectionSpacing()}`}>
         {showBreadcrumb && (
-          <>
-            <div className={`${breadcrumbClassName} ${isMobile && isLandscape ? 'py-1' : ''} flex items-center`}>
-              <Breadcrumb />
-            </div>
-            <Divider padding="none" />
-          </>
+          <div className={`${breadcrumbClassName} ${isMobile && isLandscape ? 'py-1' : ''} flex items-center`}>
+            <Breadcrumb />
+          </div>
         )}
         {children}
       </main>
       
-      <Divider padding="sm" />
       <Footer />
       
       {/* Bottom padding for mobile sticky button */}

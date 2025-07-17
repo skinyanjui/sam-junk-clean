@@ -458,9 +458,8 @@ export const CardTab: React.FC<Omit<CardTabPanelProps, 'label'>> = ({
   );
 };
 
-export const CardTabPanel: React.FC<CardTabPanelProps> = ({
+export const CardTabPanel: React.FC<Omit<CardTabPanelProps, 'label'>> = ({
   id,
-  label,
   children,
   active = false
 }) => {

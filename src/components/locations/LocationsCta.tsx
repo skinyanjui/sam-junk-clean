@@ -1,4 +1,3 @@
-
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { useTranslation } from 'react-i18next';
@@ -8,14 +7,14 @@ const LocationsCta = () => {
   const { t } = useTranslation();
   
   return (
-    <section className="py-20 bg-brand-navy text-white relative overflow-hidden">
+    <section className="py-8 md:py-10 bg-brand-navy text-white relative overflow-hidden">
       {/* Background pattern */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute top-0 left-0 w-full h-full">
-          {[...Array(20)].map((_, i) => (
+          {[...Array(6)].map((_, i) => (
             <MapPin 
               key={i} 
-              size={24} 
+              size={18} 
               className="absolute text-white"
               style={{
                 top: `${Math.random() * 100}%`,
@@ -29,26 +28,26 @@ const LocationsCta = () => {
       
       <div className="container-custom max-w-4xl relative z-10">
         <div className="text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">{t('locations.ctaTitle')}</h2>
-          <p className="text-xl mb-10 text-white/90 max-w-3xl mx-auto">
-            Ready to reclaim your space? Our friendly team is ready to help you remove junk and clutter from your home or business. Contact us today for a free, no-obligation quote.
+          <h2 className="text-2xl md:text-3xl font-bold mb-3">{t('locations.ctaTitle')}</h2>
+          <p className="text-base md:text-lg mb-4 text-white/90 max-w-3xl mx-auto">
+            Ready to reclaim your space? Our friendly team is ready to help you remove junk and clutter from your home or business.
           </p>
-          <div className="flex flex-col sm:flex-row gap-5 justify-center">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button 
               asChild 
-              size="lg" 
-              className="bg-brand-red hover:bg-opacity-90 text-white font-medium px-8 py-6 text-lg flex items-center"
+              size="default" 
+              className="bg-brand-red hover:bg-opacity-90 text-white font-medium"
             >
               <Link to="/quote">
                 {t('locations.requestQuote')}
-                <ArrowRight className="ml-2" size={18} />
+                <ArrowRight className="ml-2" size={16} />
               </Link>
             </Button>
             <Button 
               asChild 
-              size="lg" 
+              size="default" 
               variant="outline" 
-              className="text-white border-white hover:bg-white hover:text-brand-navy font-medium px-8 py-6 text-lg"
+              className="text-white border-white hover:bg-white hover:text-brand-navy font-medium"
             >
               <Link to="/contact">{t('common.contactUs')}</Link>
             </Button>

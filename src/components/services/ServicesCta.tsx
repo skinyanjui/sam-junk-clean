@@ -1,7 +1,6 @@
 
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import Divider from '@/components/ui/divider';
 import { useResponsiveLayout } from '@/hooks/use-mobile';
 import { Phone } from 'lucide-react';
 import { PHONE_NUMBER, getPhoneLink } from '@/utils/contact-info';
@@ -39,7 +38,6 @@ const ServicesCta = () => {
           </div>
         </div>
       </div>
-      <Divider padding="none" />
     </section>
   );
 };

@@ -341,7 +341,7 @@
 
 /* Tab panel accessibility */
 .card-accessible[role="tabpanel"] {
-  border-top: 0;
+  padding-top: 0.5rem;
 }
 
 .card-accessible[role="tabpanel"][aria-hidden="true"] {
@@ -354,9 +354,19 @@
 }
 
 .card-tab[aria-selected="true"] {
-  border-bottom-color: var(--card-brand-red);
   color: var(--card-brand-red);
   font-weight: 600;
+  position: relative;
+}
+
+.card-tab[aria-selected="true"]::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: var(--card-brand-red);
 }
 
 .card-tab:focus-visible {
@@ -680,27 +690,28 @@
   height: 100%;
 }
 
-/* Card Divider Utilities */
-.card-divider {
-  border-bottom: 1px solid rgb(229 231 235);
-  margin: 1rem 0;
+/* Card Spacing Utilities (minimal spacing) */
+.card-spacing-y-sm {
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
 }
 
-.card-divider-dashed {
-  border-bottom: 1px dashed rgb(229 231 235);
-  margin: 1rem 0;
+.card-spacing-y-md {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 
 /* Card Tab Styling */
 .card-tabs {
-  border-bottom: 1px solid rgb(229 231 235);
+  padding-bottom: 0.5rem;
 }
 
 .card-tab {
   padding: 0.75rem 1rem;
-  border-bottom: 2px solid transparent;
+  margin-bottom: 2px;
   transition: var(--card-transition-fast);
   cursor: pointer;
+  position: relative;
 }
 
 .card-tab:hover {
@@ -708,9 +719,18 @@
 }
 
 .card-tab.active {
-  border-bottom-color: var(--card-brand-red);
   color: var(--card-brand-red);
   font-weight: 600;
+}
+
+.card-tab.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: var(--card-brand-red);
 }
 
 /* Card Collapsible Utilities */
