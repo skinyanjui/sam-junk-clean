@@ -46,14 +46,9 @@ const BenefitCard = ({ benefit, index }: BenefitCardProps) => {
   return (
     <motion.div variants={itemVariants}>
       <Card 
-        variant="compact"
-        size="xs"
-        elevation="sm"
-        interactive={true}
-        glassEffect={true}
         className="bg-white/80 backdrop-blur-sm border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 h-full overflow-hidden group"
       >
-        <CardContent size="xs" className="relative">
+        <CardContent className="relative">
           <div className="absolute top-0 right-0 p-1">
             <div className="bg-green-100 rounded-full p-1">
               <Check className="h-3 w-3 text-green-600" />

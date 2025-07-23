@@ -146,17 +146,13 @@ const PricingOverview = () => {
                 : ''
               } ${isMobile ? 'mb-4' : ''}`}>
               <Card 
-                variant="featured"
-                size="md"
-                elevation={tier.popular ? "lg" : "md"}
-                interactive={true}
                 className={`h-full transition-all duration-500 hover:-translate-y-1 hover:shadow-lg ${
                   tier.popular 
-                    ? 'border-2 border-brand-red shadow-lg' 
-                    : ''
+                    ? 'border-2 border-brand-red shadow-lg bg-gradient-to-b from-white to-blue-50' 
+                    : 'shadow-md bg-gradient-to-b from-white to-gray-50'
                 }`}
               >
-                <CardHeader size="md" className={`text-center pb-3 ${isMobile ? 'pt-3 px-3' : ''}`}>
+                <CardHeader className={`text-center pb-3 ${isMobile ? 'pt-3 px-3' : ''}`}>
                   {tier.popular && (
                     <Badge className="bg-brand-red mb-1 mx-auto">Most Common</Badge>
                   )}

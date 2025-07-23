@@ -266,7 +266,6 @@ const LocationsMap = ({
 
   return (
     <Card
-      variant="standard"
       className="overflow-hidden shadow-lg rounded-xl border border-gray-200"
     >
       <CardHeader className="pb-3">
