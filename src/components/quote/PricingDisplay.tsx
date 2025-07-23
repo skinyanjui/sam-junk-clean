@@ -1,7 +1,7 @@
-
-import React, { useState, useEffect } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { PricingTier, fetchPricingTiers } from '@/integrations/supabase/pricingService';
+import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { PricingCard, type PricingTier } from '@/components/ui/pricing-card';
+import { fetchPricingTiers } from '@/integrations/supabase/pricingService';
 import { Skeleton } from '@/components/ui/skeleton';
 
 const PricingDisplay = () => {
@@ -37,22 +37,16 @@ const PricingDisplay = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[...Array(4)].map((_, index) => (
-              <Card 
-                key={index} 
-                variant="standard"
-                size="md"
-                elevation="sm"
-                className="border-2"
-              >
-                <CardHeader size="md" className="pb-3">
-                  <Skeleton className="h-6 w-32" />
-                </CardHeader>
-                <CardContent size="md">
-                  <Skeleton className="h-4 w-full mb-2" />
-                  <Skeleton className="h-4 w-3/4 mb-4" />
-                  <Skeleton className="h-6 w-24" />
-                </CardContent>
-              </Card>
+              <PricingCard
+                key={index}
+                tier={{
+                  tier_name: '',
+                  price_display: '',
+                  description: ''
+                }}
+                isLoading={true}
+                variant="compact"
+              />
             ))}
           </div>
         </div>
@@ -82,25 +76,15 @@ const PricingDisplay = () => {
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {pricingData.map((item) => (
-            <Card 
-              key={item.id} 
-              variant="standard"
-              size="md"
-              elevation="sm"
-              interactive={true}
-              className="border-2 hover:border-brand-red transition-colors"
-            >
-              <CardHeader size="md" className="pb-3">
-                <CardTitle size="md" className="text-brand-navy">{item.tier_name}</CardTitle>
-              </CardHeader>
-              <CardContent size="md">
-                <p className="text-gray-600 mb-4">{item.description}</p>
-                <p className="text-2xl font-bold text-brand-red">
-                  Starting at {item.price_display.split('–')[0]}
-                </p>
-              </CardContent>
-            </Card>
+          {pricingData.map((tier) => (
+            <PricingCard
+              key={tier.id}
+              tier={tier}
+              variant="compact"
+              ctaText="Get Quote"
+              ctaLink="/quote"
+              showFeatures={false}
+            />
           ))}
         </div>
         

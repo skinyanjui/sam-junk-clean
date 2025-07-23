@@ -1,143 +1,123 @@
-
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Check } from 'lucide-react';
+import { Check, TrendingUp, ArrowRight, Star, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
+import { PricingCard, type PricingTier } from '@/components/ui/pricing-card';
+import { fetchPricingTiers } from '@/integrations/supabase/pricingService';
 import { useResponsiveLayout } from '@/hooks/use-mobile';
-import { Badge } from '@/components/ui/badge';
-import { PricingTier, PricingTierDisplay, fetchPricingTiers, preparePricingTiersForOverview } from '@/integrations/supabase/pricingService';
 import { Skeleton } from '@/components/ui/skeleton';
 
 const PricingOverview = () => {
-  const { isMobile, isLandscapeMobile } = useResponsiveLayout();
-  const [pricingTiers, setPricingTiers] = useState<PricingTierDisplay[]>([]);
+  const [pricingTiers, setPricingTiers] = useState<PricingTier[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  
+  const [error, setError] = useState<string | null>(null);
+  const { isMobile, isLandscapeMobile } = useResponsiveLayout();
+
   useEffect(() => {
-    const loadPricingData = async () => {
+    const loadData = async () => {
       try {
-        const data = await fetchPricingTiers();
-        // Use the preparation function to get display-ready pricing tiers
-        const processedTiers = preparePricingTiersForOverview(data);
-        setPricingTiers(processedTiers);
+        const tiersData = await fetchPricingTiers();
+        setPricingTiers(tiersData);
       } catch (err) {
-        console.error('Failed to load pricing data for overview:', err);
-        // Set some default data
-        setPricingTiers([
-          {
-            id: '1',
-            tier_name: 'Small Loads',
-            min_price: 75,
-            max_price: 175,
-            price_display: '$75-$175',
-            description: 'Single items to 1/4 truck',
-            fill_level: '25%',
-            fill_percentage: 25,
-            sort_order: 1,
-            features: ['Furniture pieces', 'Appliance removal', 'Small cleanouts', 'Quick, single-item pickups'],
-            popular: false
-          },
-          {
-            id: '2',
-            tier_name: 'Medium Loads',
-            min_price: 175,
-            max_price: 450,
-            price_display: '$175-$450',
-            description: '1/4 to 3/4 truck loads',
-            fill_level: '50%',
-            fill_percentage: 50,
-            sort_order: 2,
-            features: ['Room renovations', 'Basement cleanouts', 'Multi-item removal', 'Office cleanups'],
-            popular: true
-          },
-          {
-            id: '3',
-            tier_name: 'Full Loads',
-            min_price: 450,
-            max_price: 600,
-            price_display: '$450-$600+',
-            description: 'Complete truck loads',
-            fill_level: '100%',
-            fill_percentage: 100,
-            sort_order: 3,
-            features: ['Whole home cleanouts', 'Large estate clearings', 'Commercial projects', 'Construction debris'],
-            popular: false
-          }
-        ]);
+        console.error('Failed to load pricing data:', err);
+        setError('Failed to load pricing information. Please try again later.');
       } finally {
         setIsLoading(false);
       }
     };
 
-    loadPricingData();
+    loadData();
   }, []);
 
-  // Show loading skeletons while data is being fetched
-  if (isLoading) {
+  // Loading skeleton for pricing cards
+  const PricingOverviewSkeleton = () => (
+    <section 
+      className="py-10 px-4 md:py-14 lg:py-16 bg-gradient-to-br from-white via-brand-gray/30 to-white relative overflow-hidden"
+    >
+      <div className="container-custom relative z-10">
+        <div className="text-center mb-6 md:mb-8">
+          <Skeleton className="h-5 w-36 mx-auto mb-3" />
+          <Skeleton className="h-9 w-64 md:w-80 mx-auto mb-3" />
+          <Skeleton className="h-1 w-16 mx-auto mb-3" />
+          <Skeleton className="h-4 w-full max-w-xl mx-auto" />
+        </div>
+        
+        <div className={`grid ${isMobile ? 'grid-cols-1' : isLandscapeMobile ? 'grid-cols-3 gap-2' : 'md:grid-cols-3 gap-4'} max-w-5xl mx-auto relative`}>
+          {[1, 2, 3].map((index) => (
+            <div key={index} className={isMobile ? 'mb-4' : ''}>
+              <PricingCard
+                tier={{
+                  tier_name: '',
+                  price_display: '',
+                  description: ''
+                }}
+                isLoading={true}
+                variant="default"
+              />
+            </div>
+          ))}
+        </div>
+        
+        <div className="text-center mt-8">
+          <Skeleton className="h-9 w-36 mx-auto" />
+        </div>
+      </div>
+    </section>
+  );
+
+  // Error state
+  if (error) {
     return (
-      <section className={`py-10 ${isMobile ? 'px-4 py-8' : isLandscapeMobile ? 'py-10' : 'py-12'} bg-gradient-to-b from-brand-gray to-white relative`}>
-        <div className="container-custom relative z-10">
-          <div className="text-center mb-6 md:mb-8">
-            <Skeleton className="h-4 w-40 mx-auto mb-1" />
-            <Skeleton className="h-8 w-64 mx-auto mb-3" />
-            <div className="w-20 h-1 bg-gray-200 mx-auto mb-3"></div>
-            <Skeleton className="h-4 w-full max-w-3xl mx-auto" />
-          </div>
-          
-          <div className={`grid ${isMobile ? 'grid-cols-1' : 'md:grid-cols-3'} gap-4 max-w-5xl mx-auto`}>
-            {[...Array(3)].map((_, i) => (
-              <Card 
-                key={i} 
-                className="h-full shadow-md bg-gradient-to-b from-white to-gray-50"
-              >
-                <CardHeader className="text-center pb-3">
-                  <Skeleton className="h-5 w-32 mx-auto mb-1" />
-                  <Skeleton className="h-6 w-24 mx-auto mb-1" />
-                  <Skeleton className="h-4 w-48 mx-auto" />
-                </CardHeader>
-                <CardContent className="pb-3">
-                  <div className="space-y-2">
-                    {[...Array(4)].map((_, j) => (
-                      <div key={j} className="flex items-center">
-                        <div className="w-4 h-4 rounded-full bg-gray-200 mr-2" />
-                        <Skeleton className="h-4 w-full" />
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-                <CardFooter className="pt-1 pb-3">
-                  <Skeleton className="h-8 w-full" />
-                </CardFooter>
-              </Card>
-            ))}
-          </div>
-          
-          <div className="text-center mt-6">
-            <Skeleton className="h-4 w-48 mx-auto" />
+      <section className="py-10 px-4 md:py-14 lg:py-16 bg-gradient-to-br from-white via-brand-gray/30 to-white relative overflow-hidden">
+        <div className="container-custom">
+          <div className="text-center py-12">
+            <p className="text-red-600 font-medium">{error}</p>
+            <Button 
+              onClick={() => window.location.reload()} 
+              variant="outline" 
+              className="mt-4"
+            >
+              Try Again
+            </Button>
           </div>
         </div>
       </section>
     );
   }
-  
+
+  // Loading state
+  if (isLoading) {
+    return <PricingOverviewSkeleton />;
+  }
+
   return (
-    <section className={`py-10 ${isMobile ? 'px-4 py-8' : isLandscapeMobile ? 'py-10' : 'py-12'} bg-gradient-to-b from-brand-gray to-white relative`}>
-      {/* Subtle background pattern */}
-      <div className="absolute inset-0 opacity-[0.02] bg-[url('https://www.transparenttextures.com/patterns/subtle-dots.png')]"></div>
+    <section 
+      className="py-10 px-4 md:py-14 lg:py-16 bg-gradient-to-br from-white via-brand-gray/30 to-white relative overflow-hidden"
+      id="pricing-overview"
+      aria-labelledby="pricing-overview-heading"
+    >
+      {/* Background decoration */}
+      <div className="absolute inset-0 bg-grid-pattern opacity-5" aria-hidden="true"></div>
+      <div className="absolute top-0 left-1/4 w-96 h-96 bg-brand-red/5 rounded-full blur-3xl" aria-hidden="true"></div>
+      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-brand-navy/5 rounded-full blur-3xl" aria-hidden="true"></div>
       
       <div className="container-custom relative z-10">
+        {/* Header */}
         <div className="text-center mb-6 md:mb-8">
-          <span className="text-brand-red font-semibold uppercase tracking-wider mb-1 block">Clear & Upfront</span>
-          <h2 className={`${isMobile ? 'text-3xl' : 'text-4xl md:text-5xl'} font-bold text-brand-navy mb-3`}>
-            No-Surprise Pricing
+          <div className="inline-flex items-center gap-2 bg-brand-red/10 text-brand-red px-3 py-1 rounded-full text-sm font-medium mb-3">
+            <Star size={14} />
+            Transparent Pricing
+          </div>
+          <h2 id="pricing-overview-heading" className="text-2xl md:text-3xl lg:text-4xl font-bold text-brand-navy mb-3">
+            Simple, Volume-Based Pricing
           </h2>
-          <div className="w-20 h-1 bg-brand-red mx-auto mb-3"></div>
-          <p className={`${isMobile ? 'text-base' : 'text-lg'} max-w-3xl mx-auto text-gray-600 leading-relaxed`}>
-            You pay only for the space your items take up in our truck. Get a free estimate before we start any work.
+          <div className="w-16 h-1 bg-gradient-to-r from-brand-red to-brand-navy mx-auto mb-3"></div>
+          <p className="text-gray-600 max-w-xl mx-auto">
+            No hidden fees, no surprises. Pay based on how much space your items take up in our truck.
           </p>
         </div>
         
+        {/* Pricing Cards */}
         <div className={`grid ${isMobile ? 'grid-cols-1' : isLandscapeMobile ? 'grid-cols-3 gap-2' : 'md:grid-cols-3 gap-4'} max-w-5xl mx-auto relative`}>
           {pricingTiers.map((tier, index) => (
             <div key={index} className={`${
@@ -145,55 +125,29 @@ const PricingOverview = () => {
                 ? 'md:-mt-3 md:mb-3 z-10' 
                 : ''
               } ${isMobile ? 'mb-4' : ''}`}>
-              <Card 
-                className={`h-full transition-all duration-500 hover:-translate-y-1 hover:shadow-lg ${
-                  tier.popular 
-                    ? 'border-2 border-brand-red shadow-lg bg-gradient-to-b from-white to-blue-50' 
-                    : 'shadow-md bg-gradient-to-b from-white to-gray-50'
-                }`}
-              >
-                <CardHeader className={`text-center pb-3 ${isMobile ? 'pt-3 px-3' : ''}`}>
-                  {tier.popular && (
-                    <Badge className="bg-brand-red mb-1 mx-auto">Most Common</Badge>
-                  )}
-                  <h3 className="text-lg font-bold text-brand-navy mb-1">{tier.tier_name}</h3>
-                  <p className="text-brand-red font-bold text-2xl md:text-2xl mb-1">{tier.price_display}</p>
-                  <p className="text-gray-600 text-sm">{tier.description}</p>
-                </CardHeader>
-                
-                <CardContent size="md" className={`pb-3 ${isMobile ? 'px-3' : ''}`}>
-                  <ul className="space-y-1">
-                    {tier.features?.map((feature, i) => (
-                      <li key={i} className="flex items-center text-sm">
-                        <Check size={14} className="text-brand-red mr-1 flex-shrink-0" />
-                        <span className="text-gray-700">{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </CardContent>
-                
-                <CardFooter size="md" className={`pt-1 pb-3 ${isMobile ? 'px-3' : ''}`}>
-                  <Button 
-                    asChild 
-                    className={`w-full ${
-                      tier.popular 
-                        ? 'bg-brand-red hover:bg-brand-red/90' 
-                        : 'bg-transparent border-2 border-brand-navy text-brand-navy hover:bg-brand-navy hover:text-white'
-                    }`}
-                    size="sm"
-                  >
-                    <Link to="/pricing">See Details</Link>
-                  </Button>
-                </CardFooter>
-              </Card>
+              <PricingCard
+                tier={tier}
+                variant="default"
+                ctaText="See Details"
+                ctaLink="/pricing"
+                showFeatures={true}
+                className={isMobile ? 'px-3' : ''}
+              />
             </div>
           ))}
         </div>
         
-        <div className="text-center mt-6">
-          <Link to="/pricing" className="inline-flex items-center text-brand-red font-medium hover:underline group">
-            View our complete pricing guide <ArrowRight size={16} className="ml-1 transition-transform duration-300 group-hover:translate-x-1" />
-          </Link>
+        {/* CTA Section */}
+        <div className="text-center mt-8">
+          <Button asChild size="lg" className="bg-brand-red hover:bg-brand-red/90">
+            <Link to="/quote" className="inline-flex items-center gap-2">
+              Get Free Quote
+              <ArrowRight size={18} />
+            </Link>
+          </Button>
+          <p className="text-sm text-gray-500 mt-3">
+            Or call us for immediate assistance: <span className="font-medium">(812) 610-1657</span>
+          </p>
         </div>
       </div>
     </section>
