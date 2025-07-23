@@ -89,17 +89,14 @@ const PricingOverview = () => {
             {[...Array(3)].map((_, i) => (
               <Card 
                 key={i} 
-                variant="featured"
-                size="md"
-                elevation="md"
-                className="h-full"
+                className="h-full shadow-md bg-gradient-to-b from-white to-gray-50"
               >
-                <CardHeader size="md" className="text-center pb-3">
+                <CardHeader className="text-center pb-3">
                   <Skeleton className="h-5 w-32 mx-auto mb-1" />
                   <Skeleton className="h-6 w-24 mx-auto mb-1" />
                   <Skeleton className="h-4 w-48 mx-auto" />
                 </CardHeader>
-                <CardContent size="md" className="pb-3">
+                <CardContent className="pb-3">
                   <div className="space-y-2">
                     {[...Array(4)].map((_, j) => (
                       <div key={j} className="flex items-center">
@@ -109,7 +106,7 @@ const PricingOverview = () => {
                     ))}
                   </div>
                 </CardContent>
-                <CardFooter size="md" className="pt-1 pb-3">
+                <CardFooter className="pt-1 pb-3">
                   <Skeleton className="h-8 w-full" />
                 </CardFooter>
               </Card>

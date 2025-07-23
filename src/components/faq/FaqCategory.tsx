@@ -25,11 +25,7 @@ const FaqCategory = ({ category, questions, index, isExpanded, onToggle }: FaqCa
 
   return (
     <Card 
-      variant="process" 
-      size="md" 
-      elevation="sm"
-      collapsible={true}
-      className="mb-8"
+      className="mb-8 shadow-sm border"
     >
       <Collapsible
         open={isExpanded}
@@ -45,14 +41,11 @@ const FaqCategory = ({ category, questions, index, isExpanded, onToggle }: FaqCa
           />
         </CollapsibleTrigger>
         <CollapsibleContent>
-          <CardContent size="md" className="pt-0">
+          <CardContent className="pt-0">
             <Accordion type="single" collapsible className="space-y-2">
               {questions.map((item, qIndex) => (
                 <Card 
                   key={qIndex} 
-                  variant="standard" 
-                  size="sm" 
-                  elevation="none"
                   className="border-gray-200"
                 >
                   <AccordionItem value={`item-${index}-${qIndex}`} className="border-none">

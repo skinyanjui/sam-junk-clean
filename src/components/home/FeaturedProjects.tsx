@@ -45,16 +45,13 @@ const FeaturedProjects = () => {
             {[1, 2, 3].map((_, index) => (
               <Card 
                 key={index} 
-                variant="standard"
-                size="md"
-                elevation="md"
                 hasImage={true}
-                className="overflow-hidden border border-gray-400"
+                className="overflow-hidden border border-gray-400 shadow-md"
               >
                 <div className="h-48">
                   <Skeleton className="w-full h-full" />
                 </div>
-                <CardContent size="md">
+                <CardContent>
                   <Skeleton className="h-3 w-24 mb-1" />
                   <Skeleton className="h-6 w-48 mb-2" />
                   <Skeleton className="h-4 w-full mb-1" />
@@ -91,12 +88,8 @@ const FeaturedProjects = () => {
           {projects.map((project) => (
             <Card 
               key={project.id} 
-              variant="standard"
-              size="md"
-              elevation="md"
-              interactive={true}
               hasImage={true}
-              className="overflow-hidden hover:shadow-lg transition-shadow duration-300 border border-gray-400"
+              className="overflow-hidden hover:shadow-lg transition-shadow duration-300 border border-gray-400 shadow-md"
             >
               <div className="relative h-48 overflow-hidden">
                 <img 
@@ -104,7 +97,7 @@ const FeaturedProjects = () => {
                   alt={project.title} 
                   className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
                 />
-                <div className="card-badge-top-left flex flex-wrap gap-2">
+                <div className="absolute top-2 left-2 flex flex-wrap gap-2">
                   {project.tags.map((tag, i) => (
                     <span key={i} className="bg-brand-navy/80 text-white text-xs font-medium px-2.5 py-1 rounded">
                       {tag}
@@ -112,7 +105,7 @@ const FeaturedProjects = () => {
                   ))}
                 </div>
               </div>
-              <CardContent size="md">
+              <CardContent>
                 <div className="text-sm text-gray-500 mb-1">{project.location}</div>
                 <h3 className="text-xl font-bold text-brand-navy mb-2">{project.title}</h3>
                 <p className="text-gray-600 mb-3">{project.description}</p>

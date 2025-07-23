@@ -9,8 +9,14 @@ interface ServiceCardProps {
   title: string;
   description: string;
   image: string;
-  link: string;
+  link?: string;
   items?: string[];
+  icon?: React.ReactNode;
+  priceRange?: string;
+  popularity?: 'low' | 'medium' | 'high';
+  isActive?: boolean;
+  onFocus?: () => void;
+  onBlur?: () => void;
 }
 
 const ServiceCard: React.FC<ServiceCardProps> = ({ 
@@ -18,7 +24,13 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
   description, 
   image, 
   link, 
-  items = [] 
+  items = [],
+  icon,
+  priceRange,
+  popularity,
+  isActive,
+  onFocus,
+  onBlur
 }) => {
   return (
     <Card className="group h-full overflow-hidden bg-white border border-gray-100 hover:border-brand-red/20 hover:shadow-lg transition-all duration-300">
@@ -57,14 +69,16 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
         </CardContent>
       )}
 
-      <CardContent className="pt-0">
-        <Button asChild variant="outline" className="w-full group">
-          <Link to={link} className="flex items-center justify-center">
-            Learn More
-            <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-200" />
-          </Link>
-        </Button>
-      </CardContent>
+      {link && (
+        <CardContent className="pt-0">
+          <Button asChild variant="outline" className="w-full group">
+            <Link to={link} className="flex items-center justify-center">
+              Learn More
+              <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-200" />
+            </Link>
+          </Button>
+        </CardContent>
+      )}
     </Card>
   );
 };

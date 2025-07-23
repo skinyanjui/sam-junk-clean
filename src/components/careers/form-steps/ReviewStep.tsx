@@ -14,7 +14,7 @@ import { Textarea } from '@/components/ui/textarea';
 
 export interface ReviewStepProps {
   positions: Array<{
-    id: number;
+    id: string;
     title: string;
   }>;
 }
@@ -25,7 +25,7 @@ const ReviewStep = ({ positions }: ReviewStepProps) => {
   
   // Find the position title from the selected position ID
   const findPositionTitle = (id: string) => {
-    const position = positions.find(pos => pos.id.toString() === id);
+    const position = positions.find(pos => pos.id === id);
     return position ? position.title : `Position #${id}`;
   };
 
