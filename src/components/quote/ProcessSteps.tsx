@@ -32,13 +32,10 @@ const ProcessSteps: React.FC<ProcessStepsProps> = ({ highlightFirst = false }) =
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <Card 
-              variant="process" 
-              size="md" 
-              elevation="sm"
               className={`card-process-step ${activeStep === 0 ? 'active ring-2 ring-brand-red' : ''}`}
               data-step="1"
             >
-              <CardContent size="md" className="text-center">
+              <CardContent className="text-center">
                 <div className="text-brand-navy font-bold text-4xl mb-3">1</div>
                 <h3 className="text-xl font-bold text-brand-navy mb-2">Submit your request</h3>
                 <p className="text-gray-600">Fill out our form with details about your junk removal needs.</p>
@@ -46,13 +43,10 @@ const ProcessSteps: React.FC<ProcessStepsProps> = ({ highlightFirst = false }) =
             </Card>
             
             <Card 
-              variant="process" 
-              size="md" 
-              elevation="sm"
               className={`card-process-step ${activeStep === 1 ? 'active ring-2 ring-brand-red' : ''}`}
               data-step="2"
             >
-              <CardContent size="md" className="text-center">
+              <CardContent className="text-center">
                 <div className="text-brand-navy font-bold text-4xl mb-3">2</div>
                 <h3 className="text-xl font-bold text-brand-navy mb-2">Get a free quote</h3>
                 <p className="text-gray-600">We'll contact you promptly with a no-obligation estimate.</p>
@@ -60,13 +54,10 @@ const ProcessSteps: React.FC<ProcessStepsProps> = ({ highlightFirst = false }) =
             </Card>
             
             <Card 
-              variant="process" 
-              size="md" 
-              elevation="sm"
               className={`card-process-step ${activeStep === 2 ? 'active ring-2 ring-brand-red' : ''}`}
               data-step="3"
             >
-              <CardContent size="md" className="text-center">
+              <CardContent className="text-center">
                 <div className="text-brand-navy font-bold text-4xl mb-3">3</div>
                 <h3 className="text-xl font-bold text-brand-navy mb-2">Schedule your pickup</h3>
                 <p className="text-gray-600">Choose a convenient time for our team to remove your items.</p>

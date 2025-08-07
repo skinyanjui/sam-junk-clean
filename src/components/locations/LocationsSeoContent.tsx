@@ -4,9 +4,9 @@ export const LocationsSeoContent = () => {
   return (
     <section className="py-6 bg-brand-gray">
       <div className="container-custom">
-        <Card variant="standard" className="bg-white">
+        <Card className="bg-white">
           <CardHeader className="pb-1">
-            <CardTitle size="md">Junk Removal Throughout the Tri-State Area</CardTitle>
+            <CardTitle>Junk Removal Throughout the Tri-State Area</CardTitle>
           </CardHeader>
           <CardContent className="text-sm">
             <p className="mb-2">Uncle Sam Junk Removal is the Tri-State's premier junk removal service, proudly serving residential and commercial customers across Indiana, Kentucky, and Illinois. Our veteran-owned business takes pride in providing fast, efficient, and eco-friendly junk removal services to all communities in our service area.</p>

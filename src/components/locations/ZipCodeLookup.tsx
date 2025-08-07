@@ -89,7 +89,6 @@ const ZipCodeLookup = ({
     <section className={`py-12 ${isProminent ? 'bg-gradient-to-br from-brand-navy to-brand-navy/90 text-white' : 'bg-gray-50'}`}>
       <div className="container-custom max-w-4xl">
         <Card 
-          variant={isProminent ? "glass" : "standard"} 
           className={`
             max-w-lg mx-auto overflow-hidden
             ${isProminent ? 'bg-white/10 backdrop-blur-md border-white/20 shadow-xl' : 'shadow-md'}

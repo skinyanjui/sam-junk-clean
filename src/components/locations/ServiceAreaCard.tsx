@@ -29,12 +29,7 @@ const ServiceAreaCard = ({
 
   return (
     <Card
-      variant="interactive"
-      size="md"
-      elevation={isFeatured ? "md" : "sm"}
-      interactive={true}
       hasImage={true}
-      hasTabs={true}
       className={`
         overflow-hidden h-full group
         ${isFeatured ? 'border-brand-red/20 bg-gradient-to-br from-white to-brand-red/5' : ''}
@@ -43,7 +38,7 @@ const ServiceAreaCard = ({
           : 'hover:shadow-md hover:-translate-y-0.5 transition-all duration-300'}
       `}
       role="region"
-      ariaLabel={`${location.name} service area information`}
+      aria-label={`${location.name} service area information`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -71,10 +66,10 @@ const ServiceAreaCard = ({
         </div>
       </div>
       
-      <CardHeader size="md" className="pb-2 relative">
+      <CardHeader className="pb-2 relative">
         <div className="flex items-start justify-between">
           <div>
-            <CardTitle size="md" className="flex items-center gap-2 text-xl font-bold">
+            <CardTitle className="flex items-center gap-2 text-xl font-bold">
               {location.name}
               {location.isPrimary && (
                 <span className="bg-brand-red text-white text-xs px-2 py-0.5 rounded-full shadow-sm">
@@ -82,7 +77,7 @@ const ServiceAreaCard = ({
                 </span>
               )}
             </CardTitle>
-            <CardDescription size="md" className="text-sm mt-1 flex items-center gap-1">
+            <CardDescription className="text-sm mt-1 flex items-center gap-1">
               <MapPin size={14} className="text-brand-red" />
               Coverage: <span className="font-medium text-gray-700">{location.serviceRadius}</span>
             </CardDescription>
@@ -105,7 +100,7 @@ const ServiceAreaCard = ({
         </div>
       </CardHeader>
       
-      <CardContent size="md" className="pb-2">
+      <CardContent className="pb-2">
         <Tabs defaultValue="cities" className="w-full">
           <TabsList className={`
             grid w-full grid-cols-3 h-9 rounded-lg bg-gray-100/80
@@ -191,7 +186,7 @@ const ServiceAreaCard = ({
         </Tabs>
       </CardContent>
       
-      <CardFooter size="md" className="flex flex-col sm:flex-row gap-2 mt-auto pt-3 border-t border-gray-100">
+      <CardFooter className="flex flex-col sm:flex-row gap-2 mt-auto pt-3 border-t border-gray-100">
         <Button 
           asChild 
           className={`

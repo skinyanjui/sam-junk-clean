@@ -82,12 +82,9 @@ const QuoteForm = ({ onFormSuccess }: QuoteFormProps) => {
   
   return (
     <Card 
-      variant="standard" 
-      size="lg" 
-      elevation="md"
       className="max-w-2xl mx-auto"
     >
-      <CardContent size="lg">
+      <CardContent>
         <QuoteHeader />
         
         {showSuccess ? (

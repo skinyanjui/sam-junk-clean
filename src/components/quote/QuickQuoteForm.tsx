@@ -86,21 +86,18 @@ const QuickQuoteForm = ({ onSuccess, className = '' }: QuickQuoteFormProps) => {
 
   return (
     <Card 
-      variant="standard" 
-      size="md" 
-      elevation="lg"
       className={className}
     >
-      <CardHeader size="md">
-        <CardTitle size="md" className="text-center text-brand-navy">
+      <CardHeader>
+        <CardTitle className="text-center text-brand-navy">
           Quick Quote Request
         </CardTitle>
-        <CardDescription size="md" className="text-center">
+        <CardDescription className="text-center">
           Get a personalized quote in under 2 hours
         </CardDescription>
       </CardHeader>
 
-      <CardContent size="md">
+      <CardContent>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <Input
@@ -159,7 +156,7 @@ const QuickQuoteForm = ({ onSuccess, className = '' }: QuickQuoteFormProps) => {
         </form>
       </CardContent>
 
-      <CardFooter size="md" className="flex-col space-y-4">
+      <CardFooter className="flex-col space-y-4">
         <div className="w-full pt-4 border-t border-gray-200">
           <div className="text-center text-sm text-gray-600 mb-3">
             Or contact us directly:

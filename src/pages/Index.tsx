@@ -185,7 +185,6 @@ const Index = () => {
 
       {/* Phase 2 Conversion optimization components */}
       <PersonalizedExitIntent 
-        isOpen={showExitIntent} 
         onClose={() => setShowExitIntent(false)} 
       />
     </PageLayout>

@@ -11,7 +11,6 @@ interface NoLocationsFoundProps {
 const NoLocationsFound = ({ searchQuery, onClearSearch }: NoLocationsFoundProps) => {
   return (
     <Card 
-      variant="notification" 
       className="max-w-lg mx-auto text-center bg-gradient-to-b from-gray-50 to-gray-100 border border-gray-200 shadow-md rounded-xl overflow-hidden"
     >
       <div className="bg-gray-100 py-4 border-b border-gray-200">
@@ -21,7 +20,7 @@ const NoLocationsFound = ({ searchQuery, onClearSearch }: NoLocationsFoundProps)
       </div>
       
       <CardHeader className="pb-2 pt-4">
-        <CardTitle size="md" className="text-xl font-bold text-gray-800">
+        <CardTitle className="text-xl font-bold text-gray-800">
           No locations found
         </CardTitle>
       </CardHeader>

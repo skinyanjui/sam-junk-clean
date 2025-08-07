@@ -12,7 +12,7 @@ export * from './breadcrumb';
 export * from './button';
 export * from './calendar';
 export * from './card';
-export * from './card-accessibility';
+
 export * from './carousel';
 export * from './checkbox';
 export * from './collapsible';
@@ -54,4 +54,4 @@ export * from './toast';
 export * from './toggle';
 export * from './toggle-group';
 export * from './tooltip';
-export * from './design-system';
+
