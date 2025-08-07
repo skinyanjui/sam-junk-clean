@@ -85,6 +85,7 @@ export default defineConfig(({ mode }) => ({
   },
   // Enable gzip compression
   preview: {
+    host: '0.0.0.0',
     headers: {
       'Cache-Control': 'public, max-age=31536000'
     }
