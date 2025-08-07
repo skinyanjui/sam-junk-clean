@@ -1,4 +1,5 @@
 
+import React from 'react';
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -7,6 +8,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HelmetProvider } from 'react-helmet-async';
 import { AnalyticsProvider } from "@/providers/AnalyticsProvider";
 import ErrorBoundary from "@/components/ErrorBoundary";
+import SimpleErrorBoundary from "@/components/SimpleErrorBoundary";
 import ScrollToTop from "@/components/ScrollToTop";
 import FloatingPhoneCTA from "@/components/mobile/FloatingPhoneCTA";
 import { usePerformanceMonitoring } from "@/hooks/use-performance-monitoring";
@@ -29,7 +31,14 @@ import NotFound from "./pages/NotFound";
 const queryClient = new QueryClient();
 
 const AppContent = () => {
-  usePerformanceMonitoring();
+  console.log('AppContent starting to render');
+  
+  try {
+    usePerformanceMonitoring();
+    console.log('Performance monitoring hook executed');
+  } catch (error) {
+    console.error('Performance monitoring error:', error);
+  }
   
   console.log('AppContent rendered successfully');
   
@@ -62,25 +71,33 @@ const AppContent = () => {
 
 const App = () => {
   console.log('App component starting');
+  console.log('React version:', React.version);
+  console.log('Environment:', process.env.NODE_ENV);
   
   return (
-    <ErrorBoundary>
-      <QueryClientProvider client={queryClient}>
-        <HelmetProvider>
-          <TooltipProvider>
-            <Toaster />
-            <Sonner />
-            <BrowserRouter>
-              <AnalyticsProvider>
-                <ABTestProvider>
-                  <AppContent />
-                </ABTestProvider>
-              </AnalyticsProvider>
-            </BrowserRouter>
-          </TooltipProvider>
-        </HelmetProvider>
-      </QueryClientProvider>
-    </ErrorBoundary>
+    <SimpleErrorBoundary>
+      <ErrorBoundary>
+        <QueryClientProvider client={queryClient}>
+          <SimpleErrorBoundary>
+            <HelmetProvider>
+              <TooltipProvider>
+                <Toaster />
+                <Sonner />
+                <BrowserRouter>
+                  <SimpleErrorBoundary>
+                    <AnalyticsProvider>
+                      <ABTestProvider>
+                        <AppContent />
+                      </ABTestProvider>
+                    </AnalyticsProvider>
+                  </SimpleErrorBoundary>
+                </BrowserRouter>
+              </TooltipProvider>
+            </HelmetProvider>
+          </SimpleErrorBoundary>
+        </QueryClientProvider>
+      </ErrorBoundary>
+    </SimpleErrorBoundary>
   );
 };
 

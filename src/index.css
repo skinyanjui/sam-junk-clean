@@ -1,4 +1,6 @@
 
+/* Import Card Design System styles */
+@import './styles/card-system.css';
 
 @tailwind base;
 @tailwind components;
