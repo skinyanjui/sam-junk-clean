@@ -3,7 +3,7 @@ import { CONTACT_INFO, PRICING_STRUCTURE, COPY_STANDARDS } from '@/utils/busines
 export const siteConfig = {
   siteName: COPY_STANDARDS.businessName,
   siteUrl: 'https://unclesamjunkremoval.com',
-  defaultOgImage: '/logo.png',
+  defaultOgImage: '/lovable-uploads/92c7287f-ec89-4c0f-9ad4-a2ed585a70a3.png',
   twitterHandle: '@UncleSamJunk',
   googleSiteVerification: 'YOUR_GOOGLE_VERIFICATION_CODE',
   bingSiteVerification: 'YOUR_BING_VERIFICATION_CODE',

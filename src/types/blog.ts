@@ -12,4 +12,5 @@ export type BlogPost = {
   tags?: string[]; // Optional array of tags for categorization and SEO
   isFeatured?: boolean; // Optional featured flag
   isPricingResource?: boolean; // Optional pricing resource flag
+  content?: string; // Optional full content of the blog post
 };

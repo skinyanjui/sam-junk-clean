@@ -1,0 +1,57 @@
+**Service Pages:**
+
+*   /services/residential
+*   /services/commercial
+*   /services/appliance-removal
+*   /services/furniture-removal
+*   /services/construction-debris
+*   /services/estate-cleanout
+*   /services/hot-tub-and-pool-equipment-removal
+*   /services/senior-moving-services
+*   /services/rental-property-cleanouts
+*   /services/yard-waste-removal
+*   /services/basement-cleanout
+*   /services/hoarding-cleanup
+*   /services/moving-day-junk-removal
+
+**Location Pages:**
+
+*   /locations/evansville-in
+*   /locations/henderson-ky
+*   /locations/owensboro-ky
+*   /locations/newburgh-in
+*   /locations/mt-carmel-il
+*   /locations/princeton-in
+*   /locations/boonville-in
+*   /locations/chandler-in
+*   /locations/new-harmony-in
+*   /locations/jasper-in
+
+**Evansville Neighborhoods:**
+
+*   /locations/evansville-in/jacobsville
+*   /locations/evansville-in/haynies-corner
+*   /locations/evansville-in/north-side
+*   /locations/evansville-in/downtown
+*   /locations/evansville-in/east-side
+*   /locations/evansville-in/melody-hill
+*   /locations/evansville-in/mccutchanville
+*   /locations/evansville-in/dartmouth
+
+**Henderson Neighborhoods:**
+
+*   /locations/henderson-ky/blue-grass-estates
+*   /locations/henderson-ky/canoe-creek
+*   /locations/henderson-ky/grantwood-hills
+*   /locations/henderson-ky/holloway-hills
+*   /locations/henderson-ky/viking-hills
+*   /locations/henderson-ky/wildwood-creek
+
+**Owensboro Neighborhoods:**
+
+*   /locations/owensboro-ky/heartland-crossing
+*   /locations/owensboro-ky/wesleyan-park
+*   /locations/owensboro-ky/downtown
+*   /locations/owensboro-ky/east-owensboro
+*   /locations/owensboro-ky/west-owensboro
+*   /locations/owensboro-ky/south-owensboro

@@ -1,6 +1,7 @@
 import { LocationData } from '@/types/locations';
 import ServiceAreaCard from './ServiceAreaCard';
 import LocationsMap from './LocationsMap';
+import RelatedLocations from './RelatedLocations';
 import NoLocationsFound from './NoLocationsFound';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useTranslation } from 'react-i18next';
@@ -68,15 +69,21 @@ export const LocationsContent = ({
 
           <TabsContent value="cards" className="mt-0 transition-all duration-500 ease-in-out">
             {filteredLocations.length > 0 ? (
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6" aria-label="Service locations">
-                {filteredLocations.map((location, index) => (
-                  <ServiceAreaCard 
-                    key={location.id} 
-                    location={location} 
-                    variant={location.isPrimary ? 'featured' : 'standard'}
-                  />
-                ))}
-              </div>
+              <>
+                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6" aria-label="Service locations">
+                  {filteredLocations.map((location, index) => (
+                    <ServiceAreaCard
+                      key={location.id}
+                      location={location}
+                      variant={location.isPrimary ? 'featured' : 'standard'}
+                    />
+                  ))}
+                </div>
+                <RelatedLocations
+                  currentLocation={filteredLocations[0]}
+                  allLocations={filteredLocations}
+                />
+              </>
             ) : (
               <NoLocationsFound 
                 searchQuery={searchProps.searchTerm} 
