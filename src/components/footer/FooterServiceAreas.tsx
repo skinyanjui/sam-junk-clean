@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { ChevronDown, ChevronUp, Loader2, MapPin } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { FooterServiceAreasProps } from './types';
+import { cityToSlug } from '@/data/locations';
 
 const FooterServiceAreas: React.FC<FooterServiceAreasProps> = ({
   serviceAreas,
@@ -73,19 +74,22 @@ const FooterServiceAreas: React.FC<FooterServiceAreasProps> = ({
                         {area.state}
                       </h4>
                       <div className="flex flex-wrap gap-x-3 gap-y-2 text-xs pl-5">
-                        {area.cities.slice(0, 2).map(city => (
-                          <Link 
-                            key={city} 
-                            to={`/locations#${area.state.toLowerCase()}`}
-                            className="text-gray-300 hover:text-white transition-colors duration-200 relative group"
-                          >
-                            <span>{city}</span>
-                            <span className="absolute left-0 -bottom-0.5 w-0 h-0.5 bg-brand-red group-hover:w-full transition-all duration-300"></span>
-                          </Link>
-                        ))}
+                        {area.cities.slice(0, 2).map(city => {
+                          const slug = cityToSlug[city.toLowerCase()];
+                          return (
+                            <Link 
+                              key={city} 
+                              to={slug ? `/locations/${slug}` : `/locations`}
+                              className="text-gray-300 hover:text-white transition-colors duration-200 relative group"
+                            >
+                              <span>{city}</span>
+                              <span className="absolute left-0 -bottom-0.5 w-0 h-0.5 bg-brand-red group-hover:w-full transition-all duration-300"></span>
+                            </Link>
+                          );
+                        })}
                         {area.cities.length > 2 && (
                           <Link 
-                            to={`/locations#${area.state.toLowerCase()}`}
+                            to="/locations"
                             className="text-brand-red hover:text-brand-red/80 transition-colors duration-200 font-medium"
                           >
                             +{area.cities.length - 2} more
@@ -125,16 +129,19 @@ const FooterServiceAreas: React.FC<FooterServiceAreasProps> = ({
                       {area.state}
                     </h4>
                     <div className="flex flex-wrap gap-x-3 gap-y-2 text-xs pl-5">
-                      {area.cities.slice(0, 3).map(city => (
-                        <Link 
-                          key={city} 
-                          to={`/locations#${area.state.toLowerCase()}`}
-                          className="text-gray-300 hover:text-white transition-colors duration-200 relative group"
-                        >
-                          <span>{city}</span>
-                          <span className="absolute left-0 -bottom-0.5 w-0 h-0.5 bg-brand-red group-hover:w-full transition-all duration-300"></span>
-                        </Link>
-                      ))}
+                      {area.cities.slice(0, 3).map(city => {
+                        const slug = cityToSlug[city.toLowerCase()];
+                        return (
+                          <Link 
+                            key={city} 
+                            to={slug ? `/locations/${slug}` : `/locations`}
+                            className="text-gray-300 hover:text-white transition-colors duration-200 relative group"
+                          >
+                            <span>{city}</span>
+                            <span className="absolute left-0 -bottom-0.5 w-0 h-0.5 bg-brand-red group-hover:w-full transition-all duration-300"></span>
+                          </Link>
+                        );
+                      })}
                       {area.cities.length > 3 && (
                         <Link 
                           to={`/locations#${area.state.toLowerCase()}`}

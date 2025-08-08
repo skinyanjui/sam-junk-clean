@@ -23,6 +23,7 @@ import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
 import FAQ from "./pages/FAQ";
 import Locations from "./pages/Locations";
+import Location from "./pages/Location";
 import Careers from "./pages/Careers";
 import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
@@ -56,8 +57,9 @@ const AppContent = () => {
         <Route path="/blog" element={<Blog />} />
         <Route path="/blog/:slug" element={<BlogPost />} />
         <Route path="/faq" element={<FAQ />} />
-        <Route path="/locations" element={<Locations />} />
-        <Route path="/careers" element={<Careers />} />
+                 <Route path="/locations" element={<Locations />} />
+         <Route path="/locations/:slug" element={<Location />} />
+         <Route path="/careers" element={<Careers />} />
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/terms" element={<Terms />} />
         <Route path="*" element={<NotFound />} />

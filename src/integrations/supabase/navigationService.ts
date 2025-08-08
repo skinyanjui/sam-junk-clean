@@ -1,5 +1,6 @@
 
 import { supabase } from './client';
+import { topLocationLinks } from '@/data/locations';
 
 // Interface for the raw data from the Supabase table
 export interface DbNavigationItem {
@@ -59,7 +60,7 @@ const getFallbackNavigation = (): NavItem[] => {
       ]
     },
     { name: 'Pricing', path: '/pricing', hasDropdown: false },
-    { name: 'Locations', path: '/locations', hasDropdown: false },
+    { name: 'Locations', path: '/locations', hasDropdown: true, dropdownItems: topLocationLinks(10) },
     { name: 'About', path: '/about', hasDropdown: false },
     { name: 'Contact', path: '/contact', hasDropdown: false }
   ];

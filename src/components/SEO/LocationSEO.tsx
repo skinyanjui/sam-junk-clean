@@ -11,6 +11,8 @@ interface LocationSEOProps {
   pageType?: 'home' | 'services' | 'pricing' | 'contact';
   customTitle?: string;
   customDescription?: string;
+  attractions?: { name: string; description?: string; url?: string }[];
+  monuments?: { name: string; description?: string; url?: string }[];
 }
 
 const LocationSEO = ({
@@ -20,7 +22,9 @@ const LocationSEO = ({
   serviceAreas = [],
   pageType = 'home',
   customTitle,
-  customDescription
+  customDescription,
+  attractions = [],
+  monuments = []
 }: LocationSEOProps) => {
   
   const locationName = `${city}, ${state}`;
@@ -79,6 +83,10 @@ const LocationSEO = ({
     serviceAreas.forEach(area => {
       baseKeywords.push(`junk removal ${area.toLowerCase()}`);
     });
+
+    // Add hyperlocal landmarks
+    attractions.forEach(a => baseKeywords.push(`${city.toLowerCase()} ${a.name.toLowerCase()}`));
+    monuments.forEach(m => baseKeywords.push(`${city.toLowerCase()} ${m.name.toLowerCase()}`));
     
     return baseKeywords.join(', ');
   };
@@ -138,9 +146,10 @@ const LocationSEO = ({
                 }] : [])
               ]
             },
-            "mainEntity": {
-              "@id": "https://unclesamjunkremoval.com#organization"
-            }
+            "knowsAbout": [
+              ...attractions.map(a => a.name),
+              ...monuments.map(m => m.name)
+            ]
           })}
         </script>
       </Helmet>
