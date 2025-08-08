@@ -44,15 +44,15 @@ const FAQ = () => {
 
   const canonicalUrl = `${siteConfig.siteUrl}${location.pathname}${location.search}`;
   
-  let pageTitleForSchema = searchQuery 
+  const pageTitleForSchema = searchQuery 
     ? `Search results for "${searchQuery}" | FAQ - ${siteConfig.siteName}` 
     : `Frequently Asked Questions | ${siteConfig.siteName}`;
   
-  let pageTitleForSeo = searchQuery 
+  const pageTitleForSeo = searchQuery 
     ? `Search results for "${searchQuery}" | FAQ` 
     : "Frequently Asked Questions";
 
-  let pageDescription = searchQuery 
+  const pageDescription = searchQuery 
     ? `Find answers to frequently asked questions about ${siteConfig.businessName} services, related to your search for "${searchQuery}".`
     : `Find answers to common questions about our junk removal services, pricing, accepted items, disposal practices, and more. ${siteConfig.businessName} serves the ${siteConfig.address.addressLocality} area and beyond.`;
 
