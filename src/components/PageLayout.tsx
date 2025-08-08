@@ -5,6 +5,7 @@ import Footer from './Footer';
 import { Breadcrumb } from './Breadcrumb';
 import { Toaster } from './ui/toaster';
 import { useResponsiveLayout } from '@/hooks/use-mobile';
+import CtaSection from '@/components/home/CtaSection';
 
 interface PageLayoutProps {
   children: ReactNode;
@@ -54,7 +55,7 @@ const PageLayout = ({
   };
   
   return (
-    <div className="flex flex-col min-h-screen max-w-[100vw] overflow-x-hidden">
+    <div className="flex flex-col min-h-screen max-w-[100vw] overflow-x-hidden text-[13px]">
       <Navbar />
       {/* Dynamic spacer for header */}
       <div className={getHeaderSpacerHeight()}></div>
@@ -67,6 +68,7 @@ const PageLayout = ({
         )}
         {children}
       </main>
+      <CtaSection />
       
       <Footer />
       
