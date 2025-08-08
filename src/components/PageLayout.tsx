@@ -6,6 +6,7 @@ import { Breadcrumb } from './Breadcrumb';
 import { Toaster } from './ui/toaster';
 import { useResponsiveLayout } from '@/hooks/use-mobile';
 import CtaSection from '@/components/home/CtaSection';
+import CrossLinks from '@/components/CrossLinks';
 
 interface PageLayoutProps {
   children: ReactNode;
@@ -68,6 +69,7 @@ const PageLayout = ({
         )}
         {children}
       </main>
+      <CrossLinks />
       <CtaSection />
       
       <Footer />
