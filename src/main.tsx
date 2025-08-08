@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client'
 import React from 'react'
 import App from './App.tsx'
 import SimpleTestPage from './components/SimpleTestPage.tsx'
+import SafeApp from './SafeApp.tsx'
 import './index.css'
 
 console.log('Main.tsx starting');
@@ -26,7 +27,17 @@ const root = createRoot(container);
 // Try rendering with fallbacks
 const initializeApp = async () => {
   try {
-    console.log('Attempting to render main App');
+    console.log('Attempting to render application');
+    
+    // Safe mode: render minimal app when ?safe=1
+    const params = new URLSearchParams(window.location.search);
+    const safeMode = params.get('safe') === '1';
+    if (safeMode) {
+      console.log('Safe mode enabled via query param');
+      root.render(<SafeApp />);
+      console.log('SafeApp rendered successfully');
+      return;
+    }
     
     // Try to import i18n but don't fail if it doesn't work
     try {
