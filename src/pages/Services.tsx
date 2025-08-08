@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { useLocation, useParams, Link } from 'react-router-dom';
+import { useEffect, useMemo, useState } from 'react';
+import { useLocation, useParams, Link, useNavigate } from 'react-router-dom';
 import PageLayout from '@/components/PageLayout';
 import ServicesHero from '@/components/services/ServicesHero';
 import ServicesList from '@/components/services/ServicesList';
@@ -10,10 +10,14 @@ import { ServiceData } from '@/components/services/servicesData';
 import { fetchServices } from '@/integrations/supabase/servicesService';
 import { LoadingSkeleton } from '@/components/ui/loading-skeleton';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { siteConfig } from '@/config/siteConfig';
+import { Search } from 'lucide-react';
 
 const Services = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const { category } = useParams<{ category?: string }>();
 
   const [services, setServices] = useState<ServiceData[]>([]);
@@ -21,6 +25,12 @@ const Services = () => {
   const [error, setError] = useState<string | null>(null);
   const [dynamicPageTitle, setDynamicPageTitle] = useState<string | undefined>();
   const [dynamicPageDescription, setDynamicPageDescription] = useState<string | undefined>();
+  const [query, setQuery] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState<string>(category || 'all');
+
+  useEffect(() => {
+    setSelectedCategory(category || 'all');
+  }, [category]);
 
   useEffect(() => {
     const loadServices = async () => {
@@ -28,10 +38,7 @@ const Services = () => {
       setError(null);
       try {
         const data = await fetchServices();
-        const filteredServices = category
-          ? data.filter(service => service.category?.toLowerCase() === category.toLowerCase())
-          : data;
-        setServices(filteredServices);
+        setServices(data);
       } catch (error) {
         console.error("Error loading services:", error);
         setServices([]);
@@ -42,7 +49,7 @@ const Services = () => {
     };
 
     loadServices();
-  }, [category]);
+  }, []);
 
   useEffect(() => {
     if (location.hash && services.length > 0) {
@@ -64,8 +71,8 @@ const Services = () => {
     }
   }, [location.hash, services]);
 
-  const formattedCategory = category
-    ? category.charAt(0).toUpperCase() + category.slice(1).toLowerCase()
+  const formattedCategory = selectedCategory && selectedCategory !== 'all'
+    ? selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1).toLowerCase()
     : null;
 
   const pageTitle = dynamicPageTitle || (formattedCategory
@@ -76,8 +83,8 @@ const Services = () => {
     ? `Explore our specialized ${formattedCategory.toLowerCase()} junk removal solutions in the Tri-State area. We efficiently handle all types of ${formattedCategory.toLowerCase()} cleanouts, debris, and unwanted item removal.`
     : `Professional junk removal services for residential and commercial properties in ${siteConfig.address.addressLocality}. We handle furniture removal, appliance disposal, estate cleanouts, and more.`);
 
-  const pageUrl = category
-    ? `${siteConfig.siteUrl}/services/${category.toLowerCase()}`
+  const pageUrl = selectedCategory && selectedCategory !== 'all'
+    ? `${siteConfig.siteUrl}/services/${selectedCategory.toLowerCase()}`
     : `${siteConfig.siteUrl}/services`;
 
   const breadcrumbBase = [
@@ -160,6 +167,36 @@ const Services = () => {
     }
   };
 
+  const categories = useMemo(() => {
+    const unique = Array.from(new Set(services.map(s => s.category?.toLowerCase().trim()).filter(Boolean)));
+    unique.sort();
+    return ['all', ...unique];
+  }, [services]);
+
+  const filteredServices = useMemo(() => {
+    const base = selectedCategory === 'all'
+      ? services
+      : services.filter(s => s.category?.toLowerCase() === selectedCategory.toLowerCase());
+
+    if (!query.trim()) return base;
+
+    const q = query.toLowerCase();
+    return base.filter(s =>
+      s.title.toLowerCase().includes(q) ||
+      s.description.toLowerCase().includes(q) ||
+      s.items.some(item => item.toLowerCase().includes(q))
+    );
+  }, [services, selectedCategory, query]);
+
+  const handleCategoryChange = (value: string) => {
+    setSelectedCategory(value);
+    if (value === 'all') {
+      navigate('/services', { replace: true });
+    } else {
+      navigate(`/services/${value}`);
+    }
+  };
+
   return (
     <PageLayout>
       <SEO
@@ -172,26 +209,45 @@ const Services = () => {
 
       <ServicesHero />
 
+      {/* Filters */}
+      <section className="bg-white border-b border-gray-100">
+        <div className="container-custom py-6">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <div className="relative w-full md:max-w-md">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+              <Input
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder="Search services (e.g., furniture, garage, appliances)"
+                className="pl-9"
+                aria-label="Search services"
+              />
+            </div>
+            <Tabs value={selectedCategory} onValueChange={handleCategoryChange}>
+              <TabsList className="flex flex-wrap justify-start md:justify-end gap-2 bg-transparent p-0 h-auto">
+                {categories.map(cat => (
+                  <TabsTrigger
+                    key={cat}
+                    value={cat}
+                    className="px-3 py-2 text-sm rounded-full border data-[state=active]:bg-brand-navy data-[state=active]:text-white"
+                    aria-label={`Filter by ${cat} category`}
+                  >
+                    {cat === 'all' ? 'All' : cat.charAt(0).toUpperCase() + cat.slice(1)}
+                  </TabsTrigger>
+                ))}
+              </TabsList>
+            </Tabs>
+          </div>
+        </div>
+      </section>
+
       {isLoading ? (
         <div className="py-16 bg-white">
           <div className="container-custom">
             <h2 className="sr-only">Loading Services</h2>
-            <div className="space-y-24">
-              {[1, 2, 3, 4].map((item) => (
-                <div key={item} className="grid md:grid-cols-2 gap-8 items-center">
-                  <LoadingSkeleton className="h-64 rounded-lg" />
-                  <div className="space-y-4">
-                    <LoadingSkeleton className="h-10 w-3/4" />
-                    <LoadingSkeleton className="h-4 w-full" />
-                    <LoadingSkeleton className="h-4 w-full" />
-                    <LoadingSkeleton className="h-4 w-3/4" />
-                    <div className="space-y-2 pt-4">
-                      {[1, 2, 3].map((subItem) => (
-                        <LoadingSkeleton key={subItem} className="h-6 w-full" />
-                      ))}
-                    </div>
-                  </div>
-                </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[1, 2, 3, 4, 5, 6].map((item) => (
+                <LoadingSkeleton key={item} className="h-72 rounded-lg" />
               ))}
             </div>
           </div>
@@ -206,18 +262,15 @@ const Services = () => {
             </Button>
           </div>
         </section>
-      ) : services.length === 0 ? (
-        <section className="py-16 bg-brand-gray text-center">
+      ) : filteredServices.length === 0 ? (
+        <section className="py-16 bg-white text-center">
           <div className="container-custom py-12">
-            <h2 className="text-2xl font-semibold text-brand-navy mb-4">No Services Currently Available</h2>
-            <p className="text-gray-600 mb-6">Please check back later or contact us for more information about our offerings.</p>
-            <Button asChild className="bg-brand-red hover:bg-opacity-90">
-              <Link to="/contact">Contact Us</Link>
-            </Button>
+            <h2 className="text-2xl font-semibold text-brand-navy mb-4">No matching services</h2>
+            <p className="text-gray-600 mb-6">Try a different search or category.</p>
           </div>
         </section>
       ) : (
-        <ServicesList services={services} />
+        <ServicesList services={filteredServices} />
       )}
 
       <ServicesCta />
