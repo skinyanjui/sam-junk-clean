@@ -1,15 +1,19 @@
+import React, { Suspense } from 'react';
 import { useLocation } from 'react-router-dom';
 import PageLayout from '@/components/PageLayout';
 import SEO from '@/components/SEO';
 import { useTranslation } from 'react-i18next';
 import { useLocationData } from '@/hooks/use-location-data';
 import { LocationsHero } from '@/components/locations/LocationsHero';
-import ZipCodeLookup from '@/components/locations/ZipCodeLookup';
-import LocationsCta from '@/components/locations/LocationsCta';
 import { LocationsSchema as initialLocationsSchema } from '@/components/locations/LocationsSchema';
-import { LocationsSeoContent } from '@/components/locations/LocationsSeoContent';
-import { LocationsContent } from '@/components/locations/LocationsContent';
 import { siteConfig } from '@/config/siteConfig';
+
+// Lazy-loaded sections for improved performance
+const LocationsContent = React.lazy(() => import('@/components/locations/LocationsContent'));
+const ZipCodeLookup = React.lazy(() => import('@/components/locations/ZipCodeLookup'));
+const LocationsCta = React.lazy(() => import('@/components/locations/LocationsCta'));
+const LocationsSeoContent = React.lazy(() => import('@/components/locations/LocationsSeoContent'));
+const LocationsMap = React.lazy(() => import('@/components/locations/LocationsMap'));
 
 const Locations = () => {
   const { t } = useTranslation();
@@ -59,6 +63,14 @@ const Locations = () => {
     combinedStructuredData.push(locationItemListSchema);
   }
 
+  const SectionFallback = ({ label }: { label: string }) => (
+    <div className="container-custom" aria-busy="true" aria-live="polite">
+      <div className="h-20 rounded-lg bg-white/5 animate-pulse flex items-center justify-center text-sm text-gray-300">
+        Loading {label}...
+      </div>
+    </div>
+  );
+
   return (
     <PageLayout>
       <SEO 
@@ -70,22 +82,42 @@ const Locations = () => {
       />
 
       <LocationsHero isLoading={isLoading} searchProps={searchProps} />
-      
-      {!isLoading && (
-        <LocationsContent 
-          filteredLocations={filteredLocations} 
-          searchProps={searchProps} 
-        />
-      )}
+
+      {/* Content grid */}
+      <Suspense fallback={<SectionFallback label="service areas" />}> 
+        {!isLoading && (
+          <LocationsContent 
+            filteredLocations={filteredLocations} 
+            searchProps={searchProps} 
+          />
+        )}
+      </Suspense>
+
+      {/* Optional map preview (lazy) */}
+      <Suspense fallback={<SectionFallback label="map" />}> 
+        {!isLoading && locations.length > 0 && (
+          <div className="container-custom">
+            <div className="rounded-lg overflow-hidden border border-white/10">
+              <LocationsMap locations={locations} height={360} />
+            </div>
+          </div>
+        )}
+      </Suspense>
 
       {/* ZIP Code Lookup Section */}
-      <ZipCodeLookup />
+      <Suspense fallback={<SectionFallback label="ZIP code lookup" />}> 
+        <ZipCodeLookup />
+      </Suspense>
 
       {/* CTA Section */}
-      <LocationsCta />
+      <Suspense fallback={<SectionFallback label="call to action" />}> 
+        <LocationsCta />
+      </Suspense>
 
       {/* Location-specific SEO content section */}
-      <LocationsSeoContent />
+      <Suspense fallback={<SectionFallback label="SEO content" />}> 
+        <LocationsSeoContent />
+      </Suspense>
     </PageLayout>
   );
 };
