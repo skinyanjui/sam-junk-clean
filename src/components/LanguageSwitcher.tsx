@@ -25,7 +25,7 @@ export const LanguageSwitcher = () => {
   };
   
   return (
-    <div className="relative">
+    <div className="relative" data-testid="language-switcher">
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="flex items-center gap-1.5 bg-white/10 hover:bg-white/20 px-2 py-1.5 rounded transition-colors"

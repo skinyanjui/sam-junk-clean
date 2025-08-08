@@ -1,6 +1,6 @@
 {
   "common": {
-    "getQuote": "Get a Free Quote",
+    "getQuote": "Get a Quote",
     "callUs": "Call Us",
     "contactUs": "Contact Us",
     "learnMore": "Learn More",
@@ -19,7 +19,7 @@
     "contact": "Contact"
   },
   "footer": {
-    "companyLinks": "Company",
+    "companyLinks": "Company Links",
     "serviceLocations": "Service Locations",
     "contactUs": "Contact Us",
     "hours": "Hours: Mon-Sat, 7AM-7PM",
