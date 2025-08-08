@@ -11,16 +11,22 @@ const FooterNavigation: React.FC<FooterNavigationProps> = ({
 }) => {
   const { t } = useTranslation();
 
+  // Safe translate with fallback
+  const tt = (key: string, fallback: string) => {
+    const value = t(key);
+    return typeof value === 'string' && value.trim().length > 0 ? value : fallback;
+  };
+
   // Navigation links with icons
   const navLinks = [
-    { to: "/", text: t('nav.home'), icon: <Home size={14} /> },
-    { to: "/services", text: t('nav.services'), icon: <Briefcase size={14} /> },
-    { to: "/quote", text: t('common.getQuote'), icon: <FileText size={14} /> },
-    { to: "/about", text: t('nav.about'), icon: <Users size={14} /> },
-    { to: "/blog", text: t('nav.blog'), icon: <MessageSquare size={14} /> },
-    { to: "/faq", text: t('nav.faq'), icon: <HelpCircle size={14} /> },
-    { to: "/careers", text: t('nav.careers'), icon: <Award size={14} /> },
-    { to: "/contact", text: t('nav.contact'), icon: <Phone size={14} /> }
+    { to: "/", text: tt('nav.home', 'Home'), icon: <Home size={14} /> },
+    { to: "/services", text: tt('nav.services', 'Services'), icon: <Briefcase size={14} /> },
+    { to: "/quote", text: tt('common.getQuote', 'Get Quote'), icon: <FileText size={14} /> },
+    { to: "/about", text: tt('nav.about', 'About'), icon: <Users size={14} /> },
+    { to: "/blog", text: tt('nav.blog', 'Blog'), icon: <MessageSquare size={14} /> },
+    { to: "/faq", text: tt('nav.faq', 'FAQ'), icon: <HelpCircle size={14} /> },
+    { to: "/careers", text: tt('nav.careers', 'Careers'), icon: <Award size={14} /> },
+    { to: "/contact", text: tt('nav.contact', 'Contact'), icon: <Phone size={14} /> }
   ];
 
   return (
@@ -34,7 +40,7 @@ const FooterNavigation: React.FC<FooterNavigationProps> = ({
           id="footer-nav-heading"
         >
           <span className="relative font-semibold tracking-wide">
-            {t('footer.companyLinks')}
+            {tt('footer.companyLinks', 'Company Links')}
             <span className="absolute -bottom-1 left-0 w-1/2 h-0.5 bg-brand-red rounded-full"></span>
           </span>
           {isMobile && (

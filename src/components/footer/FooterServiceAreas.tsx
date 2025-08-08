@@ -14,6 +14,11 @@ const FooterServiceAreas: React.FC<FooterServiceAreasProps> = ({
 }) => {
   const { t } = useTranslation();
 
+  const tt = (key: string, fallback: string) => {
+    const value = t(key);
+    return typeof value === 'string' && value.trim().length > 0 ? value : fallback;
+  };
+
   return (
     <div className="text-center md:text-left">
       <div 
@@ -25,7 +30,7 @@ const FooterServiceAreas: React.FC<FooterServiceAreasProps> = ({
           id="footer-service-areas-heading"
         >
           <span className="relative font-semibold tracking-wide">
-            {t('footer.serviceLocations')}
+            {tt('footer.serviceLocations', 'Service Locations')}
             <span className="absolute -bottom-1 left-0 w-1/2 h-0.5 bg-brand-red rounded-full"></span>
           </span>
           {isMobile && (

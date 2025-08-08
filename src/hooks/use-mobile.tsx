@@ -34,11 +34,9 @@ export function useOrientation() {
 
   React.useEffect(() => {
     const checkOrientation = () => {
-      setOrientation(
-        window.matchMedia("(orientation: landscape)").matches 
-          ? 'landscape' 
-          : 'portrait'
-      )
+      const supportsMatchMedia = typeof window !== 'undefined' && typeof window.matchMedia === 'function'
+      const isLandscape = supportsMatchMedia && window.matchMedia("(orientation: landscape)").matches
+      setOrientation(isLandscape ? 'landscape' : 'portrait')
     }
     
     // Initial check
@@ -69,13 +67,13 @@ export function useResponsiveLayout() {
   React.useEffect(() => {
     const checkLayout = () => {
       const width = window.innerWidth
+      const supportsMatchMedia = typeof window !== 'undefined' && typeof window.matchMedia === 'function'
+      const isLandscape = supportsMatchMedia && window.matchMedia("(orientation: landscape)").matches
       setLayout({
         isMobile: width < MOBILE_BREAKPOINT,
         isTablet: width >= MOBILE_BREAKPOINT && width < TABLET_BREAKPOINT,
         isDesktop: width >= TABLET_BREAKPOINT,
-        orientation: window.matchMedia("(orientation: landscape)").matches 
-          ? 'landscape' 
-          : 'portrait'
+        orientation: isLandscape ? 'landscape' : 'portrait'
       })
     }
     
