@@ -627,7 +627,7 @@ const Footer = () => {
     }, []);
 
     return (
-        <footer className="bg-gradient-to-b from-brand-navy to-brand-navy-dark text-white pt-12 pb-6 relative overflow-hidden">
+        <footer className="bg-gradient-to-b from-brand-navy to-brand-navy-dark text-white pt-8 pb-4 relative overflow-hidden">
             {/* Background pattern for modern look */}
             <div className="absolute inset-0 opacity-5">
                 <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle,_rgba(255,255,255,0.1)_1px,_transparent_1px)] bg-[length:24px_24px]"></div>
@@ -638,7 +638,7 @@ const Footer = () => {
 
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 {/* Main footer content */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
                     <FooterBranding
                         logo="/lovable-uploads/92c7287f-ec89-4c0f-9ad4-a2ed585a70a3.png"
                         altText="Uncle Sam Junk Removal"

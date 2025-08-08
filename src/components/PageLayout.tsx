@@ -1,7 +1,7 @@
 
 import { ReactNode } from 'react';
 import Navbar from './Navbar';
-import Footer from './Footer';
+import Footer from './footer/Footer';
 import { Breadcrumb } from './Breadcrumb';
 import { Toaster } from './ui/toaster';
 import { useResponsiveLayout } from '@/hooks/use-mobile';
