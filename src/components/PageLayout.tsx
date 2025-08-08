@@ -56,7 +56,7 @@ const PageLayout = ({
   };
   
   return (
-    <div className="flex flex-col min-h-screen max-w-[100vw] overflow-x-hidden text-[13px]">
+    <div className="flex flex-col min-h-screen max-w-[100vw] overflow-x-hidden">
       <Navbar />
       {/* Dynamic spacer for header */}
       <div className={getHeaderSpacerHeight()}></div>

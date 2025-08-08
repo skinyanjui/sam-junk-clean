@@ -4,7 +4,6 @@ import PageLayout from '@/components/PageLayout';
 import HeroSection from '@/components/home/HeroSection';
 import ServicesOverview from '@/components/home/ServicesOverview';
 import PricingOverview from '@/components/home/PricingOverview';
-import CtaSection from '@/components/home/CtaSection';
 import TestimonialsSection from '@/components/home/TestimonialsSection';
 import WhyChooseUs from '@/components/home/WhyChooseUs';
 import EnhancedTrustSignals from '@/components/home/EnhancedTrustSignals';
@@ -178,8 +177,6 @@ const Index = () => {
           <WhyChooseUs />
           
           <TestimonialsSection />
-          
-          <CtaSection />
         </div>
       )}
 

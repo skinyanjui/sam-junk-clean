@@ -639,34 +639,42 @@ const Footer = () => {
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 {/* Main footer content */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
-                    <FooterBranding
-                        logo="/lovable-uploads/92c7287f-ec89-4c0f-9ad4-a2ed585a70a3.png"
-                        altText="Uncle Sam Junk Removal"
-                        socialLinks={socialLinks}
-                    />
+                    <div className="rounded-xl border border-white/10 bg-white/5 p-4 backdrop-blur-lg">
+                        <FooterBranding
+                            logo="/lovable-uploads/92c7287f-ec89-4c0f-9ad4-a2ed585a70a3.png"
+                            altText="Uncle Sam Junk Removal"
+                            socialLinks={socialLinks}
+                        />
+                    </div>
 
-                    <FooterNavigation
-                        isMobile={isMobile}
-                        isExpanded={mobileOpen.company}
-                        onToggle={() => toggleSection('company')}
-                    />
+                    <div className="rounded-xl border border-white/10 bg-white/5 p-4 backdrop-blur-lg">
+                        <FooterNavigation
+                            isMobile={isMobile}
+                            isExpanded={mobileOpen.company}
+                            onToggle={() => toggleSection('company')}
+                        />
+                    </div>
 
-                    <FooterServiceAreas
-                        serviceAreas={serviceAreas}
-                        isLoading={isLoadingLocations}
-                        isMobile={isMobile}
-                        isExpanded={mobileOpen.serviceAreas}
-                        onToggle={() => toggleSection('serviceAreas')}
-                    />
+                    <div className="rounded-xl border border-white/10 bg-white/5 p-4 backdrop-blur-lg">
+                        <FooterServiceAreas
+                            serviceAreas={serviceAreas}
+                            isLoading={isLoadingLocations}
+                            isMobile={isMobile}
+                            isExpanded={mobileOpen.serviceAreas}
+                            onToggle={() => toggleSection('serviceAreas')}
+                        />
+                    </div>
 
-                    <FooterContactInfo
-                        contactInfo={contactInfo}
-                        businessHours={businessHours}
-                        isLoading={isLoading}
-                        isMobile={isMobile}
-                        isExpanded={mobileOpen.contact}
-                        onToggle={() => toggleSection('contact')}
-                    />
+                    <div className="rounded-xl border border-white/10 bg-white/5 p-4 backdrop-blur-lg">
+                        <FooterContactInfo
+                            contactInfo={contactInfo}
+                            businessHours={businessHours}
+                            isLoading={isLoading}
+                            isMobile={isMobile}
+                            isExpanded={mobileOpen.contact}
+                            onToggle={() => toggleSection('contact')}
+                        />
+                    </div>
                 </div>
 
                 <FooterCopyright currentYear={currentYear} />
