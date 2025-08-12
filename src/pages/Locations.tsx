@@ -9,10 +9,10 @@ import { LocationsSchema as initialLocationsSchema } from '@/components/location
 import { siteConfig } from '@/config/siteConfig';
 
 // Lazy-loaded sections for improved performance
-const LocationsContent = React.lazy(() => import('@/components/locations/LocationsContent'));
+const LocationsContent = React.lazy(() => import('@/components/locations/LocationsContent').then(m => ({ default: m.LocationsContent })));
 const ZipCodeLookup = React.lazy(() => import('@/components/locations/ZipCodeLookup'));
 const LocationsCta = React.lazy(() => import('@/components/locations/LocationsCta'));
-const LocationsSeoContent = React.lazy(() => import('@/components/locations/LocationsSeoContent'));
+const LocationsSeoContent = React.lazy(() => import('@/components/locations/LocationsSeoContent').then(m => ({ default: m.LocationsSeoContent })));
 const LocationsMap = React.lazy(() => import('@/components/locations/LocationsMap'));
 
 const Locations = () => {
@@ -98,7 +98,7 @@ const Locations = () => {
         {!isLoading && locations.length > 0 && (
           <div className="container-custom">
             <div className="rounded-lg overflow-hidden border border-white/10">
-              <LocationsMap locations={locations} height={360} />
+              <LocationsMap />
             </div>
           </div>
         )}
