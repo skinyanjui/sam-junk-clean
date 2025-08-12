@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo, useCallback } from 'react';
-import { useTranslation } from 'react-i18next';
+
 import { useLocationData } from '@/hooks/use-location-data';
 import { getSocialLinks, getBusinessHours } from '@/integrations/supabase/companyInfoService';
 import FooterBranding from './FooterBranding';
@@ -10,7 +10,7 @@ import FooterCopyright from './FooterCopyright';
 import { SocialLinks, BusinessHours } from './types';
 
 const Footer = () => {
-  const { t } = useTranslation();
+  
   const { locations, isLoading: isLoadingLocations } = useLocationData();
   const [mobileOpen, setMobileOpen] = useState<Record<string, boolean>>({
     company: false,
