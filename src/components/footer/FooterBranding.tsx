@@ -8,17 +8,17 @@ const FooterBranding: React.FC<FooterBrandingProps> = ({
   socialLinks 
 }) => {
   // Responsive logo size based on screen width
-  const [logoSize, setLogoSize] = useState({ width: 'auto', height: '80px' });
+  const [logoSize, setLogoSize] = useState({ width: 'auto', height: '64px' });
   
   useEffect(() => {
     const handleResize = () => {
       // Adjust logo size based on screen width
       if (window.innerWidth < 640) {
-        setLogoSize({ width: 'auto', height: '60px' });
+        setLogoSize({ width: 'auto', height: '48px' });
       } else if (window.innerWidth < 1024) {
-        setLogoSize({ width: 'auto', height: '70px' });
+        setLogoSize({ width: 'auto', height: '56px' });
       } else {
-        setLogoSize({ width: 'auto', height: '80px' });
+        setLogoSize({ width: 'auto', height: '64px' });
       }
     };
     
