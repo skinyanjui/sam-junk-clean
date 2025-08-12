@@ -52,17 +52,17 @@ const FooterBranding: React.FC<FooterBrandingProps> = ({
     socialLinks
 }) => {
     // Responsive logo size based on screen width
-    const [logoSize, setLogoSize] = useState({ width: 'auto', height: '80px' });
+    const [logoSize, setLogoSize] = useState({ width: 'auto', height: '64px' });
 
     useEffect(() => {
         const handleResize = () => {
             // Adjust logo size based on screen width
             if (window.innerWidth < 640) {
-                setLogoSize({ width: 'auto', height: '60px' });
+                setLogoSize({ width: 'auto', height: '48px' });
             } else if (window.innerWidth < 1024) {
-                setLogoSize({ width: 'auto', height: '70px' });
+                setLogoSize({ width: 'auto', height: '56px' });
             } else {
-                setLogoSize({ width: 'auto', height: '80px' });
+                setLogoSize({ width: 'auto', height: '64px' });
             }
         };
 
@@ -446,7 +446,7 @@ const FooterCopyright: React.FC<FooterCopyrightProps> = ({ currentYear }) => {
     const { t } = useTranslation();
 
     return (
-        <div className="pt-6 mt-4 border-t border-white/10 text-xs text-gray-400">
+        <div className="pt-4 mt-3 border-t border-white/10 text-xs text-gray-400">
             <div className="flex flex-col-reverse sm:flex-row justify-between items-center gap-4">
                 <p className="text-center sm:text-left mt-4 sm:mt-0">
                     {t('footer.copyright', { year: currentYear })} • Uncle Sam Junk Removal
@@ -627,7 +627,7 @@ const Footer = () => {
     }, []);
 
     return (
-        <footer className="bg-gradient-to-b from-brand-navy to-brand-navy-dark text-white pt-8 pb-4 relative overflow-hidden">
+        <footer className="bg-gradient-to-b from-brand-navy to-brand-navy-dark text-white pt-5 pb-3 relative overflow-hidden">
             {/* Background pattern for modern look */}
             <div className="absolute inset-0 opacity-5">
                 <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle,_rgba(255,255,255,0.1)_1px,_transparent_1px)] bg-[length:24px_24px]"></div>
@@ -638,8 +638,8 @@ const Footer = () => {
 
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 {/* Main footer content */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
-                    <div className="rounded-xl border border-white/10 bg-white/5 p-4 backdrop-blur-lg">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
+                    <div className="rounded-xl border border-white/10 bg-white/5 p-3 backdrop-blur-lg">
                         <FooterBranding
                             logo="/lovable-uploads/92c7287f-ec89-4c0f-9ad4-a2ed585a70a3.png"
                             altText="Uncle Sam Junk Removal"
@@ -647,7 +647,7 @@ const Footer = () => {
                         />
                     </div>
 
-                    <div className="rounded-xl border border-white/10 bg-white/5 p-4 backdrop-blur-lg">
+                    <div className="rounded-xl border border-white/10 bg-white/5 p-3 backdrop-blur-lg">
                         <FooterNavigation
                             isMobile={isMobile}
                             isExpanded={mobileOpen.company}
@@ -655,7 +655,7 @@ const Footer = () => {
                         />
                     </div>
 
-                    <div className="rounded-xl border border-white/10 bg-white/5 p-4 backdrop-blur-lg">
+                    <div className="rounded-xl border border-white/10 bg-white/5 p-3 backdrop-blur-lg">
                         <FooterServiceAreas
                             serviceAreas={serviceAreas}
                             isLoading={isLoadingLocations}
@@ -665,7 +665,7 @@ const Footer = () => {
                         />
                     </div>
 
-                    <div className="rounded-xl border border-white/10 bg-white/5 p-4 backdrop-blur-lg">
+                    <div className="rounded-xl border border-white/10 bg-white/5 p-3 backdrop-blur-lg">
                         <FooterContactInfo
                             contactInfo={contactInfo}
                             businessHours={businessHours}
